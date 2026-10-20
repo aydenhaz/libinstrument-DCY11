@@ -1,0 +1,6 @@
+PASS: 424 original Thumb/helper comparisons; I_GetAlcPtr mocked null
+PASS: 576 original paint/helper comparisons; draw/capture effects mocked
+PASS: capture callback counter mutation is reloaded before increment
+PASS: draw callback counter mutation is reloaded before capture decision
+PASS: 30 original RGB/RGBA accumulation and state comparisons; stopped before formatter
+PASS: full original callback RGB config trace, temporary cleanup, and three ignored events; services mocked

@@ -169,3 +169,9 @@ The build deliberately removes failed final outputs. It will not label an incomp
 - Recovered event 0x17 request/ready transitions and valid RGB/RGBA average arithmetic, preserving float32 accumulation and dimension-based divisor. Helper rejects unsupported malformed buffers; this is not invented original validation.
 - 30 original Thumb/VFP arithmetic/state cases pass in addition to prior 1,002 cover-state cases. Native sanitizer and ARM Thumb compile-only checks pass.
 - Stops before external formatter operations; remaining string/configuration effects and actual observer integration are incomplete. See analysis/COVER_RGB_CALLBACK.md. No replacement SO.
+
+## Cover RGB configuration writes
+
+- Corrected hsl::StringUtils::Format to UTF16 varargs returning owning dice::String16 via hidden ARM32 result storage. Added static config binding and helper writing widgetCoverR/G/B in original order.
+- Native sanitizer host-contract test passes; ARM signature probe and all 31 production compile-only units pass. Original callback full execution trace (external string/config services mocked) verifies format/write order, temporary cleanup and ignored events.
+- Helpers are not installed into a constructed CoverUtil/Packet. See analysis/COVER_RGB_CONFIGURATION.md. No Android strict link or replacement SO.

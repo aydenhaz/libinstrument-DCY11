@@ -1,3 +1,3 @@
 #pragma once
-namespace dice { class String16; }
-namespace hsl { class StringUtils { public: static void Format(const char*, ...); static int FindStr(const dice::String16&, const dice::String16&, unsigned); }; }
+#include <DiceString16.h>
+namespace hsl { class StringUtils { public: static dice::String16 Format(const unsigned short*, ...); static int FindStr(const dice::String16&, const dice::String16&, unsigned); }; }

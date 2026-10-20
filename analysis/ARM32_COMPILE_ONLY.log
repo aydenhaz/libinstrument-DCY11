@@ -31,10 +31,6 @@ internal/NS_MultiScreenBase/Batch14_boilerplate.cpp: 0
 internal/NS_MultiScreenBase/Batch15_named192.cpp: 0
 
 internal/NS_MultiScreenBase/Batch17_compiled.cpp: 0
-/workspace/scratch/d8a6667a9410/rebuild-v3/internal/NS_MultiScreenBase/Batch17_compiled.cpp:3:26: warning: '/*' within block comment [-Wcomment]
-    3 |  * Upgraded from expanded/*.cpp pseudocode; verified against decoded traces.
-      |                          ^
-1 warning generated.
 
 internal/NS_MultiScreenBase/Batch18_final.cpp: 0
 
