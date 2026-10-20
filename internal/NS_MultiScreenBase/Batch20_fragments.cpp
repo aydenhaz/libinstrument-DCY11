@@ -48,12 +48,12 @@ void GuideFragment_GoToCross_impl(void *self, int32_t index, bool flag) {
         sm->SetCurrentScreenMode(0, index);
     } else {
         /* I_Assert path */
-        CGFragment *frag = CGFragment::tryStartExistFragment(intent, 2, /*ctx*/0);
+        CGFragment *frag = CGFragment::tryStartExistFragmentUnrecovered(intent, 2, /*ctx*/0);
         frag = frag;
         if (!frag) {
             frag = new CGFragment();
             frag->setContext(/*ctx*/0);
-            frag->startNewFragment(0, 0, intent, 2);
+            frag->startNewFragmentUnrecovered(0, 0, intent, 2);
         }
     }
 }
@@ -70,12 +70,12 @@ void ThemeSwitch_impl(void *self, int32_t iaccTheme, int32_t screenMode) {
     CGIntent intent;
     intent.putBoolExtra(reinterpret_cast<const unsigned short*>(u"themeChanged"), true);
     /* I_Assert */
-    CGFragment *frag = CGFragment::tryStartExistFragment(intent, 2, 0);
+    CGFragment *frag = CGFragment::tryStartExistFragmentUnrecovered(intent, 2, 0);
     frag = frag;
     if (!frag) {
         frag = new CGFragment();
         frag->setContext(0);
-        frag->startNewFragment(0, 0, intent, 2);
+        frag->startNewFragmentUnrecovered(0, 0, intent, 2);
     }
     SurfaceConfig sc;
     AutoConfigJsonData::GetInstance()->GetSurfaceConfig(0, sc);
@@ -93,12 +93,12 @@ void AutoExscreenNotifyObserver_OnHideCrossImage(void *self, int crossType) {
     CGIntent intent;
     intent.putBoolExtra(reinterpret_cast<const unsigned short*>(u"hideCross"), true);
     /* I_Assert */
-    CGFragment *frag = CGFragment::tryStartExistFragment(intent, 2, 0);
+    CGFragment *frag = CGFragment::tryStartExistFragmentUnrecovered(intent, 2, 0);
     frag = frag;
     if (!frag) {
         frag = new CGFragment();
         frag->setContext(0);
-        frag->startNewFragment(0, 0, intent, 2);
+        frag->startNewFragmentUnrecovered(0, 0, intent, 2);
     }
     SurfaceConfig sc;
     AutoConfigJsonData::GetInstance()->GetSurfaceConfig(0, sc);
@@ -162,12 +162,12 @@ GNS_FRAME::CGView *BuildRootView_impl(CGFragment *self, CGViewGroup *parent) {
 /* sub_32a00 (140B) — fragment start helper (shared by GoToCross family) */
 void StartFragmentHelper_impl(const CGIntent &intent, int mode) {
     /* I_Assert */
-    CGFragment *frag = CGFragment::tryStartExistFragment(intent, 2, 0);
+    CGFragment *frag = CGFragment::tryStartExistFragmentUnrecovered(intent, 2, 0);
     frag = frag;
     if (!frag) {
         frag = new CGFragment();
         frag->setContext(0);
-        frag->startNewFragment(0, 0, intent, 2);
+        frag->startNewFragmentUnrecovered(0, 0, intent, 2);
     }
 }
 

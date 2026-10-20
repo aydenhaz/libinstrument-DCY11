@@ -1,0 +1,203 @@
+000327d0 push       {r4, r5, r6, r7, lr}                     
+000327d2 add        r7, sp, #0xc                             
+000327d4 push.w     {r8, sb, sl}                             
+000327d8 sub        sp, #0x1a0                               
+000327da mov        r4, r0                                   
+000327dc ldr        r0, [pc, #0x1f4]                         literal 0x3c112
+000327de add        r6, sp, #0x24                            
+000327e0 mov        r5, r1                                   
+000327e2 add        r0, pc                                   
+000327e4 ldr.w      sl, [r0]                                 
+000327e8 ldr.w      r0, [sl]                                 
+000327ec str        r0, [sp, #0x19c]                         
+000327ee mov        r0, r6                                   
+000327f0 blx        #0x13c5c                                 _ZN9GNS_FRAME8CGIntentC1Ev
+000327f4 ldr        r1, [pc, #0x1e0]                         literal 0x2a618
+000327f6 mov        r2, r5                                   
+000327f8 add        r1, pc                                   
+000327fa blx        #0x14820                                 _ZN9GNS_FRAME8CGIntent13putInt32ExtraEPKti
+000327fe ldr        r1, [pc, #0x1dc]                         literal 0x2a34c
+00032800 mov        r0, r6                                   
+00032802 movs       r2, #1                                   
+00032804 add        r1, pc                                   
+00032806 blx        #0x14820                                 _ZN9GNS_FRAME8CGIntent13putInt32ExtraEPKti
+0003280a blx        #0x13d40                                 _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEv
+0003280e movs       r1, #0                                   
+00032810 blx        #0x13d4c                                 _ZN18NS_MultiScreenBase20AutoConfigScreenMode20GetCurrentScreenModeENS_10ScreenTypeE
+00032814 cbz        r0, #0x3283a                             
+00032816 add        r1, sp, #0x24                            
+00032818 mov        r0, r4                                   
+0003281a bl         #0x32a00                                 
+0003281e add        r0, sp, #0x24                            
+00032820 blx        #0x13ce0                                 _ZN9GNS_FRAME8CGIntentD1Ev
+00032824 ldr.w      r0, [sl]                                 
+00032828 ldr        r1, [sp, #0x19c]                         
+0003282a subs       r0, r0, r1                               
+0003282c ittt       eq                                       
+0003282e addeq      sp, #0x1a0                               
+00032830 popeq.w    {r8, sb, sl}                             
+00032834 popeq      {r4, r5, r6, r7, pc}                     
+00032836 blx        #0x13a28                                 __stack_chk_fail
+0003283a blx        #0x13f14                                 _ZN3hsl3HSL14GetGuideHandleEv
+0003283e cmp        r0, #0                                   
+00032840 beq.w      #0x32962                                 
+00032844 ldr        r1, [r0]                                 
+00032846 ldr        r1, [r1, #0x1c]                          
+00032848 blx        r1                                       
+0003284a cmp        r0, #0                                   
+0003284c beq.w      #0x32962                                 
+00032850 add        r6, sp, #0x90                            
+00032852 mov        r5, r0                                   
+00032854 mov        r0, r6                                   
+00032856 bl         #0x1ac80                                 
+0003285a ldr        r0, [r5]                                 
+0003285c mov        r1, r6                                   
+0003285e ldr        r2, [r0, #8]                             
+00032860 mov        r0, r5                                   
+00032862 blx        r2                                       
+00032864 add        r6, sp, #0x64                            
+00032866 ldr.w      r8, [sp, #0xdc]                          
+0003286a ldr.w      sb, [sp, #0x15c]                         
+0003286e mov        r0, r6                                   
+00032870 blx        #0x1407c                                 _ZN2bl8PathInfoC1Ev
+00032874 ldr        r0, [r5]                                 
+00032876 mov        r1, r6                                   
+00032878 ldr.w      r2, [r0, #0xdc]                          
+0003287c mov        r0, r5                                   
+0003287e blx        r2                                       
+00032880 mov        r0, r6                                   
+00032882 blx        #0x14088                                 _ZNK2bl8PathInfo7IsValidEv
+00032886 cmp        r0, #0                                   
+00032888 beq        #0x32956                                 
+0003288a add        r5, sp, #0x38                            
+0003288c mov        r0, r5                                   
+0003288e blx        #0x14094                                 _ZN2bl11SegmentInfoC1Ev
+00032892 ldr        r1, [sp, #0xd0]                          
+00032894 add        r0, sp, #0x64                            
+00032896 mov        r2, r5                                   
+00032898 blx        #0x140a0                                 _ZNK2bl8PathInfo14GetSegmentInfoEjRNS_11SegmentInfoE
+0003289c mov        r0, r5                                   
+0003289e blx        #0x140ac                                 _ZNK2bl11SegmentInfo7IsValidEv
+000328a2 cmp        r0, #0                                   
+000328a4 beq        #0x32950                                 
+000328a6 add        r0, sp, #0x38                            
+000328a8 blx        #0x140b8                                 _ZNK2bl11SegmentInfo9GetLengthEv
+000328ac mov        r3, r0                                   
+000328ae sub.w      r0, r0, sb                               
+000328b2 str        r0, [sp]                                 
+000328b4 mov        r0, r4                                   
+000328b6 mov        r1, r8                                   
+000328b8 mov        r2, sb                                   
+000328ba bl         #0x424dc                                 
+000328be mov        sb, r0                                   
+000328c0 blx        #0x13c14                                 I_GetAlcPtr
+000328c4 cbz        r0, #0x32902                             
+000328c6 blx        #0x13c14                                 I_GetAlcPtr
+000328ca ldr        r1, [r0]                                 
+000328cc mov.w      r8, #0                                   
+000328d0 mov.w      ip, #0x164                               
+000328d4 add.w      r3, r4, #0x30c                           
+000328d8 ldr.w      lr, [r1]                                 
+000328dc mov.w      r1, #0x8000000                           
+000328e0 ldr        r5, [pc, #0xfc]                          literal 0x2339b
+000328e2 ldr        r6, [pc, #0x100]                         literal 0x22c31
+000328e4 ldr        r2, [pc, #0x100]                         literal 0x28dd5
+000328e6 add        r5, pc                                   
+000328e8 strd       r1, r8, [sp]                             
+000328ec movs       r1, #8                                   
+000328ee add        r2, pc                                   
+000328f0 add        r6, pc                                   
+000328f2 strd       r3, r2, [sp, #8]                         
+000328f6 movs       r2, #0                                   
+000328f8 strd       r6, ip, [sp, #0x10]                      
+000328fc strd       r5, sb, [sp, #0x18]                      
+00032900 blx        lr                                       
+00032902 add        r0, sp, #0x38                            
+00032904 blx        #0x140c4                                 _ZN2bl11SegmentInfoD1Ev
+00032908 add        r0, sp, #0x64                            
+0003290a blx        #0x140d0                                 _ZN2bl8PathInfoD1Ev
+0003290e add        r0, sp, #0x90                            
+00032910 bl         #0x1ad2c                                 
+00032914 cmp.w      sb, #0                                   
+00032918 beq        #0x32962                                 
+0003291a blx        #0x13d40                                 _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEv
+0003291e movs       r1, #0                                   
+00032920 movs       r2, #1                                   
+00032922 blx        #0x14058                                 _ZN18NS_MultiScreenBase20AutoConfigScreenMode20SetCurrentScreenModeENS_10ScreenTypeEi
+00032926 ldr        r6, [pc, #0xc4]                          literal 0xfffe9a53
+00032928 movs       r0, #0                                   
+0003292a add        r6, pc                                   
+0003292c blx        r6                                       
+0003292e bl         #0x1c2d4                                 
+00032932 movs       r0, #0                                   
+00032934 bl         #0x1984c                                 
+00032938 ldr        r5, [r0]                                 
+0003293a movs       r0, #0                                   
+0003293c blx        r6                                       
+0003293e mov        r1, r5                                   
+00032940 bl         #0x1c798                                 
+00032944 movs       r0, #0                                   
+00032946 blx        r6                                       
+00032948 mov        r1, r5                                   
+0003294a bl         #0x1e790                                 
+0003294e b          #0x32816                                 
+00032950 add        r0, sp, #0x38                            
+00032952 blx        #0x140c4                                 _ZN2bl11SegmentInfoD1Ev
+00032956 add        r0, sp, #0x64                            
+00032958 blx        #0x140d0                                 _ZN2bl8PathInfoD1Ev
+0003295c add        r0, sp, #0x90                            
+0003295e bl         #0x1ad2c                                 
+00032962 ldrb.w     r0, [r4, #0x214]                         
+00032966 clz        r0, r0                                   
+0003296a lsrs       r0, r0, #5                               
+0003296c blx        #0x13c80                                 I_Assert
+00032970 ldr        r3, [pc, #0x7c]                          literal 0xfffe8301
+00032972 add        r5, sp, #0x24                            
+00032974 mov        r0, r4                                   
+00032976 movs       r2, #2                                   
+00032978 add        r3, pc                                   
+0003297a mov        r1, r5                                   
+0003297c blx        #0x13c8c                                 _ZN9GNS_FRAME10CGFragment21tryStartExistFragmentERKNS_8CGIntentEiPv
+00032980 cbz        r0, #0x32998                             
+00032982 ldr        r1, [pc, #0x70]                          literal 0x3bf90
+00032984 movs       r3, #0                                   
+00032986 ldr        r2, [pc, #0x70]                          literal 0x39d72
+00032988 add        r1, pc                                   
+0003298a add        r2, pc                                   
+0003298c ldr        r1, [r1]                                 
+0003298e blx        #0x13bd8                                 __dynamic_cast
+00032992 cmp        r0, #0                                   
+00032994 bne.w      #0x3281e                                 
+00032998 ldr.w      r0, [r4, #0x258]                         
+0003299c cmp        r0, #0                                   
+0003299e beq.w      #0x3281e                                 
+000329a2 movw       r0, #0xc48                               
+000329a6 blx        #0x13b84                                 _Znwj
+000329aa movs       r1, #1                                   
+000329ac mov        r6, r0                                   
+000329ae bl         #0x32bbc                                 
+000329b2 ldr.w      r1, [r4, #0x258]                         
+000329b6 blx        #0x13cbc                                 _ZN9GNS_FRAME10CGFragment10setContextEPNS_9CGContextE
+000329ba mov.w      r0, #-1                                  
+000329be mov        r1, r6                                   
+000329c0 strd       r5, r0, [sp]                             
+000329c4 mov        r0, r4                                   
+000329c6 ldr        r2, [pc, #0x34]                          literal 0xfffe82af
+000329c8 movs       r3, #2                                   
+000329ca add        r2, pc                                   
+000329cc blx        #0x13cc8                                 _ZN9GNS_FRAME10CGFragment16startNewFragmentEPS0_PviRKNS_8CGIntentEi
+000329d0 b          #0x3281e                                 
+000329d2 nop                                                 
+000329d4 stm        r1!, {r1, r4}                            
+000329d6 movs       r3, r0                                   
+000329d8 adr        r6, #0x60                                
+000329da movs       r2, r0                                   
+000329dc adr        r3, #0x130                               
+000329de movs       r2, r0                                   
+000329e0 adds       r3, #0x9b                                
+000329e2 movs       r2, r0                                   
+000329e4 cmp        r4, #0x31                                
+000329e6 movs       r2, r0                                   
+000329e8 ldrh       r5, [r2, #0x2e]                          
+000329ea movs       r2, r0                                   
+000329ec ldr        r2, [sp, #0x14c]                         

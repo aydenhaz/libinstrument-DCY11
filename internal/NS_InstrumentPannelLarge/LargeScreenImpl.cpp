@@ -62,7 +62,7 @@ int32_t LargeScreenImpl::QueryInterface(int32_t id, void **out) {
  *        if frag: CGFrameSimulation::ownWorkStation()/getExhibition()
  *                 CGString name(u"..."); exhibition->appendFragment(3, name, intent, 0)
  *   3. Fallback (no existing fragment): operator new fragment; frag->setContext(ctx);
- *      ...; frag->startNewFragment(parent, 0, intent, 2)
+ *      ...; frag->startNewFragmentUnrecovered(parent, 0, intent, 2)
  *   Log sites interleave CGFrameAlcLog::getInstance() + I_GetAlcDevPtr() pairs.
  */
 void LargeScreenImpl::OnChangeScreenMode(int32_t screenType, int32_t mode, const GNS_FRAME::CGIntent &intent) {
@@ -78,7 +78,7 @@ void LargeScreenImpl::OnChangeScreenMode(int32_t screenType, int32_t mode, const
 
     /* branch per (screenType, mode): see analysis log strings
        "largeScreenMode:%d,curLargeScreenMode:%d" @0x5365c, "largeScreenMode same as before" @0x53685 */
-    GNS_FRAME::CGFragment *frag = GNS_FRAME::CGFragment::tryStartExistFragment(intent, 2, ctx);
+    GNS_FRAME::CGFragment *frag = GNS_FRAME::CGFragment::tryStartExistFragmentUnrecovered(intent, 2, ctx);
     /* __dynamic_cast to one of the 10 concrete CGInstrumentPannelLarge*Fragment types */
 
     if (frag) {
@@ -90,7 +90,7 @@ void LargeScreenImpl::OnChangeScreenMode(int32_t screenType, int32_t mode, const
 
     /* fallback: create new fragment for this mode */
     /* frag = new CGInstrumentPannelLargeXxxFragment(...); frag->setContext(ctx);
-       frag->startNewFragment(parent, 0, intent, 2); */
+       frag->startNewFragmentUnrecovered(parent, 0, intent, 2); */
 }
 
 } // namespace NS_InstrumentPannelLarge

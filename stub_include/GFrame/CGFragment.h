@@ -3,7 +3,10 @@ namespace GNS_FRAME {
 class CGViewGroup; class CGView; class CGIntent; class CGContext;
 class CGFragment {
 public:
-    static CGFragment *tryStartExistFragment(const CGIntent&, int, void*);
+    CGFragment *tryStartExistFragment(const CGIntent&, int, void*);
+    // Intentionally undefined: legacy callers lack a valid parent/type identity.
+    // Never alias these to real host methods just to make the linker pass.
+    static CGFragment *tryStartExistFragmentUnrecovered(const CGIntent&, int, void*);
     static CGViewGroup *inflater(int, CGViewGroup*);
     static CGView *findViewById(int);
     void onDestroyView();
@@ -13,6 +16,7 @@ public:
     static bool isTopFragment();
     void setContext(CGContext*);
     void setType(void*);
-    void startNewFragment(void*, int, const CGIntent&, int);
+    void startNewFragment(CGFragment* child, void* typeIdentity, int mode, const CGIntent&, int requestCode);
+    void startNewFragmentUnrecovered(void*, int, const CGIntent&, int);
 };
 }

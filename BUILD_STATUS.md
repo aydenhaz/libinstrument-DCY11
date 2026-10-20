@@ -120,3 +120,10 @@ The build deliberately removes failed final outputs. It will not label an incomp
 - Protocol pointer/reference types now match actual host symbols. Control payload uses the observed 0 + eight 99 sentinel initialization; state population still incomplete.
 - Host ASan/UBSan contract test and ARM calling-convention probes pass. Four probe symbols match original host definitions. All 31 units still pass ARM compile-only checks.
 - See analysis/EXTERNAL_SCREEN_ABI.md. No full Android link, runtime equivalence or replacement SO.
+
+## Fragment startup receiver and parameter ABI
+
+- Recovered instance lookup and parent.startNewFragment(child, identity, mode, intent, requestCode) signatures from original ARM32 instructions. Removed duplicate CGFragment declaration in CGPackage.h.
+- Old incomplete callers now reference explicitly undefined Unrecovered methods; their invented parent/child allocation paths cannot silently bind to real host functions. Correct derived factories and receiver recovery remain outstanding.
+- Native ASan/UBSan argument/receiver contract test and ARM symbol probe pass. All 31 source units pass ARM Linux musl compile-only checking. See analysis/FRAGMENT_START_ABI.md.
+- No Android strict-link success, working navigation or replacement SO is claimed.
