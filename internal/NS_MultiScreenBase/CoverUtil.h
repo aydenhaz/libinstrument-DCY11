@@ -10,6 +10,7 @@ namespace GNS_FRAME { class CGContext; }
 namespace GPI { struct CGSize; }
 namespace bl { class IMapDevice; class IMapView; }
 namespace NS_MultiScreenBase {
+enum class CoverInitializationResult { InvalidInputs, Disabled, ImageCreateFailed, ImageUnavailable, MapObserverRegistered, NeedsTopRenderRegistration };
 enum class CoverResourceResult { MissingFile, Loaded, LoadFailed, NoImage };
 enum class CoverConfigurationStage { InvalidInputs, Disabled, NeedsImageSetup };
 struct CoverUtilTestAccess;
@@ -25,11 +26,13 @@ public:
     bool recreateImageStorage();
     CoverResourceResult loadConfiguredResourceImage();
     bool bindScreenshotSource(const GPI::CGSize& finalSize);
+    CoverInitializationResult initializeConfiguredCover(GNS_FRAME::CGContext*,bl::IMapDevice*,bl::IMapView*,SurfaceConfig);
     // Explicit prefix operation, not the unrecovered complete setConfig method.
-    CoverConfigurationStage prepareConfiguration(GNS_FRAME::CGContext*,bl::IMapDevice*,bl::IMapView*,SurfaceConfig);
-    // Configuration and full module integration are still
-    // unrecovered. This class is not enabled in the Packet factory.
+    CoverConfigurationStage prepareConfiguration(GNS_FRAME::CGContext*,bl::IMapDevice*,bl::IMapView*,const SurfaceConfig&);
+    // Complete setConfig, optional top-render registration and Packet integration
+    // remain unrecovered. This class is not enabled in the Packet factory.
 private:
+    bool recreateImageStorage(const GPI::CGSize&);
     friend struct CoverUtilTestAccess;
     GNS_FRAME::CGContext* context_=nullptr;
     void* unknown0c_=nullptr;

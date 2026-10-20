@@ -9,7 +9,12 @@
 #include <asl/String16Utils.h>
 #include <map>
 #include <cstdlib>
+#include <GFrame/CGImage.h>
+#include <hsl/UtilPath.h>
+#include <hsl/FileUtils.h>
+#include <hsl/SystemNotify.h>
 CGString::CGString() {}
+CGString::CGString(const unsigned short*) {}
 CGString::~CGString() {}
 CGString::CGString(const CGString&) {}
 CGString& CGString::operator=(const CGString&){return *this;}
@@ -23,6 +28,9 @@ struct CoverUtilTestAccess {
  static int threshold(const CoverUtil& c){return c.threshold_;}
  static bool enabled(const CoverUtil& c){return c.enabled_;}
  static GNS_FRAME::CGContext* context(const CoverUtil& c){return c.context_;}
+ static bl::ScreenShotInfo& info(CoverUtil& c){return c.screenshot_;}
+ static void optionalRender(CoverUtil& c){c.unknown14_=1;}
+ static void cleanup(CoverUtil& c){delete static_cast<GNS_FRAME::CGImage*>(c.image_);c.image_=nullptr;}
  static int surface(const CoverUtil& c){return static_cast<int>(c.surface_.scalar[7]);}
 };
 }
@@ -53,6 +61,29 @@ bool hsl::Config::GetString(const dice::String16& key,dice::String16& value,VALU
 int asl::String16Utils::atoi(const unsigned short* value){std::string s;while(*value)s+=char(*value++);return std::atoi(s.c_str());}
 int hsl::StringUtils::FindStr(const dice::String16& value,const dice::String16& needle,unsigned start){
  auto pos=text(value).find(text(needle),start);return pos==std::string::npos?-1:static_cast<int>(pos);
+}
+static bool imageCreated=true,filePresent=false,fileLoaded=false;
+static int registrations;
+static bool requestTopDuringRegistration=false;
+static unsigned char boundPixels[16];
+static NS_MultiScreenBase::CoverUtil* initializing;
+GNS_FRAME::CGImage::CGImage(){}
+GNS_FRAME::CGImage::~CGImage(){}
+bool GNS_FRAME::CGImage::create(const GPI::CGSize&,EGColorType color,unsigned char* data){assert(static_cast<int>(color)==0x101&&!data);return imageCreated;}
+bool GNS_FRAME::CGImage::loadImageFromFile(const CGString&,int mode,bool a,bool b,CGString* out){assert(mode==-1&&!a&&!b&&!out);return fileLoaded;}
+uint32_t GNS_FRAME::CGImage::getDataLen()const{return sizeof(boundPixels);}
+unsigned char* GNS_FRAME::CGImage::getData()const{return boundPixels;}
+void hsl::UtilPath::GetPathRelativeToRes(const dice::String16& key,dice::String16& out,PathType_ type){assert(text(key)=="HmiResPath"&&int(type)==3);out=dice::String16("/res/");}
+bool hsl::FileUtils::IsExistFile(const dice::String16& path){assert(text(path)=="/res/sm_cover.png");return filePresent;}
+hsl::SystemNotify* hsl::HSL::GetSystemNotifyHandle(){static hsl::SystemNotify notify;return &notify;}
+void hsl::SystemNotify::AddMapSurfaceViewObserver(MapSurfaceViewObserver* observer){
+ assert(observer==static_cast<MapSurfaceViewObserver*>(initializing));
+ auto& info=NS_MultiScreenBase::CoverUtilTestAccess::info(*initializing);
+ assert(info.bytes==boundPixels&&info.length==sizeof(boundPixels)&&info.stride==4);
+ assert(info.width==2&&info.height==2);++registrations;
+ if(requestTopDuringRegistration)NS_MultiScreenBase::CoverUtilTestAccess::optionalRender(*initializing);
+ // Registration is permitted to synchronously notify the actual observer.
+ observer->MapSurfaceViewStatusChange(0,static_cast<MAPSURFACE>(1),nullptr,0,0,0);
 }
 int main(){
     IPL_ABI::writeCoverRgbConfiguration({0,127,255});
@@ -102,4 +133,19 @@ int main(){
     configuration["sm_support_widgetCoverMaxFrame"]="-1";
     assert(cover.prepareConfiguration(context,device,view,config)==Stage::NeedsImageSetup);
     assert(Access::enabled(cover)&&Access::threshold(cover)==-1&&Access::surface(cover)==1);
+    using Init=NS_MultiScreenBase::CoverInitializationResult;
+    NS_MultiScreenBase::CoverUtil initialized;initializing=&initialized;
+    config.scalar[0]=2;config.scalar[1]=2;config.scalar[7]=0;configuration.clear();
+    assert(initialized.initializeConfiguredCover(nullptr,device,view,config)==Init::InvalidInputs&&registrations==0);
+    config.scalar[7]=1;
+    assert(initialized.initializeConfiguredCover(context,device,view,config)==Init::Disabled&&registrations==0);
+    config.scalar[7]=0;imageCreated=false;
+    assert(initialized.initializeConfiguredCover(context,device,view,config)==Init::ImageCreateFailed&&registrations==0);
+    imageCreated=true;filePresent=false;
+    assert(initialized.initializeConfiguredCover(context,device,view,config)==Init::MapObserverRegistered&&registrations==1);
+    filePresent=true;fileLoaded=false;
+    assert(initialized.initializeConfiguredCover(context,device,view,config)==Init::MapObserverRegistered&&registrations==2);
+    requestTopDuringRegistration=true;
+    assert(initialized.initializeConfiguredCover(context,device,view,config)==Init::NeedsTopRenderRegistration&&registrations==3);
+    Access::cleanup(initialized);
 }

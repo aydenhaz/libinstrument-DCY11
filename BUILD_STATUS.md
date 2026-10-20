@@ -219,3 +219,10 @@ The build deliberately removes failed final outputs. It will not label an incomp
 - Restored HmiResPath/type-3 resolution, direct sm_cover.png append, existence branch and exact host image-load arguments. Preserves inhibit flag on failed load and prior state on missing-file branch while setting byte +0x91.
 - Native sanitizer path/state tests and host symbol checks pass; all 35 production units pass ARM Linux musl compile-only checking.
 - Complete initialization orchestration, observer/closure registration and Packet construction remain incomplete. See analysis/COVER_RESOURCE_IMAGE.md. No replacement SO.
+
+## Cover initialization pipeline and map registration
+
+- Added initializeConfiguredCover staged entrypoint composing policy, image creation/resource loading/buffer binding and typed map-observer registration. Captures image dimensions before external image calls; internal prefix now uses const-reference config to avoid a second by-value copy.
+- Explicit outcomes preserve failure/disabled suppression, optional-file continuation and incomplete optional top-render registration. Map observer sees complete buffer fields before synchronous notifications.
+- Native sanitizer integration test and original instruction regressions pass; all 36 production units pass ARM Linux musl compile-only checking. See analysis/COVER_INITIALIZATION_PIPELINE.md.
+- Full original setConfig/optional closure installation and Packet/module integration remain incomplete. No replacement SO.

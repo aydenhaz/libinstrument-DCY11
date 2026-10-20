@@ -2,7 +2,7 @@
 #include "../abi/CoverConfigPolicy.h"
 namespace NS_MultiScreenBase {
 CoverConfigurationStage CoverUtil::prepareConfiguration(GNS_FRAME::CGContext* context,
-        bl::IMapDevice* device,bl::IMapView* view,SurfaceConfig config) {
+        bl::IMapDevice* device,bl::IMapView* view,const SurfaceConfig& config) {
     if(!context || !device || !view) return CoverConfigurationStage::InvalidInputs;
     context_=context;unknown0c_=device;unknown10_=view;
     surface_=config;
