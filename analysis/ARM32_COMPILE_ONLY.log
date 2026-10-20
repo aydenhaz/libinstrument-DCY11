@@ -42,6 +42,8 @@ internal/NS_MultiScreenBase/Batch21_config_alc.cpp: 0
 
 internal/NS_MultiScreenBase/Batch22_final_meaty.cpp: 0
 
+internal/NS_MultiScreenBase/CoverUtil.cpp: 0
+
 internal/UnnamedResidue.cpp: 0
 
 expanded/alc_wrappers.cpp: 0

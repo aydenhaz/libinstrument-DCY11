@@ -1,0 +1,13 @@
+00973b8e bx         lr                                       
+00973b90 b.w        #0xa570d8                                
+00973b94 push       {r4, r6, r7, lr}                         
+00973b96 add        r7, sp, #8                               
+00973b98 ldr        r0, [r0, #4]                             
+00973b9a ldr.w      r0, [r0, #0x28c]                         
+00973b9e cbz        r0, #0x973bac                            
+00973ba0 ldr        r4, [r0]                                 
+00973ba2 ldr.w      ip, [r4, #8]                             
+00973ba6 pop.w      {r4, r6, r7, lr}                         
+00973baa bx         ip                                       
+00973bac movs       r0, #1                                   
+00973bae pop        {r4, r6, r7, pc}                         

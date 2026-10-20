@@ -1,0 +1,17 @@
+{
+  "size": 44,
+  "secondary_offset_to_top": -4,
+  "slots": {
+    "4": "_ZTIN18NS_MultiScreenBase9CoverUtilE",
+    "8": "_ZN18NS_MultiScreenBase9CoverUtil26MapSurfaceViewStatusChangeEi11MAPSURFACE_Pviii",
+    "12": "_ZN18NS_MultiScreenBase9CoverUtilD1Ev",
+    "16": "_ZN18NS_MultiScreenBase9CoverUtilD0Ev",
+    "20": "_ZN18NS_MultiScreenBase9CoverUtil22onBusinessDataObserverEiPKvPv",
+    "28": "_ZTIN18NS_MultiScreenBase9CoverUtilE",
+    "32": "_ZThn4_N18NS_MultiScreenBase9CoverUtilD1Ev",
+    "36": "_ZThn4_N18NS_MultiScreenBase9CoverUtilD0Ev",
+    "40": "_ZThn4_N18NS_MultiScreenBase9CoverUtil22onBusinessDataObserverEiPKvPv"
+  },
+  "field_offsets": "14 ARM32 static assertions passed",
+  "production_compile": "32/32 ARM Linux musl; no link"
+}

@@ -181,3 +181,10 @@ The build deliberately removes failed final outputs. It will not label an incomp
 - Joined flag updates, valid-image arithmetic and RGB config writes into applyCoverCaptureResult. Internal result enum is not the host observer return type; malformed buffers are explicitly rejected by the helper.
 - Verified second observer table has destructor slots 0/1 and callback slot 2; all thunks adjust this by -4. Primary and secondary callback emulation produce identical full traces and flag/cleanup behavior.
 - Native sanitizer pipeline test and complete ARM Thumb helper compilation pass. Formal bl observer callback signature remains unresolved; helpers are not yet installed in Packet. See analysis/COVER_CAPTURE_PIPELINE.md. No replacement SO.
+
+## Concrete CoverUtil observer class
+
+- Located the host dice-to-bl business-observer bridge, which preserves r1/r2/r3 into bl slot 2. Added the supported binary interface shape; method spelling/const qualifiers follow the forwarded dice interface inference.
+- Added a concrete dual-observer CoverUtil with original constructor state, map/capture processing and first-render predicate. ARM32 size 0xa8, 14 field offsets and 44-byte vtable group/slot order pass checks.
+- Native sanitizer tests instantiate the class and dispatch through both observer bases; all 32 production units pass ARM Linux musl compile-only checking.
+- Still not wired into Packet: setConfig, drawing/capture service calls, logging, host bases and registration remain incomplete. See analysis/COVER_OBSERVER_CLASS.md. No replacement SO.

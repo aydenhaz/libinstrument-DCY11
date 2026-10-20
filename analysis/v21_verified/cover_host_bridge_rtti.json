@@ -1,0 +1,13 @@
+[
+  {
+    "address": "0xf1bd7c",
+    "name": "N2bl23MapBusinessDataObserverE",
+    "typeinfo_class": "_ZTVN10__cxxabiv120__si_class_type_infoE",
+    "bases": [
+      {
+        "address": "0xf15aac",
+        "name": "N4dice24IMapBusinessDataObserverE"
+      }
+    ]
+  }
+]
