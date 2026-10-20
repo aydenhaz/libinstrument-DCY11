@@ -1,0 +1,5 @@
+Native g++ ASan/UBSan helper test: PASS (leak detection disabled)
+Zig 0.17.0 ARM Linux musl Thumb compile-only test: PASS
+Original V21 Thumb differential execution: PASS, 424 comparisons
+Original SHA256: 6f5bd54c8e694ac40f02cd4280f6c6a049ea34896703e1eb5547fbc9e41d65e3
+External I_GetAlcPtr mocked null; complete object and logging path not tested.

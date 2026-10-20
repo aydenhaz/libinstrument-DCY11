@@ -1,0 +1,75 @@
+00017d14 push       {r4, r5, r6, r7, lr}                     
+00017d16 add        r7, sp, #0xc                             
+00017d18 push.w     {r8, sb, sl, fp}                         
+00017d1c sub        sp, #0x34                                
+00017d1e mov        r4, r0                                   
+00017d20 ldr        r0, [r0, #0x3c]                          
+00017d22 cmp        r0, r1                                   
+00017d24 bne        #0x17dda                                 
+00017d26 mov        r5, r3                                   
+00017d28 mov        r8, r2                                   
+00017d2a mov        r6, r1                                   
+00017d2c blx        #0x13c14                                 I_GetAlcPtr
+00017d30 cmp        r0, #0                                   
+00017d32 ldr        r0, [pc, #0xb0]                          literal 0x4398d
+00017d34 ldr        r1, [pc, #0xb0]                          literal 0x34c17
+00017d36 add        r0, pc                                   
+00017d38 add        r1, pc                                   
+00017d3a beq        #0x17d8a                                 
+00017d3c ldr.w      fp, [r7, #8]                             
+00017d40 mov        sb, r0                                   
+00017d42 mov        sl, r1                                   
+00017d44 blx        #0x13c14                                 I_GetAlcPtr
+00017d48 ldr        r1, [r0]                                 
+00017d4a mov.w      ip, #0x6a                                
+00017d4e mov.w      lr, #0                                   
+00017d52 mov.w      r2, #0x8000000                           
+00017d56 ldr        r3, [r1]                                 
+00017d58 ldr        r1, [r7, #0xc]                           
+00017d5a strd       r8, r5, [sp, #0x20]                      
+00017d5e str        r1, [sp, #0x2c]                          
+00017d60 ldr        r1, [r7, #0x10]                          
+00017d62 str.w      fp, [sp, #0x28]                          
+00017d66 str        r1, [sp, #0x30]                          
+00017d68 ldr        r1, [pc, #0x80]                          literal 0x34d00
+00017d6a ldr        r5, [pc, #0x84]                          literal 0x34c7b
+00017d6c add        r1, pc                                   
+00017d6e strd       r2, lr, [sp]                             
+00017d72 add        r5, pc                                   
+00017d74 strd       sl, sb, [sp, #8]                         
+00017d78 strd       r5, ip, [sp, #0x10]                      
+00017d7c movs       r2, #0                                   
+00017d7e strd       r1, r6, [sp, #0x18]                      
+00017d82 movs       r1, #8                                   
+00017d84 blx        r3                                       
+00017d86 mov        r1, sl                                   
+00017d88 mov        r0, sb                                   
+00017d8a cmp.w      r8, #1                                   
+00017d8e bne        #0x17dda                                 
+00017d90 mov        sb, r0                                   
+00017d92 ldr.w      r0, [r4, #0x9c]                          
+00017d96 cbz        r0, #0x17dda                             
+00017d98 ldrb.w     r0, [r4, #0x70]                          
+00017d9c cbz        r0, #0x17dda                             
+00017d9e mov.w      r8, #0                                   
+00017da2 mov        r5, r1                                   
+00017da4 str.w      r8, [r4, #0xa4]                          
+00017da8 blx        #0x13c14                                 I_GetAlcPtr
+00017dac cbz        r0, #0x17dda                             
+00017dae blx        #0x13c14                                 I_GetAlcPtr
+00017db2 ldr        r1, [r0]                                 
+00017db4 movs       r2, #0xff                                
+00017db6 mov.w      r6, #0x8000000                           
+00017dba ldr        r3, [r1]                                 
+00017dbc ldr        r1, [pc, #0x34]                          literal 0x34d1a
+00017dbe ldr        r4, [pc, #0x38]                          literal 0x34cdf
+00017dc0 add        r1, pc                                   
+00017dc2 strd       r6, r8, [sp]                             
+00017dc6 add        r4, pc                                   
+00017dc8 strd       r5, sb, [sp, #8]                         
+00017dcc strd       r4, r2, [sp, #0x10]                      
+00017dd0 movs       r2, #0                                   
+00017dd2 strd       r1, r8, [sp, #0x18]                      
+00017dd6 movs       r1, #8                                   
+00017dd8 blx        r3                                       
+00017dda add        sp, #0x34                                

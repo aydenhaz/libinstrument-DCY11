@@ -151,3 +151,9 @@ The build deliberately removes failed final outputs. It will not label an incomp
 - getContext and getHostFragmentActivity corrected to instance methods. Original getContext reads package+0x5c; the prior static call omitted the required receiver.
 - Original callers pass the same package to both methods. Activity return type remains unverified and cannot be treated as a package/context source.
 - Receiver-less incomplete flows explicitly remain unresolved; the Packet still lacks constructed host bases. ARM signature forwarding and 31-unit Linux musl compile-only checks pass. See analysis/PACKAGE_RECEIVER_ABI.md. No replacement SO.
+
+## Cover render-state logic
+
+- Extracted exact first-render predicate (including signed <= boundary) and gated surface-event counter reset from original CoverUtil instructions. Constructor evidence records threshold 2 and related default state.
+- Native ASan/UBSan and ARM Thumb compile-only checks pass. Unicorn differential execution against the SHA256-verified original binary passes all 424 cases with I_GetAlcPtr mocked null.
+- Helpers are not yet wired into Packet: full CoverUtil observer class, second interface and construction remain incomplete. See analysis/COVER_RENDER_STATE.md. No replacement SO.
