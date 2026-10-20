@@ -1,6 +1,6 @@
 #include <AbiTypes.h>
 #pragma once
-namespace NS_MultiScreenBase { struct tagSTExtScreen; }
+#include <ExternalScreenTypes.h>
 namespace bl {  }
 namespace hsl {
 class MultiScreenService {
@@ -11,8 +11,8 @@ public:
     void InitLock();
     bool IsHslStartupFinished();
     void InitLockFree();
-    int GetStartOpenScreenMode(int);
-    void SetStartOpenScreenMode(int, const NS_MultiScreenBase::tagSTExtScreen&);
+    tagSTExtScreen GetStartOpenScreenMode(int);
+    void SetStartOpenScreenMode(int, tagSTExtScreen);
     bl::MapEngineID GetMapEngineId(int);
     int SetNaviType(ENaviMode_, ECruiseMode_);
     int SetNaviType(int navigation,int cruise) {

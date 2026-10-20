@@ -115,8 +115,8 @@ GNS_FRAME::CGViewGroup *AutoCruiseFragment::onCreateView(GNS_FRAME::CGViewGroup 
 
 /* sub_35e2c (840B) AutoOpeningFragment::OnMapLevelChanged(uint32_t, bool) */
 void AutoOpeningFragment::OnMapLevelChanged(uint32_t level, bool animated) {
-    /* ALC pairs + MultiScreenStatusHmiToAl(tagSTExtScreen&) dispatch */
-    tagSTExtScreen st{};
+    /* Correct host payload type; state population remains incomplete. */
+    tagSTExtScreenControl st{};
     hsl::GOTHERProtocolHmiToAl::MultiScreenStatusHmiToAl(st);
     (void)level; (void)animated;
 }

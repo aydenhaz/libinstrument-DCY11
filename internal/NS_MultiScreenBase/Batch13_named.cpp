@@ -1,3 +1,4 @@
+#include <ExternalScreenTypes.h>
 #include <AbiTypes.h>
 /*
  * Batch 13 — named business functions, ranks 33-52 (20 functions)
@@ -20,7 +21,7 @@ namespace asl { class RefBase; }
 namespace bl {  }
 namespace NS_MultiScreenBase {
 
-struct tagSTExtScreen; struct tagSTStartCrossInfo;
+ struct tagSTStartCrossInfo;
 struct SurfaceConfig; struct tagMultiViewModeInfo;
 struct MapViewModeConfig {};
 

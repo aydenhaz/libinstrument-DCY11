@@ -1,9 +1,9 @@
 #pragma once
-namespace NS_MultiScreenBase { struct tagSTExtScreen; }
+#include <ExternalScreenTypes.h>
 namespace hsl {
 class GOTHERProtocolHmiToAl {
 public:
-    static void ExScreenRenderActionHmiToAl(NS_MultiScreenBase::tagSTExtScreen*);
-    static void MultiScreenStatusHmiToAl(const NS_MultiScreenBase::tagSTExtScreen&);
+    static void ExScreenRenderActionHmiToAl(tagSTExtScreen*);
+    static void MultiScreenStatusHmiToAl(tagSTExtScreenControl&);
 };
 }

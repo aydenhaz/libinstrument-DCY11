@@ -1,0 +1,84 @@
+_Z9setScreenPN3hsl18MultiScreenServiceE @ -- Begin function _Z9setScreenPN3hsl18MultiScreenServiceE
+	.p2align	2
+	.type	_Z9setScreenPN3hsl18MultiScreenServiceE,%function
+	.code	32
+_Z9setScreenPN3hsl18MultiScreenServiceE: @ @_Z9setScreenPN3hsl18MultiScreenServiceE
+.Lfunc_begin0:
+	.file	2 "/workspace/scratch/d8a6667a9410" "rebuild-v3/tests/external_screen_signature_probe.cpp"
+	.loc	2 3 0                           @ rebuild-v3/tests/external_screen_signature_probe.cpp:3:0
+	.fnstart
+	.cfi_sections .debug_frame
+	.cfi_startproc
+@ %bb.0:
+	@DEBUG_VALUE: setScreen:service <- $r0
+	.save	{r11, lr}
+	push	{r11, lr}
+	.cfi_def_cfa_offset 8
+	.cfi_offset lr, -4
+	.cfi_offset r11, -8
+	.setfp	r11, sp
+	mov	r11, sp
+	.cfi_def_cfa_register r11
+	.pad	#8
+	sub	sp, sp, #8
+.Ltmp0:
+	@DEBUG_VALUE: setScreen:screen <- [DW_OP_LLVM_fragment 0 32] 11
+	@DEBUG_VALUE: setScreen:screen <- [DW_OP_LLVM_fragment 32 32] 22
+	@DEBUG_VALUE: setScreen:screen <- [DW_OP_LLVM_fragment 64 32] 33
+	@DEBUG_VALUE: setScreen:screen <- [DW_OP_LLVM_fragment 96 32] 44
+	mov	r2, #33
+	mov	r1, #44
+.Ltmp1:
+	.loc	2 4 48 prologue_end             @ rebuild-v3/tests/external_screen_signature_probe.cpp:4:48
+	str	r2, [sp]
+	mov	r2, #11
+	str	r1, [sp, #4]
+	mov	r1, #5
+	mov	r3, #22
+	bl	_ZN3hsl18MultiScreenService22SetStartOpenScreenModeEi14tagSTExtScreen
+.Ltmp2:
+	@DEBUG_VALUE: setScreen:service <- [DW_OP_LLVM_entry_value 1] $r0
+	.loc	2 5 1 epilogue_begin            @ rebuild-v3/tests/external_screen_signature_probe.cpp:5:1
+	mov	sp, r11
+	pop	{r11, pc}
+.Ltmp3:
+.Lfunc_end0:
+	.size	_Z9setScreenPN3hsl18MultiScreenServiceE, .Lfunc_end0-_Z9setScreenPN3hsl18MultiScreenServiceE
+	.cfi_endproc
+	.file	3 "/workspace/scratch/d8a6667a9410" "rebuild-v3/stub_include/hsl/MultiScreenService.h"
+	.file	4 "/tmp/ipl-zig/ziglang/lib/libc/include/arm-linux-musl/bits" "alltypes.h"
+	.file	5 "/workspace/scratch/d8a6667a9410" "rebuild-v3/stub_include/ExternalScreenTypes.h"
+	.fnend
+                                        
+_Z9getScreenPN3hsl18MultiScreenServiceE @ -- Begin function _Z9getScreenPN3hsl18MultiScreenServiceE
+	.p2align	2
+	.type	_Z9getScreenPN3hsl18MultiScreenServiceE,%function
+	.code	32
+_Z9getScreenPN3hsl18MultiScreenServiceE: @ @_Z9getScreenPN3hsl18MultiScreenServiceE
+.Lfunc_begin1:
+	.loc	2 6 0                           @ rebuild-v3/tests/external_screen_signature_probe.cpp:6:0
+	.fnstart
+	.cfi_startproc
+@ %bb.0:
+	@DEBUG_VALUE: getScreen:service <- $r1
+	.save	{r11, lr}
+	push	{r11, lr}
+	.cfi_def_cfa_offset 8
+	.cfi_offset lr, -4
+	.cfi_offset r11, -8
+	.setfp	r11, sp
+	mov	r11, sp
+	.cfi_def_cfa_register r11
+.Ltmp4:
+	.loc	2 6 76 prologue_end             @ rebuild-v3/tests/external_screen_signature_probe.cpp:6:76
+	mov	r2, #5
+	.loc	2 6 76 epilogue_begin is_stmt 0 @ rebuild-v3/tests/external_screen_signature_probe.cpp:6:76
+	pop	{r11, lr}
+.Ltmp5:
+	b	_ZN3hsl18MultiScreenService22GetStartOpenScreenModeEi
+.Ltmp6:
+.Lfunc_end1:
+	.size	_Z9getScreenPN3hsl18MultiScreenServiceE, .Lfunc_end1-_Z9getScreenPN3hsl18MultiScreenServiceE
+	.cfi_endproc
+	.fnend
+                                        

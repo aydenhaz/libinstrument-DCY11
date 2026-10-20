@@ -112,3 +112,11 @@ The build deliberately removes failed final outputs. It will not label an incomp
 - SetNaviType now uses the actual global ENaviMode_/ECruiseMode_ types. Integer forwarding test passes and ARM probe matches the original exported host symbol.
 - Added --compile-only builder mode, with tests confirming it removes stale shared outputs and never links/publishes an SO.
 - Full Android strict link, object construction and behavioral validation remain outstanding. No replacement SO.
+
+## External-screen payload and hidden-return ABI
+
+- Replaced invented namespace-local packed 48-byte payload with global tagSTExtScreen (16 bytes) and separate tagSTExtScreenControl (36 bytes).
+- GetStartOpenScreenMode returns a 16-byte structure through hidden r0 storage, with this/key in r1/r2. Old int return declaration shifted arguments incorrectly. Setter takes the payload by value, not const reference.
+- Protocol pointer/reference types now match actual host symbols. Control payload uses the observed 0 + eight 99 sentinel initialization; state population still incomplete.
+- Host ASan/UBSan contract test and ARM calling-convention probes pass. Four probe symbols match original host definitions. All 31 units still pass ARM compile-only checks.
+- See analysis/EXTERNAL_SCREEN_ABI.md. No full Android link, runtime equivalence or replacement SO.

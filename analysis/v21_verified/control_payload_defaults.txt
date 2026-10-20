@@ -1,0 +1,11 @@
+000360a0 movs       r0, #0x63                                
+000360a2 str        r0, [sp, #0x64]                          
+000360a4 strd       r0, r0, [sp, #0x5c]                      
+000360a8 strd       r0, r0, [sp, #0x54]                      
+000360ac strd       r0, r0, [sp, #0x4c]                      
+000360b0 strd       r8, r0, [sp, #0x44]                      
+000360b4 ldr.w      r0, [sl, #0x34c]                         
+000360b8 bl         #0x296a0                                 
+000360bc add        r1, sp, #0x44                            
+000360be bl         #0x2be04                                 
+000360c2 vcvt.s32.f32 s0, s16                                  

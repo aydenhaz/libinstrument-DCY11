@@ -1,3 +1,4 @@
+#include <ExternalScreenTypes.h>
 #include <AbiTypes.h>
 #pragma once
 #include <cstdint>
@@ -5,7 +6,7 @@ namespace bl {  }
 namespace GPI { class Closure; }
 namespace NS_MultiScreenBase {
 
-struct tagSTExtScreen;
+
 struct SurfaceConfig;
 struct tagMultiViewModeInfo;
 

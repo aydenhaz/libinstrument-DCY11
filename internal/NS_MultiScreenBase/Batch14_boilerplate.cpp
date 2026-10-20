@@ -1,3 +1,4 @@
+#include <ExternalScreenTypes.h>
 /*
  * Batch 14 — GPI::Closure / CGAsyncObject boilerplate families
  *
@@ -67,7 +68,7 @@ INSTANTIATE_RUNONUI(19ae4)
 
 /* sub_2c7c4 (572B) AutoExscreenNotifyObserver::SwitchToUiStyleAndProjectionSize(...) */
 namespace NS_MultiScreenBase {
-struct tagSTExtScreen;
+
 bool AutoExscreenNotifyObserver_SwitchToUiStyleAndProjectionSize(const tagSTExtScreen &st) {
     /* "ExtScreenUiStyle:%d, _extScreenProjectionSize:%d" log */
     (void)st;

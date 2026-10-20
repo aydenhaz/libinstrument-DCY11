@@ -1,0 +1,35 @@
+0047d568 push       {r4, r5, r6, r7, lr}                     
+0047d56a add        r7, sp, #0xc                             
+0047d56c str        fp, [sp, #-0x4]!                         
+0047d570 sub        sp, #8                                   
+0047d572 mov        r4, r0                                   
+0047d574 add.w      r0, r1, #0x44                            
+0047d578 str        r2, [sp, #4]                             
+0047d57a mov        r5, r0                                   
+0047d57c mov        r3, r0                                   
+0047d57e ldr        r5, [r5]                                 
+0047d580 cbz        r5, #0x47d58e                            
+0047d582 ldr        r6, [r5, #0x10]                          
+0047d584 cmp        r6, r2                                   
+0047d586 ite        ge                                       
+0047d588 movge      r3, r5                                   
+0047d58a addlt      r5, #4                                   
+0047d58c b          #0x47d57e                                
+0047d58e cmp        r0, r3                                   
+0047d590 beq        #0x47d598                                
+0047d592 ldr        r0, [r3, #0x10]                          
+0047d594 cmp        r0, r2                                   
+0047d596 ble        #0x47d5a8                                
+0047d598 movs       r1, #0                                   
+0047d59a mov.w      r0, #-1                                  
+0047d59e strd       r1, r1, [r4]                             
+0047d5a2 strd       r1, r0, [r4, #8]                         
+0047d5a6 b          #0x47d5b8                                
+0047d5a8 add.w      r0, r1, #0x40                            
+0047d5ac add        r1, sp, #4                               
+0047d5ae bl         #0x47d4d0                                
+0047d5b2 ldm.w      r0, {r1, r2, r3, r5}                     
+0047d5b6 stm        r4!, {r1, r2, r3, r5}                    
+0047d5b8 add        sp, #8                                   
+0047d5ba ldr        fp, [sp], #4                             
+0047d5be pop        {r4, r5, r6, r7, pc}                     

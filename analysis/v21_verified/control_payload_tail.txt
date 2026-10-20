@@ -1,0 +1,17 @@
+0002bfe0 blx        #0x13c14                                 I_GetAlcPtr
+0002bfe4 ldr        r1, [r0]                                 
+0002bfe6 add.w      fp, sp, #0x20                            
+0002bfea ldrd       lr, r2, [r5]                             
+0002bfee ldrd       r4, r6, [r5, #8]                         
+0002bff2 ldr.w      ip, [r1]                                 
+0002bff6 ldrd       r3, r1, [r5, #0x10]                      
+0002bffa ldr.w      sb, [r5, #0x18]                          
+0002bffe ldr        r5, [r5, #0x20]                          
+0002c000 stm.w      fp!, {r2, r4, r6}                        
+0002c004 movw       r2, #0x34a                               
+0002c008 mov.w      r6, #0x8000000                           
+0002c00c strd       r3, r1, [sp, #0x2c]                      
+0002c010 add.w      r4, r8, #0x108                           
+0002c014 strd       sb, r5, [sp, #0x34]                      
+0002c018 movs       r5, #0                                   
+0002c01a ldr        r1, [pc, #0x4c]                          literal 0x271bd

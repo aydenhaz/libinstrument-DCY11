@@ -1,0 +1,22 @@
+[
+  {
+    "symbol": "_ZN3hsl18MultiScreenService22SetStartOpenScreenModeEi14tagSTExtScreen",
+    "emitted_reference": true,
+    "host_definition": true
+  },
+  {
+    "symbol": "_ZN3hsl18MultiScreenService22GetStartOpenScreenModeEi",
+    "emitted_reference": true,
+    "host_definition": true
+  },
+  {
+    "symbol": "_ZN3hsl21GOTHERProtocolHmiToAl27ExScreenRenderActionHmiToAlEP14tagSTExtScreen",
+    "emitted_reference": true,
+    "host_definition": true
+  },
+  {
+    "symbol": "_ZN3hsl21GOTHERProtocolHmiToAl24MultiScreenStatusHmiToAlER21tagSTExtScreenControl",
+    "emitted_reference": true,
+    "host_definition": true
+  }
+]

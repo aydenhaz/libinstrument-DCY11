@@ -1,0 +1,14 @@
+0047d4b0 push       {r2, r3, r4, r5, r7, lr}                 
+0047d4b2 add        r7, sp, #0x10                            
+0047d4b4 str        r1, [sp, #4]                             
+0047d4b6 adds       r0, #0x40                                
+0047d4b8 add        r1, sp, #4                               
+0047d4ba mov        r4, r3                                   
+0047d4bc mov        r5, r2                                   
+0047d4be bl         #0x47d4d0                                
+0047d4c2 ldr        r1, [r7, #0xc]                           
+0047d4c4 str        r1, [r0, #0xc]                           
+0047d4c6 ldr        r1, [r7, #8]                             
+0047d4c8 str        r1, [r0, #8]                             
+0047d4ca strd       r5, r4, [r0]                             
+0047d4ce pop        {r2, r3, r4, r5, r7, pc}                 

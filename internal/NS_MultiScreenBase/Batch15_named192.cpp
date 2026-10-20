@@ -1,3 +1,4 @@
+#include <ExternalScreenTypes.h>
 #include <AbiTypes.h>
 /*
  * Batch 15 — distinct named functions (192, excl. runOnUIThread family)
@@ -19,7 +20,7 @@ namespace bl {  }
 
 namespace GPI { struct CGCanvas; }
 namespace NS_MultiScreenBase {
-struct tagSTExtScreen; struct tagSTStartCrossInfo;
+ struct tagSTStartCrossInfo;
 struct SurfaceConfig; struct tagMultiViewModeInfo; struct MapViewModeConfig;
 
 // function bodies follow; each sub_XXXX address maps to a binary function
