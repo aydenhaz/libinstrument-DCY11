@@ -175,3 +175,9 @@ The build deliberately removes failed final outputs. It will not label an incomp
 - Corrected hsl::StringUtils::Format to UTF16 varargs returning owning dice::String16 via hidden ARM32 result storage. Added static config binding and helper writing widgetCoverR/G/B in original order.
 - Native sanitizer host-contract test passes; ARM signature probe and all 31 production compile-only units pass. Original callback full execution trace (external string/config services mocked) verifies format/write order, temporary cleanup and ignored events.
 - Helpers are not installed into a constructed CoverUtil/Packet. See analysis/COVER_RGB_CONFIGURATION.md. No Android strict link or replacement SO.
+
+## Composed capture-result helper and secondary thunk
+
+- Joined flag updates, valid-image arithmetic and RGB config writes into applyCoverCaptureResult. Internal result enum is not the host observer return type; malformed buffers are explicitly rejected by the helper.
+- Verified second observer table has destructor slots 0/1 and callback slot 2; all thunks adjust this by -4. Primary and secondary callback emulation produce identical full traces and flag/cleanup behavior.
+- Native sanitizer pipeline test and complete ARM Thumb helper compilation pass. Formal bl observer callback signature remains unresolved; helpers are not yet installed in Packet. See analysis/COVER_CAPTURE_PIPELINE.md. No replacement SO.

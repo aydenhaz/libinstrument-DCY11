@@ -42,11 +42,15 @@ data=bytes([0,127,255,31,0,127,255,42])
 mu.mem_write(ctx['data_address'],data)
 word(0x80,2);word(0x84,1);word(0x88,ctx['data_address']);word(0x8c,8)
 mu.mem_write(obj+0x7c,b'\x04');mu.mem_write(obj+0x98,b'\x01');mu.mem_write(obj+0xa0,b'\x00')
-assert invoke(0x17e9c,obj,23)==1
-assert trace==['format:0','format:127','format:255','widgetCoverR=0','widgetCoverG=127','widgetCoverB=255'],trace
-assert not strings,'all temporary String16 values must be destroyed'
-for event in (-1,22,24):
+expected=['format:0','format:127','format:255','widgetCoverR=0','widgetCoverG=127','widgetCoverB=255']
+for entry,receiver in ((0x17e9c,obj),(0x18068,obj+4)):
     trace.clear();mu.mem_write(obj+0x98,b'\x01');mu.mem_write(obj+0xa0,b'\x00')
-    assert invoke(0x17e9c,obj,event)==1
-    assert not trace and mu.mem_read(obj+0x98,1)==b'\x01' and mu.mem_read(obj+0xa0,1)==b'\x00'
-print('PASS: full original callback RGB config trace, temporary cleanup, and three ignored events; services mocked')
+    assert invoke(entry,receiver,23)==1
+    assert trace==expected,trace
+    assert not strings,'all temporary String16 values must be destroyed'
+    assert mu.mem_read(obj+0x98,1)==b'\x00' and mu.mem_read(obj+0xa0,1)==b'\x01'
+    for event in (-1,22,24):
+        trace.clear();mu.mem_write(obj+0x98,b'\x01');mu.mem_write(obj+0xa0,b'\x00')
+        assert invoke(entry,receiver,event)==1
+        assert not trace and mu.mem_read(obj+0x98,1)==b'\x01' and mu.mem_read(obj+0xa0,1)==b'\x00'
+print('PASS: primary and secondary (+4 this adjustment) original callback traces, temporary cleanup and ignored events; services mocked')

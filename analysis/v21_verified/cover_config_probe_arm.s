@@ -296,6 +296,164 @@ GCC_except_table1:
 	.p2align	2
 	.fnend
                                         @ -- End function
+	.text
+	.globl	_Z12applyCaptureiPKhjiiiRbS1_   @ -- Begin function _Z12applyCaptureiPKhjiiiRbS1_
+	.p2align	2
+	.type	_Z12applyCaptureiPKhjiiiRbS1_,%function
+	.code	32
+_Z12applyCaptureiPKhjiiiRbS1_:          @ @_Z12applyCaptureiPKhjiiiRbS1_
+	.fnstart
+@ %bb.0:
+	mov	r12, r0
+	mov	r0, #0
+	cmp	r12, #23
+	bxne	lr
+.LBB2_1:
+	.save	{r4, r5, r11, lr}
+	push	{r4, r5, r11, lr}
+	.setfp	r11, sp, #8
+	add	r11, sp, #8
+	.pad	#24
+	sub	sp, sp, #24
+	ldr	r0, [r11, #16]
+	mov	r5, #0
+	ldr	lr, [r11, #20]
+	ldr	r12, [r11, #8]
+	strb	r5, [r0]
+	mov	r0, #1
+	add	r5, sp, #12
+	strb	r0, [lr]
+	ldr	r4, [r11, #12]
+	mov	r0, r1
+	mov	r1, r2
+	mov	r2, r3
+	mov	r3, r12
+	strd	r4, r5, [sp]
+	bl	_ZN7IPL_ABI15coverRgbAverageEPKhjiiiRNS_15CoverRgbAverageE
+	mov	r1, r0
+	mov	r0, #2
+	cmp	r1, #0
+	beq	.LBB2_3
+@ %bb.2:
+	add	r0, sp, #12
+	bl	_ZN7IPL_ABI26writeCoverRgbConfigurationERKNS_15CoverRgbAverageE
+	mov	r0, #1
+.LBB2_3:
+	sub	sp, r11, #8
+	pop	{r4, r5, r11, lr}
+	bx	lr
+.Lfunc_end2:
+	.size	_Z12applyCaptureiPKhjiiiRbS1_, .Lfunc_end2-_Z12applyCaptureiPKhjiiiRbS1_
+	.fnend
+                                        @ -- End function
+	.section	.text._ZN7IPL_ABI15coverRgbAverageEPKhjiiiRNS_15CoverRgbAverageE,"axG",%progbits,_ZN7IPL_ABI15coverRgbAverageEPKhjiiiRNS_15CoverRgbAverageE,comdat
+	.weak	_ZN7IPL_ABI15coverRgbAverageEPKhjiiiRNS_15CoverRgbAverageE @ -- Begin function _ZN7IPL_ABI15coverRgbAverageEPKhjiiiRNS_15CoverRgbAverageE
+	.p2align	2
+	.type	_ZN7IPL_ABI15coverRgbAverageEPKhjiiiRNS_15CoverRgbAverageE,%function
+	.code	32
+_ZN7IPL_ABI15coverRgbAverageEPKhjiiiRNS_15CoverRgbAverageE: @ @_ZN7IPL_ABI15coverRgbAverageEPKhjiiiRNS_15CoverRgbAverageE
+	.fnstart
+@ %bb.0:
+	.save	{r4, r5, r6, r7, r8, r9, r10, r11, lr}
+	push	{r4, r5, r6, r7, r8, r9, r10, r11, lr}
+	.setfp	r11, sp, #28
+	add	r11, sp, #28
+	.pad	#12
+	sub	sp, sp, #12
+	mov	r4, r0
+	mov	r0, #0
+	cmp	r4, #0
+	beq	.LBB3_2
+@ %bb.1:
+	cmp	r2, #1
+	cmpge	r3, #1
+	bge	.LBB3_3
+.LBB3_2:
+	sub	sp, r11, #28
+	pop	{r4, r5, r6, r7, r8, r9, r10, r11, pc}
+.LBB3_3:
+	ldr	r6, [r11, #8]
+	sub	r7, r6, #5
+	cmn	r7, #2
+	blo	.LBB3_2
+@ %bb.4:
+	umull	r7, r5, r3, r2
+	mvn	r2, #-2147483648
+	subs	r2, r2, r7
+	rscs	r2, r5, #0
+	blo	.LBB3_2
+@ %bb.5:
+	umull	r2, r3, r7, r6
+	mov	r10, r1
+	mla	r3, r5, r6, r3
+	eor	r2, r2, r1
+	orrs	r2, r2, r3
+	bne	.LBB3_2
+@ %bb.6:
+	cmp	r10, #0
+	str	r7, [sp, #4]                    @ 4-byte Spill
+	beq	.LBB3_9
+@ %bb.7:
+	mov	r7, #0
+	mov	r8, #0
+	mov	r9, #0
+	str	r0, [sp, #8]                    @ 4-byte Spill
+.LBB3_8:                                @ =>This Inner Loop Header: Depth=1
+	mov	r5, r4
+	ldrb	r0, [r5, r8]!
+	bl	__aeabi_ui2f
+	mov	r1, r0
+	ldr	r0, [sp, #8]                    @ 4-byte Reload
+	bl	__aeabi_fadd
+	str	r0, [sp, #8]                    @ 4-byte Spill
+	ldrb	r0, [r5, #1]
+	ldrb	r5, [r5, #2]
+	bl	__aeabi_ui2f
+	mov	r1, r0
+	mov	r0, r7
+	bl	__aeabi_fadd
+	mov	r7, r0
+	mov	r0, r5
+	bl	__aeabi_ui2f
+	mov	r1, r0
+	mov	r0, r9
+	bl	__aeabi_fadd
+	add	r8, r8, r6
+	mov	r9, r0
+	cmp	r8, r10
+	blo	.LBB3_8
+	b	.LBB3_10
+.LBB3_9:
+	mov	r9, #0
+	mov	r7, #0
+	str	r0, [sp, #8]                    @ 4-byte Spill
+.LBB3_10:
+	ldr	r0, [sp, #4]                    @ 4-byte Reload
+	bl	__aeabi_ui2f
+	mov	r5, r0
+	mov	r0, r9
+	mov	r1, r5
+	bl	__aeabi_fdiv
+	bl	__aeabi_f2iz
+	ldr	r4, [r11, #12]
+	mov	r1, r5
+	str	r0, [r4, #8]
+	mov	r0, r7
+	bl	__aeabi_fdiv
+	bl	__aeabi_f2iz
+	str	r0, [r4, #4]
+	mov	r1, r5
+	ldr	r0, [sp, #8]                    @ 4-byte Reload
+	bl	__aeabi_fdiv
+	bl	__aeabi_f2iz
+	str	r0, [r4]
+	mov	r0, #1
+	sub	sp, r11, #28
+	pop	{r4, r5, r6, r7, r8, r9, r10, r11, pc}
+.Lfunc_end3:
+	.size	_ZN7IPL_ABI15coverRgbAverageEPKhjiiiRNS_15CoverRgbAverageE, .Lfunc_end3-_ZN7IPL_ABI15coverRgbAverageEPKhjiiiRNS_15CoverRgbAverageE
+	.fnend
+                                        @ -- End function
 	.type	.L.str,%object                  @ @.str
 	.section	.rodata.str2.2,"aMS",%progbits,2
 	.p2align	1, 0x0

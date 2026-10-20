@@ -1,4 +1,4 @@
-#include "../internal/abi/CoverRgbConfiguration.h"
+#include "../internal/abi/CoverCaptureResult.h"
 #include <cassert>
 #include <cstdarg>
 #include <string>
@@ -22,4 +22,14 @@ int main(){
     IPL_ABI::writeCoverRgbConfiguration({0,127,255});
     const std::vector<std::string> expected={"format:0","format:127","format:255","widgetCoverR=0","widgetCoverG=127","widgetCoverB=255"};
     assert(calls==expected);
+    calls.clear();
+    const uint8_t image[]={0,127,255,33,0,127,255,44};
+    bool requested=true,ready=false;
+    assert(IPL_ABI::applyCoverCaptureResult(22,image,8,2,1,4,requested,ready)==IPL_ABI::CoverCaptureApply::IgnoredEvent);
+    assert(calls.empty() && requested && !ready);
+    assert(IPL_ABI::applyCoverCaptureResult(23,image,8,2,1,4,requested,ready)==IPL_ABI::CoverCaptureApply::Applied);
+    assert(!requested && ready && calls==expected);
+    calls.clear();requested=true;ready=false;
+    assert(IPL_ABI::applyCoverCaptureResult(23,nullptr,8,2,1,4,requested,ready)==IPL_ABI::CoverCaptureApply::InvalidImage);
+    assert(calls.empty() && !requested && ready);
 }
