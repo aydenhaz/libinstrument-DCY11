@@ -1,0 +1,109 @@
+00018078 push       {r4, r5, r6, r7, lr}                     
+0001807a add        r7, sp, #0xc                             
+0001807c push.w     {r3, r4, r5, r6, r7, r8, sb, sl, fp}     
+00018080 mov        r4, r0                                   
+00018082 ldr        r0, [pc, #0x108]                         literal 0x56870
+00018084 add        r0, pc                                   
+00018086 ldr        r5, [r0]                                 
+00018088 ldr        r0, [r5]                                 
+0001808a str        r0, [sp, #0x10]                          
+0001808c ldr.w      r0, [r4, #0x9c]                          
+00018090 cmp        r0, #0                                   
+00018092 beq        #0x18176                                 
+00018094 ldrb.w     r0, [r4, #0x70]                          
+00018098 cmp        r0, #0                                   
+0001809a beq        #0x18176                                 
+0001809c add.w      r0, r4, #0x18                            
+000180a0 str        r5, [sp, #4]                             
+000180a2 movs       r5, #0                                   
+000180a4 movs       r1, #0                                   
+000180a6 strd       r5, r5, [r4, #0x88]                      
+000180aa bl         #0x181b0                                 
+000180ae strb.w     r5, [r4, #0xa0]                          
+000180b2 add.w      r8, sp, #0xc                             
+000180b6 strd       r5, r5, [r4, #0xc]                       
+000180ba strb.w     r5, [r4, #0x70]                          
+000180be mov        r0, r8                                   
+000180c0 ldr        r1, [pc, #0xcc]                          literal 0x442d6
+000180c2 ldr        r5, [pc, #0xd0]                          literal 0xffffe191
+000180c4 add        r1, pc                                   
+000180c6 add        r5, pc                                   
+000180c8 blx        r5                                       
+000180ca ldr        r1, [pc, #0xcc]                          literal 0x44382
+000180cc add.w      sl, sp, #8                               
+000180d0 add        r1, pc                                   
+000180d2 mov        r0, sl                                   
+000180d4 mov        sb, r1                                   
+000180d6 blx        r5                                       
+000180d8 ldr        r0, [pc, #0xc0]                          literal 0x56854
+000180da mov        r1, sl                                   
+000180dc add        r0, pc                                   
+000180de ldr.w      fp, [r0]                                 
+000180e2 mov        r0, r8                                   
+000180e4 blx        fp                                       
+000180e6 ldr        r6, [pc, #0xb8]                          literal 0xffffe1ad
+000180e8 mov        r0, sl                                   
+000180ea add        r6, pc                                   
+000180ec blx        r6                                       
+000180ee mov        r0, r8                                   
+000180f0 blx        r6                                       
+000180f2 ldr        r1, [pc, #0xb0]                          literal 0x442bc
+000180f4 add.w      r8, sp, #0xc                             
+000180f8 add        r1, pc                                   
+000180fa mov        r0, r8                                   
+000180fc blx        r5                                       
+000180fe add.w      sl, sp, #8                               
+00018102 mov        r1, sb                                   
+00018104 mov        r0, sl                                   
+00018106 blx        r5                                       
+00018108 mov        r0, r8                                   
+0001810a mov        r1, sl                                   
+0001810c blx        fp                                       
+0001810e mov        r0, sl                                   
+00018110 blx        r6                                       
+00018112 mov        r0, r8                                   
+00018114 blx        r6                                       
+00018116 ldr        r1, [pc, #0x90]                          literal 0x442b2
+00018118 add.w      r8, sp, #0xc                             
+0001811c add        r1, pc                                   
+0001811e mov        r0, r8                                   
+00018120 blx        r5                                       
+00018122 add.w      sl, sp, #8                               
+00018126 mov        r1, sb                                   
+00018128 mov        r0, sl                                   
+0001812a blx        r5                                       
+0001812c mov        r0, r8                                   
+0001812e mov        r1, sl                                   
+00018130 ldr        r5, [sp, #4]                             
+00018132 blx        fp                                       
+00018134 mov        r0, sl                                   
+00018136 blx        r6                                       
+00018138 mov        r0, r8                                   
+0001813a blx        r6                                       
+0001813c ldr.w      r0, [r4, #0x9c]                          
+00018140 cbz        r0, #0x18176                             
+00018142 blx        #0x13bfc                                 _ZN3hsl3HSL21GetSystemNotifyHandleEv
+00018146 mov        r1, r4                                   
+00018148 blx        #0x13e24                                 _ZN3hsl12SystemNotify28RemoveMapSurfaceViewObserverEPNS_22MapSurfaceViewObserverE
+0001814c ldrb       r0, [r4, #0x14]                          
+0001814e cbz        r0, #0x18162                             
+00018150 blx        #0x13e30                                 _ZN9GNS_FRAME13CGWorkStation14ownWorkStationEv
+00018154 movs       r1, #0                                   
+00018156 blx        #0x13e3c                                 _ZN9GNS_FRAME13CGWorkStation20setTopRenderCallbackEPFvPNS_8CGCanvasEE
+0001815a ldr        r0, [pc, #0x50]                          literal 0x56eac
+0001815c add        r0, pc                                   
+0001815e bl         #0x17c66                                 
+00018162 ldr.w      r0, [r4, #0x9c]                          
+00018166 cbz        r0, #0x18170                             
+00018168 blx        #0x13e48                                 _ZN9GNS_FRAME7CGImageD1Ev
+0001816c blx        #0x13ba8                                 _ZdlPv
+00018170 movs       r0, #0                                   
+00018172 str.w      r0, [r4, #0x9c]                          
+00018176 ldr        r0, [r5]                                 
+00018178 ldr        r1, [sp, #0x10]                          
+0001817a subs       r0, r0, r1                               
+0001817c ittt       eq                                       
+0001817e addeq      sp, #0x14                                
+00018180 popeq.w    {r8, sb, sl, fp}                         
+00018184 popeq      {r4, r5, r6, r7, pc}                     
+00018186 blx        #0x13a28                                 __stack_chk_fail

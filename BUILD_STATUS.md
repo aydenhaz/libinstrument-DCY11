@@ -233,3 +233,7 @@ The build deliberately removes failed final outputs. It will not label an incomp
 - Private std::function storage does not cross the host ABI; only a plain canvas callback is registered. Original GPI private allocation/refcount representation is not claimed equivalent.
 - Native sanitizer callback/pipeline tests and single by-value config-copy test pass; all 37 production units pass ARM Linux musl compile-only checking. See analysis/COVER_TOP_REGISTRATION.md.
 - Logging, Packet host-base/module construction and Android strict linking/device validation remain incomplete. No replacement SO.
+
+## Cover release checkpoint (2026-10-20)
+
+Recovered original 0x18078 cleanup effects as `CoverUtil::releaseConfiguredCover`: buffer reference reset, RGB defaults 127, observer removal, optional host/private callback clearing, image deletion. Preserves original guards and fields not reset by original. Source and evidence in analysis/COVER_RELEASE.md. Native ASan/UBSan integration passes; ARM Linux musl compile-only 38/38 passes. Original caller naming/Packet integration and Android NDK strict linking remain unfinished; no replacement .so is available.

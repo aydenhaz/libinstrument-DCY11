@@ -15,4 +15,9 @@ void CoverUtil::installTopRenderCallback() {
     topRender=[this](GNS_FRAME::CGCanvas* canvas){TopRenderCoverCallback(canvas);};
     GNS_FRAME::CGWorkStation::ownWorkStation()->setTopRenderCallback(&dispatchTopRender);
 }
+void CoverUtil::uninstallTopRenderCallback() {
+    GNS_FRAME::CGWorkStation::ownWorkStation()->setTopRenderCallback(nullptr);
+    topRender=nullptr;
+}
+
 }

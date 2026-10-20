@@ -23,6 +23,10 @@ CGString& CGString::operator=(const CGString&){return *this;}
 namespace NS_MultiScreenBase {
 struct CoverUtilTestAccess {
  static void prepare(CoverUtil& c,uint8_t* data){c.screenshot_.bytes=data;c.screenshot_.width=2;c.screenshot_.height=1;c.screenshot_.length=8;c.screenshot_.stride=4;c.image_=&c;c.enabled_=1;c.requested_=1;c.state_=0;c.counter_=9;c.surface_.scalar[7]=7;}
+ static void pending(CoverUtil& c){c.requested_=1;c.counter_=23;c.inhibitCapture_=1;}
+ static bool retained(const CoverUtil& c){return c.requested_==1&&c.counter_==23&&c.inhibitCapture_==1&&c.screenshot_.width==2&&c.screenshot_.height==2;}
+ static void disable(CoverUtil& c){c.enabled_=0;}
+ static void enable(CoverUtil& c){c.enabled_=1;}
  static bool defaults(const CoverUtil& c){return c.threshold_==2&&!c.image_&&!c.enabled_&&!c.requested_&&!c.state_&&!c.counter_&&c.unknown94_==1&&c.surface_.scalar[7]==0xffffffffu;}
  static bool requested(const CoverUtil& c){return c.requested_;}
  static bool ready(const CoverUtil& c){return c.state_;}
@@ -66,6 +70,7 @@ int hsl::StringUtils::FindStr(const dice::String16& value,const dice::String16& 
 }
 static bool imageCreated=true,filePresent=false,fileLoaded=false;
 static int registrations;
+static int removals;
 static bool requestTopDuringRegistration=false;
 static void (*registeredTop)(GNS_FRAME::CGCanvas*);
 static int topRegistrations;
@@ -90,6 +95,11 @@ void hsl::SystemNotify::AddMapSurfaceViewObserver(MapSurfaceViewObserver* observ
  if(requestTopDuringRegistration)NS_MultiScreenBase::CoverUtilTestAccess::optionalRender(*initializing);
  // Registration is permitted to synchronously notify the actual observer.
  observer->MapSurfaceViewStatusChange(0,static_cast<MAPSURFACE>(1),nullptr,0,0,0);
+}
+void hsl::SystemNotify::RemoveMapSurfaceViewObserver(MapSurfaceViewObserver* observer){
+ assert(observer==static_cast<MapSurfaceViewObserver*>(initializing));
+ assert(!NS_MultiScreenBase::CoverUtilTestAccess::enabled(*initializing));
+ calls.push_back("remove");++removals;
 }
 int main(){
     IPL_ABI::writeCoverRgbConfiguration({0,127,255});
@@ -157,5 +167,24 @@ int main(){
     initialized.setConfig(context,device,view,config);
     assert(stringCopies==copiesBefore+1);
     assert(registrations==4&&topRegistrations==2);
-    Access::cleanup(initialized);
+    calls.clear();
+    auto oldDispatch=registeredTop;
+    Access::pending(initialized);
+    initialized.releaseConfiguredCover();
+    assert((calls==std::vector<std::string>{"widgetCoverR=127","widgetCoverG=127","widgetCoverB=127","remove"}));
+    assert(removals==1&&topRegistrations==3&&!registeredTop);
+    assert(!Access::info(initialized).bytes&&!Access::info(initialized).length);
+    assert(!Access::enabled(initialized)&&!Access::ready(initialized));
+    assert(Access::context(initialized)==context&&Access::retained(initialized));
+    oldDispatch(nullptr); // Private target cleared as well as host callback.
+    calls.clear();initialized.releaseConfiguredCover();assert(calls.empty()&&removals==1);
+    NS_MultiScreenBase::CoverUtil empty;
+    empty.releaseConfiguredCover();assert(calls.empty());
+    requestTopDuringRegistration=false;initializing=&empty;
+    empty.setConfig(context,device,view,config);
+    calls.clear();Access::disable(empty);empty.releaseConfiguredCover();
+    assert(calls.empty()&&Access::info(empty).bytes==boundPixels&&removals==1);
+    Access::enable(empty);empty.releaseConfiguredCover();
+    assert(removals==2&&topRegistrations==3); // Optional top callback untouched.
+
 }

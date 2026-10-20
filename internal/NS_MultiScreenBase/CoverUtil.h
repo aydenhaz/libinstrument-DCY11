@@ -23,6 +23,8 @@ public:
     bool isUIFirstRenderFinish();
     void TopRenderCoverCallback(GNS_FRAME::CGCanvas*);
     void installTopRenderCallback();
+    // Recovered 0x18078 effects; original method name is not established.
+    void releaseConfiguredCover();
     // Explicit stages; resource-file loading must precede the buffer binding.
     bool recreateImageStorage();
     CoverResourceResult loadConfiguredResourceImage();
@@ -35,6 +37,7 @@ public:
 private:
     CoverInitializationResult initializeConfiguredCoverImpl(GNS_FRAME::CGContext*,bl::IMapDevice*,bl::IMapView*,const SurfaceConfig&);
     bool recreateImageStorage(const GPI::CGSize&);
+    void uninstallTopRenderCallback();
     friend struct CoverUtilTestAccess;
     GNS_FRAME::CGContext* context_=nullptr;
     void* unknown0c_=nullptr;
