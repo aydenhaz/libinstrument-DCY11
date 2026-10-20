@@ -139,3 +139,9 @@ The build deliberately removes failed final outputs. It will not label an incomp
 - inflater, findViewById and isTopFragment corrected from static declarations to instance methods, based on original host field accesses and argument forwarding. Their mangled names did not expose the prior receiver omission.
 - Receiver-less placeholder paths explicitly remain unresolved. The existing derived GuideGuangQiA106Fragment now forwards its actual this in Batch18, but object construction, IDs and widget behavior remain incomplete.
 - ARM probe confirms this/ID/parent register forwarding; all 31 source units pass ARM Linux musl compile-only checking. See analysis/FRAGMENT_VIEW_ABI.md. No Android strict link or replacement SO.
+
+## Current symbol inventory
+
+- Added an ELF object/host symbol inventory with global/weak classification, export visibility filtering and ELF identity checks. It is not a linker or ABI compatibility validator.
+- Fresh 31-object ARM Linux musl inventory: 177 names supplied by hosts, 2 supplied by rebuilt objects, 43 unprovided names. These include deliberate Unrecovered blockers and runtime/toolchain differences; this is not an updated Android link error count.
+- std::__1 vs host std::__ndk1 explains additional C++ boundary mismatches; do not alias incompatible standard-library ABIs. See analysis/CURRENT_SYMBOL_INVENTORY.md. No replacement SO.
