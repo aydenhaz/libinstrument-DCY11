@@ -1,0 +1,78 @@
+0047cc94 push       {r4, r5, r6, r7, lr}                     
+0047cc96 add        r7, sp, #0xc                             
+0047cc98 push.w     {r8, sb, sl, fp}                         
+0047cc9c sub        sp, #0x2c                                
+0047cc9e ldr        r0, [pc, #0xb8]                          literal 0x232750
+0047cca0 mov        r8, r2                                   
+0047cca2 mov        sb, r1                                   
+0047cca4 add        r0, pc                                   
+0047cca6 ldr.w      sl, [r0]                                 
+0047ccaa ldr.w      r0, [sl]                                 
+0047ccae str        r0, [sp, #0x28]                          
+0047ccb0 movs       r0, #0                                   
+0047ccb2 str        r0, [sp, #0x24]                          
+0047ccb4 blx        #0x126cb0                                _ZN3hsl3HSL15GetConfigHandleEv
+0047ccb8 cbz        r0, #0x47ccda                            
+0047ccba ldr        r1, [pc, #0xa0]                          literal 0xcc49c
+0047ccbc add        r4, sp, #0x20                            
+0047ccbe mov        r6, r0                                   
+0047ccc0 add        r1, pc                                   
+0047ccc2 mov        r0, r4                                   
+0047ccc4 bl         #0x13cca0                                
+0047ccc8 add        r2, sp, #0x24                            
+0047ccca mov        r0, r6                                   
+0047cccc mov        r1, r4                                   
+0047ccce movs       r3, #0                                   
+0047ccd0 blx        #0x126cbc                                _ZN3hsl6Config8GetInt32ERKN4dice8String16ERiNS0_14VALUE_STRATEGYE
+0047ccd4 mov        r0, r4                                   
+0047ccd6 bl         #0x13cd86                                
+0047ccda blx        #0x126914                                I_GetAlcPtr
+0047ccde cbz        r0, #0x47cd1e                            
+0047cce0 blx        #0x126914                                I_GetAlcPtr
+0047cce4 ldr        r1, [r0]                                 
+0047cce6 mov.w      ip, #0x63                                
+0047ccea mov.w      lr, #0                                   
+0047ccee mov.w      r3, #0x8000000                           
+0047ccf2 ldr.w      fp, [r1]                                 
+0047ccf6 ldr        r1, [sp, #0x24]                          
+0047ccf8 ldr        r2, [pc, #0x64]                          literal 0x18b802
+0047ccfa ldr        r6, [pc, #0x68]                          literal 0x18b7bc
+0047ccfc ldr        r4, [pc, #0x68]                          literal 0x19d930
+0047ccfe add        r2, pc                                   
+0047cd00 ldr        r5, [pc, #0x68]                          literal 0x198a6f
+0047cd02 add        r6, pc                                   
+0047cd04 add        r4, pc                                   
+0047cd06 strd       r3, lr, [sp]                             
+0047cd0a add        r5, pc                                   
+0047cd0c strd       r5, r4, [sp, #8]                         
+0047cd10 strd       r6, ip, [sp, #0x10]                      
+0047cd14 strd       r2, r1, [sp, #0x18]                      
+0047cd18 movs       r1, #8                                   
+0047cd1a movs       r2, #0                                   
+0047cd1c blx        fp                                       
+0047cd1e ldr        r0, [sp, #0x24]                          
+0047cd20 cmp        r0, #1                                   
+0047cd22 bne        #0x47cd3e                                
+0047cd24 cmp.w      sb, #0                                   
+0047cd28 bne        #0x47cd34                                
+0047cd2a movs       r0, #1                                   
+0047cd2c blx        #0x12f7ac                                _ZN3hsl17InstrumentManager21SetInstrumentViewTypeENS_14InstrumentTypeE
+0047cd30 mov.w      sb, #0                                   
+0047cd34 movs       r0, #0                                   
+0047cd36 mov        r1, sb                                   
+0047cd38 mov        r2, r8                                   
+0047cd3a blx        #0x12f2a8                                _ZN3hsl6VRImpl22FUNC_SetNaviTypeReqRcvEi10ENaviMode_12ECruiseMode_
+0047cd3e ldr.w      r0, [sl]                                 
+0047cd42 ldr        r1, [sp, #0x28]                          
+0047cd44 subs       r0, r0, r1                               
+0047cd46 itttt      eq                                       
+0047cd48 moveq      r0, #0                                   
+0047cd4a addeq      sp, #0x2c                                
+0047cd4c popeq.w    {r8, sb, sl, fp}                         
+0047cd50 popeq      {r4, r5, r6, r7, pc}                     
+0047cd52 blx        #0x1267dc                                __stack_chk_fail
+0047cd56 nop                                                 
+0047cd58 movs       r7, #0x50                                
+0047cd5a movs       r3, r4                                   
+0047cd5c stm        r4!, {r2, r3, r4, r7}                    
+0047cd5e movs       r4, r1                                   

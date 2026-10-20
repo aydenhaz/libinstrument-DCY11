@@ -10,6 +10,7 @@ compiler = parser.add_mutually_exclusive_group(required=True)
 compiler.add_argument('--ndk', type=Path)
 compiler.add_argument('--cxx', type=Path, help='explicit compiler executable or target-configured launcher; not necessarily NDK')
 parser.add_argument('--out', type=Path, default=Path('build/android-arm32'))
+parser.add_argument('--compile-only', action='store_true', help='check all translation units without linking or publishing a shared library')
 args = parser.parse_args()
 root = Path(__file__).resolve().parent
 out = args.out.resolve()
@@ -40,6 +41,9 @@ with (out / 'compile.log').open('w') as log:
 print(f'Compiled {len(objects)}/{len(sources)} source files')
 if failures:
     sys.exit(1)
+if args.compile_only:
+    print('Compile-only: no shared library linked or published')
+    sys.exit(0)
 host_names = ['Common', 'GAdaptor', 'GAdaptorInterface', 'GFrame', 'GPlatformInterface', 'GSQuirrel', 'Gbl', 'base_utils', 'hsl']
 hosts = [root / 'host_libs' / f'lib{name}.so' for name in host_names]
 missing = [str(p) for p in hosts if not p.is_file()]

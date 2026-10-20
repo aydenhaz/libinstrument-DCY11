@@ -28,13 +28,16 @@ if '-shared' in args and os.environ.get('FAIL_STAGE')=='link':sys.exit(1)
    out=root/'out';out.mkdir()
    final=out/'libInstrumentPannelLarge.so';pending=out/'libInstrumentPannelLarge.so.pending'
    hosts=['Common','GAdaptor','GAdaptorInterface','GFrame','GPlatformInterface','GSQuirrel','Gbl','base_utils','hsl']
-   def run(stage,direct=False):
+   def run(stage,direct=False,compile_only=False):
     final.write_bytes(b'stale');pending.write_bytes(b'stale partial')
     compiler_args=['--cxx',str(cxx)] if direct else ['--ndk',str(root/'ndk')]
-    return subprocess.run([sys.executable,str(root/'build_android.py'),*compiler_args,'--out',str(out)],env=dict(os.environ,FAIL_STAGE=stage),capture_output=True)
+    return subprocess.run([sys.executable,str(root/'build_android.py'),*compiler_args,*(['--compile-only'] if compile_only else []),'--out',str(out)],env=dict(os.environ,FAIL_STAGE=stage),capture_output=True)
    for stage in ['compile','hosts']:
     self.assertNotEqual(run(stage).returncode,0)
     self.assertFalse(final.exists());self.assertFalse(pending.exists())
+   result=run('compile-only',direct=True,compile_only=True);self.assertEqual(result.returncode,0,result.stderr)
+   self.assertFalse(final.exists());self.assertFalse(pending.exists())
+   self.assertIn(b'Compile-only',result.stdout)
    for name in hosts:(root/'host_libs'/('lib'+name+'.so')).touch()
    self.assertNotEqual(run('link').returncode,0)
    self.assertFalse(final.exists());self.assertFalse(pending.exists())

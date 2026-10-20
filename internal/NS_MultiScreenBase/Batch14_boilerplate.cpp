@@ -10,11 +10,9 @@
 #include <GFrame/CGAsyncObject.h>
 
 namespace GPI {
-class Closure {
-public:
-    virtual ~Closure() {}
-    virtual void invoke() = 0;
-};
+// Closure is declared once in GPIClosure.h. The removed local abstract
+// Closure::invoke class was incompatible with that declaration and the real
+// nested Callable/CallbackBase ABI. No fake invocation body replaces it.
 struct Cancelable {
     void *handle;
     bool valid() const { return handle != 0; }
@@ -44,9 +42,9 @@ public:
 
 /* ============================================================
  * Explicit instantiations (one per binary function).
- * The binary's 230-member zero-call family are the Closure
- * invoke() bodies + data accessors generated from these same
- * templates; they collapse to no-ops under stub GPI::Closure.
+ * These address records do not instantiate recovered callbacks. The actual
+ * nested Callable/CallbackBase ABI and task bodies still need reconstruction;
+ * the no-op stand-ins below are not a functional closure implementation.
  * ============================================================ */
 #define INSTANTIATE_RUNONUI(fn) \
     /* binary sub_##fn -> template expansion, body identical */

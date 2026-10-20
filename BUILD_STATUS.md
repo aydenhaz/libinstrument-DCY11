@@ -104,3 +104,11 @@ The build deliberately removes failed final outputs. It will not label an incomp
 - Incorrect Packet registration still uses an explicitly unresolved legacy overload; it needs the real Opening Fragment observer. No unsafe conversion hides the blocker.
 - RTTI tool now resolves defined-symbol ABS32/GLOB_DAT pointers as well as imported types. Original Packet/CoverUtil output is unchanged; a libGbl regression probe passes.
 - CoverUtil implementation, proper Packet construction, strict Android linking and device validation remain incomplete. No replacement SO.
+
+## Complete ARM32 compile-only check
+
+- Current source passes all 31 translation units with Zig 0.17.0 targeting arm-linux-musleabi. This is compile-only, not Android/NDK linking; see analysis/ARM32_COMPILE_ONLY.md and its log.
+- Removed Batch14's incompatible duplicate Closure class uncovered by the full check; callbacks remain incomplete.
+- SetNaviType now uses the actual global ENaviMode_/ECruiseMode_ types. Integer forwarding test passes and ARM probe matches the original exported host symbol.
+- Added --compile-only builder mode, with tests confirming it removes stale shared outputs and never links/publishes an SO.
+- Full Android strict link, object construction and behavioral validation remain outstanding. No replacement SO.
