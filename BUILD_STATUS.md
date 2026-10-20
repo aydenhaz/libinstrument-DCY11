@@ -96,3 +96,11 @@ The build deliberately removes failed final outputs. It will not label an incomp
 - Direct ELF RTTI parsing proves Packet inherits CGFragmentPackage at +0 and CoverUtil at +0xc0. CoverUtil inherits MapSurfaceViewObserver at +0 and IBLMapBusinessDataObserver at +4. Prior references to a script subobject were incorrect and have been corrected.
 - SurfaceConfig constructor restored nonzero defaults: +0x1c=-1, +0x20=8, +0x48=1. Former all-zero initialization was incomplete. Host ASan/UBSan tests check defaults and CGString construction/destruction; ARM compile-only checks pass.
 - CoverUtil and host construction still require actual vtables and callback implementations. No factory is enabled and no replacement SO is claimed.
+
+## Typed map observer interface
+
+- Recovered six-argument MapSurfaceViewStatusChange interface, callback slot 0 and destructor slots 1/2. Host ASan/UBSan dispatch/deletion test and ARM extent/vtable checks pass.
+- Typed Add/RemoveMapSurfaceViewObserver probes match actual host symbol names. The incomplete standalone removal helper now uses the correct pointer type.
+- Incorrect Packet registration still uses an explicitly unresolved legacy overload; it needs the real Opening Fragment observer. No unsafe conversion hides the blocker.
+- RTTI tool now resolves defined-symbol ABS32/GLOB_DAT pointers as well as imported types. Original Packet/CoverUtil output is unchanged; a libGbl regression probe passes.
+- CoverUtil implementation, proper Packet construction, strict Android linking and device validation remain incomplete. No replacement SO.

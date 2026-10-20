@@ -11,7 +11,9 @@ with open(a.elf,'rb') as f:
   if s['sh_type'] not in ('SHT_REL','SHT_RELA'):continue
   symbols=e.get_section(s['sh_link'])
   for r in s.iter_relocations():
-   if r['r_info_sym']:rels[r['r_offset']]=symbols.get_symbol(r['r_info_sym']).name
+   if r['r_info_sym']:
+    sym=symbols.get_symbol(r['r_info_sym'])
+    rels[r['r_offset']]=(r['r_info_type'],sym.name,sym['st_value'],sym['st_shndx']!='SHN_UNDEF')
  def read(addr,n):
   for seg in e.iter_segments():
    if seg['p_type']=='PT_LOAD' and seg['p_vaddr']<=addr and addr+n<=seg['p_vaddr']+seg['p_filesz']:
@@ -25,12 +27,26 @@ with open(a.elf,'rb') as f:
    if ch==b'\0':return value.decode('utf-8')
    value.extend(ch)
   raise ValueError('unterminated RTTI name')
- def ref(addr):
+ def pointer(addr):
   raw=word(addr)
-  if addr in rels:return {'imported_type':rels[addr]}
-  return {'address':hex(raw),'name':name(word(raw+4))}
+  if addr not in rels:return raw,None
+  typ,symbol,value,defined=rels[addr]
+  if not defined:return None,symbol
+  if typ==2:return (value+raw)&0xffffffff,None # R_ARM_ABS32: S+A
+  if typ==21:return value,None # R_ARM_GLOB_DAT: S
+  raise ValueError('unsupported symbolic pointer relocation '+str(typ))
+ def type_name(addr):
+  at,external=pointer(addr+4)
+  if external:raise ValueError('external RTTI name '+external)
+  if not at:raise ValueError('null RTTI name at '+hex(addr))
+  return name(at)
+ def ref(addr):
+  raw,external=pointer(addr)
+  if external:return {'imported_type':external}
+  if not raw:raise ValueError('null base RTTI at '+hex(addr))
+  return {'address':hex(raw),'name':type_name(raw)}
  def inspect(addr):
-  kind=rels.get(addr,'');result={'address':hex(addr),'name':name(word(addr+4)),'typeinfo_class':kind,'bases':[]}
+  kind=rels[addr][1] if addr in rels else '';result={'address':hex(addr),'name':type_name(addr),'typeinfo_class':kind,'bases':[]}
   if '__vmi_class_type_info' in kind:
    count=word(addr+12);result['flags']=word(addr+8)
    if count>128:raise ValueError('implausible base count')

@@ -2,6 +2,7 @@
 #include "NS_InstrumentPannelLarge/CGIPLPacket.h"
 #include "abi/VoidCallable.h"
 #include <hsl/UITaskThreadProxy.h>
+#include <hsl/MapSurfaceViewObserver.h>
 #if !defined(__arm__) || defined(__aarch64__)
 #error This probe must be compiled for ARM32
 #endif
@@ -11,3 +12,5 @@ static_assert(NS_InstrumentPannelLarge::CGIPLPacket::taskProxyOffset()==0x168,"p
 static_assert(sizeof(hmi::UITaskThreadProxy)==0xf0,"proxy extent including vptr");
 static_assert(sizeof(IPL_ABI::VoidCallable)==20,"callback extent");
 static_assert(sizeof(IPL_ABI::MemberInvoker<IPL_ABI::MemberCallableSizeProbe>)==24,"method extent");
+
+static_assert(sizeof(hsl::MapSurfaceViewObserver)==4,"map observer primary vptr");

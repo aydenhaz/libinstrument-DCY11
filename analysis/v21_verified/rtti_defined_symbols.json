@@ -1,0 +1,24 @@
+[
+  {
+    "address": "0xf1db18",
+    "name": "N2bl12OperatorDMapE",
+    "typeinfo_class": "_ZTVN10__cxxabiv121__vmi_class_type_infoE",
+    "bases": [
+      {
+        "address": "0xf1db58",
+        "name": "N2bl13IOperatorDMapE",
+        "offset_or_vtable_offset": 0,
+        "public": true,
+        "virtual": false
+      },
+      {
+        "address": "0xf15aac",
+        "name": "N4dice24IMapBusinessDataObserverE",
+        "offset_or_vtable_offset": 4,
+        "public": true,
+        "virtual": false
+      }
+    ],
+    "flags": 0
+  }
+]

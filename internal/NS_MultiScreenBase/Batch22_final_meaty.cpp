@@ -48,7 +48,7 @@ void ConfigBundleZeroInit(void *cfg_bundle) {
 
 /* sub_18078 (312B) — observer detach + render callback clear
    "windowId:%d, mode:%d, status:%d" */
-void DetachMapSurfaceObserver(void *self) {
+void DetachMapSurfaceObserver(hsl::MapSurfaceViewObserver *self) {
     /* "nable GNS_FRAME::CGAsyncObject::runOnUIThread ... eturn" log */
     hsl::HSL::GetSystemNotifyHandle()->RemoveMapSurfaceViewObserver(self);
     GNS_FRAME::CGWorkStation::ownWorkStation()->setTopRenderCallback(0);
