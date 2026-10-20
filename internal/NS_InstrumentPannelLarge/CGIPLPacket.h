@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include <cstddef>
 namespace bl { struct ObjectRuntimeInfo; }
 namespace GPI { class Closure; }
 namespace GNS_FRAME { class CGCanvas; class CGIntent; class CGFragment; class CGPackage; class CGContext; }
@@ -23,26 +24,34 @@ public:
     void onResume();                     // sub_3f080   692B  batch8
     void onDestroy();                    // sub_2f2f0   372B  batch8
 
+    // Internal rebuilt singleton; original factory writes it after construction.
+    static CGIPLPacket* activePacket() {return active_;}
+    static constexpr std::size_t taskProxyOffset();
     static void TopRenderCallback(GNS_FRAME::CGCanvas*);
 
 private:
-    // batch5 members
-    LargeScreenImpl *impl_;
-    void *third_;
-    hmi::UITaskThreadProxy *uiThreadProxy_ = nullptr;
-    GNS_FRAME::CGContext *ctx_;
-    bl::ObjectRuntimeInfo *blObject_;
-    GNS_FRAME::CGFragment *hostFragment_;
-    void *activity_;
-    int mode_;
-    // batch7 members
-    hsl::IActivateVerification *verify_;
-    uint16_t state_;        // +0x39a bit0 = verify ok
-    uint32_t state394_;     // 12-way switch state
-    uint64_t timerId_;
-    uint64_t lastElapsed_;
-    int screenType_;
-    char opaque_[32];
+    // UNVERIFIED legacy fields used by the incomplete onInitEnd. These are
+    // NOT a reconstructed host base or script object. Do not register factories
+    // or treat prefix size alone as object ABI compatibility.
+    struct UnverifiedLegacyFields {
+        LargeScreenImpl* impl_;
+        void* third_;
+        GNS_FRAME::CGContext* ctx_;
+        bl::ObjectRuntimeInfo* blObject_;
+        GNS_FRAME::CGFragment* hostFragment_;
+        void* activity_;
+        int mode_;
+    } legacy_;
+    unsigned char unconstructed_host_prefix_[0x168-sizeof(UnverifiedLegacyFields)];
+    hmi::UITaskThreadProxy* uiThreadProxy_ = nullptr;
+    static CGIPLPacket* active_;
 };
+inline constexpr std::size_t CGIPLPacket::taskProxyOffset() {
+    return offsetof(CGIPLPacket,uiThreadProxy_);
+}
+static_assert(CGIPLPacket::taskProxyOffset()==0x168,"V21 task proxy field offset");
+#if defined(__arm__) && !defined(__aarch64__)
+static_assert(sizeof(CGIPLPacket)==0x16c,"V21 Packet allocation extent only; host prefix unconstructed");
+#endif
 
 }

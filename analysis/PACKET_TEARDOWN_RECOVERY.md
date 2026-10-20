@@ -36,7 +36,8 @@ registration; both registration and that tail dispatch are still incomplete.
 
 The host boundary test verifies arguments and order of the applied operations.
 It checks lock/unlock order and map-service-null, facility-null, facility-present,
-and ALC-disabled branches. Proxy deletion, singleton clearing, Android calling
+and ALC-disabled branches. Virtual proxy deletion, pointer reset, and singleton clearing are now included
+in the host boundary test, including repeated cleanup. Android calling
 conventions and actual task cancellation remain unverified. A real constructed
 Packet host base is required: the present empty Packet constructor does not
 create the lock. onDestroy and the library remain incomplete.
@@ -51,3 +52,28 @@ The existing empty Packet constructor/destructor remain incomplete.
 The old ScriptThis implementation is removed: it was invented from 0x30dc8,
 which is actually GClassMethod equality. Its dynamic_cast compares member
 method objects; it does not recover a script Packet pointer.
+
+## Proxy and singleton checkpoint
+
+UITaskThreadProxy now declares the actual virtual destructor. The total opaque
+extent includes its vptr and remains 0xf0. The original Common library exports
+D0/D1 destructors and the primary/secondary vtables; instrument 0x2f40e..0x2f412
+calls deleting-destructor slot 1.
+
+Packet's proxy field now occupies +0x168. Unverified initialization fields are
+explicitly named legacy_ and the remaining prefix is reserved; no host base or
+script constructor is implied by padding. Retired bogus Batch7 fields were
+removed. onDestroy deletes the proxy after thread removal, zeros the pointer,
+then clears the rebuilt singleton. The constructor currently only publishes
+that singleton, and still does not construct a valid host Packet.
+
+The test uses a derived tracked proxy to verify virtual deletion and that the
+singleton remains visible during destruction, is cleared afterward, and a
+second cleanup does not delete again. ASan/UBSan pass with LeakSanitizer off.
+
+Compile-only ARM32 layout probe passes using Zig 0.17.0's ARM Linux musl target:
+Packet=0x16c, proxy offset=0x168, virtual proxy=0xf0, Callable=20, method object=24.
+This confirms ARM EABI layout, not Android libc++ or runtime behavior. The
+Android-target alternative compiler attempt compiled 14/31 units; the rest
+failed because its Android C system headers were absent. No strict link was
+attempted after those failures and no replacement SO was published.

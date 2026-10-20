@@ -27,6 +27,7 @@
 #include <hsl/SystemNotify.h>
 #include <hsl/MultiScreenService.h>
 #include <hsl/ThirdManager.h>
+#include <hsl/UITaskThreadProxy.h>
 #include <new>
 
 namespace NS_InstrumentPannelLarge {
@@ -109,11 +110,13 @@ void CGIPLPacket::onDestroy() {
     reinterpret_cast<GNS_FRAME::CGPackage*>(this)->closeAllFragments();
     /* V21 destroys engine-5 map facility before unregistering its UI thread. */
     IPL_ABI::destroyInstrumentMapFacility();
-    /* TODO: proxy deletion at +0x168 and singleton clearing.
-       Packet layout/factory are still incomplete. */
+    /* Proxy field is at verified +0x168; the preceding host prefix still
+       requires genuine base/script construction before Android use. */
     reinterpret_cast<hsl::ThirdManager*>(hsl::HSL::Get3rdHandle())
         ->RemoveUITaskThread(hsl::UI_TASK_DEVICE_INSTRUMENT);
-
+    delete uiThreadProxy_;
+    uiThreadProxy_=nullptr;
+    active_=nullptr;
 }
 
 } // namespace

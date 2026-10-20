@@ -82,3 +82,11 @@ The build deliberately removes failed final outputs. It will not label an incomp
 - Restored host Packet+8 lock/unlock around refresh task cancellation. The actual host base must have been constructed; the current empty constructor remains a blocker.
 - Shutdown contract test passes service-null, facility-null, facility-present and logging-disabled paths; it verifies cancellation occurs under the lock and fragment closure occurs after unlock.
 - Corrected onDestroy trace name to the original "CGIPLPacket destructor". Proxy deletion at +0x168 and singleton clearing are still missing. No Android build or replacement SO is claimed.
+
+## Proxy ownership and ARM layout checkpoint
+
+- Task proxy declares its real virtual destructor; storage includes the vptr within 0xf0 bytes.
+- Packet proxy field moved to verified +0x168; unused invented fields removed. Host/script prefix is explicitly unconstructed and legacy initialization still needs replacement.
+- onDestroy now deletes the proxy after thread removal, resets its pointer and clears the rebuilt singleton. Host ASan/UBSan tests check virtual destruction, singleton timing and repeated cleanup.
+- ARM EABI compile-only checks pass (Zig 0.17.0, arm-linux-musleabi): Packet 0x16c, proxy offset 0x168, task proxy 0xf0, Callable 20, method object 24. This is not Android ABI/runtime validation.
+- Alternate Android-target attempt compiled 14/31 units; missing Android C headers prevented the remaining compilation. No new strict-link result or replacement SO. build_android.py now supports an explicit --cxx launcher and records its path; --ndk remains supported.

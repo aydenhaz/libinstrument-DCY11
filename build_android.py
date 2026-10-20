@@ -6,7 +6,9 @@ import subprocess
 import sys
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--ndk', type=Path, required=True)
+compiler = parser.add_mutually_exclusive_group(required=True)
+compiler.add_argument('--ndk', type=Path)
+compiler.add_argument('--cxx', type=Path, help='explicit compiler executable or target-configured launcher; not necessarily NDK')
 parser.add_argument('--out', type=Path, default=Path('build/android-arm32'))
 args = parser.parse_args()
 root = Path(__file__).resolve().parent
@@ -17,7 +19,8 @@ output = out / 'libInstrumentPannelLarge.so'
 output.unlink(missing_ok=True)
 candidate = out / 'libInstrumentPannelLarge.so.pending'
 candidate.unlink(missing_ok=True)
-cxx = args.ndk.resolve() / 'toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang++'
+cxx = args.cxx.resolve() if args.cxx else args.ndk.resolve() / 'toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang++'
+(out / 'compiler.txt').write_text(str(cxx) + '\n')
 flags = ['-std=c++11', '-fPIC', '-mthumb']
 for directory in ['include', 'stub_include', 'internal', 'internal/NS_MultiScreenBase', 'internal/NS_InstrumentPannelLarge']:
     flags.append('-I' + str(root / directory))

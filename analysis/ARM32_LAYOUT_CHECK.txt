@@ -1,0 +1,26 @@
+Compiler: Zig 0.17.0
+Compile-only target: arm-linux-musleabi (ARM EABI; NOT Android runtime)
+Command:
+zig c++ -target arm-linux-musleabi -std=c++11 -fPIC -mthumb \
+  -Istub_include -Iinternal -c tests/arm32_layout_probe.cpp -o layout.o
+Result: exit 0
+file: ELF 32-bit LSB relocatable, ARM, EABI5 version 1 (SYSV)
+
+Assertions passed:
+  pointer size = 4
+  CGIPLPacket allocation extent = 0x16c
+  task proxy field offset = 0x168
+  UITaskThreadProxy extent including virtual pointer = 0xf0
+  VoidCallable extent = 20
+  MemberInvoker extent = 24
+  ARM member pointer = 8
+  MemberCallableWrapper extent = 16
+
+This does not validate host base construction, script state/vtables, RTTI
+identity, Android libc++ shared control blocks, linking or execution.
+
+Separate alternative arm-linux-androideabi full-source attempt:
+  14/31 translation units compiled.
+  Missing Android C headers caused the rest to fail (ldiv_t, memcpy, etc.).
+  Strict link not reached; no final SO.
+  This is not a new NDK r27c build or a source-regression count.

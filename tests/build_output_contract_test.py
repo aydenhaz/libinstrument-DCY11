@@ -28,9 +28,10 @@ if '-shared' in args and os.environ.get('FAIL_STAGE')=='link':sys.exit(1)
    out=root/'out';out.mkdir()
    final=out/'libInstrumentPannelLarge.so';pending=out/'libInstrumentPannelLarge.so.pending'
    hosts=['Common','GAdaptor','GAdaptorInterface','GFrame','GPlatformInterface','GSQuirrel','Gbl','base_utils','hsl']
-   def run(stage):
+   def run(stage,direct=False):
     final.write_bytes(b'stale');pending.write_bytes(b'stale partial')
-    return subprocess.run([sys.executable,str(root/'build_android.py'),'--ndk',str(root/'ndk'),'--out',str(out)],env=dict(os.environ,FAIL_STAGE=stage),capture_output=True)
+    compiler_args=['--cxx',str(cxx)] if direct else ['--ndk',str(root/'ndk')]
+    return subprocess.run([sys.executable,str(root/'build_android.py'),*compiler_args,'--out',str(out)],env=dict(os.environ,FAIL_STAGE=stage),capture_output=True)
    for stage in ['compile','hosts']:
     self.assertNotEqual(run(stage).returncode,0)
     self.assertFalse(final.exists());self.assertFalse(pending.exists())
@@ -38,5 +39,7 @@ if '-shared' in args and os.environ.get('FAIL_STAGE')=='link':sys.exit(1)
    self.assertNotEqual(run('link').returncode,0)
    self.assertFalse(final.exists());self.assertFalse(pending.exists())
    result=run('success');self.assertEqual(result.returncode,0,result.stderr)
+   self.assertEqual(final.read_bytes(),b'complete');self.assertFalse(pending.exists())
+   result=run('success',direct=True);self.assertEqual(result.returncode,0,result.stderr)
    self.assertEqual(final.read_bytes(),b'complete');self.assertFalse(pending.exists())
 if __name__=='__main__':unittest.main()

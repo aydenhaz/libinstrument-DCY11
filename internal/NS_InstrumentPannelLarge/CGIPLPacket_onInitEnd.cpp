@@ -79,19 +79,19 @@ void CGIPLPacket::onInitEnd() {
               /*tag*/ 0, this);
 
     /* 2. LargeScreenImpl + module registration (interface 0x9f = 159) */
-    impl_ = new LargeScreenImpl();
-    ExModuleManager::GetInstance()->ModuleReg((ModuleInterfaceId)0x9f, impl_);
+    legacy_.impl_ = new LargeScreenImpl();
+    ExModuleManager::GetInstance()->ModuleReg((ModuleInterfaceId)0x9f, legacy_.impl_);
 
     /* 3. UI task thread wiring */
-    third_ = hsl::HSL::Get3rdHandle();
-    if (third_) { // V21 0x2ec58..0x2ecc2.
+    legacy_.third_ = hsl::HSL::Get3rdHandle();
+    if (legacy_.third_) { // V21 0x2ec58..0x2ecc2.
         if (!uiThreadProxy_) {
             const int executor = GNS_FRAME::CGFrameSimulation::getRenderThreadExecutorId();
             uiThreadProxy_ = new hmi::UITaskThreadProxy(executor);
         }
         const int executor = GNS_FRAME::CGFrameSimulation::getRenderThreadExecutorId();
         const uint32_t render_thread = GNS_FRAME::CGFrameSimulation::getRenderThreadId();
-        static_cast<hsl::ThirdManager*>(third_)->SetUITaskThread(
+        static_cast<hsl::ThirdManager*>(legacy_.third_)->SetUITaskThread(
             hsl::UI_TASK_DEVICE_INSTRUMENT, executor,
             static_cast<long long>(render_thread), true, uiThreadProxy_->taskInterface());
         const int engine = hsl::CommonUtils::GetEngineIdByDeviceId(hsl::UI_TASK_DEVICE_INSTRUMENT);
@@ -101,8 +101,8 @@ void CGIPLPacket::onInitEnd() {
     /* 4. Fragment context + runtime info */
     GNS_FRAME::CGFrameSimulation::ownWorkStation();
     GNS_FRAME::CGPackage *pkg = GNS_FRAME::CGFrameSimulation::getFragmentActivity();
-    ctx_ = GNS_FRAME::CGPackage::getContext();
-    bl::ObjectRuntimeInfo *rti = new bl::ObjectRuntimeInfo(blObject_);
+    legacy_.ctx_ = GNS_FRAME::CGPackage::getContext();
+    bl::ObjectRuntimeInfo *rti = new bl::ObjectRuntimeInfo(legacy_.blObject_);
 
     /* 5. Init timer by id */
     hsl::TimerUtilsFuns::InsertTimerById(/*timer id*/ 0);
@@ -125,16 +125,16 @@ void CGIPLPacket::onInitEnd() {
     sn->AddInstrumentPannelObserver(this);
 
     /* 8. Host fragment wiring */
-    hostFragment_->setContext(ctx_);
-    hostFragment_->setType(this);
+    legacy_.hostFragment_->setContext(legacy_.ctx_);
+    legacy_.hostFragment_->setType(this);
     GNS_FRAME::CGIntent intent;
-    static_cast<GNS_FRAME::CGActivity*>(activity_)->setFragment(0, hostFragment_, intent);
+    static_cast<GNS_FRAME::CGActivity*>(legacy_.activity_)->setFragment(0, legacy_.hostFragment_, intent);
 
     /* 9. Publish screen mode */
     NS_MultiScreenBase::AutoConfigScreenMode::GetInstance()
-        ->SetCurrentScreenMode(0, /*mode*/ mode_);
+        ->SetCurrentScreenMode(0, /*mode*/ legacy_.mode_);
     static NS_MultiScreenBase::tagSTExtScreen st{};
-    hsl::MultiScreenService::GetInstance()->SetStartOpenScreenMode(mode_, st);
+    hsl::MultiScreenService::GetInstance()->SetStartOpenScreenMode(legacy_.mode_, st);
 
     /* 10. Crash-log breadcrumb */
     CGString s; s.Format(reinterpret_cast<const unsigned short*>(u"onInitEnd"));

@@ -12,6 +12,7 @@
 #include <hsl/HSL.h>
 #include <hsl/ThirdManager.h>
 #include <hsl/MapViewServiceImpl.h>
+#include <hsl/UITaskThreadProxy.h>
 #include "NS_InstrumentPannelLarge/CGIPLPacket.h"
 using NS_InstrumentPannelLarge::CGIPLPacket;
 static void* packet;
@@ -57,18 +58,41 @@ void CGAsyncObject::cancelScheduleTaskHelper(void* identity){
 }
 void CGPackage::closeAllFragments(){assert(static_cast<void*>(this)==packet&&!locked);events.push_back(5);}
 }
+namespace hmi {
+UITaskThreadProxy::UITaskThreadProxy(int){}
+UITaskThreadProxy::~UITaskThreadProxy(){events.push_back(14);}
+}
+struct TrackedProxy:hmi::UITaskThreadProxy {
+ TrackedProxy():hmi::UITaskThreadProxy(0){}
+ ~TrackedProxy() override {
+  assert(CGIPLPacket::activePacket()==packet);events.push_back(13);
+ }
+};
 namespace hsl {
 void* HSL::GetMapServiceHandle(){return mapService;}
 HSL* HSL::Get3rdHandle(){static HSL service;return &service;}
 void MapViewServiceImpl::DestroyDisplayFacility(MapViewBase* facility){assert(static_cast<void*>(this)==&serviceObject&&static_cast<void*>(facility)==&facilityObject);events.push_back(10);}
 void ThirdManager::RemoveUITaskThread(UI_TASK_DEVICE_ID device){assert(device==UI_TASK_DEVICE_INSTRUMENT);events.push_back(6);}
 }
+static void prepareLock(CGIPLPacket& object){
+ packet=&object;void** table=lockSlots;
+ std::memcpy(static_cast<unsigned char*>(packet)+8,&table,sizeof(table));
+}
 int main(){
- CGIPLPacket object;packet=&object;
- void** lockTable=lockSlots;std::memcpy(static_cast<unsigned char*>(packet)+8,&lockTable,sizeof(lockTable));
+ CGIPLPacket object;prepareLock(object);assert(CGIPLPacket::activePacket()==&object);
  serviceSlots[15]=reinterpret_cast<void*>(&lookup);facilitySlots[42]=reinterpret_cast<void*>(&deviceId);
  mapService=nullptr;object.onDestroy();assert((events==std::vector<int>{0,1,2,3,11,4,12,5,6}));
  events.clear();mapService=&serviceObject;hasFacility=false;object.onDestroy();assert((events==std::vector<int>{0,1,2,3,11,4,12,5,7,6}));
  events.clear();hasFacility=true;object.onDestroy();assert((events==std::vector<int>{0,1,2,3,11,4,12,5,7,8,9,10,6}));
  events.clear();traceEnabled=false;object.onDestroy();assert((events==std::vector<int>{1,2,3,11,4,12,5,7,8,10,6}));
+ assert(CGIPLPacket::activePacket()==nullptr);
+ CGIPLPacket withProxy;prepareLock(withProxy);assert(CGIPLPacket::activePacket()==&withProxy);
+ hmi::UITaskThreadProxy* proxy=new TrackedProxy;
+ auto* slot=static_cast<unsigned char*>(packet)+CGIPLPacket::taskProxyOffset();
+ std::memcpy(slot,&proxy,sizeof(proxy));
+ events.clear();traceEnabled=true;mapService=nullptr;withProxy.onDestroy();
+ assert((events==std::vector<int>{0,1,2,3,11,4,12,5,6,13,14}));
+ std::memcpy(&proxy,slot,sizeof(proxy));assert(!proxy&&CGIPLPacket::activePacket()==nullptr);
+ events.clear();withProxy.onDestroy();assert((events==std::vector<int>{0,1,2,3,11,4,12,5,6}));
+
 }
