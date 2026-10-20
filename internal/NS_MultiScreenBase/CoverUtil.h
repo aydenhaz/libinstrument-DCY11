@@ -10,7 +10,7 @@ namespace GNS_FRAME { class CGContext; }
 namespace GPI { struct CGSize; }
 namespace bl { class IMapDevice; class IMapView; }
 namespace NS_MultiScreenBase {
-enum class CoverInitializationResult { InvalidInputs, Disabled, ImageCreateFailed, ImageUnavailable, MapObserverRegistered, NeedsTopRenderRegistration };
+enum class CoverInitializationResult { InvalidInputs, Disabled, ImageCreateFailed, ImageUnavailable, MapObserverRegistered, TopRenderRegistered };
 enum class CoverResourceResult { MissingFile, Loaded, LoadFailed, NoImage };
 enum class CoverConfigurationStage { InvalidInputs, Disabled, NeedsImageSetup };
 struct CoverUtilTestAccess;
@@ -22,16 +22,18 @@ public:
     bool onBusinessDataObserver(int,const void*,void*) override;
     bool isUIFirstRenderFinish();
     void TopRenderCoverCallback(GNS_FRAME::CGCanvas*);
+    void installTopRenderCallback();
     // Explicit stages; resource-file loading must precede the buffer binding.
     bool recreateImageStorage();
     CoverResourceResult loadConfiguredResourceImage();
     bool bindScreenshotSource(const GPI::CGSize& finalSize);
+    void setConfig(GNS_FRAME::CGContext*,bl::IMapDevice*,bl::IMapView*,SurfaceConfig);
     CoverInitializationResult initializeConfiguredCover(GNS_FRAME::CGContext*,bl::IMapDevice*,bl::IMapView*,SurfaceConfig);
     // Explicit prefix operation, not the unrecovered complete setConfig method.
     CoverConfigurationStage prepareConfiguration(GNS_FRAME::CGContext*,bl::IMapDevice*,bl::IMapView*,const SurfaceConfig&);
-    // Complete setConfig, optional top-render registration and Packet integration
-    // remain unrecovered. This class is not enabled in the Packet factory.
+    // Logging and Packet integration remain unrecovered. This class is not enabled in the Packet factory.
 private:
+    CoverInitializationResult initializeConfiguredCoverImpl(GNS_FRAME::CGContext*,bl::IMapDevice*,bl::IMapView*,const SurfaceConfig&);
     bool recreateImageStorage(const GPI::CGSize&);
     friend struct CoverUtilTestAccess;
     GNS_FRAME::CGContext* context_=nullptr;

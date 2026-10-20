@@ -226,3 +226,10 @@ The build deliberately removes failed final outputs. It will not label an incomp
 - Explicit outcomes preserve failure/disabled suppression, optional-file continuation and incomplete optional top-render registration. Map observer sees complete buffer fields before synchronous notifications.
 - Native sanitizer integration test and original instruction regressions pass; all 36 production units pass ARM Linux musl compile-only checking. See analysis/COVER_INITIALIZATION_PIPELINE.md.
 - Full original setConfig/optional closure installation and Packet/module integration remain incomplete. No replacement SO.
+
+## Cover top-render registration and setConfig entry
+
+- Installed the optional top-render callback and added the original void setConfig entrypoint over shared initialization logic. Saves target before host registration and preserves replacement/immediate-dispatch behavior.
+- Private std::function storage does not cross the host ABI; only a plain canvas callback is registered. Original GPI private allocation/refcount representation is not claimed equivalent.
+- Native sanitizer callback/pipeline tests and single by-value config-copy test pass; all 37 production units pass ARM Linux musl compile-only checking. See analysis/COVER_TOP_REGISTRATION.md.
+- Logging, Packet host-base/module construction and Android strict linking/device validation remain incomplete. No replacement SO.

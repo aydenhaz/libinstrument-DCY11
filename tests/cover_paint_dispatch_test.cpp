@@ -1,6 +1,7 @@
 #include "../internal/NS_MultiScreenBase/CoverUtil.h"
 #include <hsl/StringUtils.h>
 #include <CAutoUtil.h>
+#include <GFrame/CGWorkStation.h>
 #include <cassert>
 #include <climits>
 #include <vector>
@@ -28,6 +29,12 @@ static Fake* expectedCanvas;
 static Fake* expectedDevice;
 static std::vector<int> calls;
 static bool mutateDraw=false,mutateCapture=false;
+static void (*registeredTop)(GNS_FRAME::CGCanvas*);
+static int topRegistrations;
+static bool invokeDuringRegistration=false;
+GNS_FRAME::CGWorkStation* GNS_FRAME::CGWorkStation::ownWorkStation(){static CGWorkStation station;return &station;}
+void GNS_FRAME::CGWorkStation::setTopRenderCallback(void(*callback)(CGCanvas*)){registeredTop=callback;++topRegistrations;
+ if(invokeDuringRegistration)callback(reinterpret_cast<CGCanvas*>(expectedCanvas));}
 static void draw(GNS_FRAME::CGCanvas* canvas,GNS_FRAME::CGImage* image,const GPI::CGRect& rect,GNS_FRAME::EGDrawImageType_ mode,void* style){
  assert(static_cast<void*>(canvas)==expectedCanvas&&static_cast<void*>(image)==current);
  const int expected[]={0,640,0,480};
@@ -62,4 +69,17 @@ int main(){
  mutateCapture=true;Access::prepare(c,&device,10);paint();assert(Access::count(c)==202);
  mutateCapture=false;mutateDraw=true;Access::prepare(c,&device,2);paint();
  assert((calls==std::vector<int>{1,2})&&Access::count(c)==11);
+    mutateDraw=false;mutateCapture=false;
+    Access::prepare(c,&device,2);c.installTopRenderCallback();
+    assert(topRegistrations==1&&registeredTop);calls.clear();
+    registeredTop(reinterpret_cast<GNS_FRAME::CGCanvas*>(&canvas));
+    assert((calls==std::vector<int>{1})&&Access::count(c)==3);
+    auto callbackEntry=registeredTop;
+    Cover replacement;Access::prepare(replacement,&device,2);current=&replacement;
+    invokeDuringRegistration=true;calls.clear();
+    replacement.installTopRenderCallback();assert(topRegistrations==2&&registeredTop==callbackEntry);
+    assert((calls==std::vector<int>{1})&&Access::count(replacement)==3);
+    invokeDuringRegistration=false;Access::count(replacement,2);
+    calls.clear();registeredTop(reinterpret_cast<GNS_FRAME::CGCanvas*>(&canvas));
+    assert((calls==std::vector<int>{1})&&Access::count(replacement)==3&&Access::count(c)==3);
 }

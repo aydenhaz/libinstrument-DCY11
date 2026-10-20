@@ -13,10 +13,12 @@
 #include <hsl/UtilPath.h>
 #include <hsl/FileUtils.h>
 #include <hsl/SystemNotify.h>
+#include <GFrame/CGWorkStation.h>
+static int stringCopies;
 CGString::CGString() {}
 CGString::CGString(const unsigned short*) {}
 CGString::~CGString() {}
-CGString::CGString(const CGString&) {}
+CGString::CGString(const CGString&) {++stringCopies;}
 CGString& CGString::operator=(const CGString&){return *this;}
 namespace NS_MultiScreenBase {
 struct CoverUtilTestAccess {
@@ -65,6 +67,10 @@ int hsl::StringUtils::FindStr(const dice::String16& value,const dice::String16& 
 static bool imageCreated=true,filePresent=false,fileLoaded=false;
 static int registrations;
 static bool requestTopDuringRegistration=false;
+static void (*registeredTop)(GNS_FRAME::CGCanvas*);
+static int topRegistrations;
+GNS_FRAME::CGWorkStation* GNS_FRAME::CGWorkStation::ownWorkStation(){static CGWorkStation station;return &station;}
+void GNS_FRAME::CGWorkStation::setTopRenderCallback(void(*callback)(CGCanvas*)){registeredTop=callback;++topRegistrations;}
 static unsigned char boundPixels[16];
 static NS_MultiScreenBase::CoverUtil* initializing;
 GNS_FRAME::CGImage::CGImage(){}
@@ -146,6 +152,10 @@ int main(){
     filePresent=true;fileLoaded=false;
     assert(initialized.initializeConfiguredCover(context,device,view,config)==Init::MapObserverRegistered&&registrations==2);
     requestTopDuringRegistration=true;
-    assert(initialized.initializeConfiguredCover(context,device,view,config)==Init::NeedsTopRenderRegistration&&registrations==3);
+    assert(initialized.initializeConfiguredCover(context,device,view,config)==Init::TopRenderRegistered&&registrations==3&&topRegistrations==1&&registeredTop);
+    const int copiesBefore=stringCopies;
+    initialized.setConfig(context,device,view,config);
+    assert(stringCopies==copiesBefore+1);
+    assert(registrations==4&&topRegistrations==2);
     Access::cleanup(initialized);
 }

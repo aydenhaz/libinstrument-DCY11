@@ -1,0 +1,79 @@
+00018a08 push       {r4, r5, r6, r7, lr}                     
+00018a0a add        r7, sp, #0xc                             
+00018a0c push.w     {r0, r1, r2, r3, r4, r5, r6, r7, r8, sb, fp} 
+00018a10 mov        r8, r0                                   
+00018a12 blx        #0x13c14                                 I_GetAlcPtr
+00018a16 ldr        r4, [pc, #0xc0]                          literal 0x341eb
+00018a18 ldr        r6, [pc, #0xc0]                          literal 0x42ca5
+00018a1a ldr        r5, [pc, #0xc4]                          literal 0x33f2f
+00018a1c add        r4, pc                                   
+00018a1e add        r6, pc                                   
+00018a20 add        r5, pc                                   
+00018a22 cbz        r0, #0x18a50                             
+00018a24 blx        #0x13c14                                 I_GetAlcPtr
+00018a28 ldr        r1, [r0]                                 
+00018a2a mov.w      ip, #0x20                                
+00018a2e mov.w      lr, #0                                   
+00018a32 mov.w      r2, #0x8000000                           
+00018a36 ldr        r3, [r1]                                 
+00018a38 ldr        r1, [pc, #0xa8]                          literal 0x341f5
+00018a3a strd       r2, lr, [sp]                             
+00018a3e movs       r2, #0                                   
+00018a40 add        r1, pc                                   
+00018a42 strd       r5, r6, [sp, #8]                         
+00018a46 strd       r4, ip, [sp, #0x10]                      
+00018a4a str        r1, [sp, #0x18]                          
+00018a4c movs       r1, #8                                   
+00018a4e blx        r3                                       
+00018a50 mov        sb, r5                                   
+00018a52 ldr        r5, [pc, #0x94]                          literal 0x565b4
+00018a54 add        r5, pc                                   
+00018a56 mov        r0, r5                                   
+00018a58 bl         #0x17c50                                 
+00018a5c cbz        r0, #0x18a66                             
+00018a5e add        sp, #0x20                                
+00018a60 pop.w      {r8, sb, fp}                             
+00018a64 pop        {r4, r5, r6, r7, pc}                     
+00018a66 blx        #0x13c14                                 I_GetAlcPtr
+00018a6a cbz        r0, #0x18a9a                             
+00018a6c blx        #0x13c14                                 I_GetAlcPtr
+00018a70 ldr        r1, [r0]                                 
+00018a72 mov.w      ip, #0x24                                
+00018a76 mov.w      lr, #0                                   
+00018a7a mov.w      r2, #0x8000000                           
+00018a7e ldr        r3, [r1]                                 
+00018a80 ldr        r1, [pc, #0x68]                          literal 0x341bf
+00018a82 strd       r2, lr, [sp]                             
+00018a86 movs       r2, #0                                   
+00018a88 add        r1, pc                                   
+00018a8a strd       sb, r6, [sp, #8]                         
+00018a8e strd       r4, ip, [sp, #0x10]                      
+00018a92 strd       r1, r8, [sp, #0x18]                      
+00018a96 movs       r1, #8                                   
+00018a98 blx        r3                                       
+00018a9a ldrd       r0, r1, [r5, #4]                         
+00018a9e cbz        r0, #0x18aaa                             
+00018aa0 cbz        r1, #0x18ab0                             
+00018aa2 adds       r1, r5, #4                               
+00018aa4 ldr        r2, [r0, #8]                             
+00018aa6 mov        r0, r1                                   
+00018aa8 b          #0x18ab4                                 
+00018aaa cbz        r1, #0x18ac2                             
+00018aac mov        r0, r8                                   
+00018aae b          #0x18acc                                 
+00018ab0 ldr        r1, [r0]                                 
+00018ab2 ldr        r2, [r1, #8]                             
+00018ab4 mov        r1, r8                                   
+00018ab6 add        sp, #0x20                                
+00018ab8 pop.w      {r8, sb, fp}                             
+00018abc pop.w      {r4, r5, r6, r7, lr}                     
+00018ac0 bx         r2                                       
+00018ac2 ldr        r0, [r5, #0xc]                           
+00018ac4 cmp        r0, #0                                   
+00018ac6 beq        #0x18a5e                                 
+00018ac8 ldr        r1, [r0]                                 
+00018aca ldr        r1, [r1, #0x14]                          
+00018acc add        sp, #0x20                                
+00018ace pop.w      {r8, sb, fp}                             
+00018ad2 pop.w      {r4, r5, r6, r7, lr}                     
+00018ad6 bx         r1                                       

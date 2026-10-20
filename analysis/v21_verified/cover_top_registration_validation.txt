@@ -1,0 +1,6 @@
+Concrete top-render registration/dispatch native ASan/UBSan: PASS
+Concrete setConfig/initialization native ASan/UBSan: PASS
+One by-value SurfaceConfig copy into setConfig: PASS
+All 37 production ARM Linux musl compile-only units: PASS
+Original private callback storage 0x6f00c..0x6f020: no dynsym exports
+Host services mocked; no Android strict link or device runtime validation.
