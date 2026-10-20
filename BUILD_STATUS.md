@@ -29,7 +29,7 @@ The reference was extracted locally and read; the earlier download blockage no l
 ## Remaining functional and ABI blockers
 
 - Original .init_array has FIVE entries: 0x14cf9,0x14d31,0x14d69,0x14d9d,0x14e41. module_init.cpp is still a nonfunctional four-entry skeleton; factory registration has not been recovered. Adding a fifth empty constructor would not fix this.
-- CORRECTION: +0x36c (map surface), +0x37c (network), +0x430 (instrument) belong to the newly allocated 0x440-byte Opening Fragment (r6), NOT CGIPLPacket. Packet factory allocates 0x16c bytes, initializes script binding at +0xc0 and proxy pointer at +0x168. Current classes still do not reproduce these layouts.
+- CORRECTION: +0x36c (map surface), +0x37c (network), +0x430 (instrument) belong to the newly allocated 0x440-byte Opening Fragment (r6), NOT CGIPLPacket. Packet factory allocates 0x16c bytes, initializes CoverUtil base at +0xc0 and proxy pointer at +0x168. Current classes still do not reproduce these layouts.
 - The primary Packet vtable has 16 slots. Imported getExecutorId/getUIThreadId entries have zero raw words plus R_ARM_ABS32 relocations; the previous scanner stopped there incorrectly. See analysis/v21_verified/packet_vtable.txt.
 - Four wrongly owned Batch7 methods are withdrawn, with source retained in analysis/rejected. This is removal of invalid implementations, not restoration of their real behaviors.
 - Closure callbacks, ownership and missing internal business methods remain incomplete. No empty callbacks, unresolved-symbol allowances or duplicate-symbol allowances were added to make a misleading SO.
@@ -90,3 +90,9 @@ The build deliberately removes failed final outputs. It will not label an incomp
 - onDestroy now deletes the proxy after thread removal, resets its pointer and clears the rebuilt singleton. Host ASan/UBSan tests check virtual destruction, singleton timing and repeated cleanup.
 - ARM EABI compile-only checks pass (Zig 0.17.0, arm-linux-musleabi): Packet 0x16c, proxy offset 0x168, task proxy 0xf0, Callable 20, method object 24. This is not Android ABI/runtime validation.
 - Alternate Android-target attempt compiled 14/31 units; missing Android C headers prevented the remaining compilation. No new strict-link result or replacement SO. build_android.py now supports an explicit --cxx launcher and records its path; --ndk remains supported.
+
+## RTTI correction and SurfaceConfig defaults
+
+- Direct ELF RTTI parsing proves Packet inherits CGFragmentPackage at +0 and CoverUtil at +0xc0. CoverUtil inherits MapSurfaceViewObserver at +0 and IBLMapBusinessDataObserver at +4. Prior references to a script subobject were incorrect and have been corrected.
+- SurfaceConfig constructor restored nonzero defaults: +0x1c=-1, +0x20=8, +0x48=1. Former all-zero initialization was incomplete. Host ASan/UBSan tests check defaults and CGString construction/destruction; ARM compile-only checks pass.
+- CoverUtil and host construction still require actual vtables and callback implementations. No factory is enabled and no replacement SO is claimed.

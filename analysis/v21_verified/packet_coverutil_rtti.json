@@ -1,0 +1,45 @@
+[
+  {
+    "address": "0x6b87c",
+    "name": "N24NS_InstrumentPannelLarge11CGIPLPacketE",
+    "typeinfo_class": "_ZTVN10__cxxabiv121__vmi_class_type_infoE",
+    "bases": [
+      {
+        "imported_type": "_ZTIN9GNS_FRAME17CGFragmentPackageE",
+        "offset_or_vtable_offset": 0,
+        "public": true,
+        "virtual": false
+      },
+      {
+        "address": "0x69144",
+        "name": "N18NS_MultiScreenBase9CoverUtilE",
+        "offset_or_vtable_offset": 192,
+        "public": true,
+        "virtual": false
+      }
+    ],
+    "flags": 0
+  },
+  {
+    "address": "0x69144",
+    "name": "N18NS_MultiScreenBase9CoverUtilE",
+    "typeinfo_class": "_ZTVN10__cxxabiv121__vmi_class_type_infoE",
+    "bases": [
+      {
+        "address": "0x69164",
+        "name": "N3hsl22MapSurfaceViewObserverE",
+        "offset_or_vtable_offset": 0,
+        "public": true,
+        "virtual": false
+      },
+      {
+        "address": "0x6916c",
+        "name": "N2bl26IBLMapBusinessDataObserverE",
+        "offset_or_vtable_offset": 4,
+        "public": true,
+        "virtual": false
+      }
+    ],
+    "flags": 0
+  }
+]

@@ -16,7 +16,7 @@ Assertions passed:
   ARM member pointer = 8
   MemberCallableWrapper extent = 16
 
-This does not validate host base construction, script state/vtables, RTTI
+This does not validate host base construction, CoverUtil state/vtables, RTTI
 identity, Android libc++ shared control blocks, linking or execution.
 
 Separate alternative arm-linux-androideabi full-source attempt:

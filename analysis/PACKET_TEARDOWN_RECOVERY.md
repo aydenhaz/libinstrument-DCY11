@@ -45,8 +45,8 @@ create the lock. onDestroy and the library remain incomplete.
 ## Construction/destruction findings
 
 Packet factory allocates 0x16c bytes, constructs CGFragmentPackage, initializes
-script state at +0xc0 (0xa8 bytes) and proxy at +0x168. Destructor 0x2eb58
-destroys script state at +0xc0 then branches through a host destructor veneer.
+CoverUtil state at +0xc0 (0xa8 bytes) and proxy at +0x168. Destructor 0x2eb58
+destroys CoverUtil state at +0xc0 then branches through a host destructor veneer.
 The existing empty Packet constructor/destructor remain incomplete.
 
 The old ScriptThis implementation is removed: it was invented from 0x30dc8,
@@ -62,7 +62,7 @@ calls deleting-destructor slot 1.
 
 Packet's proxy field now occupies +0x168. Unverified initialization fields are
 explicitly named legacy_ and the remaining prefix is reserved; no host base or
-script constructor is implied by padding. Retired bogus Batch7 fields were
+CoverUtil constructor is implied by padding. Retired bogus Batch7 fields were
 removed. onDestroy deletes the proxy after thread removal, zeros the pointer,
 then clears the rebuilt singleton. The constructor currently only publishes
 that singleton, and still does not construct a valid host Packet.

@@ -12,6 +12,8 @@ struct SurfaceConfig {
     CGString name;
     uint32_t tail[4]{};
     uint8_t final_flag{};
+    // V21 constructor 0x16302: +0x1c=-1, +0x20=8, +0x48=1.
+    SurfaceConfig() {scalar[7]=0xffffffffu;scalar[8]=8;tail[3]=1;}
 };
 static_assert(sizeof(SurfaceConfig) == 0x50, "V21 ARM32 SurfaceConfig");
 static_assert(offsetof(SurfaceConfig, name) == 0x24, "SurfaceConfig string offset");

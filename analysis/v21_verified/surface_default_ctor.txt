@@ -1,0 +1,20 @@
+00016302 push       {r4, r5, r7, lr}                         
+00016304 add        r7, sp, #8                               
+00016306 movs       r5, #0                                   
+00016308 mov        r4, r0                                   
+0001630a strh       r5, [r0, #8]                             
+0001630c mov.w      r1, #-1                                  
+00016310 strd       r5, r5, [r0]                             
+00016314 strd       r5, r5, [r0, #0xc]                       
+00016318 str        r5, [r0, #0x14]                          
+0001631a strb       r5, [r0, #0x18]                          
+0001631c movs       r0, #8                                   
+0001631e strd       r1, r0, [r4, #0x1c]                      
+00016322 add.w      r0, r4, #0x24                            
+00016326 blx        #0x13d04                                 _ZN8CGStringC1Ev
+0001632a movs       r0, #1                                   
+0001632c strb.w     r5, [r4, #0x4c]                          
+00016330 strd       r5, r5, [r4, #0x3c]                      
+00016334 strd       r5, r0, [r4, #0x44]                      
+00016338 mov        r0, r4                                   
+0001633a pop        {r4, r5, r7, pc}                         

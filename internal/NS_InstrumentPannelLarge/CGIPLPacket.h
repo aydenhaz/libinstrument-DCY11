@@ -31,7 +31,7 @@ public:
 
 private:
     // UNVERIFIED legacy fields used by the incomplete onInitEnd. These are
-    // NOT a reconstructed host base or script object. Do not register factories
+    // NOT a reconstructed host base or CoverUtil base. Do not register factories
     // or treat prefix size alone as object ABI compatibility.
     struct UnverifiedLegacyFields {
         LargeScreenImpl* impl_;
