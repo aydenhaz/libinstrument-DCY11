@@ -1,0 +1,30 @@
+001e6ebc push       {r2, r3, r4, r5, r7, lr}                 
+001e6ebe add        r7, sp, #0x10                            
+001e6ec0 mov        r1, r0                                   
+001e6ec2 ldr        r0, [pc, #0x38]                          literal 0x202888
+001e6ec4 add        r0, pc                                   
+001e6ec6 ldr        r5, [r0]                                 
+001e6ec8 ldr        r0, [r5]                                 
+001e6eca str        r0, [sp, #4]                             
+001e6ecc mov        r0, sp                                   
+001e6ece blx        #0x10fe40                                _ZNK9GNS_FRAME7CGImage18getSafeImageBufferEv
+001e6ed2 ldr        r0, [sp]                                 
+001e6ed4 cbz        r0, #0x1e6ee0                            
+001e6ed6 ldr        r1, [r0, #0x10]                          
+001e6ed8 ldr        r0, [r0, #0x24]                          
+001e6eda mul        r4, r1, r0                               
+001e6ede b          #0x1e6ee2                                
+001e6ee0 movs       r4, #0                                   
+001e6ee2 mov        r0, sp                                   
+001e6ee4 bl         #0x12ed68                                
+001e6ee8 ldr        r0, [r5]                                 
+001e6eea ldr        r1, [sp, #4]                             
+001e6eec subs       r0, r0, r1                               
+001e6eee ittt       eq                                       
+001e6ef0 moveq      r0, r4                                   
+001e6ef2 addeq      sp, #8                                   
+001e6ef4 popeq      {r4, r5, r7, pc}                         
+001e6ef6 blx        #0x10c2b8                                __stack_chk_fail
+001e6efa nop                                                 
+001e6efc cmp        r0, #0x88                                
+001e6efe movs       r0, r4                                   

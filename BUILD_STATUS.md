@@ -207,3 +207,9 @@ The build deliberately removes failed final outputs. It will not label an incomp
 - Preserves defaults "0"/"2", substring matching, ignored GetString status and unclamped atoi result. Context field is now pointer-typed without shifting ARM32 layout.
 - Native sanitizer policy/base-interface tests and ARM32 layout probe pass; all 33 production units pass ARM Linux musl compile-only checking. See analysis/COVER_CONFIG_POLICY.md.
 - Image/file/buffer setup, registration, optional closure and Packet integration remain incomplete. No replacement SO.
+
+## Cover image allocation and screenshot-source stages
+
+- Added explicit recreateImageStorage and bindScreenshotSource stages: destroy old image, create verified-size replacement, clean up failure, then separately bind final dimensions and host data length/pointer in original order.
+- Native sanitizer lifecycle contract passes, including replacement failure and subsequent recreation. All 34 production units pass ARM Linux musl compile-only checking; getter references match host exports.
+- File loading, registration, complete setConfig and Packet integration remain incomplete. See analysis/COVER_IMAGE_STAGES.md. No replacement SO.

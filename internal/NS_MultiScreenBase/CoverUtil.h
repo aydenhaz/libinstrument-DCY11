@@ -7,6 +7,7 @@
 #include <cstddef>
 #include "../abi/CoverGraphics.h"
 namespace GNS_FRAME { class CGContext; }
+namespace GPI { struct CGSize; }
 namespace bl { class IMapDevice; class IMapView; }
 namespace NS_MultiScreenBase {
 enum class CoverConfigurationStage { InvalidInputs, Disabled, NeedsImageSetup };
@@ -19,6 +20,9 @@ public:
     bool onBusinessDataObserver(int,const void*,void*) override;
     bool isUIFirstRenderFinish();
     void TopRenderCoverCallback(GNS_FRAME::CGCanvas*);
+    // Explicit stages; resource-file loading must precede the buffer binding.
+    bool recreateImageStorage();
+    bool bindScreenshotSource(const GPI::CGSize& finalSize);
     // Explicit prefix operation, not the unrecovered complete setConfig method.
     CoverConfigurationStage prepareConfiguration(GNS_FRAME::CGContext*,bl::IMapDevice*,bl::IMapView*,SurfaceConfig);
     // Configuration and full module integration are still

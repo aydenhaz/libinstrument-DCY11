@@ -20,6 +20,8 @@ public:
     CGImage();
     ~CGImage();
     bool create(const GPI::CGSize&, EGColorType, unsigned char*);
+    uint32_t getDataLen() const;
+    unsigned char* getData() const;
 };
 static_assert(sizeof(CGImage)==0x1e0,"V21 CGImage allocation extent");
 }
