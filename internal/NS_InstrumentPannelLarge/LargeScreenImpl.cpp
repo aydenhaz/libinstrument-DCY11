@@ -74,7 +74,8 @@ void LargeScreenImpl::OnChangeScreenMode(int32_t screenType, int32_t mode, const
 
     GNS_FRAME::CGPackage *pkg = GNS_FRAME::CGPackage::getHostFragmentActivity();
     GNS_FRAME::CGContext *ctx = GNS_FRAME::CGPackage::getContext();
-    I_Assert(ctx != 0 ? "ctx" : "ctx null");
+    /* Original assertion requires the real Fragment state, not a context string.
+       Restore it together with the correct receiver/layout. */
 
     /* branch per (screenType, mode): see analysis log strings
        "largeScreenMode:%d,curLargeScreenMode:%d" @0x5365c, "largeScreenMode same as before" @0x53685 */

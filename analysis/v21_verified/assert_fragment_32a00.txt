@@ -1,0 +1,45 @@
+00032a00 push       {r4, r5, r6, r7, lr}                     
+00032a02 add        r7, sp, #0xc                             
+00032a04 str        fp, [sp, #-0x4]!                         
+00032a08 sub        sp, #8                                   
+00032a0a mov        r4, r0                                   
+00032a0c ldrb.w     r0, [r0, #0x214]                         
+00032a10 mov        r5, r1                                   
+00032a12 clz        r0, r0                                   
+00032a16 lsrs       r0, r0, #5                               
+00032a18 blx        #0x13c80                                 I_Assert
+00032a1c ldr        r3, [pc, #0x5c]                          literal 0xffffc0db
+00032a1e mov        r0, r4                                   
+00032a20 mov        r1, r5                                   
+00032a22 movs       r2, #2                                   
+00032a24 add        r3, pc                                   
+00032a26 blx        #0x13c8c                                 _ZN9GNS_FRAME10CGFragment21tryStartExistFragmentERKNS_8CGIntentEiPv
+00032a2a cbz        r0, #0x32a3e                             
+00032a2c ldr        r1, [pc, #0x50]                          literal 0x3bee6
+00032a2e movs       r3, #0                                   
+00032a30 ldr        r2, [pc, #0x50]                          literal 0x36ee8
+00032a32 add        r1, pc                                   
+00032a34 add        r2, pc                                   
+00032a36 ldr        r1, [r1]                                 
+00032a38 blx        #0x13bd8                                 __dynamic_cast
+00032a3c cbnz       r0, #0x32a72                             
+00032a3e ldr.w      r0, [r4, #0x258]                         
+00032a42 cbz        r0, #0x32a72                             
+00032a44 movw       r0, #0x8b8                               
+00032a48 blx        #0x13b84                                 _Znwj
+00032a4c movs       r1, #1                                   
+00032a4e mov        r6, r0                                   
+00032a50 bl         #0x198d0                                 
+00032a54 ldr.w      r1, [r4, #0x258]                         
+00032a58 blx        #0x13cbc                                 _ZN9GNS_FRAME10CGFragment10setContextEPNS_9CGContextE
+00032a5c mov.w      r0, #-1                                  
+00032a60 mov        r1, r6                                   
+00032a62 strd       r5, r0, [sp]                             
+00032a66 mov        r0, r4                                   
+00032a68 ldr        r2, [pc, #0x1c]                          literal 0xffffc093
+00032a6a movs       r3, #2                                   
+00032a6c add        r2, pc                                   
+00032a6e blx        #0x13cc8                                 _ZN9GNS_FRAME10CGFragment16startNewFragmentEPS0_PviRKNS_8CGIntentEi
+00032a72 add        sp, #8                                   
+00032a74 ldr        fp, [sp], #4                             
+00032a78 pop        {r4, r5, r6, r7, pc}                     

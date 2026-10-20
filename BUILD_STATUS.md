@@ -127,3 +127,9 @@ The build deliberately removes failed final outputs. It will not label an incomp
 - Old incomplete callers now reference explicitly undefined Unrecovered methods; their invented parent/child allocation paths cannot silently bind to real host functions. Correct derived factories and receiver recovery remain outstanding.
 - Native ASan/UBSan argument/receiver contract test and ARM symbol probe pass. All 31 source units pass ARM Linux musl compile-only checking. See analysis/FRAGMENT_START_ABI.md.
 - No Android strict-link success, working navigation or replacement SO is claimed.
+
+## Assertion ABI recovery
+
+- I_Assert now takes a Boolean condition; original calls pass a normalized Fragment state, not a string address. Removed two fabricated context-string calls from incomplete flows rather than substituting an unverified condition.
+- Original release host implementation is BX LR; no rebuilt no-op implementation was introduced. Original Fragment state and receiver recovery remain necessary. See analysis/ASSERT_ABI.md.
+- ARM signature probe confirms literal true/false use r0=1/0 and import I_Assert. All 31 production units still pass ARM Linux musl compile-only checking; no replacement SO.

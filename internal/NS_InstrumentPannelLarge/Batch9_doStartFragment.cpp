@@ -57,7 +57,8 @@ int32_t LargeScreenImpl::doStartFragment(int index,
 
     GNS_FRAME::CGPackage *pkg = GNS_FRAME::CGFrameSimulation::getFragmentActivity();
     GNS_FRAME::CGContext *ctx = GNS_FRAME::CGPackage::getContext();
-    I_Assert("ctx");
+    /* Original assertion requires the real Fragment state, not a context string.
+       Restore it together with the correct receiver/layout. */
 
     /* read custom type from intent extra "largeInstrumentCustomType" */
     int customType = 0;
