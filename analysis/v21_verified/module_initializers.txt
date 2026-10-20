@@ -1,0 +1,174 @@
+00014cf8 push       {r4, r5, r7, lr}                         
+00014cfa add        r7, sp, #8                               
+00014cfc ldr        r5, [pc, #0x24]                          literal 0x5b052
+00014cfe add        r5, pc                                   
+00014d00 ldrb       r0, [r5, #4]                             
+00014d02 lsls       r0, r0, #0x1f                            
+00014d04 bne        #0x14d22                                 
+00014d06 add.w      r4, r5, #0x50                            
+00014d0a mov        r0, r4                                   
+00014d0c bl         #0x14f10                                 
+00014d10 ldr        r0, [pc, #0x14]                          literal 0x217
+00014d12 mov        r1, r4                                   
+00014d14 ldr        r2, [pc, #0x14]                          literal 0x53ecc
+00014d16 add        r0, pc                                   
+00014d18 add        r2, pc                                   
+00014d1a blx        #0x139ec                                 __cxa_atexit
+00014d1e movs       r0, #1                                   
+00014d20 str        r0, [r5, #4]                             
+00014d22 pop        {r4, r5, r7, pc}                         
+00014d24 add        sp, #0x148                               
+00014d26 movs       r5, r0                                   
+00014d28 lsls       r7, r2, #8                               
+00014d2a movs       r0, r0                                   
+00014d2c subs       r6, #0xcc                                
+00014d2e movs       r5, r0                                   
+00014d30 push       {r4, r5, r7, lr}                         
+00014d32 add        r7, sp, #8                               
+00014d34 ldr        r5, [pc, #0x24]                          literal 0x5b01a
+00014d36 add        r5, pc                                   
+00014d38 ldrb       r0, [r5]                                 
+00014d3a lsls       r0, r0, #0x1f                            
+00014d3c bne        #0x14d5a                                 
+00014d3e add.w      r4, r5, #0x60                            
+00014d42 mov        r0, r4                                   
+00014d44 bl         #0x14f10                                 
+00014d48 ldr        r0, [pc, #0x14]                          literal 0x1df
+00014d4a mov        r1, r4                                   
+00014d4c ldr        r2, [pc, #0x14]                          literal 0x53e94
+00014d4e add        r0, pc                                   
+00014d50 add        r2, pc                                   
+00014d52 blx        #0x139ec                                 __cxa_atexit
+00014d56 movs       r0, #1                                   
+00014d58 str        r0, [r5]                                 
+00014d5a pop        {r4, r5, r7, pc}                         
+00014d5c add        sp, #0x68                                
+00014d5e movs       r5, r0                                   
+00014d60 lsls       r7, r3, #7                               
+00014d62 movs       r0, r0                                   
+00014d64 subs       r6, #0x94                                
+00014d66 movs       r5, r0                                   
+00014d68 ldr        r1, [pc, #0x20]                          literal 0x5a29a
+00014d6a movs       r0, #0                                   
+00014d6c ldr        r2, [pc, #0x20]                          literal 0x54378
+00014d6e add        r1, pc                                   
+00014d70 add        r2, pc                                   
+00014d72 adds       r2, #8                                   
+00014d74 strd       r2, r0, [r1]                             
+00014d78 strd       r0, r0, [r1, #8]                         
+00014d7c str        r0, [r1, #0x10]                          
+00014d7e ldr        r0, [pc, #0x14]                          literal 0x2e7b
+00014d80 ldr        r2, [pc, #0x14]                          literal 0x53e60
+00014d82 add        r0, pc                                   
+00014d84 add        r2, pc                                   
+00014d86 b.w        #0x455c4                                 
+00014d8a nop                                                 
+00014d8c adr        r2, #0x268                               
+00014d8e movs       r5, r0                                   
+00014d90 muls       r0, r7, r0                               
+00014d92 movs       r5, r0                                   
+00014d94 cmp        r6, #0x7b                                
+00014d96 movs       r0, r0                                   
+00014d98 subs       r6, #0x60                                
+00014d9a movs       r5, r0                                   
+00014d9c push       {r4, r5, r6, r7, lr}                     
+00014d9e add        r7, sp, #0xc                             
+00014da0 push.w     {r8, sb, sl}                             
+00014da4 ldr        r0, [pc, #0x74]                          literal 0x5afa8
+00014da6 ldr        r1, [pc, #0x78]                          literal 0x4786c
+00014da8 add        r0, pc                                   
+00014daa ldr        r4, [pc, #0x78]                          literal 0x14a5
+00014dac add.w      r6, r0, #0x20                            
+00014db0 add        r1, pc                                   
+00014db2 add        r4, pc                                   
+00014db4 mov        sb, r0                                   
+00014db6 mov        r0, r6                                   
+00014db8 blx        r4                                       
+00014dba ldr        r0, [pc, #0x6c]                          literal 0x59b60
+00014dbc mov        r8, r4                                   
+00014dbe ldr        r5, [pc, #0x6c]                          literal 0x6c2f
+00014dc0 mov        r1, r6                                   
+00014dc2 ldr        r4, [pc, #0x6c]                          literal 0x53e18
+00014dc4 add        r0, pc                                   
+00014dc6 add        r5, pc                                   
+00014dc8 ldr.w      sl, [r0]                                 
+00014dcc add        r4, pc                                   
+00014dce mov        r0, r5                                   
+00014dd0 mov        r2, r4                                   
+00014dd2 blx        sl                                       
+00014dd4 ldr        r1, [pc, #0x5c]                          literal 0x47864
+00014dd6 add.w      r6, sb, #0x24                            
+00014dda add        r1, pc                                   
+00014ddc mov        r0, r6                                   
+00014dde blx        r8                                       
+00014de0 mov        r0, r5                                   
+00014de2 mov        r1, r6                                   
+00014de4 mov        r2, r4                                   
+00014de6 blx        sl                                       
+00014de8 ldr        r1, [pc, #0x4c]                          literal 0x47876
+00014dea add.w      r6, sb, #0x28                            
+00014dee add        r1, pc                                   
+00014df0 mov        r0, r6                                   
+00014df2 blx        r8                                       
+00014df4 mov        r0, r5                                   
+00014df6 mov        r1, r6                                   
+00014df8 mov        r2, r4                                   
+00014dfa blx        sl                                       
+00014dfc ldr        r1, [pc, #0x3c]                          literal 0x47886
+00014dfe add.w      r6, sb, #0x2c                            
+00014e02 add        r1, pc                                   
+00014e04 mov        r0, r6                                   
+00014e06 blx        r8                                       
+00014e08 mov        r0, r5                                   
+00014e0a mov        r1, r6                                   
+00014e0c mov        r2, r4                                   
+00014e0e mov        r3, sl                                   
+00014e10 pop.w      {r8, sb, sl}                             
+00014e14 pop.w      {r4, r5, r6, r7, lr}                     
+00014e18 bx         r3                                       
+00014e1a nop                                                 
+00014e1c add        r7, sp, #0x2a0                           
+00014e1e movs       r5, r0                                   
+00014e20 ldrb       r4, [r5, #1]                             
+00014e22 movs       r4, r0                                   
+00014e24 asrs       r5, r4, #0x12                            
+00014e26 movs       r0, r0                                   
+00014e28 ldr        r3, [sp, #0x180]                         
+00014e2a movs       r5, r0                                   
+00014e2c ldr        r7, [r5, #0x40]                          
+00014e2e movs       r0, r0                                   
+00014e30 subs       r6, #0x18                                
+00014e32 movs       r5, r0                                   
+00014e34 ldrb       r4, [r4, #1]                             
+00014e36 movs       r4, r0                                   
+00014e38 ldrb       r6, [r6, #1]                             
+00014e3a movs       r4, r0                                   
+00014e3c ldrb       r6, [r0, #2]                             
+00014e3e movs       r4, r0                                   
+00014e40 push       {r4, r5, r6, r7, lr}                     
+00014e42 add        r7, sp, #0xc                             
+00014e44 str        r8, [sp, #-0x4]!                         
+00014e48 sub        sp, #0x38                                
+00014e4a ldr        r0, [pc, #0x64]                          literal 0x59aa4
+00014e4c add.w      r8, sp, #0x1c                            
+00014e50 add        r0, pc                                   
+00014e52 ldr        r5, [r0]                                 
+00014e54 ldr        r0, [r5]                                 
+00014e56 str        r0, [sp, #0x34]                          
+00014e58 mov        r0, r8                                   
+00014e5a ldr        r1, [pc, #0x58]                          literal 0x47ac2
+00014e5c add        r1, pc                                   
+00014e5e blx        #0x13e00                                 _ZN8CGStringC1EPKt
+00014e62 ldr        r1, [pc, #0x54]                          literal 0x47ad0
+00014e64 add        r6, sp, #4                               
+00014e66 add        r1, pc                                   
+00014e68 mov        r0, r6                                   
+00014e6a blx        #0x13e00                                 _ZN8CGStringC1EPKt
+00014e6e ldr        r4, [pc, #0x4c]                          literal 0x5aeae
+00014e70 mov        r1, r8                                   
+00014e72 ldr        r2, [pc, #0x4c]                          literal 0x19c8d
+00014e74 mov        r3, r6                                   
+00014e76 add        r4, pc                                   
+00014e78 add        r2, pc                                   
+00014e7a mov        r0, r4                                   
+00014e7c blx        #0x13e0c                                 _ZN9GNS_FRAME19ClassNode_CGPackageC1ERK8CGStringPFPNS_9CGPackageEPNS_9CGContextEES3_

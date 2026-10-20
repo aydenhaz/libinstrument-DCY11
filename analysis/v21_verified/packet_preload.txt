@@ -1,0 +1,153 @@
+0002f464 push       {r4, r5, r6, r7, lr}                     
+0002f466 add        r7, sp, #0xc                             
+0002f468 push.w     {r8, sb, sl, fp}                         
+0002f46c sub        sp, #0x5c                                
+0002f46e mov        fp, r0                                   
+0002f470 ldr        r0, [pc, #0x150]                         literal 0x3f482
+0002f472 add        r0, pc                                   
+0002f474 ldr        r0, [r0]                                 
+0002f476 str        r0, [sp, #0x20]                          
+0002f478 ldr        r0, [r0]                                 
+0002f47a str        r0, [sp, #0x58]                          
+0002f47c blx        #0x13c14                                 I_GetAlcPtr
+0002f480 cbz        r0, #0x2f4ba                             
+0002f482 blx        #0x13c14                                 I_GetAlcPtr
+0002f486 ldr        r1, [r0]                                 
+0002f488 mov.w      ip, #0x10e                               
+0002f48c mov.w      lr, #0                                   
+0002f490 mov.w      r2, #0x8000000                           
+0002f494 ldr        r3, [r1]                                 
+0002f496 ldr        r1, [pc, #0x130]                         literal 0x25635
+0002f498 ldr        r4, [pc, #0x130]                         literal 0x255f1
+0002f49a ldr        r5, [pc, #0x134]                         literal 0x2c221
+0002f49c add        r1, pc                                   
+0002f49e ldr        r6, [pc, #0x134]                         literal 0x25527
+0002f4a0 add        r4, pc                                   
+0002f4a2 add        r5, pc                                   
+0002f4a4 strd       r2, lr, [sp]                             
+0002f4a8 add        r6, pc                                   
+0002f4aa movs       r2, #0                                   
+0002f4ac strd       r6, r5, [sp, #8]                         
+0002f4b0 strd       r4, ip, [sp, #0x10]                      
+0002f4b4 str        r1, [sp, #0x18]                          
+0002f4b6 movs       r1, #8                                   
+0002f4b8 blx        r3                                       
+0002f4ba blx        #0x13e30                                 _ZN9GNS_FRAME13CGWorkStation14ownWorkStationEv
+0002f4be ldr        r1, [pc, #0x118]                         literal 0x13a1
+0002f4c0 add        r1, pc                                   
+0002f4c2 blx        #0x13e3c                                 _ZN9GNS_FRAME13CGWorkStation20setTopRenderCallbackEPFvPNS_8CGCanvasEE
+0002f4c6 mov        sb, fp                                   
+0002f4c8 ldr        r0, [sb, #8]!                            
+0002f4cc ldr        r1, [r0, #8]                             
+0002f4ce mov        r0, sb                                   
+0002f4d0 blx        r1                                       
+0002f4d2 movs       r4, #0                                   
+0002f4d4 movs       r0, #0x10                                
+0002f4d6 str        r4, [sp, #0x4c]                          
+0002f4d8 blx        #0x13b84                                 _Znwj
+0002f4dc ldr        r5, [pc, #0xfc]                          literal 0x184f
+0002f4de ldr        r1, [pc, #0x100]                         literal 0x3c7ac
+0002f4e0 str        r4, [sp, #0x34]                          
+0002f4e2 add        r5, pc                                   
+0002f4e4 add        r1, pc                                   
+0002f4e6 str        r0, [sp, #0x48]                          
+0002f4e8 adds       r1, #8                                   
+0002f4ea strd       r1, fp, [r0]                             
+0002f4ee strd       r5, r4, [r0, #8]                         
+0002f4f2 strd       r4, r4, [sp, #0x2c]                      
+0002f4f6 ldr        r0, [pc, #0xec]                          literal 0x39b3c
+0002f4f8 strd       r4, r4, [sp, #0x40]                      
+0002f4fc add        r0, pc                                   
+0002f4fe adds       r0, #8                                   
+0002f500 strd       r0, r4, [sp, #0x24]                      
+0002f504 movs       r0, #0x24                                
+0002f506 blx        #0x13b84                                 _Znwj
+0002f50a str        r4, [r0, #8]                             
+0002f50c mov        r8, r0                                   
+0002f50e ldr        r0, [pc, #0xd8]                          literal 0x3c726
+0002f510 mov        r6, r8                                   
+0002f512 strd       r4, r4, [sp, #0x50]                      
+0002f516 add        r0, pc                                   
+0002f518 adds       r0, #8                                   
+0002f51a str.w      r0, [r8]                                 
+0002f51e str        r4, [r6, #4]!                            
+0002f522 strd       fp, r5, [r8, #0x10]                      
+0002f526 strd       r4, r4, [r8, #0x18]                      
+0002f52a str.w      r4, [r8, #0x20]                          
+0002f52e mov        r4, r8                                   
+0002f530 ldr        r0, [pc, #0xb8]                          literal 0x3c726
+0002f532 add        r0, pc                                   
+0002f534 adds       r0, #8                                   
+0002f536 str        r0, [r4, #0xc]!                          
+0002f53a add        r0, sp, #0x50                            
+0002f53c bl         #0x30db4                                 
+0002f540 strd       r4, r8, [sp, #0x38]                      
+0002f544 ldrex      r0, [r6]                                 
+0002f548 adds       r0, #1                                   
+0002f54a strex      r1, r0, [r6]                             
+0002f54e cmp        r1, #0                                   
+0002f550 bne        #0x2f544                                 
+0002f552 add        r6, sp, #0x24                            
+0002f554 add.w      sl, sp, #0x48                            
+0002f558 add        r4, sp, #0x38                            
+0002f55a mov        r0, r6                                   
+0002f55c mov        r1, sl                                   
+0002f55e mov        r2, r4                                   
+0002f560 bl         #0x1643c                                 
+0002f564 mov        r0, r4                                   
+0002f566 bl         #0x1515c                                 
+0002f56a mov        r0, r8                                   
+0002f56c bl         #0x15186                                 
+0002f570 add        r0, sp, #0x40                            
+0002f572 bl         #0x30db4                                 
+0002f576 mov        r0, sl                                   
+0002f578 bl         #0x163b8                                 
+0002f57c ldr        r1, [pc, #0x70]                          literal 0x25551
+0002f57e mov.w      r2, #-1                                  
+0002f582 mov.w      r0, #0x110                               
+0002f586 strd       r2, r5, [sp]                             
+0002f58a add        r1, pc                                   
+0002f58c strd       r1, r0, [sp, #8]                         
+0002f590 mov        r0, fp                                   
+0002f592 mov        r1, r6                                   
+0002f594 mov.w      r2, #0x3e8                               
+0002f598 movs       r3, #0                                   
+0002f59a blx        #0x146e8                                 _ZN9GNS_FRAME13CGAsyncObject18scheduleTaskHelperERN3GPI7Closure8CallableIFvvEEEiiiPvy
+0002f59e mov        r0, r6                                   
+0002f5a0 bl         #0x16390                                 
+0002f5a4 ldr.w      r0, [fp, #8]                             
+0002f5a8 ldr        r1, [r0, #0xc]                           
+0002f5aa mov        r0, sb                                   
+0002f5ac blx        r1                                       
+0002f5ae ldr        r0, [sp, #0x20]                          
+0002f5b0 ldr        r0, [r0]                                 
+0002f5b2 ldr        r1, [sp, #0x58]                          
+0002f5b4 subs       r0, r0, r1                               
+0002f5b6 ittt       eq                                       
+0002f5b8 addeq      sp, #0x5c                                
+0002f5ba popeq.w    {r8, sb, sl, fp}                         
+0002f5be popeq      {r4, r5, r6, r7, pc}                     
+0002f5c0 blx        #0x13a28                                 __stack_chk_fail
+0002f5c4 eor        r0, r2, #0x830000                        
+0002f5c8 ldrsb      r5, [r6, r0]                             
+0002f5ca movs       r2, r0                                   
+0002f5cc strb       r1, [r6, r7]                             
+0002f5ce movs       r2, r0                                   
+0002f5d0 stm        r2!, {r0, r5}                            
+0002f5d2 movs       r2, r0                                   
+0002f5d4 strb       r7, [r4, r4]                             
+0002f5d6 movs       r2, r0                                   
+0002f5d8 asrs       r1, r4, #0xe                             
+0002f5da movs       r0, r0                                   
+0002f5dc adds       r7, r1, r1                               
+0002f5de movs       r0, r0                                   
+0002f5e0 stm        r7!, {r2, r3, r5, r7}                    
+0002f5e2 movs       r3, r0                                   
+0002f5e4 ldr        r3, [sp, #0xf0]                          
+0002f5e6 movs       r3, r0                                   
+0002f5e8 stm        r7!, {r1, r2, r5}                        
+0002f5ea movs       r3, r0                                   
+0002f5ec stm        r7!, {r1, r2, r5}                        
+0002f5ee movs       r3, r0                                   
+0002f5f0 strb       r1, [r2, r5]                             
+0002f5f2 movs       r2, r0                                   

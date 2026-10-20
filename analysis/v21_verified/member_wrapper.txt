@@ -1,0 +1,31 @@
+00030ebc b.w        #0x45574                                 
+00030ec0 ldr        r3, [r0, #0xc]                           
+00030ec2 ldrd       r2, r1, [r0, #4]                         
+00030ec6 add.w      r0, r2, r3, asr #1                       
+00030eca lsls       r2, r3, #0x1f                            
+00030ecc itt        ne                                       
+00030ece ldrne      r2, [r0]                                 
+00030ed0 ldrne      r1, [r2, r1]                             
+00030ed2 bx         r1                                       
+00030ed4 push       {r4, r5, r7, lr}                         
+00030ed6 add        r7, sp, #8                               
+00030ed8 mov        r4, r0                                   
+00030eda movs       r0, #0x10                                
+00030edc blx        #0x13b84                                 _Znwj
+00030ee0 ldr        r1, [pc, #0x10]                          literal 0x3adac
+00030ee2 mov        r2, r0                                   
+00030ee4 add        r1, pc                                   
+00030ee6 adds       r1, #8                                   
+00030ee8 stm        r2!, {r1}                                
+00030eea adds       r1, r4, #4                               
+00030eec ldm.w      r1, {r3, r4, r5}                         
+00030ef0 stm        r2!, {r3, r4, r5}                        
+00030ef2 pop        {r4, r5, r7, pc}                         
+00030ef4 add        r5, sp, #0x2b0                           
+00030ef6 movs       r3, r0                                   
+00030ef8 cbz        r1, #0x30f16                             
+00030efa push       {r4, r5, r7, lr}                         
+00030efc add        r7, sp, #8                               
+00030efe mov        r5, r0                                   
+00030f00 mov        r0, r1                                   
+00030f02 mov        r4, r1                                   

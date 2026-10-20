@@ -1,0 +1,26 @@
+00014f10 push       {r4, r6, r7, lr}                         
+00014f12 add        r7, sp, #8                               
+00014f14 mov        r4, r0                                   
+00014f16 ldr        r0, [pc, #0x14]                          literal 0x599f4
+00014f18 add        r0, pc                                   
+00014f1a ldr        r0, [r0]                                 
+00014f1c add.w      r1, r0, #8                               
+00014f20 mov        r0, r4                                   
+00014f22 stm        r0!, {r1}                                
+00014f24 blx        #0x13b6c                                 _ZN3asl9LockLinuxC1Ev
+00014f28 mov        r0, r4                                   
+00014f2a pop        {r4, r6, r7, pc}                         
+00014f2c ldr        r1, [sp, #0x3d0]                         
+00014f2e movs       r5, r0                                   
+00014f30 push       {r4, r6, r7, lr}                         
+00014f32 add        r7, sp, #8                               
+00014f34 mov        r4, r0                                   
+00014f36 ldr        r0, [pc, #0x14]                          literal 0x599d4
+00014f38 add        r0, pc                                   
+00014f3a ldr        r0, [r0]                                 
+00014f3c add.w      r1, r0, #8                               
+00014f40 mov        r0, r4                                   
+00014f42 stm        r0!, {r1}                                
+00014f44 blx        #0x13b78                                 _ZN3asl9LockLinuxD1Ev
+00014f48 mov        r0, r4                                   
+00014f4a pop        {r4, r6, r7, pc}                         

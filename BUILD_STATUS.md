@@ -52,3 +52,11 @@ The build deliberately removes failed final outputs. It will not label an incomp
 - refreshGFramePaint restores sendMsg(0x30,0,0,source-token,nullptr), including line 0xe0 in token high word.
 - onPostAlreadyLoadRes dispatches primary vtable slot 14. Both use the verified seven-stack-word Packet ALC call.
 - tests/packet_lifecycle_contract_test.cpp passes with host mocks. This validates call arguments and dispatch only, not Android loading or complete class layout.
+
+## Further verified corrections
+
+- The first two init entries are guarded lock wrappers, calling asl::LockLinux at 0x14f24. They are not Fragment factory registrations. The fifth init registers CGIPLPacket; the four legacy empty constructors remain nonfunctional.
+- Original onPreLoad allocates 0x10 and 0x24 bytes for member-callable and shared-control machinery, NOT 0x16 and 0x36. Current onPreLoad remains unreconstructed and must not be used as proof of callback scheduling.
+- MemberCallableWrapper now models the wrapper's four vtable entries and target/member pointer representation. Host ASan/UBSan tests pass for direct invocation, clone ownership, and virtual dispatch through a secondary base. It is deliberately not wired to the unrecovered Callable/shared-control ABI. ARM size assertions await the restored NDK.
+- NDK download made no progress in this environment and was stopped. No fresh Android compile/link result is claimed.
+- Build output is cleared before compilation; the linker writes a pending file, published only on success. The fake-compiler contract test passes compile failure, missing hosts, link failure and success cases. This tests artifact publication, not Android compatibility.

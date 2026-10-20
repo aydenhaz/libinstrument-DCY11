@@ -12,6 +12,11 @@ args = parser.parse_args()
 root = Path(__file__).resolve().parent
 out = args.out.resolve()
 out.mkdir(parents=True, exist_ok=True)
+# Clear stale successes before compilation or host validation can fail.
+output = out / 'libInstrumentPannelLarge.so'
+output.unlink(missing_ok=True)
+candidate = out / 'libInstrumentPannelLarge.so.pending'
+candidate.unlink(missing_ok=True)
 cxx = args.ndk.resolve() / 'toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang++'
 flags = ['-std=c++11', '-fPIC', '-mthumb']
 for directory in ['include', 'stub_include', 'internal', 'internal/NS_MultiScreenBase', 'internal/NS_InstrumentPannelLarge']:
@@ -39,12 +44,12 @@ if missing:
     print('Missing host libraries:', ', '.join(missing))
     print('Run sh host_libs/restore_libGbl.sh if libGbl.so is compressed.')
     sys.exit(1)
-output = out / 'libInstrumentPannelLarge.so'
-output.unlink(missing_ok=True)
-result = subprocess.run([str(cxx), '-shared', '-Wl,--no-undefined', '-Wl,--error-limit=0', '-Wl,-soname,libInstrumentPannelLarge.so', *objects, '-Wl,--no-as-needed', *map(str, hosts), '-o', str(output)], capture_output=True, text=True)
+result = subprocess.run([str(cxx), '-shared', '-Wl,--no-undefined', '-Wl,--error-limit=0', '-Wl,-soname,libInstrumentPannelLarge.so', *objects, '-Wl,--no-as-needed', *map(str, hosts), '-o', str(candidate)], capture_output=True, text=True)
 (out / 'link.log').write_text(result.stdout + result.stderr)
 print('Strict link:', 'PASS' if result.returncode == 0 else 'FAIL')
 if result.returncode:
     print(result.stderr)
-    output.unlink(missing_ok=True)
+    candidate.unlink(missing_ok=True)
+else:
+    candidate.replace(output)
 sys.exit(result.returncode)

@@ -1,28 +1,13 @@
 /* CORRECTION: V21 has 5 init entries, including 0x14e41. The following 4-entry skeleton does not register the actual factories and is not replacement-ready. See BUILD_STATUS.md. */
-/*
- * init_array / fini_array reconstruction.
- *
- * The original .init_array has 4 entries (@0x14cf9, 0x14d31, 0x14d69, 0x14d9d)
- * and .fini_array has 2 (@0x14ee0, 0x14ecc). Disassembly shows they:
- *   1. construct GNS_FRAME::ClassNode_CGPackage nodes for the module's
- *      fragments (CGInstrumentPannelLargeCruiseFragment, ...GuideFragment,
- *      ...GuideGuangQiA106Fragment, CGIPLMultiScreen / CGIPLNotify frames),
- *   2. register the module with ExModuleManager (ModuleReg) under the
- *      IMultiScreenInterfaces / IGuideInfoCardAdaptor interfaces,
- *   3. arm __cxa_atexit for each static object.
- * Fragment literal pools recovered from .rodata include:
- *   "CGInstrumentPannelLargeCruiseFragment::OnUpdateUiWidgets(int32_t)"
- *   "NS_MultiScreenBase::AutoCruiseFragment"
- *   "NS_MultiScreenBase::AutoExscreenNotifyObserver::AddMapRenderObserver(...)"
- *   "...OnTimerOpenDynamicLevel(GNS_FRAME::CGUITimer *)"
- * and log format strings:
- *   "...Type:%d, isCurrentDynamicLevel:%d"
- *   "ExtScreenUiStyle:%d, _extScreenProjectionSize:%d"
- *
- * The exact ClassNode factory tables live in the un-reconstructed internal
- * code (the binary carries ~1500 internal functions). This translation unit
- * preserves the constructor/destructor *order and count*; fill the node
- * factories when reimplementing the internal fragment classes.
+/* The four constructors below are legacy placeholders and do not register
+ * factories. Verified original init entry roles:
+ * 0x14cf8, 0x14d30: guarded lock-wrapper construction through 0x14f10,
+ *                    which calls asl::LockLinux::LockLinux().
+ * 0x14d68: initialize a global polymorphic object and register its destructor.
+ * 0x14d9c: construct four static objects (concrete type not yet recovered).
+ * 0x14e40: ClassNode_CGPackage(name, factory, alias), factory=0x2eb09.
+ * The old claim that the first four entries were Fragment factories was false.
+ * Evidence: analysis/v21_verified/module_initializers.txt, module_lock_ctor.txt.
  */
 
 #include "InstrumentPannelLarge.h"
