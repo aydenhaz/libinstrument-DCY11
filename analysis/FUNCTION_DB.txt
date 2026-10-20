@@ -1,0 +1,2228 @@
+# Auto-generated translation database: 705 unmapped internal functions
+# Format: sub_XXXX size | calls | strings
+
+sub_14cf8  size=56
+  calls: __cxa_atexit
+
+sub_14d30  size=56
+  calls: __cxa_atexit
+
+sub_14d68  size=52
+
+sub_14d9c  size=164
+  strings: kExScreenModeKey | kExScreenCuriseKey | kExScreenGuideKey | kExScreenPreviewKey
+
+sub_14e40  size=140
+  calls: _ZN8CGStringC1EPKtx2, _ZN8CGStringD1Evx2, _ZN9GNS_FRAME19ClassNode_CGPackageC1ERK8CGStringPFPNS_9CGPackageEPNS_9CGContextEES3_, __cxa_atexit, __stack_chk_fail
+  strings: CGIPLPacket | com.autonavi.package.GIPLPacket
+
+sub_14ecc  size=68
+
+sub_14f10  size=32
+  calls: _ZN3asl9LockLinuxC1Ev
+
+sub_14f30  size=32
+  calls: _ZN3asl9LockLinuxD1Ev
+
+sub_14f50  size=64
+
+sub_14f90  size=244
+  calls: _Znwjx2, __stack_chk_fail
+
+sub_15084  size=176
+  calls: _ZNSt6__ndk15mutex4lockEv, _Znwj, __stack_chk_fail
+
+sub_1515c  size=18
+
+sub_1516e  size=24
+
+sub_15186  size=52
+
+sub_15224  size=52
+  calls: __stack_chk_fail
+
+sub_15258  size=36
+
+sub_1527c  size=54
+
+sub_152b2  size=80
+
+sub_15302  size=22
+  calls: _ZNSt6__ndk15mutex6unlockEv
+
+sub_15318  size=88
+  calls: __stack_chk_fail
+
+sub_15370  size=22
+  calls: _Znwj
+
+sub_15386  size=82
+  calls: _ZNSt6__ndk15mutexD1Ev, _ZdlPv
+
+sub_153d8  size=132
+  calls: __stack_chk_fail
+
+sub_1545c  size=20
+
+sub_15470  size=68
+  calls: __stack_chk_fail
+
+sub_156ec  size=156
+  calls: I_GetAlcPtrx2, _ZN9GNS_FRAME10CGFragment8inflaterEiPNS_11CGViewGroupE, __dynamic_cast
+  strings: onCreateView | virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar
+
+sub_15788  size=200
+  calls: I_GetAlcPtrx4, _ZN3hsl18MultiScreenService11GetInstanceEv, _ZNK3hsl18MultiScreenService15IsShowStartLogoEN2bl11MapEngineIDE, _ZNK9GNS_FRAME8CGObjMem16checkObjMemValidEv
+  strings: virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar | onResume | isShowLogo:%d
+
+sub_15850  size=30
+
+sub_15878  size=748
+  calls: I_GetAlcPtrx6, I_GetAlcDevPtrx3, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME8CGIntentC1Ev, _ZN9GNS_FRAME9CGPackage23getHostFragmentActivityEv, _ZN9GNS_FRAME9CGPackage10getContextEv, I_Assert, _ZN9GNS_FRAME10CGFragment21tryStartExistFragmentERKNS_8CGIntentEiPv, __dynamic_cast, _Znwj, _ZN9GNS_FRAME10CGFragmentC2ENS0_11ELaunchModeE, _ZN9GNS_FRAME10CGFragment10setContextEPNS_9CGContextE, _ZN9GNS_FRAME10CGFragment16startNewFragmentEPS0_PviRKNS_8CGIntentEi, _ZN3hsl3HSL19GetMapServiceHandleEv, _ZN9GNS_FRAME8CGIntentD1Ev, __stack_chk_fail
+  strings: virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar | pushFragment<OldTopFragment, NewTopFragment> on package fail | T *GNS_FRAME::CGPackage::pushFragment(const GNS_FRAME::CGInt | GFrame | System request open before boot PanelLarge | map devices isRender:%d
+
+sub_15b64  size=24
+  calls: _ZN3hsl3HSL21GetSystemNotifyHandleEv
+
+sub_15b7c  size=140
+  calls: I_GetAlcPtrx2
+  strings: bIsShow:%d | virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar
+
+sub_15c08  size=20
+
+sub_15c1c  size=124
+  calls: I_GetAlcPtrx2
+  strings: screenType:%d | virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar
+
+sub_15c98  size=24
+
+sub_15cb0  size=532
+  calls: I_GetAlcDevPtrx3, _Znwjx2, I_GetAlcPtrx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Instr | runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI | GFrame
+
+sub_15ec4  size=124
+  calls: _ZN18NS_MultiScreenBase18AutoConfigJsonData11GetInstanceEv, _ZNK18NS_MultiScreenBase18AutoConfigJsonData16GetSurfaceConfigENS_10ScreenTypeERNS_13SurfaceConfigE, _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEv, _ZN18NS_MultiScreenBase20AutoConfigScreenMode20GetCurrentScreenModeENS_10ScreenTypeE, _ZN8CGStringD1Ev, __stack_chk_fail
+
+sub_15f40  size=492
+  calls: _ZN3hsl3HSL16GetMapViewHandleEN2bl11MapEngineIDEx4, _ZN3hsl3HSL15GetConfigHandleEv, _ZN3hsl6Config8GetInt32ERKN4dice8String16ERiNS0_14VALUE_STRATEGYE, _ZN3hsl6Config8SetInt32ERKN4dice8String16EiNS_11SetterType_E, __stack_chk_fail
+  strings: IP_MapViewMode
+
+sub_1613a  size=36
+
+sub_1615e  size=36
+
+sub_16182  size=216
+
+sub_1625a  size=64
+  calls: __aeabi_memcpy
+
+sub_1629a  size=20
+  calls: _ZdaPv
+
+sub_162ae  size=26
+
+sub_162c8  size=58
+  calls: _Znaj
+
+sub_16302  size=58
+  calls: _ZN8CGStringC1Ev
+
+sub_1633c  size=64
+  calls: _ZN2bl19BLCollectionsFormat11getInstanceEv, _ZN2bl19BLCollectionsFormat16CollectionDataExEiPKciS2_z
+  strings: [100000230][3][%d][%d][%d] | AUTO_BASE
+
+sub_1637c  size=20
+
+sub_163b8  size=24
+
+sub_1643c  size=132
+  calls: __stack_chk_fail
+
+sub_164c0  size=20
+
+sub_166dc  size=172
+  calls: _ZNSt6__ndk15mutex4lockEv, _ZdlPv, __stack_chk_fail
+
+sub_16788  size=132
+  calls: I_GetAlcPtrx2
+  strings: screenType:%d, engineId:%d | static bl::MapEngineID NS_MultiScreenBase::AutoExscreenUtil:
+
+sub_1680c  size=92
+  calls: _ZN18NS_MultiScreenBase18AutoConfigJsonData11GetInstanceEv, _ZNK18NS_MultiScreenBase18AutoConfigJsonData16GetSurfaceConfigENS_10ScreenTypeERNS_13SurfaceConfigE, _ZN8CGStringD1Ev, __stack_chk_fail
+
+sub_16868  size=128
+  calls: I_GetAlcPtrx2
+  strings: mapEngineId:%d, screenType:%d | static NS_MultiScreenBase::ScreenType NS_MultiScreenBase::Au
+
+sub_168e8  size=1764
+  calls: I_GetAlcPtrx16, _ZN3hsl6BundleC1Evx5, _ZN3hsl6Bundle9PutBundleERKN4dice8String16ERKS0_x4, _ZN3hsl3HSL15GetConfigHandleEv, _ZN3hsl8Encoding15Int32ToString16Ei, _ZN3hsl8Encoding17String16ToString8ERKN4dice8String16E, _ZN3hsl6Config9SetBundleERKN4dice8String16ERKNS_6BundleENS_11SetterType_E, _ZN3hsl6BundleD1Ev, __stack_chk_fail
+  strings: static void NS_MultiScreenBase::AutoExscreenUtil::SetMapPara | AutoExscreenUtil | ExScreenLarge | config == nullptr | ExScreenWidget | ExScreenSmall
+
+sub_16fcc  size=416
+  calls: I_GetAlcPtrx4, _ZN3hsl3HSL15GetConfigHandleEv, __stack_chk_fail
+  strings: ExScreenLarge | config == nullptr | static int32_t NS_MultiScreenBase::AutoExscreenUtil::GetMapP | AutoExscreenUtil | ExScreenWidget | ExScreenSmall
+
+sub_1716c  size=20
+  calls: _ZdlPv
+
+sub_17180  size=56
+  calls: _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEv, _ZN18NS_MultiScreenBase20AutoConfigScreenMode20GetCurrentScreenModeENS_10ScreenTypeE
+
+sub_171b8  size=148
+  calls: I_GetAlcPtrx2, _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEv, _ZN18NS_MultiScreenBase20AutoConfigScreenMode20GetCurrentScreenModeENS_10ScreenTypeE
+  strings: screenType:%d, mapMode:%d | static void NS_MultiScreenBase::AutoExscreenUtil::SetMapView | AutoExscreenUtil
+
+sub_1724c  size=212
+  calls: I_GetAlcPtrx3
+  strings: screenType:%d, mapModeFromUiConfig:%d | static int32_t NS_MultiScreenBase::AutoExscreenUtil::GetMapV
+
+sub_17320  size=40
+  calls: _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEv, _ZN18NS_MultiScreenBase20AutoConfigScreenMode20GetCurrentScreenModeENS_10ScreenTypeE
+
+sub_17348  size=40
+  calls: _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEv, _ZN18NS_MultiScreenBase20AutoConfigScreenMode20GetCurrentScreenModeENS_10ScreenTypeE
+
+sub_17370  size=140
+  calls: I_GetAlcPtrx2, _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEv, _ZN18NS_MultiScreenBase20AutoConfigScreenMode20GetCurrentScreenModeENS_10ScreenTypeE
+  strings: screenType:%d, currentMode:%d, sceneType:%d, mapCrossControl | static int32_t NS_MultiScreenBase::AutoExscreenUtil::GetMapC | AutoExscreenUtil
+
+sub_173fc  size=144
+  calls: I_GetAlcPtrx2, _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEv, _ZN18NS_MultiScreenBase20AutoConfigScreenMode20GetCurrentScreenModeENS_10ScreenTypeE
+  strings: screenType:%d, mapLevel:%d | static void NS_MultiScreenBase::AutoExscreenUtil::SetMapView | AutoExscreenUtil
+
+sub_1748c  size=40
+  calls: _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEv, _ZN18NS_MultiScreenBase20AutoConfigScreenMode20GetCurrentScreenModeENS_10ScreenTypeE
+
+sub_174b4  size=424
+  calls: I_GetAlcPtrx8, _ZN3hsl3HSL15GetConfigHandleEv, _ZN3hsl6Config8GetInt32ERKN4dice8String16ERiNS0_14VALUE_STRATEGYE, __stack_chk_fail
+  strings: AutoExscreenUtil | IsLargePannelOnlyShowCrossImage | config == nullptr | static int32_t NS_MultiScreenBase::AutoExscreenUtil::IsOnlyS | IsWidgetOnlyShowCrossImage | IsSmallPannelOnlyShowCrossImage
+
+sub_1765c  size=448
+  calls: I_GetAlcPtrx3, _ZN3hsl3HSL16GetMapViewHandleEN2bl11MapEngineIDE, __stack_chk_fail
+  strings: screenType:%d, sceneType:%d | static bool NS_MultiScreenBase::AutoExscreenUtil::OpenDynami | mapViewBase == nullptr | AutoExscreenUtil
+
+sub_1781c  size=180
+  calls: I_GetAlcPtrx2, _ZN3hsl3HSL16GetMapViewHandleEN2bl11MapEngineIDE
+  strings: mapViewBase == nullptr | static bool NS_MultiScreenBase::AutoExscreenUtil::CloseDynam | AutoExscreenUtil
+
+sub_178d0  size=412
+  calls: I_GetAlcPtrx5, _ZN3hsl3HSL15GetConfigHandleEv, _ZN3hsl6Config8GetInt32ERKN4dice8String16ERiNS0_14VALUE_STRATEGYE, __stack_chk_fail
+  strings: static bool NS_MultiScreenBase::AutoExscreenUtil::IsMapScale | AutoExscreenUtil | screenType:%d | MapScaleSync | config = NULL | MapScaleSync:%d,isMapScaleSyncOpen:%d
+
+sub_17a6c  size=100
+  calls: __aeabi_memcpy4x2
+
+sub_17ad0  size=132
+  calls: I_GetAlcPtrx2
+  strings: mapScaleFromJson:%d,mapLevelFromUser:%d, isCurrentDynamicLev | static bool NS_MultiScreenBase::AutoExscreenUtil::IsCurrentD | AutoExscreenUtil
+
+sub_17b54  size=36
+
+sub_17b78  size=22
+  calls: _ZdlPv
+
+sub_17b8e  size=114
+  calls: _Znwj, __aeabi_memcpy, abort
+
+sub_17c28  size=24
+
+sub_17cac  size=104
+  calls: __aeabi_memclr4
+
+sub_18078  size=312
+  calls: _ZN3hsl3HSL21GetSystemNotifyHandleEv, _ZN3hsl12SystemNotify28RemoveMapSurfaceViewObserverEPNS_22MapSurfaceViewObserverE, _ZN9GNS_FRAME13CGWorkStation14ownWorkStationEv, _ZN9GNS_FRAME13CGWorkStation20setTopRenderCallbackEPFvPNS_8CGCanvasEE, _ZN9GNS_FRAME7CGImageD1Ev, _ZdlPv, __stack_chk_fail
+  strings: widgetCoverR | 127 | widgetCoverG | widgetCoverB
+
+sub_181b0  size=36
+
+sub_181d4  size=144
+  calls: __aeabi_memcpy, __aeabi_memmove
+
+sub_18264  size=1588
+  calls: I_GetAlcPtrx16, _Znwjx3, _ZN3hsl3HSL15GetConfigHandleEvx2, _ZN3hsl6Config9GetStringERKN4dice8String16ERS2_NS0_14VALUE_STRATEGYEx2, _ZN9GNS_FRAME7CGImageD1Evx2, _ZdlPvx2, __aeabi_memcpy, _ZN8CGStringaSERKS_, _ZN3asl13String16Utils4atoiEPKt, _ZN3hsl11StringUtils6FormatEPKtz, _ZN3hsl11StringUtils7FindStrERKN4dice8String16ES4_j, _ZN9GNS_FRAME7CGImageC1Ev, _ZN9GNS_FRAME7CGImage6createERKN3GPI6CGSizeE12EGColorType_Ph, _ZN3hsl8UtilPath20GetPathRelativeToResERKN4dice8String16ERS2_NS_9PathType_E, _ZN3hsl9FileUtils11IsExistFileERKN4dice8String16E, _ZN8CGStringC1EPKt, _ZN9GNS_FRAME7CGImage17loadImageFromFileERK8CGStringibbPS1_, _ZN8CGStringD1Ev, _ZNK9GNS_FRAME7CGImage10getDataLenEv, _ZNK9GNS_FRAME7CGImage7getDataEv, _ZN3hsl3HSL21GetSystemNotifyHandleEv, _ZN3hsl12SystemNotify25AddMapSurfaceViewObserverEPNS_22MapSurfaceViewObserverE, _ZN9GNS_FRAME13CGWorkStation14ownWorkStationEv, _ZN9GNS_FRAME13CGWorkStation20setTopRenderCallbackEPFvPNS_8CGCanvasEE, __stack_chk_fail
+  strings: void NS_MultiScreenBase::CoverUtil::setConfig(GNS_FRAME::CGC | HMI_MAP | 0 | sm_enable_widgetCoverForWndId | 2 | sm_support_widgetCoverMaxFrame
+
+sub_18898  size=368
+  calls: I_GetAlcPtrx4, __stack_chk_fail
+  strings: void NS_MultiScreenBase::CoverUtil::TopRenderCoverCallback(G | HMI_MAP | _nTopRenderCount=%d | will copy _nTopRenderCount=%d, deviceid=%d
+
+sub_18a08  size=232
+  calls: I_GetAlcPtrx4
+  strings: void TopRenderCallback(GNS_FRAME::CGCanvas *) | HMI_MAP | TopRenderCallback | TopRenderCallback %p
+
+sub_18af0  size=56
+
+sub_18b28  size=20
+
+sub_18c8a  size=22
+
+sub_18cb0  size=96
+  calls: __aeabi_memmove
+
+sub_18d10  size=132
+  calls: __aeabi_memcpy, __stack_chk_fail
+
+sub_18d9c  size=140
+  calls: I_GetAlcPtrx2
+  strings: _nTopRenderCount=%d | bool NS_MultiScreenBase::CoverUtil::isUIFirstRenderFinish() | HMI_MAP
+
+sub_18e2e  size=42
+  calls: _ZN29CGCustomCruiseTrafficLaneView12hideLaneInfoEv, _ZN15LaneViewDynamic13resetLaneViewEv
+
+sub_18e58  size=644
+  calls: __aeabi_memclr4x2, I_GetAlcPtrx2, _ZN3hsl3HSL16GetMapViewHandleEN2bl11MapEngineIDE, _ZN9GNS_FRAME13CGBroadcaster11getInstanceEj, _ZN3hsl3HSL14GetGuideHandleEv, _ZN3hsl3HSL14GetRouteHandleEv, _ZN3hsl11IRouteLayer6CreateEPNS_13IRouteRequestEN2bl11MapEngineIDE, __stack_chk_fail
+  strings: HMI_NAVI | AutoArNaviFragment | AutoArNaviFragment constructor! | NS_MultiScreenBase::AutoArNaviFragment::AutoArNaviFragment(b | NS_InstrumentPannelLarge::CGInstrumentPannelLargeARGuideFrag
+
+sub_1919c  size=152
+  calls: _ZN9GNS_FRAME10CGFragment8inflaterEiPNS_11CGViewGroupE, __dynamic_cast, __stack_chk_fail
+  strings: virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar
+
+sub_19234  size=308
+  calls: I_GetAlcPtrx2, _Znwj, _ZN9GNS_FRAME10CGUIObjectC2Ev, _ZN3hsl3HSL14GetGuideHandleEv, _ZN9GNS_FRAME13CGBroadcaster11getInstanceEj, _ZN9GNS_FRAME13CGBroadcaster10publishMsgERKNS_16STGBroadcastMsg_Ey, __stack_chk_fail
+  strings: virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar | BROADCAST1 n32What:%d n32Arg1=%d | HMI_COMMON | /home/jenkins/build/AutoCpp/app/components/MultiScreen/Instr
+
+sub_19368  size=136
+  calls: __stack_chk_fail
+  strings: virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar
+
+sub_193f0  size=96
+  calls: __stack_chk_fail
+  strings: virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar
+
+sub_19450  size=124
+  calls: I_GetAlcPtrx2
+  strings: screenType:%d | virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar
+
+sub_194cc  size=136
+  calls: I_GetAlcPtrx2
+  strings: naviType:%d | virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar
+
+sub_19554  size=100
+  calls: I_GetAlcPtrx2
+  strings: naviType:%d | virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar
+
+sub_195bc  size=212
+  calls: I_GetAlcPtrx2, GAI_DispatchArStatusNotify, __stack_chk_fail
+  strings: virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar | fromAr2Normal:%d | void NS_InstrumentPannelLarge::CGInstrumentPannelLargeARGuid
+
+sub_19690  size=192
+  calls: _ZN3hsl13ArNaviMapView13StartArRecordEv, __stack_chk_fail
+  strings: virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar | HMI_ARNAVI | void NS_InstrumentPannelLarge::CGInstrumentPannelLargeARGuid | void NS_InstrumentPannelLarge::CGInstrumentPannelLargeARGuid
+
+sub_19750  size=192
+
+sub_19810  size=60
+  calls: __aeabi_memcpy
+
+sub_1984c  size=132
+  calls: __cxa_guard_acquirex3, __cxa_guard_release
+
+sub_198d0  size=140
+  calls: __aeabi_memclr8
+
+sub_19970  size=116
+  calls: _ZNK9GNS_FRAME8CGIntent12getBoolExtraEPKtRbx2, __stack_chk_fail
+  strings: isFromSystem | isShowRouting
+
+sub_199e4  size=116
+  calls: _ZNK9GNS_FRAME8CGIntent12getBoolExtraEPKtRbx2, __stack_chk_fail
+  strings: isFromSystem | isShowRouting
+
+sub_19a58  size=140
+  calls: I_GetAlcPtrx2, _ZN3hsl11SystemUtils16NaviStatusNotifyE23ENaviInfoBroadcastItem_NS0_10NotifyModeENS0_15NotifyCountModeE
+  strings: GAI_ExtScreenChangeScreenModeNotify:%d | virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar
+
+sub_19ae4  size=1020
+  calls: __dynamic_castx17, _ZN9GNS_FRAME10CGFragment12findViewByIdEix16, _ZN9GNS_FRAME6CGView4hideEbx5, _ZN9GNS_FRAME10CGFragment10getContextEvx3, _ZN9GNS_FRAME10CGFragment8inflaterEiPNS_11CGViewGroupE, _ZN9GNS_FRAME6CGView13setBackGroundEi, _ZN9GNS_FRAME10CGTextView16setEllipsizeTypeEi, __aeabi_memclr8, _ZN9GNS_FRAME13CGBroadcaster11getInstanceEj, _ZN8CGStringD1Ev, __stack_chk_fail
+
+sub_19ee0  size=40
+  calls: _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEv, _ZN18NS_MultiScreenBase20AutoConfigScreenMode21GetCurrentScreenThemeENS_10ScreenTypeE
+
+sub_19f08  size=60
+  calls: _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEv, _ZN18NS_MultiScreenBase20AutoConfigScreenMode36GetCurrentScreenScreenProjectionSizeENS_10ScreenTypeE
+
+sub_19f44  size=488
+  calls: I_GetAlcPtrx4, _ZN13GuideInfoCard19UpdateCrossDistanceEv, _ZN9GNS_FRAME6CGView4hideEb, _ZN3hsl3HSL14GetGuideHandleEv, __stack_chk_fail
+  strings: virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar | showCrossType:%d, _currentCrossType:%d | _currentCrossType:%d
+
+sub_1a12c  size=44
+
+sub_1a158  size=460
+  calls: _ZN9GNS_FRAME10CGFragment12findViewByIdEix4, _ZN9GNS_FRAME6CGView4hideEbx3, I_GetAlcPtrx2, _ZN9GNS_FRAME6CGView4showEvx2, __dynamic_castx2, _ZN8CGStringC1Evx2, _ZN9GNS_FRAME15CGMagicalStringC1ERK8CGStringx2, _ZN9GNS_FRAME15CGMagicalStringD1Evx2, _ZN8CGStringD1Evx2, _ZN3hsl9PointInfoC1Ev, __aeabi_memclr4, _ZN3hsl3HSL14GetGuideHandleEv, _ZN3hsl9PointInfoD1Ev, __stack_chk_fail
+  strings: naviType:%d | virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar
+
+sub_1a328  size=548
+  calls: I_GetAlcDevPtrx3, _Znwjx2, I_GetAlcPtrx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Instr | runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI | GFrame
+
+sub_1a54c  size=656
+  calls: I_GetAlcPtrx4, I_GetAlcDevPtrx3, _Znwjx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEv, _ZN18NS_MultiScreenBase20AutoConfigScreenMode21SetCurrentScreenThemeENS_10ScreenTypeEi, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: theme:%d | virtual bool NS_InstrumentPannelLarge::CGInstrumentPannelLar | /home/jenkins/build/AutoCpp/app/components/MultiScreen/Instr | runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread
+
+sub_1a7dc  size=544
+  calls: _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEvx7, I_GetAlcPtrx2, _ZN18NS_MultiScreenBase20AutoConfigScreenMode30SetCurrentScreenProjectionSizeENS_10ScreenTypeEix2, _ZN18NS_MultiScreenBase20AutoConfigScreenMode20GetCurrentScreenModeENS_10ScreenTypeEx2, _ZN18NS_MultiScreenBase20AutoConfigScreenMode20SetCurrentScreenModeENS_10ScreenTypeEi, _ZN9GNS_FRAME8CGIntentC1Ev, _ZN9GNS_FRAME8CGIntent12putBoolExtraEPKtb, I_Assert, _ZN9GNS_FRAME10CGFragment21tryStartExistFragmentERKNS_8CGIntentEiPv, __dynamic_cast, _Znwj, _ZN9GNS_FRAME10CGFragment10setContextEPNS_9CGContextE, _ZN9GNS_FRAME10CGFragment16startNewFragmentEPS0_PviRKNS_8CGIntentEi, _ZN18NS_MultiScreenBase18AutoConfigJsonData11GetInstanceEv, _ZNK18NS_MultiScreenBase18AutoConfigJsonData16GetSurfaceConfigENS_10ScreenTypeERNS_13SurfaceConfigE, _ZN8CGStringD1Ev, _ZN9GNS_FRAME8CGIntentD1Ev, __stack_chk_fail
+  strings: projectionSize:%d,isFromSystem:%d | isFromSystem
+
+sub_1a9fc  size=200
+  calls: I_GetAlcPtrx2, _ZN9GNS_FRAME6CGView4showEvx2, _ZN9GNS_FRAME6CGView4hideEbx2
+  strings: uiStyle: %d | virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar
+
+sub_1aac4  size=82
+
+sub_1ab16  size=34
+
+sub_1ab38  size=324
+  calls: I_GetAlcPtrx2, _ZN3hsl3HSL14GetGuideHandleEv, _ZN2bl8PathInfoC1Ev, _ZNK2bl8PathInfo7IsValidEv, _ZN2bl11SegmentInfoC1Ev, _ZNK2bl8PathInfo14GetSegmentInfoEjRNS_11SegmentInfoE, _ZNK2bl11SegmentInfo7IsValidEv, _ZNK2bl11SegmentInfo9GetLengthEv, __stack_chk_fail, _ZN2bl11SegmentInfoD1Ev, _ZN2bl8PathInfoD1Ev
+  strings: isNeedShowMap:%d | bool NS_InstrumentPannelLarge::CGInstrumentPannelLargeGuideS
+
+sub_1ac80  size=172
+  calls: __aeabi_memclr8, __aeabi_memclr4
+
+sub_1ad2c  size=128
+
+sub_1adac  size=36
+
+sub_1add0  size=68
+
+sub_1ae14  size=20
+
+sub_1af42  size=18
+
+sub_1b070  size=156
+  calls: _ZN3asl7RefBaseC2Ev, __aeabi_memclr8, __aeabi_memclr4
+
+sub_1b10c  size=68
+  calls: _ZdaPvx2, _ZN2bl14CrossImageInfoD1Ev
+
+sub_1b150  size=22
+  calls: _ZNK3asl7RefBase9incStrongEPKv
+
+sub_1b166  size=20
+  calls: _ZNK3asl7RefBase9decStrongEPKv
+
+sub_1b1c0  size=72
+  calls: _ZN8CGStringC1Ev, __aeabi_memclr4, __aeabi_memset4
+
+sub_1b208  size=236
+  calls: _Znwjx2, __stack_chk_fail
+
+sub_1b2f4  size=20
+
+sub_1b454  size=208
+  calls: I_GetAlcPtrx2, _ZN9GNS_FRAME13CGProgressBar11setProgressEi, _ZN3hsl18MultiScreenService11GetInstanceEv, _ZN3hsl18MultiScreenService29SetCrossViewProgressBarHeightEN2bl11MapEngineIDEi
+  strings: showPrgressBar:%d | void NS_MultiScreenBase::AutoNavi2dCrossView::InitView(NS_Mu
+
+sub_1b524  size=408
+  calls: I_GetAlcPtrx2, _ZN9GNS_FRAME12LayoutParams15getLayoutParamsEPNS_6CGViewEx2, _ZN9GNS_FRAME12LayoutParams15setLayoutParamsEPNS_6CGViewERS0_x2, _ZN9GNS_FRAME12LayoutParamsD1Evx2, memcmp, __aeabi_memcpy4, __stack_chk_fail
+  strings: _screenType:%d, rect(%d,%d,%d,%d),_crosRect(%d,%d,%d,%d) | void NS_MultiScreenBase::AutoNavi2dCrossView::InitCrossViewL
+
+sub_1b6bc  size=388
+  calls: I_GetAlcPtrx6, _ZN9GNS_FRAME6CGView4hideEbx3, _ZN9GNS_FRAME13CGProgressBar11setProgressEi, _ZN3hsl3HSL15GetConfigHandleEv, _ZN3hsl6Config7GetBoolERKN4dice8String16ERbNS0_14VALUE_STRATEGYE, _ZN9GNS_FRAME6CGView13setBackGroundEi, __stack_chk_fail
+  strings: void NS_MultiScreenBase::AutoNavi2dCrossView::HideCrossView( | AutoNavi2dCrossView::HideCrossView | isNeedICupHMIConfig | clear background | imageview is NULL!
+
+sub_1b840  size=100
+  calls: I_GetAlcPtrx2
+  strings: AutoNavi2dCrossView::GetProgessBarView _pPrgressBar:%p
+
+sub_1b8a4  size=340
+  calls: I_GetAlcPtrx4, _ZN9GNS_FRAME6CGView4showEvx3, _ZN3hsl3HSL15GetConfigHandleEv, _ZN3hsl6Config7GetBoolERKN4dice8String16ERbNS0_14VALUE_STRATEGYE, _ZN9GNS_FRAME6CGView13setBackGroundEi, _ZN9GNS_FRAME6CGView4hideEb, __stack_chk_fail
+  strings: void NS_MultiScreenBase::AutoNavi2dCrossView::ShowCrossView( | AutoNavi2dCrossView::ShowCrossView isProgressBarVisible:%d,s | isNeedICupHMIConfig | AutoNavi2dCrossView::ShowCrossView  Over
+
+sub_1ba06  size=58
+  calls: _ZN3hsl3HSL15GetConfigHandleEv
+
+sub_1ba40  size=1452
+  calls: I_GetAlcPtrx6, _ZN3hsl6BundleC1Evx5, _ZN3hsl6Bundle9GetBundleERKN4dice8String16ERS0_x4, _ZN3hsl8Encoding17String16ToString8ERKN4dice8String16Ex2, _ZN3hsl6BundleD1Evx2, __aeabi_memcpy, __aeabi_memmove, _ZN3hsl6Config9GetBundleERKN4dice8String16ERNS_6BundleE, _Znaj, _ZN3hsl8Encoding15Int32ToString16Ei, __stack_chk_fail
+  strings: int32CrossControl | int32EagleEyeEnable | int32MapLevel | int32MapPreviwe | int32MapViewMode | int32mapDayNightMode
+
+sub_1bffc  size=20
+  calls: _ZdaPv
+
+sub_1c010  size=68
+
+sub_1c05a  size=54
+  calls: _Znaj
+
+sub_1c090  size=44
+  calls: _ZdaPv
+
+sub_1c0bc  size=184
+  calls: I_GetAlcPtrx2
+
+sub_1c174  size=156
+  calls: _ZN3asl12String8Utils8snprintfEPciPKcz
+  strings: HMI_CONFIG-%d
+
+sub_1c210  size=196
+  calls: __aeabi_memclr4x2, __aeabi_memset4
+
+sub_1c2d4  size=104
+
+sub_1c33c  size=24
+
+sub_1c354  size=44
+
+sub_1c380  size=248
+  calls: __cxa_guard_acquirex3, __cxa_atexitx2, __cxa_guard_release
+
+sub_1c478  size=336
+  calls: I_GetAlcPtrx2, _ZN18NS_MultiScreenBase18AutoConfigJsonData11GetInstanceEv, _ZNK18NS_MultiScreenBase18AutoConfigJsonData16GetSurfaceConfigENS_10ScreenTypeERNS_13SurfaceConfigE, _ZN8CGStringD1Ev, _ZN9GNS_FRAME12LayoutParams15getLayoutParamsEPNS_6CGViewE, _ZNK9GNS_FRAME9CGContext13getScreenSizeEv, _ZN9GNS_FRAME12LayoutParams15setLayoutParamsEPNS_6CGViewERS0_, _ZN9GNS_FRAME12LayoutParamsD1Ev, __stack_chk_fail
+  strings: layout_marginLeft = %d,layout_marginTop = %d,layout_marginRi | void NS_MultiScreenBase::AutoMultiScreenConfig::SetLayoutLef
+
+sub_1c5c8  size=128
+  calls: I_GetAlcPtrx2
+  strings: _screenType:%d, sceneType:%d
+
+sub_1c648  size=20
+
+sub_1c65c  size=260
+  calls: I_GetAlcPtrx4
+  strings: bool NS_MultiScreenBase::AutoMultiScreenConfig::IsEnableCros | sceneType:%d, crossType:%d, mapCrossControl:%d | _screenType:%d, sceneType:%d, crossType:%d, configedCrossVie
+
+sub_1c760  size=56
+
+sub_1ddd8  size=140
+  calls: I_GetAlcPtrx2
+  strings: engineId:%d is invalid exscreen, return | hsl::MapViewBase *NS_MultiScreenBase::AutoMultiScreenConfig:
+
+sub_1de64  size=54
+  calls: __aeabi_memcpy, _ZN8CGStringC1ERKS_
+
+sub_1de9a  size=90
+
+sub_1def4  size=400
+  calls: I_GetAlcPtrx6, _ZN3hsl3HSL16GetMapViewHandleEN2bl11MapEngineIDE
+  strings: mapViewBase:%p, mapViewBaseMain:%p | bool NS_MultiScreenBase::AutoMultiScreenConfig::SetMapViewMo | mapModeFromJson:%d, mapModeFromUiConfig:%d, mapViewMode:%d | Main screen mapmode:%d
+
+sub_1e084  size=904
+  calls: I_GetAlcPtrx14, _ZN3hsl3HSL16GetMapViewHandleEN2bl11MapEngineIDE
+  strings: void NS_MultiScreenBase::AutoMultiScreenConfig::SetMapLevel( | mapLevelFromJson:%d,mapLevelFromUiConfig:%d | mapViewBase == nullptr | mapViewBaseMain == nullptr | [follow main scale = %f] | [fixed scale = %d]
+
+sub_1e40c  size=604
+  calls: I_GetAlcPtrx8, _ZN14GuideNaviUtils17GetGuideOperationEv, _ZN3hsl3HSL15GetConfigHandleEv, _ZN3hsl6Config7GetBoolERKN4dice8String16ERbNS0_14VALUE_STRATEGYE, __stack_chk_fail
+  strings: void NS_MultiScreenBase::AutoMultiScreenConfig::UpdateTraffi | mapViewBase is NULL,_screenType:%d | isGuiding:%d | bool NS_MultiScreenBase::AutoMultiScreenConfig::IsGuiding() | tmcConfig:%d,netStatus:%d,trafficEventMode:%d,event:%d | value_mapview_tmc
+
+sub_1e668  size=64
+  calls: __aeabi_memclr, strncpy
+  strings: style_1
+
+sub_1e6a8  size=20
+
+sub_1e6bc  size=212
+  calls: __aeabi_memmove, _Znwj, __aeabi_memcpy, _ZdlPv, abort
+
+sub_1e790  size=664
+  calls: I_GetAlcPtrx6, _ZN3hsl3HSL19GetMapServiceHandleEv, __stack_chk_fail
+  strings: bool NS_MultiScreenBase::AutoMultiScreenConfig::ResetMapBind | void NS_MultiScreenBase::AutoMapBindingList::ConvertConfigTo | BINDING_LIST | mapDayNightMode:%d before | mapDayNightMode:%d finish | viewMode:%d, zoomer:%d, trafficTmc:%d, dayNightMode:%d, skyb
+
+sub_1ea2c  size=340
+  calls: I_GetAlcPtrx5, _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEv, _ZN18NS_MultiScreenBase20AutoConfigScreenMode20GetCurrentScreenModeENS_10ScreenTypeE
+  strings: screenType:%d, isEagleEyeEnabledFromJson:%d | static bool NS_MultiScreenBase::AutoExscreenUtil::ShouldEnab | AutoExscreenUtil | screenType:%d, isEagleEyeEnabledFromUiConfig:%d | _screenType=%d, _sceneType=%d, isEagleEyeEnabled=%d | bool NS_MultiScreenBase::AutoMultiScreenConfig::IsEagleEyeEn
+
+sub_1eb80  size=64
+
+sub_1ebd0  size=32
+
+sub_1ebf0  size=328
+  calls: _Znwjx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail
+  strings: HMI_COMMON | virtual void GAutoArNaviView::OnArMapViewDestroyed()
+
+sub_1ed38  size=84
+
+sub_1ed8c  size=232
+  calls: I_GetAlcPtrx4, _ZN3hsl17ArMapViewInstance15CreateArMapViewEN2bl11MapEngineIDERPNS_13ArNaviMapViewEPNS_23IArMapLifeCycleCallBackEb
+  strings: void GAutoArNaviView::InitArNaviMapView() | HMI_COMMON | _arMapView:%p | ret:%d, _arMapView:%p
+
+sub_1ee74  size=20
+
+sub_1efbc  size=244
+  calls: _ZN3hsl17InstrumentManager23GetInstrumentScreenSizeERjS1_, _ZN3hsl13ArNaviMapView13SetScreenSizeEjj, _ZN3hsl17InstrumentManager20GetInstrumentMapSizeERjS1_S1_S1_, _ZN3hsl13ArNaviMapView10SetMapSizeEjj, _ZN3hsl13ArNaviMapView14SetMapStartPosEjj, _ZN3hsl13ArNaviMapView12ResetMapViewEN2bl11MapEngineIDE, _ZN3hsl13ArNaviMapView14ResetArMapViewEv, _ZN3hsl13ArNaviMapView13IsArReplayingEv, _ZN3hsl13ArNaviMapView15StopArReplayingEv, _ZN3hsl13ArNaviMapView19SetArScreenViewTypeEN2bl11MapEngineIDE, _ZN3hsl13ArNaviMapView23SetTrafficLightListenerEPNS_22ArTrafficLightObserverE, _ZN3hsl13ArNaviMapView20SetArMapViewObserverEPNS_21ArNaviMapViewObserverE, _ZN3hsl13ArNaviMapView19SetArStatusObserverEPNS_16ArStatusObserverE, _ZN3hsl17ArMapViewInstance16DestroyArMapViewEPNS_13ArNaviMapViewEPNS_23IArMapLifeCycleCallBackE, GAI_NaviInfoBroadcasting, __stack_chk_fail
+  strings: HMI_COMMON | void GAutoArNaviView::UninitArNaviMapView()
+
+sub_1f0b0  size=28
+  calls: _ZN3hsl12ObserverBaseC2EPKc
+
+sub_1f0cc  size=236
+  calls: _Znwjx2, __stack_chk_fail
+
+sub_1f1b8  size=20
+
+sub_1f3ec  size=156
+  calls: I_GetAlcPtrx2, _ZNK9GNS_FRAME8CGIntent13getInt32ExtraEPKtRi, __stack_chk_fail
+  strings: naviType | AutoArNaviFragment::onCreateIntent naviType:%d | virtual void NS_MultiScreenBase::AutoArNaviFragment::onCreat
+
+sub_1f488  size=396
+  calls: _ZN3hsl3HSL14GetGuideHandleEvx2, I_GetAlcPtrx2, _ZN3hsl3HSL21GetSystemNotifyHandleEv, _ZN3hsl12SystemNotify18AddTestNumObserverEPNS_15TestNumObserverE, _ZN3hsl3HSL12GetPosHandleEv, _ZN9GNS_FRAME13CGBroadcaster11getInstanceEj, _ZN9GNS_FRAME10CGFragment13isTopFragmentEv, __stack_chk_fail
+  strings: _screenType:%d, previewStatus:%d, isTop:%d | /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_1f614  size=780
+  calls: I_GetAlcPtrx7, _ZN3hsl3HSL19GetMapServiceHandleEv, __stack_chk_fail
+  strings: virtual void NS_MultiScreenBase::AutoArNaviFragment::onResum | screenType:%d, mapLevelFromUiConfig:%d | static int32_t NS_MultiScreenBase::AutoExscreenUtil::GetMapV | AutoExscreenUtil | tmpScaleConfig:%d, mapScale:%d | _guideLayer=%p, _isOnlyShowCrossImage=%d, _screenType=%d, is
+
+sub_1f920  size=104
+  calls: I_GetAlcPtrx2
+  strings: AutoArNaviFragment onPause | virtual void NS_MultiScreenBase::AutoArNaviFragment::onPause
+
+sub_1f988  size=344
+  calls: _ZN9GNS_FRAME13CGBroadcaster11getInstanceEjx2, _ZN3hsl3HSL21GetSystemNotifyHandleEv, _ZN3hsl12SystemNotify21RemoveTestNumObserverEPNS_15TestNumObserverE, _ZN3hsl3HSL12GetPosHandleEv, _ZN3hsl3HSL14GetGuideHandleEv, _ZN3hsl11IRouteLayer7DestroyEPS0_, __stack_chk_fail
+  strings: virtual void NS_MultiScreenBase::AutoArNaviFragment::onDestr
+
+sub_1fae0  size=108
+  calls: I_GetAlcPtrx2
+  strings: screenType:%d | virtual void NS_MultiScreenBase::AutoArNaviFragment::OnUpdat
+
+sub_1fb4c  size=76
+  calls: __stack_chk_fail
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_1fb98  size=180
+  calls: I_GetAlcPtrx2, _ZN3hsl3HSL14GetGuideHandleEv, __stack_chk_fail
+  strings: AutoArNaviFragment::UpdateNaviInfoOnUI | virtual void NS_MultiScreenBase::AutoArNaviFragment::UpdateN
+
+sub_1fc4c  size=76
+  calls: __stack_chk_fail
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_1fc98  size=204
+  calls: I_GetAlcPtrx2, _ZN3hsl3HSL14GetGuideHandleEv, __stack_chk_fail
+  strings: AutoArNaviFragment::UpdateExitDirectionInfoOnUI | virtual void NS_MultiScreenBase::AutoArNaviFragment::UpdateE
+
+sub_1fd64  size=76
+  calls: __stack_chk_fail
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_1fdb0  size=176
+  calls: I_GetAlcPtrx2, _ZN3hsl3HSL14GetGuideHandleEv, __stack_chk_fail
+  strings: AutoArNaviFragment::ShowNaviLaneInfoOnUI b:%d f:%d | virtual void NS_MultiScreenBase::AutoArNaviFragment::ShowNav
+
+sub_1fe60  size=76
+  calls: __stack_chk_fail
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_1feac  size=108
+  calls: I_GetAlcPtrx2
+  strings: AutoArNaviFragment::HideNaviLaneInfoOnUI | virtual void NS_MultiScreenBase::AutoArNaviFragment::HideNav
+
+sub_1ff18  size=84
+  calls: __stack_chk_fail
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_1ff6c  size=88
+  calls: __stack_chk_fail
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_1ffc4  size=544
+  calls: I_GetAlcDevPtrx3, _Znwjx2, I_GetAlcPtrx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi | runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI | GFrame
+
+sub_201e4  size=216
+  calls: I_GetAlcPtrx4
+  strings: virtual void NS_MultiScreenBase::AutoArNaviFragment::Reroute | AutoArNaviFragment::RerouteBeginOnUI requestId:%d type:%d | do not need show route progress
+
+sub_202bc  size=548
+  calls: I_GetAlcDevPtrx3, _Znwjx2, I_GetAlcPtrx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi | runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI | GFrame
+
+sub_204e0  size=500
+  calls: I_GetAlcPtrx4, _ZN3hsl3HSL14GetGuideHandleEv, _ZN3hsl3HSL15GetConfigHandleEv, _ZN3hsl6Config7GetBoolERKN4dice8String16ERbNS0_14VALUE_STRATEGYE, _ZN3hsl15RouteResultDataC1Ev, _ZNK3hsl15RouteResultData12GetPathCountEv, _ZNK3hsl15RouteResultData11GetPathInfoEiRNS_13PathInfoParamE, _ZN3hsl15RouteResultDataD1Ev, __stack_chk_fail
+  strings: virtual void NS_MultiScreenBase::AutoArNaviFragment::Reroute | isEnableDistanceLimitationOnCalculate | AutoArNaviFragment::RerouteEndOnUI success:%d
+
+sub_206d8  size=172
+  calls: I_GetAlcPtrx2, __stack_chk_fail
+  strings: AutoArNaviFragment::OnHideCrossImage,type:%d | virtual void NS_MultiScreenBase::AutoArNaviFragment::OnHideC
+
+sub_20784  size=568
+  calls: I_GetAlcPtrx4, _ZN9GNS_FRAME10CGFragment13isTopFragmentEv, _ZN13GuideInfoCard19UpdateCrossDistanceEv, _ZN3hsl3HSL14GetGuideHandleEv, __stack_chk_fail
+  strings: virtual void NS_MultiScreenBase::AutoArNaviFragment::ShowCro | showCrossType:%d, _currentCrossType:%d | _currentCrossType:%d
+
+sub_209bc  size=604
+  calls: I_GetAlcPtrx10, _ZN3hsl3HSL14GetGuideHandleEv, __stack_chk_fail
+  strings: virtual void NS_MultiScreenBase::AutoArNaviFragment::HideCro | IPL screen hide cross _currentCrossType:%d | info.backLane.size is %d,info.frontLane.size is %d | guideManager is NULL. | guideData is NULL. | _currentCrossType:%d
+
+sub_20c1c  size=88
+  calls: __stack_chk_fail
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_20c74  size=148
+  calls: I_GetAlcPtrx2
+  strings: naviType:%d _isGPSNaviStop:%d | virtual void NS_MultiScreenBase::AutoArNaviFragment::NaviDes
+
+sub_20d08  size=80
+  calls: __stack_chk_fail
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_20d58  size=132
+  calls: I_GetAlcPtrx2, _ZN3hsl3HSL12GetPosHandleEv, _ZN3hsl3Pos16GetGPSActivationEv
+  strings: AutoArNaviFragment::PosStatusOnUI valid:%d | virtual void NS_MultiScreenBase::AutoArNaviFragment::PosStat
+
+sub_20ddc  size=108
+  calls: _ZN9GNS_FRAME10CGFragment13isTopFragmentEv, __stack_chk_fail
+
+sub_20e48  size=360
+  calls: I_GetAlcPtrx4, _ZN3hsl3HSL15GetConfigHandleEv, _ZN3hsl6Config7GetBoolERKN4dice8String16ERbNS0_14VALUE_STRATEGYE, __stack_chk_fail
+  strings: virtual void NS_MultiScreenBase::AutoArNaviFragment::NaviMod | isAlwaysShowArMap | CONFIG_isAlwaysShowArMap:%d
+
+sub_20fb0  size=80
+  calls: __stack_chk_fail
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_21000  size=276
+  calls: I_GetAlcPtrx2, _ZN3hsl3HSL15GetConfigHandleEv, _ZN3hsl6Config7GetBoolERKN4dice8String16ERbNS0_14VALUE_STRATEGYE, __stack_chk_fail
+  strings: isAlwaysShowArMap | AutoArNaviFragment::GuideFinishCardClosed,isAlwaysShowArMap: | virtual void NS_MultiScreenBase::AutoArNaviFragment::GuideFi
+
+sub_21114  size=100
+  calls: I_GetAlcPtrx2
+  strings: AutoArNaviFragment::OnNaviFinish naviType:%d | virtual void NS_MultiScreenBase::AutoArNaviFragment::OnNaviF
+
+sub_21178  size=124
+  calls: I_GetAlcPtrx2
+  strings: AutoArNaviFragment::OnNaviExit naviType:%d | virtual void NS_MultiScreenBase::AutoArNaviFragment::OnNaviE
+
+sub_211f4  size=460
+  calls: I_GetAlcPtrx8, _ZN9GNS_FRAME10CGFragment13isTopFragmentEv, __stack_chk_fail
+  strings: virtual void NS_MultiScreenBase::AutoArNaviFragment::OnMapCr | screenType:%d, isOpen:%d | _currentCrossType:%d | return | /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_213c0  size=572
+  calls: I_GetAlcDevPtrx3, _Znwjx2, I_GetAlcPtrx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI | GFrame
+
+sub_215fc  size=196
+  calls: I_GetAlcPtrx2, __stack_chk_fail
+  strings: screenType:%d, _screenType:%d, showPreview:%d | virtual void NS_MultiScreenBase::AutoArNaviFragment::OnSetMa | /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_216c0  size=200
+  calls: I_GetAlcPtrx2, __stack_chk_fail
+  strings: screenType:%d, _screenType:%d, showEagleEye:%d | virtual void NS_MultiScreenBase::AutoArNaviFragment::OnSetSh
+
+sub_21788  size=260
+  calls: I_GetAlcPtrx4, _ZN9GNS_FRAME10CGFragment13isTopFragmentEv, __stack_chk_fail
+  strings: virtual void NS_MultiScreenBase::AutoArNaviFragment::OnUpdat | screenType:%d | return
+
+sub_2188c  size=228
+
+sub_21970  size=520
+  calls: I_GetAlcDevPtrx3, _Znwjx2, I_GetAlcPtrx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI | GFrame
+
+sub_21b78  size=20
+
+sub_21ca8  size=260
+  calls: I_GetAlcPtrx2, _ZN9GNS_FRAME10CGFragment13isTopFragmentEv
+  strings: _screenType:%d, isTop:%d, isEagleEyeInit:%d, showEagleEye:%d | void NS_MultiScreenBase::AutoArNaviFragment::OnSetShowEagleE
+
+sub_21dac  size=520
+  calls: I_GetAlcDevPtrx3, _Znwjx2, I_GetAlcPtrx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI | GFrame
+
+sub_21fb4  size=20
+
+sub_220e2  size=46
+  calls: _ZN9GNS_FRAME10CGFragment13isTopFragmentEv
+
+sub_22110  size=524
+  calls: I_GetAlcDevPtrx3, _Znwjx2, I_GetAlcPtrx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI | GFrame
+
+sub_2231c  size=20
+
+sub_2244c  size=148
+  calls: I_GetAlcPtrx2
+  strings: enableRender:%d, screenType:%d, previewStatus:%d | void NS_MultiScreenBase::AutoArNaviFragment::OnEnableMapRend
+
+sub_224e0  size=20
+
+sub_22610  size=468
+  calls: I_GetAlcDevPtrx3, _Znwjx2, I_GetAlcPtrx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI | GFrame
+
+sub_227e4  size=336
+  calls: I_GetAlcPtrx4
+  strings: void NS_MultiScreenBase::AutoArNaviFragment::Exit3DCross() | _currentCrossType:%d is not %d
+
+sub_22934  size=144
+  calls: I_GetAlcPtrx2
+  strings: _currentCrossType:%d
+
+sub_229c4  size=20
+
+sub_22b08  size=520
+  calls: I_GetAlcDevPtrx3, _Znwjx2, I_GetAlcPtrx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI | GFrame
+
+sub_22d10  size=20
+
+sub_22e40  size=92
+
+sub_22e9c  size=76
+
+sub_22ee8  size=34
+
+sub_22f0a  size=34
+
+sub_22f2c  size=36
+
+sub_22f50  size=150
+
+sub_22fe6  size=20
+
+sub_22ffa  size=18
+
+sub_2312a  size=18
+
+sub_2325c  size=112
+  calls: __aeabi_memclr8, __stack_chk_fail
+
+sub_232cc  size=24
+  calls: free
+
+sub_232e4  size=416
+  calls: I_GetAlcPtrx2, _ZN3hsl3HSL12GetPosHandleEv, _ZN3hsl3Pos16GetGPSActivationEv, __stack_chk_fail
+  strings: isTbtVisiable:%d, isEtaVisiable:%d, isLaneVisiable:%d | void NS_MultiScreenBase::AutoArNaviFragment::AllViewInited(N
+
+sub_23484  size=128
+  calls: I_GetAlcPtrx2
+  strings: AutoArNaviFragment::TbtGpsLocatingViewStatusChanged isShow:% | void NS_MultiScreenBase::AutoArNaviFragment::TbtGpsLocatingV
+
+sub_23504  size=244
+  calls: _Znwjx2, __stack_chk_fail
+
+sub_235f8  size=164
+  calls: _ZNSt6__ndk15mutex4lockEv, __stack_chk_fail
+
+sub_236c4  size=24
+
+sub_23746  size=50
+
+sub_23778  size=80
+
+sub_237de  size=18
+
+sub_237f0  size=32
+
+sub_23810  size=132
+  calls: __stack_chk_fail
+
+sub_23894  size=20
+
+sub_239f0  size=152
+  calls: _ZNSt6__ndk15mutex4lockEv, _ZdlPv, __stack_chk_fail
+
+sub_23ad0  size=44
+
+sub_23afc  size=68
+
+sub_23b40  size=40
+  calls: _ZN29CGCustomCruiseTrafficLaneView12hideLaneInfoEv, _ZN15LaneViewDynamic13resetLaneViewEv
+
+sub_23b68  size=20
+
+sub_23b7c  size=548
+  calls: __aeabi_memclr4x2, I_GetAlcPtrx2, _ZN3hsl3HSL16GetMapViewHandleEN2bl11MapEngineIDE, _ZN9GNS_FRAME13CGBroadcaster11getInstanceEj, _ZN3hsl3HSL14GetGuideHandleEv, _ZN3hsl3HSL14GetRouteHandleEv, _ZN3hsl11IRouteLayer6CreateEPNS_13IRouteRequestEN2bl11MapEngineIDE, __stack_chk_fail
+  strings: HMI_NAVI | AutoNaviFragment | AutoNaviFragment constructor! | NS_MultiScreenBase::AutoNaviFragment::AutoNaviFragment(bl::M
+
+sub_23e80  size=156
+  calls: I_GetAlcPtrx2, _ZNK9GNS_FRAME8CGIntent13getInt32ExtraEPKtRi, __stack_chk_fail
+  strings: naviType | AutoNaviFragment::onCreateIntent naviType:%d | virtual void NS_MultiScreenBase::AutoNaviFragment::onCreateI
+
+sub_23f1c  size=376
+  calls: _ZN3hsl3HSL14GetGuideHandleEvx2, I_GetAlcPtrx2, _ZN3hsl3HSL21GetSystemNotifyHandleEv, _ZN3hsl12SystemNotify18AddTestNumObserverEPNS_15TestNumObserverE, _ZN3hsl3HSL12GetPosHandleEv, _ZN9GNS_FRAME13CGBroadcaster11getInstanceEj, _ZN9GNS_FRAME10CGFragment13isTopFragmentEv, __stack_chk_fail
+  strings: _screenType:%d, previewStatus:%d, isTop:%d
+
+sub_24cfc  size=104
+  calls: I_GetAlcPtrx2
+  strings: AutoNaviFragment onPause | virtual void NS_MultiScreenBase::AutoNaviFragment::onPause()
+
+sub_24d64  size=368
+  calls: _ZN9GNS_FRAME13CGBroadcaster11getInstanceEjx2, _ZN3hsl3HSL21GetSystemNotifyHandleEv, _ZN3hsl12SystemNotify21RemoveTestNumObserverEPNS_15TestNumObserverE, _ZN3hsl3HSL12GetPosHandleEv, _ZN3hsl3HSL14GetGuideHandleEv, _ZN3hsl11IRouteLayer7DestroyEPS0_, __stack_chk_fail
+  strings: virtual void NS_MultiScreenBase::AutoNaviFragment::onDestroy
+
+sub_24ed4  size=108
+  calls: I_GetAlcPtrx2
+  strings: screenType:%d | virtual void NS_MultiScreenBase::AutoNaviFragment::OnUpdateU
+
+sub_24f40  size=76
+  calls: __stack_chk_fail
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_24f8c  size=620
+  calls: I_GetAlcPtrx8, _ZN3hsl3HSL14GetGuideHandleEvx2, __stack_chk_fail, _ZN3hsl15RouteResultDataC1Ev, _ZNK3hsl15RouteResultData10GetCurPathEv, _ZN2bl11SegmentInfoC1Ev, _ZNK2bl8PathInfo14GetSegmentInfoEjRNS_11SegmentInfoE, _ZNK2bl11SegmentInfo7IsValidEv, _ZN2bl8LinkInfoC1Ev, _ZNK2bl11SegmentInfo11GetLinkInfoEjRNS_8LinkInfoE, _ZNK2bl8LinkInfo7IsValidEv, _ZNK2bl8LinkInfo9GetLengthEv, _ZN2bl8LinkInfoD1Ev, _ZN2bl11SegmentInfoD1Ev, _ZN2bl8PathInfoD1Ev, _ZN3hsl15RouteResultDataD1Ev
+  strings: virtual void NS_MultiScreenBase::AutoNaviFragment::UpdateNav | AutoNaviFragment::UpdateNaviInfoOnUI | _crossLinkId %d  | length:%d | uint32_t NS_MultiScreenBase::AutoNaviFragment::GetCurPathLin | linkLength:%d,linkEndLength:%d
+
+sub_251f8  size=76
+  calls: __stack_chk_fail
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_25244  size=204
+  calls: I_GetAlcPtrx2, _ZN3hsl3HSL14GetGuideHandleEv, __stack_chk_fail
+  strings: AutoNaviFragment::UpdateExitDirectionInfoOnUI | virtual void NS_MultiScreenBase::AutoNaviFragment::UpdateExi
+
+sub_25310  size=76
+  calls: __stack_chk_fail
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_2535c  size=176
+  calls: I_GetAlcPtrx2, _ZN3hsl3HSL14GetGuideHandleEv, __stack_chk_fail
+  strings: AutoNaviFragment::ShowNaviLaneInfoOnUI b:%d f:%d | virtual void NS_MultiScreenBase::AutoNaviFragment::ShowNaviL
+
+sub_2540c  size=76
+  calls: __stack_chk_fail
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_25458  size=108
+  calls: I_GetAlcPtrx2
+  strings: AutoNaviFragment::HideNaviLaneInfoOnUI | virtual void NS_MultiScreenBase::AutoNaviFragment::HideNaviL
+
+sub_254c4  size=84
+  calls: __stack_chk_fail
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_25518  size=88
+  calls: __stack_chk_fail
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_25570  size=544
+  calls: I_GetAlcDevPtrx3, _Znwjx2, I_GetAlcPtrx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi | runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI | GFrame
+
+sub_25790  size=232
+  calls: I_GetAlcPtrx4
+  strings: virtual void NS_MultiScreenBase::AutoNaviFragment::RerouteBe | AutoNaviFragment::RerouteBeginOnUI requestId:%d type:%d | do not need show route progress
+
+sub_25878  size=548
+  calls: I_GetAlcDevPtrx3, _Znwjx2, I_GetAlcPtrx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi | runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI | GFrame
+
+sub_25a9c  size=500
+  calls: I_GetAlcPtrx4, _ZN3hsl3HSL14GetGuideHandleEv, _ZN3hsl3HSL15GetConfigHandleEv, _ZN3hsl6Config7GetBoolERKN4dice8String16ERbNS0_14VALUE_STRATEGYE, _ZN3hsl15RouteResultDataC1Ev, _ZNK3hsl15RouteResultData12GetPathCountEv, _ZNK3hsl15RouteResultData11GetPathInfoEiRNS_13PathInfoParamE, _ZN3hsl15RouteResultDataD1Ev, __stack_chk_fail
+  strings: virtual void NS_MultiScreenBase::AutoNaviFragment::RerouteEn | isEnableDistanceLimitationOnCalculate | AutoNaviFragment::RerouteEndOnUI success:%d
+
+sub_25c90  size=632
+  calls: I_GetAlcPtrx4, I_GetAlcDevPtrx3, _Znwjx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: AutoNaviFragment::OnShowCrossImage | /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi | runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI
+
+sub_25f08  size=172
+  calls: I_GetAlcPtrx2, __stack_chk_fail
+  strings: AutoNaviFragment::OnHideCrossImage,type:%d | virtual void NS_MultiScreenBase::AutoNaviFragment::OnHideCro
+
+sub_25fb4  size=96
+  calls: __stack_chk_fail
+
+sub_26014  size=36
+
+sub_26038  size=664
+  calls: I_GetAlcPtrx6, _ZN9GNS_FRAME10CGFragment13isTopFragmentEv, _ZN13GuideInfoCard19UpdateCrossDistanceEv, _ZN3hsl3HSL14GetGuideHandleEv, __stack_chk_fail
+  strings: virtual void NS_MultiScreenBase::AutoNaviFragment::ShowCross | showCrossType:%d, _currentCrossType:%d | showCross error,codce=%d | _currentCrossType:%d
+
+sub_262d0  size=644
+  calls: I_GetAlcPtrx10, _ZN3hsl3HSL14GetGuideHandleEv, __stack_chk_fail
+  strings: virtual void NS_MultiScreenBase::AutoNaviFragment::HideCross | IPL screen hide cross _currentCrossType:%d | info.backLane.size is %d,info.frontLane.size is %d | guideManager is NULL. | guideData is NULL. | _currentCrossType:%d
+
+sub_26558  size=88
+  calls: __stack_chk_fail
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_265b0  size=148
+  calls: I_GetAlcPtrx2
+  strings: naviType:%d _isGPSNaviStop:%d | virtual void NS_MultiScreenBase::AutoNaviFragment::NaviDestO
+
+sub_26644  size=536
+  calls: I_GetAlcDevPtrx3, _Znwjx2, I_GetAlcPtrx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi | runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI | GFrame
+
+sub_2685c  size=132
+  calls: I_GetAlcPtrx2, _ZN3hsl3HSL12GetPosHandleEv, _ZN3hsl3Pos16GetGPSActivationEv
+  strings: AutoNaviFragment::PosStatusOnUI valid:%d | virtual void NS_MultiScreenBase::AutoNaviFragment::PosStatus
+
+sub_268e0  size=536
+  calls: I_GetAlcPtrx7, _ZN9GNS_FRAME10CGFragment13isTopFragmentEv, _ZN3hsl3HSL15GetConfigHandleEv, _ZN3hsl6Config7GetBoolERKN4dice8String16ERbNS0_14VALUE_STRATEGYE, _ZN3hsl3HSL14GetGuideHandleEv, __stack_chk_fail, _ZN3hsl17InstrumentManager21GetInstrumentViewTypeEv, _ZN3hsl17InstrumentManager21SetInstrumentViewTypeENS_14InstrumentTypeE
+  strings: virtual void NS_MultiScreenBase::AutoNaviFragment::NaviModeC | naviType:%d,isTop:%d | isAlwaysShowArMap | nArMode:%d, viewType:%d,isAlwaysShowArMap:%d | AR Screen | Normal Screen
+
+sub_26af8  size=204
+  calls: I_GetAlcPtrx2
+  strings: AutoNaviFragment::NaviModeChangedOnUI _naviType:%d,_isGPSNav
+
+sub_26bc4  size=80
+  calls: __stack_chk_fail
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_26c14  size=184
+  calls: I_GetAlcPtrx2
+  strings: AutoNaviFragment::GuideFinishCardClosed | virtual void NS_MultiScreenBase::AutoNaviFragment::GuideFini
+
+sub_26ccc  size=100
+  calls: I_GetAlcPtrx2
+  strings: AutoNaviFragment::OnNaviFinish naviType:%d | virtual void NS_MultiScreenBase::AutoNaviFragment::OnNaviFin
+
+sub_26d30  size=124
+  calls: I_GetAlcPtrx2
+  strings: AutoNaviFragment::OnNaviExit naviType:%d | virtual void NS_MultiScreenBase::AutoNaviFragment::OnNaviExi
+
+sub_26dac  size=380
+  calls: I_GetAlcPtrx8, _ZN9GNS_FRAME10CGFragment13isTopFragmentEv
+  strings: virtual void NS_MultiScreenBase::AutoNaviFragment::OnMapCros | _currentCrossType:%d | return
+
+sub_26f28  size=572
+  calls: I_GetAlcDevPtrx3, _Znwjx2, I_GetAlcPtrx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI | GFrame
+
+sub_27164  size=140
+  calls: I_GetAlcPtrx2
+  strings: screenType:%d, _screenType:%d, showPreview:%d | virtual void NS_MultiScreenBase::AutoNaviFragment::OnSetMapP
+
+sub_271f0  size=316
+  calls: I_GetAlcPtrx4, _ZN9GNS_FRAME10CGFragment13isTopFragmentEv
+  strings: screenType:%d, _screenType:%d, showEagleEye:%d | _screenType:%d, isTop:%d, isEagleEyeInit:%d, showEagleEye:%d
+
+sub_2732c  size=984
+  calls: I_GetAlcPtrx15, _ZN18NS_MultiScreenBase18AutoConfigJsonData11GetInstanceEv, _ZNK18NS_MultiScreenBase18AutoConfigJsonData20GetSceneViewModeInfoENS_10ScreenTypeERNSt6__ndk16vectorI15tagViewModeInfoNS2_9allocatorIS4_EEEE, _ZdlPv, __stack_chk_fail
+  strings: virtual void NS_MultiScreenBase::AutoNaviFragment::OnExScree | screenType:%d, lastMode:%d,currentMode:%d | mode return | _screenType:%d,return | lastMode surface(%d,%d),currentMode surface(%d,%d) | IsEagleEyeEnabled
+
+sub_27704  size=260
+  calls: I_GetAlcPtrx4, _ZN9GNS_FRAME10CGFragment13isTopFragmentEv, __stack_chk_fail
+  strings: virtual void NS_MultiScreenBase::AutoNaviFragment::OnUpdateU | screenType:%d | return
+
+sub_27808  size=244
+
+sub_278fc  size=520
+  calls: I_GetAlcDevPtrx3, _Znwjx2, I_GetAlcPtrx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI | GFrame
+
+sub_27b04  size=20
+
+sub_27c32  size=36
+  calls: abort
+
+sub_27c56  size=46
+  calls: _ZN9GNS_FRAME10CGFragment13isTopFragmentEv
+
+sub_27c84  size=148
+  calls: I_GetAlcPtrx2
+  strings: enableRender:%d, screenType:%d, previewStatus:%d | void NS_MultiScreenBase::AutoNaviFragment::OnEnableMapRender
+
+sub_27d18  size=20
+
+sub_27e48  size=364
+  calls: I_GetAlcPtrx4
+  strings: void NS_MultiScreenBase::AutoNaviFragment::Exit3DCross() | _currentCrossType:%d is not %d
+
+sub_27fb4  size=156
+  calls: I_GetAlcPtrx2
+  strings: _currentCrossType:%d | void NS_MultiScreenBase::AutoNaviFragment::HideCross(bool, b
+
+sub_28050  size=468
+  calls: I_GetAlcDevPtrx3, _Znwjx2, I_GetAlcPtrx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI | GFrame
+
+sub_28224  size=20
+
+sub_28368  size=520
+  calls: I_GetAlcDevPtrx3, _Znwjx2, I_GetAlcPtrx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI | GFrame
+
+sub_28570  size=20
+
+sub_2869e  size=18
+
+sub_287ca  size=18
+
+sub_2895a  size=18
+
+sub_28a8a  size=18
+
+sub_28bbc  size=112
+  calls: __aeabi_memclr8, __stack_chk_fail
+
+sub_28c2c  size=468
+  calls: I_GetAlcPtrx2, _ZN3hsl3HSL12GetPosHandleEv, _ZN3hsl3Pos16GetGPSActivationEv, __stack_chk_fail
+  strings: isTbtVisiable:%d, isEtaVisiable:%d, isLaneVisiable:%d
+
+sub_28e00  size=128
+  calls: I_GetAlcPtrx2
+  strings: AutoNaviFragment::TbtGpsLocatingViewStatusChanged isShow:%d | void NS_MultiScreenBase::AutoNaviFragment::TbtGpsLocatingVie
+
+sub_28e80  size=244
+  calls: _Znwjx2, __stack_chk_fail
+
+sub_28f74  size=20
+
+sub_290cc  size=64
+
+sub_2910c  size=64
+
+sub_2914c  size=36
+
+sub_29170  size=40
+
+sub_29198  size=32
+
+sub_291b8  size=48
+
+sub_291e8  size=32
+
+sub_29208  size=48
+
+sub_29238  size=108
+
+sub_292c8  size=84
+  calls: __stack_chk_fail
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_2931c  size=536
+  calls: I_GetAlcPtrx6, __stack_chk_failx2, _ZN13GuideInfoCard19UpdateCrossDistanceEv, _ZN3hsl3HSL16GetMapViewHandleEN2bl11MapEngineIDE
+  strings: showCross error,codce=%d | void NS_MultiScreenBase::AutoNaviFragment::Enter3DCross() | 3D Cross not enabled, return | _currentCrossType:%d
+
+sub_29548  size=192
+  calls: _ZN9GNS_FRAME10CGFragment12onCreateViewEPNS_11CGViewGroupE, _ZN9GNS_FRAME10CGFragment10getContextEv, _Znwj, _ZN9GNS_FRAME13CGFrameLayoutC1EPNS_9CGContextE, _ZN9GNS_FRAME12LayoutParams15getLayoutParamsEPNS_6CGViewE, _ZN9GNS_FRAME12LayoutParams15setLayoutParamsEPNS_6CGViewERS0_, _ZN7CGColorC1Ehhhh, _ZN9GNS_FRAME15CGColorDrawable19createColorDrawableERK7CGColor, _ZNK3asl7RefBase9incStrongEPKv, _ZN9GNS_FRAME6CGView13setBackGroundERKNS_13CGDrawablePtrE, _ZNK3asl7RefBase9decStrongEPKv, _ZN7CGColorD1Ev, _ZN9GNS_FRAME10CGFragment8inflaterEPNS_6CGViewEPNS_11CGViewGroupE, _ZN9GNS_FRAME6CGView12setClickableEb, _ZN9GNS_FRAME12LayoutParamsD1Ev, __stack_chk_fail
+
+sub_29608  size=60
+
+sub_29654  size=76
+
+sub_296a0  size=248
+  calls: __cxa_guard_acquirex3, __cxa_atexitx2, __cxa_guard_release
+
+sub_29798  size=804
+  calls: I_GetAlcPtrx2, _ZN3hsl12ObserverBaseC2EPKc, _ZN3hsl11AsyncObjectC2Ev, _ZN3asl12String8Utils8snprintfEPciPKcz, GAI_GetExtScreenUIStyle, GAI_GetExtScreenUISize, _ZN9GNS_FRAME17CGUITimerInstanceC1EPNS_13CGWorkStationEi, _ZN9GNS_FRAME13CGStringUtils6createEPKc, _ZN8CGStringaSERKS_, _ZN8CGStringD1Ev, __stack_chk_fail
+  strings: AutoExscreenNotifyObserver | HMI_OBSER-%d | _extScreenUiStyle:%d, _extScreenProjectionSize:%d | /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi | PN18NS_MultiScreenBase26AutoExscreenNotifyObserverE
+
+sub_29abc  size=308
+  calls: I_GetAlcPtrx2, _ZN3hsl11AsyncObject9CancelAllEj, _ZN3hsl3HSL21GetSystemNotifyHandleEv, _ZN3hsl12SystemNotify28RemoveExscreenNotifyObserverEPNS_22ExscreenNotifyObserverE, _ZN3hsl8UIObjectD1Ev
+  strings: ~AutoExscreenNotifyObserver! | NS_MultiScreenBase::AutoExscreenNotifyObserver::~AutoExscree
+
+sub_2bbac  size=20
+
+sub_2bcdc  size=296
+  calls: I_GetAlcPtrx4, _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEv, _ZN18NS_MultiScreenBase20AutoConfigScreenMode20GetCurrentScreenModeENS_10ScreenTypeE
+  strings: mapEngineId:%d, sceneType:%d, shouldOpen:%d | void NS_MultiScreenBase::AutoExscreenNotifyObserver::OnSetEx | screenType:%d, currentMode:%d, sceneType:%d, mapCrossControl | static void NS_MultiScreenBase::AutoExscreenUtil::SetMapCros | AutoExscreenUtil
+
+sub_2be04  size=620
+  calls: I_GetAlcPtrx10, _ZN3hsl3HSL16GetMapViewHandleEN2bl11MapEngineIDE, _ZN3hsl18MultiScreenService11GetInstanceEv, _ZN3hsl18MultiScreenService11GetWindowIdEN2bl11MapEngineIDE, _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEv, _ZN18NS_MultiScreenBase20AutoConfigScreenMode20GetCurrentScreenModeENS_10ScreenTypeE
+  strings: _screenType=%d, _sceneType=%d, _mapViewMode=%d | NS_MultiScreenBase::MapViewModeConfig NS_MultiScreenBase::Au | mapCrossControl=%d | bool NS_MultiScreenBase::AutoMultiScreenConfig::IsEnableCros | mapViewBase == nullptr | bool NS_MultiScreenBase::AutoExscreenNotifyObserver::UpdateE
+
+sub_2c070  size=500
+  calls: I_GetAlcPtrx5, _ZN3hsl3HSL16GetMapViewHandleEN2bl11MapEngineIDE, _ZN9GNS_FRAME9CGUITimer5startEiy, __stack_chk_fail
+  strings: void NS_MultiScreenBase::AutoExscreenNotifyObserver::OnSetEx | mapEngindId:%d, mapLevel:%d, mapMode:%d, mapPosition:%d | sceneType:%d, isCurrentDynamicLevel:%d | mapViewBase == nullptr
+
+sub_2c264  size=20
+
+sub_2c396  size=18
+
+sub_2c4c4  size=140
+  calls: I_GetAlcPtrx2
+  strings: size:%d
+
+sub_2c550  size=324
+  calls: _Znwjx2, _ZN3hsl8UIObject23RunAsyncDelayByEngineIdERKN3GPI7Closure8CallableIFvvEEEN2bl11MapEngineIDEjy, __stack_chk_fail
+
+sub_2c694  size=20
+
+sub_2c7c4  size=572
+  calls: I_GetAlcPtrx8, __stack_chk_fail, _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEv, _ZN18NS_MultiScreenBase20AutoConfigScreenMode20SetCurrentScreenModeENS_10ScreenTypeEi, _ZN18NS_MultiScreenBase18AutoConfigJsonData11GetInstanceEv, _ZNK18NS_MultiScreenBase18AutoConfigJsonData16GetSurfaceConfigENS_10ScreenTypeERNS_13SurfaceConfigE, _ZN8CGStringD1Ev
+  strings: bool NS_MultiScreenBase::AutoExscreenNotifyObserver::SwitchT | uiStyle:%d, projectionSize:%d | largeScreenMode:%d,curLargeScreenMode:%d | largeScreenMode same as before | _uiUpdateObserverVec.size:%d
+
+sub_2ca00  size=140
+  calls: I_GetAlcPtrx2
+  strings: style:%d | void NS_MultiScreenBase::AutoExscreenNotifyObserver::OnExtSc
+
+sub_2ca8c  size=1016
+  calls: I_GetAlcPtrx8, _ZN8CGStringD1Evx3, _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEvx2, _ZN3hsl17InstrumentManager23SetInstrumentScreenSizeEjjx2, _ZN3hsl17InstrumentManager20SetInstrumentMapSizeEjjjjx2, _ZN3hsl18MultiScreenService11GetInstanceEvx2, _ZN3hsl18MultiScreenService11SetNaviTypeE10ENaviMode_12ECruiseMode_x2, _ZN18NS_MultiScreenBase20AutoConfigScreenMode20GetCurrentScreenModeENS_10ScreenTypeE, _ZN18NS_MultiScreenBase20AutoConfigScreenMode20SetCurrentScreenModeENS_10ScreenTypeEi, __stack_chk_fail, _ZN18NS_MultiScreenBase18AutoConfigJsonData11GetInstanceEv, _ZNK18NS_MultiScreenBase18AutoConfigJsonData16GetSurfaceConfigENS_10ScreenTypeERNS_13SurfaceConfigE, __aeabi_memclr8, _ZN9GNS_FRAME17CGFrameSimulation14ownWorkStationEv, _ZN9GNS_FRAME17CGFrameSimulation5getIdEv, GAI_SurfaceSizeGet, _ZN3hsl17InstrumentManager21SetInstrumentViewTypeENS_14InstrumentTypeE
+  strings: bool NS_MultiScreenBase::AutoExscreenNotifyObserver::OnOpenE | bool NS_MultiScreenBase::AutoMultiScreenConfig::GetSurfaceSi | screen:(%d, %d) | surfaceWidth:%d,surfaceHeight:%d
+
+sub_2ceac  size=24
+
+sub_2cfa8  size=20
+
+sub_2d0d8  size=152
+
+sub_2d170  size=244
+  calls: I_GetAlcPtrx2, __stack_chk_failx2
+  strings: _screenType:%d, sceneType:%d, isCurrentDynamicLevel:%d
+
+sub_2d264  size=116
+  calls: I_GetAlcPtrx2, _ZN3hsl3HSL21GetSystemNotifyHandleEv
+  strings: systemNotify is null | void NS_MultiScreenBase::AutoExscreenNotifyObserver::AddExsc
+
+sub_2d300  size=24
+
+sub_2d382  size=56
+
+sub_2d3ba  size=18
+
+sub_2d55c  size=412
+  calls: I_GetAlcPtrx4
+  strings: void NS_MultiScreenBase::AutoExscreenNotifyObserver::AddMapR | mapRenderObserver:%p | index:%d
+
+sub_2d6f8  size=184
+  calls: I_GetAlcPtrx2
+  strings: mapRenderObserver:%p | void NS_MultiScreenBase::AutoExscreenNotifyObserver::RemoveM
+
+sub_2d7b0  size=400
+  calls: I_GetAlcPtrx4
+  strings: void NS_MultiScreenBase::AutoExscreenNotifyObserver::AddUiUp | uiUpdateObserver:%p | index:%d
+
+sub_2d940  size=36
+
+sub_2d964  size=240
+  calls: I_GetAlcPtrx4
+  strings: void NS_MultiScreenBase::AutoExscreenNotifyObserver::RemoveU | uiUpdateObserver:%p | index:%d
+
+sub_2da54  size=400
+  calls: I_GetAlcPtrx4
+  strings: void NS_MultiScreenBase::AutoExscreenNotifyObserver::AddMapC | mapCrossControlObserver:%p | index:%d
+
+sub_2dbe4  size=36
+
+sub_2dc08  size=400
+  calls: I_GetAlcPtrx4
+  strings: void NS_MultiScreenBase::AutoExscreenNotifyObserver::AddExSc | exScreenModeOperateObserver:%p | index:%d
+
+sub_2dd98  size=36
+
+sub_2ddbc  size=240
+  calls: I_GetAlcPtrx4
+  strings: void NS_MultiScreenBase::AutoExscreenNotifyObserver::RemoveE | exScreenModeOperateObserver:%p | index:%d
+
+sub_2deac  size=124
+  calls: I_GetAlcPtrx2
+  strings: screenProjectionSizeListener:%p | void NS_MultiScreenBase::AutoExscreenNotifyObserver::SetScre
+
+sub_2df28  size=124
+  calls: I_GetAlcPtrx2
+  strings: uiStyleListener:%p | void NS_MultiScreenBase::AutoExscreenNotifyObserver::SetUiSt
+
+sub_2eaec  size=28
+
+sub_2eb08  size=80
+  calls: _Znwj, _ZN9GNS_FRAME17CGFragmentPackageC2EPNS_9CGContextE
+
+sub_2eb58  size=22
+
+sub_2fca0  size=36
+
+sub_2fcc4  size=276
+  calls: _Znwj, _ZN3hsl3HSL14GetGuideHandleEv, _ZN3hsl3HSL16GetMapViewHandleEN2bl11MapEngineIDE, _ZN3hsl3HSL14GetRouteHandleEv, _ZN3hsl11IRouteLayer6CreateEPNS_13IRouteRequestEN2bl11MapEngineIDE
+  strings: HMI_PREVIEW
+
+sub_2fdd8  size=24
+
+sub_2fe40  size=24
+
+sub_2ff44  size=132
+  calls: __stack_chk_fail
+
+sub_2ffc8  size=20
+
+sub_30114  size=132
+  calls: __stack_chk_fail
+
+sub_30198  size=20
+
+sub_302e0  size=40
+  calls: _ZN9GNS_FRAME17CGFragmentBuilderD2Ev, _Znwj
+
+sub_30314  size=20
+
+sub_3045a  size=18
+
+sub_3059c  size=36
+  calls: _ZN9GNS_FRAME17CGFragmentBuilderD2Ev, _Znwj
+
+sub_305cc  size=20
+
+sub_30712  size=18
+
+sub_30864  size=1232
+  calls: I_GetAlcPtrx12, _ZN9GNS_FRAME17CGFrameSimulation14ownWorkStationEvx6, _ZN8CGStringD1Evx5, _ZN9GNS_FRAME13CGWorkStation14ownWorkStationEvx2, _ZN3hsl18MultiScreenService11GetInstanceEvx2, _ZN8CGStringC1Evx2, _ZN9GNS_FRAME17CGFrameSimulation11showFpsInfoEbR8CGStringix2, _ZN3hsl3HSL12GetEasterEggEvx2, _ZN3hsl8Encoding15FloatToString16Efx2, _ZN8CGStringC1EPKtx2, _ZN9GNS_FRAME17CGFrameSimulation14getDisplayInfoEvx2, _ZN9GNS_FRAME13CGDisplayInfoD1Evx2, _ZN9GNS_FRAME9CGPackage10getContextEv, _ZN3hsl18MultiScreenService14GetShowFpsFlagEv, _ZN3hsl18MultiScreenService15GetShowTimeFlagEv, _ZN3hsl9EasterEgg12GetTargetFpsERiN2bl11MapEngineIDE, _ZN3hsl8Encoding15Int32ToString16Ei, _ZN3hsl9EasterEgg16GetRealRenderFpsERfN2bl11MapEngineIDE, _ZN3hsl3HSL15GetConfigHandleEv, _ZN3hsl6Config15IsSupportARNaviEb, GAI_GetArPerfInfo, _ZdlPv, _ZN3hmi13HMICommonUtil20FormateCurrentTimeExEPN9GNS_FRAME9CGContextERbS4_bb, __stack_chk_fail
+  strings:    | void NS_InstrumentPannelLarge::TopRenderFpsTimeCallback(GNS_ | HMI_PANNELLARGE | isShowFpsEnabled:%d, isShowTimeEnabled:%d | SetFps2:  |  MapFps2: 
+
+sub_30db4  size=20
+
+sub_30ef8  size=32
+
+sub_30f18  size=76
+  calls: _ZN7CGColorC1Ejx2, _ZN7CGColorC1Ev, _ZN8CGStringC1Ev, _ZN8CGStringaSEPKt
+
+sub_30f64  size=524
+  calls: _ZNK8CGStringltERKS_x3, _Znwjx2, _ZN8CGStringC1ERKS_x2
+
+sub_31170  size=44
+  calls: _ZN8CGStringD1Ev
+
+sub_3119c  size=26
+
+sub_311b6  size=156
+
+sub_31252  size=38
+
+sub_31278  size=38
+
+sub_3129e  size=38
+
+sub_31538  size=1168
+  calls: __dynamic_castx15, _ZN9GNS_FRAME10CGFragment12findViewByIdEix15, _ZN9GNS_FRAME10CGFragment10getContextEvx3, _ZN9GNS_FRAME6CGView13setBackGroundEix2, I_GetAlcPtrx2, _ZN9GNS_FRAME10CGFragment8inflaterEiPNS_11CGViewGroupE, _ZN9GNS_FRAME6CGView4showEv, _ZN9GNS_FRAME10CGTextView16setEllipsizeTypeEi, _ZN9GNS_FRAME6CGView4hideEb, __aeabi_memclr8, __aeabi_memclr4, _ZN9GNS_FRAME13CGBroadcaster11getInstanceEj, _ZN8CGStringD1Ev, __stack_chk_fail
+  strings: virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar | maneuverIconOnLine has data already!
+
+sub_319c8  size=80
+
+sub_31a18  size=18
+
+sub_31a40  size=144
+  calls: I_GetAlcPtrx2, _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEv, _ZN18NS_MultiScreenBase20AutoConfigScreenMode20GetCurrentScreenModeENS_10ScreenTypeE
+  strings: GAI_ExtScreenChangeScreenModeNotify:%d | virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar
+
+sub_31ad0  size=460
+  calls: __dynamic_castx8, _ZN9GNS_FRAME10CGFragment12findViewByIdEix8, _ZN9GNS_FRAME6CGView4hideEbx5, _ZN9GNS_FRAME10CGFragment8inflaterEiPNS_11CGViewGroupE, _ZN9GNS_FRAME6CGView13setBackGroundEi, _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEv
+
+sub_31c9c  size=180
+  calls: _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEvx4, _ZN18NS_MultiScreenBase20AutoConfigScreenMode21GetCurrentScreenThemeENS_10ScreenTypeE, _ZN18NS_MultiScreenBase20AutoConfigScreenMode36GetCurrentScreenScreenProjectionSizeENS_10ScreenTypeE, _ZN18NS_MultiScreenBase20AutoConfigScreenMode20GetCurrentScreenModeENS_10ScreenTypeE, _ZN18NS_MultiScreenBase20AutoConfigScreenMode20SetCurrentScreenModeENS_10ScreenTypeEi
+
+sub_31d60  size=548
+  calls: I_GetAlcDevPtrx3, _Znwjx2, I_GetAlcPtrx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Instr | runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI | GFrame
+
+sub_31f84  size=656
+  calls: I_GetAlcPtrx4, I_GetAlcDevPtrx3, _Znwjx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEv, _ZN18NS_MultiScreenBase20AutoConfigScreenMode21SetCurrentScreenThemeENS_10ScreenTypeEi, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: theme:%d | virtual bool NS_InstrumentPannelLarge::CGInstrumentPannelLar | /home/jenkins/build/AutoCpp/app/components/MultiScreen/Instr | runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread
+
+sub_32214  size=540
+  calls: I_GetAlcPtrx6, _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEvx6, _ZN18NS_MultiScreenBase20AutoConfigScreenMode30SetCurrentScreenProjectionSizeENS_10ScreenTypeEix2, _ZN18NS_MultiScreenBase20AutoConfigScreenMode20GetCurrentScreenModeENS_10ScreenTypeE, _ZN18NS_MultiScreenBase20AutoConfigScreenMode20SetCurrentScreenModeENS_10ScreenTypeEi, GAI_ExtScreenChangeScreenModeNotify, _ZN18NS_MultiScreenBase18AutoConfigJsonData11GetInstanceEv, _ZNK18NS_MultiScreenBase18AutoConfigJsonData16GetSurfaceConfigENS_10ScreenTypeERNS_13SurfaceConfigE, _ZN8CGStringD1Ev, __stack_chk_fail
+  strings: virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar | projectionSize:%d,isFromSystem:%d | currentMode:%d,screenMode:%d | GAI_ExtScreenChangeScreenModeNotify:%d
+
+sub_32430  size=200
+  calls: I_GetAlcPtrx2, _ZN9GNS_FRAME6CGView4hideEbx2, _ZN9GNS_FRAME6CGView4showEv
+  strings: uiStyle: %d | virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar
+
+sub_324f8  size=92
+
+sub_32554  size=32
+
+sub_32574  size=20
+
+sub_326a2  size=18
+
+sub_327d0  size=560
+  calls: _ZN9GNS_FRAME8CGIntent13putInt32ExtraEPKtix2, _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEvx2, I_GetAlcPtrx2, _ZN2bl11SegmentInfoD1Evx2, _ZN2bl8PathInfoD1Evx2, _ZN9GNS_FRAME8CGIntentC1Ev, _ZN18NS_MultiScreenBase20AutoConfigScreenMode20GetCurrentScreenModeENS_10ScreenTypeE, _ZN9GNS_FRAME8CGIntentD1Ev, __stack_chk_fail, _ZN3hsl3HSL14GetGuideHandleEv, _ZN2bl8PathInfoC1Ev, _ZNK2bl8PathInfo7IsValidEv, _ZN2bl11SegmentInfoC1Ev, _ZNK2bl8PathInfo14GetSegmentInfoEjRNS_11SegmentInfoE, _ZNK2bl11SegmentInfo7IsValidEv, _ZNK2bl11SegmentInfo9GetLengthEv, _ZN18NS_MultiScreenBase20AutoConfigScreenMode20SetCurrentScreenModeENS_10ScreenTypeEi, I_Assert, _ZN9GNS_FRAME10CGFragment21tryStartExistFragmentERKNS_8CGIntentEiPv, __dynamic_cast, _Znwj, _ZN9GNS_FRAME10CGFragment10setContextEPNS_9CGContextE, _ZN9GNS_FRAME10CGFragment16startNewFragmentEPS0_PviRKNS_8CGIntentEi
+  strings: naviType | isShowRouting | isNeedShowMap:%d
+
+sub_32a00  size=140
+  calls: I_Assert, _ZN9GNS_FRAME10CGFragment21tryStartExistFragmentERKNS_8CGIntentEiPv, __dynamic_cast, _Znwj, _ZN9GNS_FRAME10CGFragment10setContextEPNS_9CGContextE, _ZN9GNS_FRAME10CGFragment16startNewFragmentEPS0_PviRKNS_8CGIntentEi
+
+sub_32a94  size=84
+  calls: _ZN8CGStringC1EPKt, _ZN8CGStringD1Ev, __stack_chk_fail
+
+sub_32af4  size=200
+  calls: _ZN3hsl3HSL15GetConfigHandleEv, _ZN3hsl6Config7GetBoolERKN4dice8String16ERbNS0_14VALUE_STRATEGYE, __stack_chk_fail, _ZN8CGStringC1EPKt, _ZN8CGStringD1Ev
+  strings: isNeedGpsLocated
+
+sub_32bbc  size=184
+
+sub_32d1c  size=68
+  calls: _ZNK9GNS_FRAME8CGIntent12getBoolExtraEPKtRb, __stack_chk_fail
+  strings: isShowRouting
+
+sub_32d60  size=68
+  calls: _ZNK9GNS_FRAME8CGIntent12getBoolExtraEPKtRb, __stack_chk_fail
+  strings: isShowRouting
+
+sub_32da4  size=140
+  calls: I_GetAlcPtrx2, _ZN3hsl11SystemUtils16NaviStatusNotifyE23ENaviInfoBroadcastItem_NS0_10NotifyModeENS0_15NotifyCountModeE
+  strings: GAI_ExtScreenChangeScreenModeNotify:%d | virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar
+
+sub_32e30  size=1120
+  calls: __dynamic_castx15, I_GetAlcPtrx10, _ZN9GNS_FRAME10CGFragment12findViewByIdEix2, _ZN9GNS_FRAME10CGFragment8inflaterEiPNS_11CGViewGroupE, _ZN3hsl3HSL15GetConfigHandleEv, _ZN3hsl6Config8GetInt32ERKN4dice8String16ERiNS0_14VALUE_STRATEGYE, _ZN9GNS_FRAME6CGView13setBackGroundEi, __stack_chk_fail
+  strings: void NS_InstrumentPannelLarge::CGInstrumentPannelLargeGuideS | largeInstrumentCustomType | HMI_COMMON | _guideViewContainer is null | _classicViewContainer is null | _motionViewContainer is null
+
+sub_33290  size=54
+  calls: _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEvx2, _ZN18NS_MultiScreenBase20AutoConfigScreenMode21GetCurrentScreenThemeENS_10ScreenTypeE, _ZN18NS_MultiScreenBase20AutoConfigScreenMode11IsIaccThemeENS_10ScreenTypeE
+
+sub_332cc  size=296
+  calls: I_GetAlcPtrx2, _ZN3hsl3HSL14GetGuideHandleEv, _ZN2bl8PathInfoC1Ev, _ZNK2bl8PathInfo7IsValidEv, _ZN2bl11SegmentInfoC1Ev, _ZNK2bl8PathInfo14GetSegmentInfoEjRNS_11SegmentInfoE, _ZNK2bl11SegmentInfo7IsValidEv, _ZNK2bl11SegmentInfo9GetLengthEv, _ZN2bl11SegmentInfoD1Ev, _ZN2bl8PathInfoD1Ev, __stack_chk_fail
+  strings: isNeedShowMap:%d | virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar
+
+sub_333f4  size=228
+  calls: _ZNK9GNS_FRAME6CGView9isVisibleEvx4, _ZN9GNS_FRAME6CGView4hideEbx4, _ZN9GNS_FRAME6CGView4showEvx3, I_GetAlcPtrx2
+  strings: naviType:%d | virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar
+
+sub_334d8  size=548
+  calls: I_GetAlcDevPtrx3, _Znwjx2, I_GetAlcPtrx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Instr | runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI | GFrame
+
+sub_336fc  size=724
+  calls: I_GetAlcPtrx6, I_GetAlcDevPtrx3, _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEvx2, _Znwjx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN18NS_MultiScreenBase20AutoConfigScreenMode21SetCurrentScreenThemeENS_10ScreenTypeEi, _ZN18NS_MultiScreenBase20AutoConfigScreenMode11IsIaccThemeENS_10ScreenTypeE, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: virtual bool NS_InstrumentPannelLarge::CGInstrumentPannelLar | theme:%d | iacc mode,return | runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread
+
+sub_339d0  size=148
+  calls: I_GetAlcPtrx2
+  strings: screenType:%d, screenMode:%d | virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar
+
+sub_33a64  size=560
+  calls: _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEvx7, __stack_chk_failx3, I_GetAlcPtrx2, _ZN18NS_MultiScreenBase20AutoConfigScreenMode12SetIaccThemeENS_10ScreenTypeEbx2, _ZN18NS_MultiScreenBase20AutoConfigScreenMode30SetCurrentScreenProjectionSizeENS_10ScreenTypeEi, _ZN18NS_MultiScreenBase20AutoConfigScreenMode20GetCurrentScreenModeENS_10ScreenTypeE, _ZN18NS_MultiScreenBase20AutoConfigScreenMode20SetCurrentScreenModeENS_10ScreenTypeEi, _ZN9GNS_FRAME8CGIntentC1Ev, _ZN9GNS_FRAME8CGIntent12putBoolExtraEPKtb, I_Assert, _ZN9GNS_FRAME10CGFragment21tryStartExistFragmentERKNS_8CGIntentEiPv, __dynamic_cast, _Znwj, _ZN9GNS_FRAME10CGFragment10setContextEPNS_9CGContextE, _ZN9GNS_FRAME10CGFragment16startNewFragmentEPS0_PviRKNS_8CGIntentEi, _ZN18NS_MultiScreenBase18AutoConfigJsonData11GetInstanceEv, _ZNK18NS_MultiScreenBase18AutoConfigJsonData16GetSurfaceConfigENS_10ScreenTypeERNS_13SurfaceConfigE, _ZN8CGStringD1Ev, _ZN9GNS_FRAME8CGIntentD1Ev, _ZN18NS_MultiScreenBase20AutoConfigScreenMode21GetCurrentScreenThemeENS_10ScreenTypeE
+  strings: projectionSize:%d,isFromSystem:%d | isFromSystem
+
+sub_33c94  size=80
+
+sub_33cfc  size=468
+  calls: _ZN9GNS_FRAME6CGView4hideEbx9, _ZN9GNS_FRAME10CGFragment10getContextEvx4, I_GetAlcPtrx2, _ZN9GNS_FRAME6CGView4showEv
+  strings: theme:%d | void NS_InstrumentPannelLarge::CGInstrumentPannelLargeGuideS
+
+sub_33ed0  size=20
+
+sub_33ffe  size=18
+
+sub_34130  size=244
+  calls: _ZN8CGStringC1EPKtx5, _ZN8CGStringD1Evx5, __stack_chk_fail
+
+sub_34224  size=276
+  calls: _ZN8CGStringC1Evx4, _ZN8CGStringD1Evx3, _ZN8CGString6FormatEPKtz, __stack_chk_fail
+  strings: %s | %s·%s
+
+sub_34338  size=500
+  calls: _ZN8CGStringC1Evx3, _ZN8CGString6FormatEPKtzx2, _ZN3hsl11FormatUtils21DistanceFormatOptionsC1Ev, _ZN3hmi13HMICommonUtil14FormatDistanceEPN9GNS_FRAME9CGContextERKN3hsl11FormatUtils12DistanceDataERNS5_21DistanceFormatOptionsERNS5_20DistanceFormatResultE, _ZN8CGStringaSEPKt, _ZN8CGStringpLEPKt, __stack_chk_fail
+  strings:  m |  km | <1%s | %d%s%d%s | %d%s
+
+sub_3452c  size=24
+
+sub_34544  size=24
+
+sub_3455c  size=36
+
+sub_34580  size=42
+  calls: _ZN9GNS_FRAME6CGView4showEvx2
+
+sub_345aa  size=50
+  calls: _ZN9GNS_FRAME6CGView4hideEbx2
+
+sub_345dc  size=26
+
+sub_345f6  size=34
+
+sub_34618  size=368
+
+sub_34788  size=56
+
+sub_347c0  size=824
+
+sub_34af8  size=206
+
+sub_34bc6  size=156
+
+sub_34c62  size=206
+
+sub_34d30  size=294
+
+sub_34e56  size=114
+
+sub_35034  size=124
+  calls: _ZN13GuideInfoCardC1Ev, _Znwj, _ZN13GuideInfoCard15SetIsMainScreenEb
+
+sub_35234  size=136
+  calls: __stack_chk_fail
+
+sub_352bc  size=220
+  calls: _ZNSt6__ndk15mutex4lockEv, __stack_chk_fail
+
+sub_35398  size=62
+  calls: _ZdlPv
+
+sub_353e6  size=46
+
+sub_35414  size=56
+  calls: _ZN13GuideInfoCard22UpdateManeuverIconDataEi
+
+sub_3544c  size=20
+
+sub_35460  size=48
+
+sub_35490  size=40
+
+sub_354b8  size=176
+  calls: __aeabi_memcpy4, _ZN8CGStringaSERKS_, _ZN13GuideInfoCard10SetContextEPN9GNS_FRAME9CGContextE, _ZN13GuideInfoCard23SetGuideInfoCardAdaptorEP21IGuideInfoCardAdaptor, _ZN13GuideInfoCard10UpdateViewEP18GuideInfoCardView_bPKNS_15UpdateViewExtraE
+
+sub_35568  size=18
+
+sub_3557a  size=82
+  calls: _ZN13GuideInfoCard14UpdateNaviInfoEPKN2bl8NaviInfoE, _ZN13GuideInfoCard24UpdateNaviInfoCachedDataERKN2bl8NaviInfoE
+
+sub_355cc  size=84
+  calls: _ZN2bl19BLCollectionsFormat11getInstanceEv, _ZN2bl19BLCollectionsFormat16CollectionDataExEiPKciS2_z
+  strings: [100000123][4][%d][%d][%lld][%s] | AUTO_HMI
+
+sub_35792  size=34
+
+sub_357b4  size=480
+  calls: I_GetAlcPtrx4, _ZN3hsl18MultiScreenService11GetInstanceEv, _ZN3hsl18MultiScreenService20IsHslStartupFinishedEv, _ZN9GNS_FRAME17CGFrameSimulation14ownWorkStationEv, _ZN9GNS_FRAME17CGFrameSimulation20setRenderEndCallbackEPFvvE, _ZN3hsl14TimerUtilsFuns18GetElapsedTimeByIdExb, __stack_chk_fail
+  strings: virtual void NS_MultiScreenBase::AutoOpeningFragment::onCrea | [container = %p][%p] | subscribe
+
+sub_35994  size=104
+  calls: I_GetAlcPtrx2
+  strings: AutoOpeningFragment onResume | virtual void NS_MultiScreenBase::AutoOpeningFragment::onResu
+
+sub_359fc  size=104
+  calls: I_GetAlcPtrx2
+  strings: AutoOpeningFragment onPause | virtual void NS_MultiScreenBase::AutoOpeningFragment::onPaus
+
+sub_35a64  size=732
+  calls: I_GetAlcPtrx6, _ZN3hsl18MultiScreenService11GetInstanceEv, _ZN3hsl18MultiScreenService18SetMapRenderStatusEib, _ZN3hsl12SystemNotify17RemoveNetObserverEPNS_11NetObserverE, _ZN3hsl3HSL19GetMapServiceHandleEv, _ZN3hsl12SystemNotify28RemoveLanguageSwitchObserverEPNS_22LanguageSwitchObserverE, _ZN9GNS_FRAME17CGFrameSimulation14ownWorkStationEv, _ZN9GNS_FRAME14CGFuncInfoTool14removeFuncInfoERKN3GPI7Closure12CallbackBaseE, _ZN9GNS_FRAME17CGUITimerInstanceD1Ev, _ZdlPv, __stack_chk_fail
+  strings: virtual void NS_MultiScreenBase::AutoOpeningFragment::onDest | _engineId:%d, _mapViewBase:%p | RemoveMapViewBaseBinding:%p | _systemNotify->RemoveLanguageSwitchObserver
+
+sub_35d40  size=100
+  calls: _ZN3hsl14TimerUtilsFuns18GetElapsedTimeByIdExb, __stack_chk_fail
+
+sub_35da4  size=136
+  calls: I_GetAlcPtrx2
+  strings: engineId:%d, _engineId:%d | virtual void NS_MultiScreenBase::AutoOpeningFragment::OnMapV
+
+sub_35e2c  size=840
+  calls: I_GetAlcPtrx10, _ZN3hsl21GOTHERProtocolHmiToAl24MultiScreenStatusHmiToAlER21tagSTExtScreenControl, __stack_chk_fail
+  strings: PreviewSceneType, return | virtual void NS_MultiScreenBase::AutoOpeningFragment::OnMapL | isOnlyShowCrossImage:%d, mapScaleFromJson:%d, mapLevelFromUs | Do not need set MultiScreen map level | [GAI_ExtScreenStatusNotify]windowId:%d, n32MiniMap:%d,n32Lev
+
+sub_36174  size=648
+  calls: I_GetAlcPtrx10, _ZN3hsl21GOTHERProtocolHmiToAl24MultiScreenStatusHmiToAlER21tagSTExtScreenControl, __stack_chk_fail
+  strings: virtual void NS_MultiScreenBase::AutoOpeningFragment::OnMapM | PreviewSceneType, return | mapViewBase:%p, mapViewBaseMain:%p | mapModeFromJson:%d, mapMode:%d | [GAI_ExtScreenStatusNotify]windowId:%d, n32MiniMap:%d,n32Lev
+
+sub_363fc  size=180
+  calls: I_GetAlcPtrx2, __stack_chk_fail
+  strings: engineId:%d, _engineId:%d | virtual void NS_MultiScreenBase::AutoOpeningFragment::OnReal | /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_364b0  size=100
+  calls: I_GetAlcPtrx2
+  strings: [isForeground = %d] | virtual void NS_MultiScreenBase::AutoOpeningFragment::OnMain
+
+sub_36514  size=648
+  calls: I_GetAlcPtrx8, _ZN3hsl3HSL15GetConfigHandleEvx2, _ZN3hsl6Config8GetInt32ERKN4dice8String16ERiNS0_14VALUE_STRATEGYEx2, __stack_chk_fail
+  strings: virtual void NS_MultiScreenBase::AutoOpeningFragment::OpenDy | [%p], engineId:%d, type:%d | LargePannelMapScale | config == nullptr | static int32_t NS_MultiScreenBase::AutoExscreenUtil::GetMapL | AutoExscreenUtil
+
+sub_3679c  size=152
+  calls: I_GetAlcPtrx2
+  strings: isLock:%d | virtual void NS_MultiScreenBase::AutoOpeningFragment::Dynami
+
+sub_36834  size=100
+  calls: I_GetAlcPtrx2
+  strings: [%p] | virtual void NS_MultiScreenBase::AutoOpeningFragment::OnHSLI
+
+sub_3689c  size=684
+  calls: I_GetAlcPtrx4, I_GetAlcDevPtrx3, _Znwjx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN3hsl18MultiScreenService11GetInstanceEv, _ZN3hsl18MultiScreenService24SetSrceenForceStopRenderEib, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: screenType:%d, _screenType:%d, enableRender:%d | virtual void NS_MultiScreenBase::AutoOpeningFragment::OnEnab | /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi | runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread
+
+sub_36b4c  size=132
+  calls: I_GetAlcPtrx2
+  strings: screenType:%d, _screenType:%d, _renderStatus=%d | virtual void NS_MultiScreenBase::AutoOpeningFragment::OnQuer
+
+sub_36bd0  size=128
+  calls: I_GetAlcPtrx2
+  strings: enableRender:%d, screenType:%d, _screenType:%d, previewStatu | virtual void NS_MultiScreenBase::AutoOpeningFragment::OnEnab
+
+sub_36c50  size=1176
+  calls: I_GetAlcPtrx10, I_GetAlcDevPtrx3, _Znwjx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN3hsl17InstrumentManager23GetFirstCameraImageFlagEv, _ZN3hsl11SystemUtils15IsAndroidSystemEv, _ZN3hsl8DataUtil22CheckOfflineDataStatusEv, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: virtual void NS_MultiScreenBase::AutoOpeningFragment::OnDevi | /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi | bool NS_MultiScreenBase::AutoOpeningFragment::IsWaitARFirstI | isGetFirstCameraImage:%d | need send first draw,isWaitARImage:%d,isMapReady:%d | runOnUIThread pTarget must is this
+
+sub_370e8  size=168
+  calls: __stack_chk_fail
+  strings: virtual void NS_MultiScreenBase::AutoOpeningFragment::OnEGLD | /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_37194  size=732
+  calls: I_GetAlcPtrx6, I_GetAlcDevPtrx3, _Znwjx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: _isMainScreenForeground:%d | PreviewSceneType, return | virtual void NS_MultiScreenBase::AutoOpeningFragment::OnMapP | /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi | runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1
+
+sub_37470  size=800
+  calls: I_GetAlcPtrx12, __stack_chk_fail
+  strings: PreviewSceneType, return. engineId=%d | virtual void NS_MultiScreenBase::AutoOpeningFragment::OnMapP | isOnlyShowCrossImage:%d, mapScaleFromJson:%d, mapLevelFromUs | mapScaleConfig:%d, isOnlyShowCrossImageFromUser:%d, isAutoSc | isMapScaleFollowMain:%d | mainLevel:%f
+
+sub_37790  size=112
+  calls: I_GetAlcPtrx2
+  strings: _mapSurface = %lld | virtual void NS_MultiScreenBase::AutoOpeningFragment::SetMap
+
+sub_37800  size=188
+  calls: I_GetAlcPtrx2
+  strings: _mapViewBase is NULL | virtual void NS_MultiScreenBase::AutoOpeningFragment::NetSta
+
+sub_378bc  size=108
+  calls: I_GetAlcPtrx2
+  strings: screenType:%d,hasGoMap:%d | virtual void NS_MultiScreenBase::AutoOpeningFragment::OnUpda
+
+sub_37928  size=1020
+  calls: I_GetAlcPtrx18, _ZN3hsl18MultiScreenService11GetInstanceEv, _ZN3hsl18MultiScreenService14GetMapEngineIdEi, _ZN3hsl3HSL19GetMapServiceHandleEv, __stack_chk_fail, _ZN9GNS_FRAME17CGFrameSimulation14ownWorkStationEv, _ZN9GNS_FRAME17CGFrameSimulation11enablePaintEb
+  strings: virtual void NS_MultiScreenBase::AutoOpeningFragment::MapSur | surfaceId:%d, type:%d, handle:%p, format:%d, wh:(%d, %d), en | type:%d | [DetachSurfaceFromDevice][mapDevice = %p] | [Not Match Screen ID | [mapViewServiceImpl == nullptr]
+
+sub_37d24  size=188
+  calls: I_GetAlcPtrx4
+  strings: virtual void NS_MultiScreenBase::AutoOpeningFragment::Langua | eLanguage:%d | _mapViewBase == nullptr
+
+sub_37de0  size=716
+  calls: I_GetAlcPtrx6, I_GetAlcDevPtrx3, _Znwjx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME10CGFragment13isTopFragmentEv, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: virtual void NS_MultiScreenBase::AutoOpeningFragment::OnUpda | _screenType:%d,screenType:%d | /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi | return | runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1
+
+sub_380ac  size=42
+
+sub_380e4  size=136
+
+sub_3816c  size=20
+
+sub_3829c  size=332
+  calls: I_GetAlcPtrx5, _ZN3hsl3HSL24GetDayStatusNotifyHandleEv, _ZN3hsl19UtilDayStatusNotify9IsUiNightEv
+  strings: screenType:%d, dayNightModeFromUiConfig:%d | static int32_t NS_MultiScreenBase::AutoExscreenUtil::GetDayN | AutoExscreenUtil | mapDayNightMode:%d, isNight:%d | bool NS_MultiScreenBase::AutoOpeningFragment::GetMapNightMod
+
+sub_383e8  size=184
+  calls: I_GetAlcPtrx2, _ZN3hsl3HSL24GetDayStatusNotifyHandleEv, _ZN3hsl19UtilDayStatusNotify26GetEGLSurfaceAttrInitColorEb
+  strings: nativeWindow:%lld, deviceId:%d, surfaceWidth:%d, surfaceHeig | bl::EGLSurfaceAttr NS_MultiScreenBase::AutoOpeningFragment::
+
+sub_384a0  size=20
+
+sub_385d0  size=244
+  calls: I_GetAlcPtrx3, _ZN9GNS_FRAME17CGFrameSimulation14ownWorkStationEv, _ZN9GNS_FRAME17CGFrameSimulation7sendMsgEiiiyPN3GPI12ScopedRefptrINS1_11MessageCtrlEEE, __stack_chk_fail
+  strings: void NS_MultiScreenBase::AutoOpeningFragment::RefreshUI() | sendMsgParmDefaultCallFromHere(GFM_REPAINT) | /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi | pFrameSimulation is NULL.
+
+sub_386c4  size=468
+  calls: I_GetAlcDevPtrx3, _Znwjx2, I_GetAlcPtrx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI | GFrame
+
+sub_38898  size=20
+
+sub_389dc  size=24
+  calls: _ZN3hsl15CarLogoObserver11GetInstanceEv
+
+sub_389f4  size=400
+  calls: I_GetAlcPtrx6, _ZN3hsl3HSL15GetConfigHandleEv, _ZN3hsl6Config8GetInt32ERKN4dice8String16ERiNS0_14VALUE_STRATEGYE, _ZN18NS_MultiScreenBase20AutoConfigScreenMode11GetInstanceEv, _ZN18NS_MultiScreenBase20AutoConfigScreenMode20GetCurrentScreenModeENS_10ScreenTypeE, _ZN3hsl21GOTHERProtocolHmiToAl27ExScreenRenderActionHmiToAlEP14tagSTExtScreen, __stack_chk_fail
+  strings: AIDL_ready | void NS_MultiScreenBase::AutoOpeningFragment::NotifyALRender | renderStatus:%d,aidlReady:%d,hasGoMap:%d | RenderStatusNotify windowId:%d, mode:%d, status:%d | aidlReady is close and not go map,not send first draw
+
+sub_38b84  size=50
+
+sub_38bb6  size=18
+
+sub_38ce8  size=1780
+  calls: I_GetAlcPtrx28, _ZN3hsl3HSL14GetGuideHandleEvx3, __aeabi_memclr8x3, _ZN9GNS_FRAME17CGFrameSimulation14ownWorkStationEvx2, _ZN3hsl3HSL12GetPosHandleEvx2, __stack_chk_failx2, _ZN9GNS_FRAME10CGFragment13isTopFragmentEv, _ZN9GNS_FRAME17CGFrameSimulation8isRenderEb, _ZN9GNS_FRAME17CGFrameSimulation7sendMsgEiiiyPN3GPI12ScopedRefptrINS1_11MessageCtrlEEE, _ZN3hsl3HSL14GetCarPositionERN2bl6CarLocENS1_11MapEngineIDE, _ZN3hsl3Pos24IsSetFirstVirtualLocInfoEv, _ZN3hsl3Pos22GetFirstVirtualLocInfoERN2bl7LocInfoE, _ZN3hsl3Pos10GetLocInfoERN2bl7LocInfoE, _ZN2bl12BizLayerUtil11LocToCarLocEPKNS_7LocInfoERNS_6CarLocE, _ZN3hsl3Pos20ForceUpdatePosStatusEb, _ZN3hsl18MultiScreenService11GetInstanceEv, _ZN3hsl18MultiScreenService18SetMapRenderStatusEib, _ZN3hsl18MultiScreenService21GetNotifyRenderStatusEi
+  strings: void NS_MultiScreenBase::AutoOpeningFragment::EnableMapRende | isSurfaceVisable==false | step2 enableMapRender:%d, isRenderMapStatusChanged:%d, _enab | isRender(%d) | /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi | pFrameSimulation is NULL.
+
+sub_393dc  size=272
+  calls: I_GetAlcPtrx6, _ZN9GNS_FRAME17CGFrameSimulation14ownWorkStationEv
+  strings: bool NS_MultiScreenBase::AutoOpeningFragment::IsEglSurfaceVa | surfaceStatusCode:%d | surface error
+
+sub_394ec  size=372
+  calls: __aeabi_memclr8x9, __aeabi_memclrx2, __aeabi_memclr4
+
+sub_39660  size=230
+  calls: __aeabi_memcpy8x4
+
+sub_39746  size=34
+
+sub_3977a  size=18
+
+sub_398a8  size=280
+  calls: I_GetAlcPtrx4, __stack_chk_fail
+  strings: void NS_MultiScreenBase::AutoOpeningFragment::OnRealCityAnim | mapViewModeFromJson:%d, mapViewModeFromUiConfig:%d
+
+sub_399c0  size=276
+  calls: I_GetAlcPtrx4, __stack_chk_fail
+  strings: [isForeground = %d] | void NS_MultiScreenBase::AutoOpeningFragment::OnMainMapForeg | _isMainScreenForeground:%d | void NS_MultiScreenBase::AutoOpeningFragment::SetMainScreenF
+
+sub_39ad4  size=236
+  calls: _Znwjx2, __stack_chk_fail
+
+sub_39bc0  size=192
+  calls: I_GetAlcPtrx2, _ZN3hsl18MultiScreenService11GetInstanceEv, _ZN3hsl18MultiScreenService18SetMainScreenGoMapEb, __stack_chk_fail
+  strings: [%p] | void NS_MultiScreenBase::AutoOpeningFragment::OnMainScreenGo
+
+sub_39c80  size=224
+  calls: I_GetAlcPtrx2, __stack_chk_fail
+  strings: [%p], _engineId:%d, _startupHSLFinish:%d, _startupHSLFinishB | void NS_MultiScreenBase::AutoOpeningFragment::OnStartupHSLFi
+
+sub_39d60  size=184
+  calls: I_GetAlcPtrx2, __stack_chk_fail
+  strings: enable:%d | void NS_MultiScreenBase::AutoOpeningFragment::WindowRenderNo
+
+sub_39e18  size=244
+  calls: _Znwjx2, __stack_chk_fail
+
+sub_39f0c  size=76
+  calls: __stack_chk_fail
+
+sub_39f58  size=20
+
+sub_3a0b0  size=116
+  calls: I_GetAlcPtrx2
+  strings: enable:%d | void NS_MultiScreenBase::AutoOpeningFragment::WindowRenderSt
+
+sub_3a124  size=520
+  calls: I_GetAlcDevPtrx3, _Znwjx2, I_GetAlcPtrx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI | GFrame
+
+sub_3a32c  size=20
+
+sub_3b6f4  size=100
+  calls: __stack_chk_fail
+  strings: void NS_MultiScreenBase::AutoOpeningFragment::GoMap()
+
+sub_3b758  size=64
+
+sub_3b798  size=20
+
+sub_3b8f0  size=184
+  calls: I_GetAlcPtrx2, __stack_chk_fail
+  strings: FragmentRenderCallback | void NS_MultiScreenBase::AutoOpeningFragment::FragmentRender | /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_3b9a8  size=736
+  calls: I_GetAlcPtrx14, _ZN3hsl18MultiScreenService11GetInstanceEvx2, __stack_chk_failx2, _ZNK3hsl18MultiScreenService15IsShowStartLogoEN2bl11MapEngineIDE, _ZN3hsl3HSL15GetConfigHandleEv, _ZN3hsl6Config8GetInt32ERKN4dice8String16ERiNS0_14VALUE_STRATEGYE, _ZN9GNS_FRAME17CGFrameSimulation14ownWorkStationEv, _ZN9GNS_FRAME17CGFrameSimulation20setRenderEndCallbackEPFvvE, _ZN3hsl18MultiScreenService20IsHslStartupFinishedEv
+  strings: void NS_MultiScreenBase::AutoOpeningFragment::FragmentRender | FragmentRenderCallbackUI,_bNotifyFirstPaint:%d | bool NS_MultiScreenBase::AutoOpeningFragment::IsNeedSendFirs | isShowLogo:%d | AIDL_ready | result:%d
+
+sub_3bc88  size=308
+  calls: I_GetAlcPtrx4, _ZN3hsl3HSL15GetConfigHandleEv, _ZN3hsl6Config8GetInt32ERKN4dice8String16ERiNS0_14VALUE_STRATEGYE, __stack_chk_fail
+  strings: isMulScreenFuncPowerBootRendering | config = NULL | bool NS_MultiScreenBase::AutoOpeningFragment::IsAutostartEna | isMulScreenFuncPowerBootRendering:%d,mapRender:%d
+
+sub_3bdbc  size=232
+  calls: I_GetAlcPtrx2, _ZN3hsl3HSL19GetMapServiceHandleEv, _ZN9GNS_FRAME10CGFragment10getContextEv, _ZN8CGStringD1Ev, __stack_chk_fail
+  strings: CoverUtil=%p | void NS_MultiScreenBase::AutoOpeningFragment::setCoverUtil(N
+
+sub_3bea4  size=28
+
+sub_3bec0  size=28
+  calls: __aeabi_memclr4
+
+sub_3bf98  size=552
+  calls: I_GetAlcPtrx2, _ZN9GNS_FRAME13CGBroadcaster11getInstanceEjx2, _ZN3hsl3HSL21GetSystemNotifyHandleEv, _ZN3hsl12SystemNotify18AddTestNumObserverEPNS_15TestNumObserverE, _ZN3hsl3HSL14GetGuideHandleEv, _ZNSt6__ndk15mutex4lockEv, _Znwj, __stack_chk_fail
+  strings: AutoPreviewFragment::onCreateView | virtual void NS_MultiScreenBase::AutoPreviewFragment::onCrea
+
+sub_3c1c0  size=176
+  calls: I_GetAlcPtrx2, __stack_chk_fail
+  strings: AutoPreviewFragment onResume | virtual void NS_MultiScreenBase::AutoPreviewFragment::onResu | /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_3c270  size=104
+  calls: I_GetAlcPtrx2
+  strings: AutoPreviewFragment onPause | virtual void NS_MultiScreenBase::AutoPreviewFragment::onPaus
+
+sub_3c2d8  size=448
+  calls: _ZN9GNS_FRAME13CGBroadcaster11getInstanceEjx2, _ZNSt6__ndk15mutex4lockEv, _ZdlPv, _ZN3hsl3HSL21GetSystemNotifyHandleEv, _ZN3hsl12SystemNotify21RemoveTestNumObserverEPNS_15TestNumObserverE, _ZN3hsl3HSL14GetGuideHandleEv, _ZN3hsl11IRouteLayer7DestroyEPS0_, __stack_chk_fail
+  strings: virtual void NS_MultiScreenBase::AutoPreviewFragment::onDest
+
+sub_3c498  size=792
+  calls: I_GetAlcPtrx6, _ZN3hsl3HSL14GetRouteHandleEv, _ZN3hsl15RouteResultDataC1Ev, _ZNK3hsl15RouteResultData15GetCurPathIndexEv, _ZN3hsl11SystemUtils14IsNetConnectedEv, _ZN3hsl15RouteResultDataD1Ev, __stack_chk_fail
+  strings: virtual void NS_MultiScreenBase::AutoPreviewFragment::ShowPr | isNavi:%d, _guideLayer:%p, _routeLayer:%p,  _screenType:%d,  | routeRequest:%p, ShowPreview failed. | ShowPreview failed. GetCurResultData() return false.
+
+sub_3c7b0  size=388
+  calls: I_GetAlcPtrx6
+  strings: virtual void NS_MultiScreenBase::AutoPreviewFragment::ExitPr | AutoPreviewFragment::ExitPreview, isNavi:%d, _isGuideLayerPr | _guideLayer:%p | _routeLayer:%p
+
+sub_3c934  size=140
+  calls: __stack_chk_fail
+  strings: virtual void NS_MultiScreenBase::AutoPreviewFragment::Handle
+
+sub_3c9c0  size=672
+  calls: I_GetAlcPtrx4, I_GetAlcDevPtrx3, _Znwjx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: enableRender:%d, screenType:%d, previewStatus:%d, _screenTyp | virtual void NS_MultiScreenBase::AutoPreviewFragment::OnEnab | runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI
+
+sub_3cc60  size=140
+  calls: I_GetAlcPtrx2
+  strings: screenType=%d, _screenType=%d, showPreview=%d | virtual void NS_MultiScreenBase::AutoPreviewFragment::OnSetM
+
+sub_3ccec  size=540
+  calls: I_GetAlcDevPtrx3, _Znwjx2, I_GetAlcPtrx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI | GFrame
+
+sub_3cf08  size=88
+
+sub_3cf60  size=152
+  calls: I_GetAlcPtrx2, _ZN9GNS_FRAME10CGFragment13isTopFragmentEv
+  strings: type:%d, isTop:%d | void NS_MultiScreenBase::AutoPreviewFragment::OnEndStopNaviU
+
+sub_3cff8  size=20
+
+sub_3d128  size=172
+  calls: I_GetAlcPtrx2
+  strings: isNavi:%d | void NS_MultiScreenBase::AutoPreviewFragment::GotoCruiseMode
+
+sub_3d1d4  size=224
+  calls: I_GetAlcPtrx4, _ZN3hsl3HSL14GetGuideHandleEv
+  strings: main screen in fmailiarnavi! | bool NS_MultiScreenBase::AutoPreviewFragment::IsNaviRunning( | main screen in navi!
+
+sub_3d2b4  size=40
+  calls: _ZN9GNS_FRAME10CGFragment13isTopFragmentEv
+
+sub_3d2dc  size=224
+  calls: I_GetAlcPtrx3, _ZN9GNS_FRAME10CGFragment13isTopFragmentEv
+  strings: enableRender=%d, screenType=%d, previewStatus=%d | void NS_MultiScreenBase::AutoPreviewFragment::OnEnableMapRen | _screenType:%d, isTopFragment is false!
+
+sub_3d3bc  size=20
+
+sub_3d4ec  size=188
+  calls: I_GetAlcPtrx2, __stack_chk_fail
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi | n32What:%d != PACKAGE_ID_MAINSCREEN:%d | void NS_MultiScreenBase::AutoPreviewFragment::NaviModeChange
+
+sub_3d5a8  size=236
+  calls: _Znwjx2, __stack_chk_fail
+
+sub_3d694  size=540
+  calls: I_GetAlcDevPtrx3, _Znwjx2, I_GetAlcPtrx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI | GFrame
+
+sub_3d8b4  size=128
+  calls: I_GetAlcPtrx2
+  strings: SelectRoutePath:%d
+
+sub_3d934  size=296
+  calls: _Znwjx2, __stack_chk_fail
+
+sub_3da84  size=24
+
+sub_3db08  size=36
+
+sub_3db2c  size=54
+
+sub_3db62  size=80
+
+sub_3dbb2  size=22
+  calls: _Znwj
+
+sub_3dbc8  size=80
+  calls: _ZNSt6__ndk15mutexD1Ev, _ZdlPv
+
+sub_3dc18  size=20
+
+sub_3dd24  size=46
+  calls: abort
+
+sub_3dd52  size=94
+  calls: _ZdlPv, abort
+
+sub_3de90  size=156
+  calls: I_GetAlcPtrx2, _ZN9GNS_FRAME10CGFragment13isTopFragmentEv
+  strings: isExist:%d, isTop:%d | void NS_MultiScreenBase::AutoPreviewFragment::EnterOrExitRou
+
+sub_3df2c  size=20
+
+sub_3e05a  size=18
+
+sub_3e1b0  size=152
+  calls: I_GetAlcPtrx2, _ZN9GNS_FRAME10CGFragment13isTopFragmentEv
+  strings: isNaviRunning:%d, isTop:%d | void NS_MultiScreenBase::AutoPreviewFragment::NaviModeChange
+
+sub_3e248  size=468
+  calls: I_GetAlcDevPtrx3, _Znwjx2, I_GetAlcPtrx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI | GFrame
+
+sub_3e41c  size=20
+
+sub_3e560  size=168
+  calls: I_GetAlcPtrx2, __stack_chk_fail
+  strings: void NS_MultiScreenBase::AutoPreviewFragment::CheckNaviMode( | IsNaviRunning is false
+
+sub_3e608  size=400
+  calls: I_GetAlcPtrx2
+  strings: HMI_CRUISE | AutoCruiseFragment | AutoCruiseFragment::AutoCruiseFragment %d | NS_MultiScreenBase::AutoCruiseFragment::AutoCruiseFragment(b
+
+sub_3e7ac  size=484
+  calls: I_GetAlcPtrx8, __dynamic_castx3, _ZN9GNS_FRAME10CGFragment12findViewByIdEix3, _ZN3hsl3HSL15GetPlatformUtilEv, _ZN9GNS_FRAME10CGFragment8inflaterEiPNS_11CGViewGroupE, _ZN9GNS_FRAME6CGView4hideEb
+  strings: virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar | onCreateView start | projID is %d. | platformUtil is NULL. | onCreateView end
+
+sub_3e99c  size=124
+  calls: I_GetAlcPtrx2
+  strings: screenType:%d | virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar
+
+sub_3ea18  size=80
+
+sub_3eb3c  size=1348
+  calls: I_GetAlcPtrx14, __aeabi_memclr8x2, _ZN3hsl3HSL12GetPosHandleEvx2, _ZN9GNS_FRAME13CGBroadcaster11getInstanceEjx2, _ZN3hsl3HSL21GetSystemNotifyHandleEv, _ZN3hsl12SystemNotify18AddTestNumObserverEPNS_15TestNumObserverE, _ZN3hsl3HSL16GetMapViewHandleEN2bl11MapEngineIDE, _ZN3hsl3HSL14GetGuideHandleEv, _ZN3hsl3HSL14GetCarPositionERN2bl6CarLocENS1_11MapEngineIDE, _ZN3hsl3Pos10GetLocInfoERN2bl7LocInfoE, _ZN3hsl3HSL15GetConfigHandleEv, _ZN3hsl6Config17AddConfigObserverEPNS_14ConfigObserverE, __stack_chk_fail
+  strings: virtual void NS_MultiScreenBase::AutoCruiseFragment::onCreat | AutoCruiseFragment onCreateView | AddCruiseObserver | void NS_MultiScreenBase::AutoCruiseFragment::GetCarLocFromPo | null posHandle | AutoCruiseFragment::GoToCarLocation (%f,%f)
+
+sub_3f334  size=172
+  calls: I_GetAlcPtrx2, __stack_chk_fail
+  strings: AutoCruiseFragment onRause | virtual void NS_MultiScreenBase::AutoCruiseFragment::onPause
+
+sub_3f3e0  size=336
+  calls: I_GetAlcPtrx2, _ZN9GNS_FRAME13CGBroadcaster11getInstanceEjx2, _ZN3hsl3HSL21GetSystemNotifyHandleEv, _ZN3hsl12SystemNotify21RemoveTestNumObserverEPNS_15TestNumObserverE, _ZN3hsl6Config20RemoveConfigObserverEPNS_14ConfigObserverE, _ZN3hsl3HSL14GetGuideHandleEv, __stack_chk_fail
+  strings: AutoCruiseFragment onDestroyView | virtual void NS_MultiScreenBase::AutoCruiseFragment::onDestr
+
+sub_3f530  size=108
+  calls: I_GetAlcPtrx2
+  strings: screenType:%d | virtual void NS_MultiScreenBase::AutoCruiseFragment::OnUpdat
+
+sub_3f5a0  size=76
+  calls: __stack_chk_fail
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_3f5ec  size=272
+  calls: I_GetAlcPtrx2, _ZN3hsl3HSL14GetGuideHandleEv, _ZN8CGStringC1EPKt, _ZN8CGStringD1Ev, __stack_chk_fail
+  strings: AutoCruiseFragment::UpdateCruiseInfoOnUI roadName:%s | virtual void NS_MultiScreenBase::AutoCruiseFragment::UpdateC
+
+sub_3f700  size=76
+  calls: __stack_chk_fail
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_3f74c  size=228
+  calls: I_GetAlcPtrx2, _ZN3hsl3HSL14GetGuideHandleEv, _ZN9GNS_FRAME6CGView4showEv, _ZN9GNS_FRAME6CGView4hideEb, __stack_chk_fail
+  strings: AutoCruiseFragment::ShowCruiseLaneInfoOnUI b:%d f:%d | virtual void NS_MultiScreenBase::AutoCruiseFragment::ShowCru
+
+sub_3f830  size=76
+  calls: __stack_chk_fail
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_3f87c  size=108
+  calls: I_GetAlcPtrx2
+  strings: AutoCruiseFragment::HideCruiseLaneInfoOnUI | virtual void NS_MultiScreenBase::AutoCruiseFragment::HideCru
+
+sub_3f8e8  size=156
+  calls: I_GetAlcPtrx2
+  strings: AutoCruiseFragment::ClearLanePointOverlay | virtual void NS_MultiScreenBase::AutoCruiseFragment::ClearLa
+
+sub_3f984  size=264
+  calls: I_GetAlcPtrx4, __stack_chk_fail
+  strings: naviType:%d | virtual void NS_MultiScreenBase::AutoCruiseFragment::NaviMod | /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi | n32What:%d != PACKAGE_ID_MAINSCREEN:%d
+
+sub_3fa8c  size=360
+  calls: I_GetAlcPtrx4, _ZN9GNS_FRAME10CGFragment13isTopFragmentEv, __stack_chk_fail
+  strings: virtual void NS_MultiScreenBase::AutoCruiseFragment::NaviMod | sceneType:%d, naviType:%d | Cannot switch to GuideSceneType from PreviewSceneType, retur
+
+sub_3fbf4  size=280
+  calls: I_GetAlcPtrx6, _ZN3hsl3HSL14GetGuideHandleEv
+  strings: virtual void NS_MultiScreenBase::AutoCruiseFragment::GuideMo | GuideModuleInited | AddCruiseObserver | n32What:%d != PACKAGE_ID_MAINSCREEN:%d
+
+sub_3fd0c  size=544
+  calls: I_GetAlcDevPtrx3, _Znwjx2, I_GetAlcPtrx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI | GFrame
+
+sub_3ff2c  size=76
+  calls: __stack_chk_fail
+  strings: /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_3ff78  size=116
+  calls: __stack_chk_fail
+  strings: PLAY_TIPS | /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi
+
+sub_3ffec  size=264
+  calls: I_GetAlcPtrx2, _ZN3hsl6Config8GetInt32ERKN4dice8String16ERiNS0_14VALUE_STRATEGYE, __stack_chk_fail
+  strings: PLAY_TIPS | AutoCruiseFragment::OnConfigChangeOnUI playTips:%d
+
+sub_400f4  size=652
+  calls: I_GetAlcPtrx4, I_GetAlcDevPtrx3, _Znwjx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: enableRender:%d, _screenType:%d, previewStatus:%d | virtual void NS_MultiScreenBase::AutoCruiseFragment::OnEnabl | runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI
+
+sub_40384  size=696
+  calls: I_GetAlcPtrx6, I_GetAlcDevPtrx3, _Znwjx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME10CGFragment13isTopFragmentEv, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: virtual void NS_MultiScreenBase::AutoCruiseFragment::OnUpdat | screenType:%d | /home/jenkins/build/AutoCpp/app/components/MultiScreen/Multi | return | runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1
+
+sub_4063c  size=166
+
+sub_406e2  size=18
+
+sub_40810  size=20
+
+sub_40940  size=468
+  calls: I_GetAlcDevPtrx3, _Znwjx2, I_GetAlcPtrx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI | GFrame
+
+sub_40b14  size=20
+
+sub_40c58  size=112
+  calls: I_GetAlcPtrx2
+  strings: AutoCruiseFragment::PosStatusUI valid:%d | void NS_MultiScreenBase::AutoCruiseFragment::PosStatusUI(boo
+
+sub_40cc8  size=20
+
+sub_40df8  size=508
+  calls: I_GetAlcDevPtrx3, _Znwjx2, I_GetAlcPtrx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI | GFrame
+
+sub_40ff4  size=20
+
+sub_41124  size=284
+  calls: I_GetAlcPtrx2, _ZN29CGCustomCruiseTrafficLaneView12SetAllowShowEb, _ZN3hsl3Pos11GetGPSValidEv
+  strings: curRoadNameViewEnable=%d,laneViewEnable=%d | void NS_MultiScreenBase::AutoCruiseFragment::AllViewInited()
+
+sub_41240  size=236
+  calls: _Znwjx2, __stack_chk_fail
+
+sub_4132c  size=20
+
+sub_41484  size=760
+  calls: I_GetAlcPtrx8, __aeabi_memclr8x3, _ZN3hsl3HSL12GetPosHandleEv, _ZN3hsl3Pos10GetLocInfoERN2bl7LocInfoE, _ZN3hsl3HSL16GetMapViewHandleEN2bl11MapEngineIDE, __stack_chk_fail
+  strings: void NS_MultiScreenBase::AutoCruiseFragment::SetCarlocationT | AutoNaviFragment::SetCarlocationToLocAtHMI (%f,%f,%f) | _mapViewBase == nullptr | _mapViewBase(%p)->GetMapCarLayerService() == nullptr | mapModeFromJson:%d, mapMode:%d
+
+sub_4177c  size=124
+  calls: I_GetAlcPtrx2
+  strings: AutoCruiseFragment::EnterCruiseScene | void NS_MultiScreenBase::AutoCruiseFragment::EnterCruiseScen
+
+sub_417f8  size=332
+  calls: I_GetAlcPtrx8, _ZN3hsl3HSL14GetGuideHandleEv
+  strings: main screen in navi! | bl::NaviType NS_MultiScreenBase::AutoCruiseFragment::GetNavi | nullptr == guideManager | nullptr == guideOperateion | main screen in simulate navi!
+
+sub_41954  size=236
+  calls: I_GetAlcPtrx2, _ZN9GNS_FRAME10CGFragmentC2ENS0_11ELaunchModeE, _ZN3hsl12ObserverBaseC2EPKc, _ZN3asl12String8Utils8snprintfEPciPKcz
+  strings: AutoBaseFragment | %s-%d | _engineId:%d, _screenType:%d | NS_MultiScreenBase::AutoBaseFragment::AutoBaseFragment(bl::M
+
+sub_41a50  size=108
+  calls: I_GetAlcPtrx2
+  strings: this:%p | virtual void NS_MultiScreenBase::AutoBaseFragment::onCreateV
+
+sub_41abc  size=104
+  calls: I_GetAlcPtrx2
+  strings: onResume | virtual void NS_MultiScreenBase::AutoBaseFragment::onResume(
+
+sub_41b24  size=104
+  calls: I_GetAlcPtrx2
+  strings: onPause | virtual void NS_MultiScreenBase::AutoBaseFragment::onPause()
+
+sub_41b8c  size=104
+  calls: I_GetAlcPtrx2
+  strings: onDestroyView | virtual void NS_MultiScreenBase::AutoBaseFragment::onDestroy
+
+sub_41bf4  size=812
+  calls: I_GetAlcPtrx4, I_GetAlcDevPtrx3, _Znwjx2, _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEvx2, _ZN9GNS_FRAME13CGAsyncObject19runOnUIThreadHelperERN3GPI7Closure8CallableIFvvEEEPvyNS_20__EGMsgInQueuePolicyENS1_7Message8PriorityEy, __stack_chk_fail, _ZN8CGStringC1Ev, _ZN8CGString6FormatEPKtz, _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString, abort
+  strings: num:%d | runOnUIThread pTarget must is this | //home/jenkins/.abtor/libraries/GFrame_shared/dev.6.2.0.54.1 | runOnUIThread | GPI::Scheduler::Cancelable GNS_FRAME::CGAsyncObject::runOnUI | GFrame
+
+sub_41f20  size=368
+  calls: I_GetAlcPtrx9, _ZN3hsl3HSL14GetGuideHandleEv, _ZN3hsl3HSL14GetRouteHandleEv
+  strings: main screen in navi! | guideManager == nullptr | guideOperation == nullptr | virtual bool NS_MultiScreenBase::AutoBaseFragment::IsAtScene | main screen in route result fragment! | main screen not in navi fragment!
+
+sub_42090  size=96
+  calls: _ZN15ExModuleManager11GetInstanceEv, _ZN15ExModuleManager11ModuleQueryE17ModuleInterfaceIdPPv, _ZN9GNS_FRAME8CGIntentC1Ev, _ZN9GNS_FRAME8CGIntentD1Ev, __stack_chk_fail
+
+sub_420f0  size=112
+  calls: _ZN15ExModuleManager11GetInstanceEv, _ZN15ExModuleManager11ModuleQueryE17ModuleInterfaceIdPPv, _ZN9GNS_FRAME8CGIntentC1Ev, _ZN9GNS_FRAME8CGIntent13putInt32ExtraEPKti, _ZN9GNS_FRAME8CGIntentD1Ev, __stack_chk_fail
+  strings: naviType
+
+sub_42160  size=112
+  calls: _ZN15ExModuleManager11GetInstanceEv, _ZN15ExModuleManager11ModuleQueryE17ModuleInterfaceIdPPv, _ZN9GNS_FRAME8CGIntentC1Ev, _ZN9GNS_FRAME8CGIntent13putInt32ExtraEPKti, _ZN9GNS_FRAME8CGIntentD1Ev, __stack_chk_fail
+  strings: naviType
+
+sub_421d0  size=112
+  calls: _ZN15ExModuleManager11GetInstanceEv, _ZN15ExModuleManager11ModuleQueryE17ModuleInterfaceIdPPv, _ZN9GNS_FRAME8CGIntentC1Ev, _ZN9GNS_FRAME8CGIntent13putInt32ExtraEPKti, _ZN9GNS_FRAME8CGIntentD1Ev, __stack_chk_fail
+  strings: naviType
+
+sub_42240  size=96
+  calls: _ZN15ExModuleManager11GetInstanceEv, _ZN15ExModuleManager11ModuleQueryE17ModuleInterfaceIdPPv, _ZN9GNS_FRAME8CGIntentC1Ev, _ZN9GNS_FRAME8CGIntentD1Ev, __stack_chk_fail
+
+sub_422a0  size=56
+
+sub_422d8  size=192
+  calls: I_GetAlcPtrx4, _ZN9GNS_FRAME17CGFrameSimulation14ownWorkStationEv
+  strings: void NS_MultiScreenBase::AutoBaseFragment::DumpScreenInfo() | pGFrameSimulation:%p | pGFrameSimulation is null | HMI_COMMON
+
+sub_42398  size=20
+
+sub_424dc  size=188
+  calls: I_GetAlcPtrx2
+  strings: currentRoadType:%d,currentRoadRemainDis:%d,currentRoadTotalD | bool NS_MultiScreenBase::AutoBaseFragment::isNeedShowMap(int
+
+sub_42654  size=280
+  calls: __dynamic_castx3, _ZN9GNS_FRAME10CGFragment12findViewByIdEix3, _ZN9GNS_FRAME10CGFragment8inflaterEiPNS_11CGViewGroupE, _ZN9GNS_FRAME6CGView4hideEb, __stack_chk_fail
+  strings: virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar
+
+sub_4276c  size=100
+
+sub_427d0  size=76
+  calls: _ZN9GNS_FRAME15CGMagicalStringC1ERK8CGString, _ZN9GNS_FRAME15CGMagicalStringD1Ev, __stack_chk_fail
+
+sub_4281c  size=272
+  calls: _Znwj, __aeabi_memclr4, __aeabi_memclr, _ZN3asl12String8Utils8snprintfEPciPKcz, __stack_chk_fail
+  strings: NS_InstrumentPannelLarge::CGInstrumentPannelLargeGuideFragme | HMI_GUIDE-%d
+
+sub_42a04  size=1080
+  calls: __dynamic_castx13, _ZN9GNS_FRAME10CGFragment12findViewByIdEix12, _ZN9GNS_FRAME10CGFragment10getContextEvx3, _ZN9GNS_FRAME6CGView13setBackGroundEix2, __aeabi_memclr8x2, I_GetAlcPtrx2, _ZN9GNS_FRAME10CGFragment8inflaterEiPNS_11CGViewGroupE, _ZN9GNS_FRAME6CGView4showEv, _ZN9GNS_FRAME10CGTextView16setEllipsizeTypeEi, _ZN9GNS_FRAME6CGView4hideEb, _ZN9GNS_FRAME13CGBroadcaster11getInstanceEj, _ZN8CGStringD1Ev, __stack_chk_fail
+  strings: virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar | maneuverIconOnLine has data already!
+
+sub_42e40  size=56
+
+sub_42e78  size=368
+  calls: I_GetAlcPtrx4, _ZN9GNS_FRAME13CGBroadcaster11getInstanceEj, __stack_chk_fail
+  strings: virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar | void NS_MultiScreenBase::AutoExscreenNotifyObserver::RemoveM | mapCrossControlObserver:%p | index:%d
+
+sub_42fe8  size=92
+  calls: __stack_chk_fail
+  strings: virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar
+
+sub_43044  size=124
+  calls: I_GetAlcPtrx2
+  strings: screenType:%d | virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar
+
+sub_430c0  size=172
+  calls: I_GetAlcPtrx2
+  strings: naviType:%d | virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar
+
+sub_4316c  size=180
+  calls: I_GetAlcPtrx2
+  strings: naviType:%d | virtual void NS_InstrumentPannelLarge::CGInstrumentPannelLar
+
+sub_43220  size=80
+
+sub_43270  size=84
+  calls: strcmpx4
+  strings: C.UTF-8 | en_US.UTF-8 | POSIX
+
+sub_432c4  size=32
+  calls: strstr
+  strings: UTF-8
+
+sub_432e4  size=96
+  calls: __errnox2
+  strings: C.UTF-8
+
+sub_43354  size=28
+
+sub_43370  size=264
+
+sub_43478  size=20
+  calls: __errno
+
+sub_4348c  size=24
+
+sub_434a4  size=20
+
+sub_434b8  size=308
+  calls: __aeabi_memcpy, __stack_chk_fail
+
+sub_435ec  size=22
+
+sub_43602  size=28
+
+sub_4361e  size=34
+
+sub_43640  size=36
+
+sub_43694  size=52
+  calls: __stack_chk_fail
+
+sub_436c8  size=188
+  calls: _Znajx2, vsnprintf, __stack_chk_fail
+
+sub_43784  size=24
+  calls: _ZdaPv
+
+sub_4379c  size=156
+  calls: __errnox2
+
+sub_43838  size=388
+  calls: __errnox2
+
+sub_439bc  size=72
+
+sub_43a04  size=616
+  calls: __stack_chk_fail
+
+sub_43c6c  size=172
+  calls: fprintf, fflush, abort
+  strings: unsupported register class | _Unwind_VRS_Get_Internal | /buildbot/src/android/ndk-release-r21/external/libcxx/../../
+
+sub_43d18  size=176
+  calls: fprintf, fflush, abort
+  strings: unsupported register class | _Unwind_VRS_Set | /buildbot/src/android/ndk-release-r21/external/libcxx/../../
+
+sub_43dc8  size=336
+  calls: __stack_chk_fail, fprintf, fflush, abort
+  strings: unsupported register class | _Unwind_VRS_Pop | /buildbot/src/android/ndk-release-r21/external/libcxx/../../
+
+sub_43f20  size=48
+
+sub_43f60  size=280
+  calls: abortx2, __stack_chk_fail, fprintf, fflush
+  strings: during phase1 personality function said it would stop here,  | unwind_phase2 | /buildbot/src/android/ndk-release-r21/external/libcxx/../../
+
+sub_44078  size=104
+  calls: sub_44116, fprintf, fflush, abort
+  strings: _Unwind_Resume() can't return | _Unwind_Resume | /buildbot/src/android/ndk-release-r21/external/libcxx/../../
+
+sub_440e0  size=52
+  calls: __stack_chk_fail
+
+sub_44114  size=48
+
+sub_44144  size=72
+  calls: __aeabi_memcpy, __aeabi_memclr
+
+sub_4418c  size=52
+
+sub_441c0  size=72
+
+sub_44208  size=56
+
+sub_44240  size=60
+
+sub_44282  size=34
+
+sub_442a4  size=20
+
+sub_442b8  size=64
+
+sub_442f8  size=84
+
+sub_4434c  size=26
+
+sub_44366  size=50
+
+sub_44398  size=100
+  calls: __stack_chk_fail
+
+sub_4440c  size=120
+  calls: fprintf, fflush, abort
+  strings: unsupported arm register | getRegister | /buildbot/src/android/ndk-release-r21/external/libcxx/../../
+
+sub_44484  size=116
+  calls: fprintf, fflush, abort
+  strings: unsupported arm register | setRegister | /buildbot/src/android/ndk-release-r21/external/libcxx/../../
+
+sub_444f8  size=172
+  calls: sub_44136, sub_4413c, sub_4412e, fprintf, fflush, abort
+  strings: Unknown ARM float register | getFloatRegister | /buildbot/src/android/ndk-release-r21/external/libcxx/../../
+
+sub_445a4  size=188
+  calls: sub_44134, sub_4413e, sub_4412c, fprintf, fflush, abort
+  strings: Unknown ARM float register | setFloatRegister | /buildbot/src/android/ndk-release-r21/external/libcxx/../../
+
+sub_44660  size=76
+  calls: __stack_chk_fail
+
+sub_446ac  size=20
+
+sub_446c0  size=52
+  calls: sub_44e26, sub_44e1c
+
+sub_446f4  size=96
+  calls: dladdr, snprintf, __stack_chk_fail
+  strings: %s
+
+sub_44754  size=68
+  calls: __gnu_Unwind_Find_exidx, __stack_chk_fail
+
+sub_44798  size=424
+  calls: __stack_chk_fail, fprintf, fflush, abort
+  strings: unknown personality routine | index inlined table detected but pr function requires extra  | getInfoFromEHABISection | /buildbot/src/android/ndk-release-r21/external/libcxx/../../
+
+sub_44940  size=60
+  calls: __stack_chk_fail
+
+sub_4497c  size=72
+
+sub_449c4  size=1092
+  strings: pc | sp | d0 | unknown register | r0 | r1
+
+sub_44e08  size=484
+
+sub_44ff8  size=84
+
+sub_4504c  size=32
+
+sub_4506c  size=68
+  calls: free
+
+sub_450b0  size=76
+  calls: mallocx2, abort, memcpy, memset
+
+sub_450fc  size=28
+
+sub_45118  size=28
+
+sub_45134  size=20
+
+sub_45148  size=28
+  calls: abort
+
+sub_45164  size=40
+
+sub_4518c  size=24
+
+sub_451a4  size=216
+  calls: calloc, abort, realloc, memset
+
+sub_4527c  size=36
+
+sub_452a0  size=270
+
+sub_453ae  size=196
+

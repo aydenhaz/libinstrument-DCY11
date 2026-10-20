@@ -1,0 +1,17 @@
+#pragma once
+namespace NS_MultiScreenBase { struct tagSTExtScreen; }
+namespace bl { typedef int MapEngineID; }
+namespace hsl {
+class MultiScreenService {
+public:
+    static MultiScreenService *GetInstance();
+    bool IsCreatedLargeScreen();
+    void SetCreatedLargeScreen(bool);
+    void InitLock();
+    void InitLockFree();
+    int GetStartOpenScreenMode(int);
+    void SetStartOpenScreenMode(int, const NS_MultiScreenBase::tagSTExtScreen&);
+    bl::MapEngineID GetMapEngineId(int);
+    void SetNaviType(int, int);
+};
+}

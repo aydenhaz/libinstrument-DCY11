@@ -1,0 +1,19 @@
+Link-closure report — FINAL
+===========================
+libInstrumentPannelLarge.so imports 441 symbols:  441/441 CLOSED, 0 missing.
+
+Host libs (host_libs/, all 32-bit ARM EABI5 soft-float Thumb — ABI-compatible):
+  libGFrame.so                131 symbols   (UI framework)
+  libhsl.so                   142 symbols   (HMI service layer)
+  libGPlatformInterface.so     38 symbols   (CGString/CGColor/I_*/GPI::)
+  libCommon.so                 41 symbols   (StringUtils/FileUtils/Encoding/...)
+  libGbl.so                    22 symbols   (bl::* BizLayer)
+  libbase_utils.so             14 symbols   (asl::* RefBase family)
+  libGAdaptorInterface.so       9 symbols   (GAI_*)
+  libGSQuirrel.so               2 symbols   (script VM)
+  libGAdaptor.so                0 symbols   (pure consumer)
+  NDK runtime                  42 symbols   (libc/libm/libdl/libc++_shared)
+
+Build:  ./link_arm.sh   (NDK toolchain required; x86 host cannot link ARM here)
+Verify: readelf -d libInstrumentPannelLarge.so | grep NEEDED   # 9 host libs + libc/libm/libdl/libc++_shared
+        nm -D --defined-only libInstrumentPannelLarge.so      # 3 entries + getClassType + RTTI
