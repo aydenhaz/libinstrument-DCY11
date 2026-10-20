@@ -1,0 +1,157 @@
+00017e9c push       {r4, r5, r6, r7, lr}                     
+00017e9e add        r7, sp, #0xc                             
+00017ea0 push.w     {r7, r8, sb, sl, fp}                     
+00017ea4 vpush      {d1, d2, d3, d4, d5, d6, d7, d8, d9, d10} 
+00017ea8 mov        r8, r0                                   
+00017eaa ldr        r0, [pc, #0x17c]                         literal 0x56a46
+00017eac cmp        r1, #0x17                                
+00017eae add        r0, pc                                   
+00017eb0 ldr.w      fp, [r0]                                 
+00017eb4 ldr.w      r0, [fp]                                 
+00017eb8 str        r0, [sp, #0x34]                          
+00017eba bne.w      #0x18006                                 
+00017ebe vldr       s18, [pc, #0x164]                        
+00017ec2 movs       r3, #0                                   
+00017ec4 movs       r0, #1                                   
+00017ec6 strb.w     r3, [r8, #0x98]                          
+00017eca vmov.f32   s16, s18                                 
+00017ece strb.w     r0, [r8, #0xa0]                          
+00017ed2 vmov.f32   s0, s18                                  
+00017ed6 ldrsb.w    r0, [r8, #0x7c]                          
+00017eda ldrd       r1, r2, [r8, #0x88]                      
+00017ede adds       r4, r3, #2                               
+00017ee0 cmp        r4, r2                                   
+00017ee2 bhs        #0x17f16                                 
+00017ee4 ldrb       r5, [r1, r3]                             
+00017ee6 adds       r4, r3, r0                               
+00017ee8 add        r3, r1                                   
+00017eea vmov       s2, r5                                   
+00017eee vcvt.f32.u32 s2, s2                                   
+00017ef2 ldrb       r5, [r3, #1]                             
+00017ef4 ldrb       r3, [r3, #2]                             
+00017ef6 vadd.f32   s0, s0, s2                               
+00017efa vmov       s2, r3                                   
+00017efe mov        r3, r4                                   
+00017f00 vcvt.f32.u32 s2, s2                                   
+00017f04 vadd.f32   s16, s16, s2                             
+00017f08 vmov       s2, r5                                   
+00017f0c vcvt.f32.u32 s2, s2                                   
+00017f10 vadd.f32   s18, s18, s2                             
+00017f14 b          #0x17ede                                 
+00017f16 ldrd       r0, r1, [r8, #0x80]                      
+00017f1a add        r5, sp, #0x30                            
+00017f1c muls       r0, r1, r0                               
+00017f1e vmov       s2, r0                                   
+00017f22 vcvt.f32.s32 s20, s2                                  
+00017f26 vdiv.f32   s0, s0, s20                              
+00017f2a vcvt.s32.f32 s0, s0                                   
+00017f2e ldr        r0, [pc, #0xfc]                          literal 0x569fa
+00017f30 ldr        r6, [pc, #0xfc]                          literal 0x44460
+00017f32 add        r0, pc                                   
+00017f34 add        r6, pc                                   
+00017f36 ldr        r4, [r0]                                 
+00017f38 mov        r0, r5                                   
+00017f3a mov        r1, r6                                   
+00017f3c vmov       r2, s0                                   
+00017f40 blx        r4                                       
+00017f42 vdiv.f32   s0, s18, s20                             
+00017f46 add        r0, sp, #0x2c                            
+00017f48 mov        r1, r6                                   
+00017f4a vcvt.s32.f32 s0, s0                                   
+00017f4e vmov       r2, s0                                   
+00017f52 blx        r4                                       
+00017f54 vdiv.f32   s0, s16, s20                             
+00017f58 add.w      sl, sp, #0x28                            
+00017f5c mov        r1, r6                                   
+00017f5e mov        r0, sl                                   
+00017f60 vcvt.s32.f32 s0, s0                                   
+00017f64 vmov       r2, s0                                   
+00017f68 blx        r4                                       
+00017f6a ldr        r1, [pc, #0xc8]                          literal 0x4442a
+00017f6c add        r6, sp, #0x24                            
+00017f6e ldr        r4, [pc, #0xc8]                          literal 0xffffe2e3
+00017f70 add        r1, pc                                   
+00017f72 mov        r0, r6                                   
+00017f74 add        r4, pc                                   
+00017f76 blx        r4                                       
+00017f78 ldr        r0, [pc, #0xc0]                          literal 0x569b4
+00017f7a mov        r1, r5                                   
+00017f7c add        r0, pc                                   
+00017f7e ldr.w      sb, [r0]                                 
+00017f82 mov        r0, r6                                   
+00017f84 blx        sb                                       
+00017f86 ldr        r5, [pc, #0xb8]                          literal 0xffffe30d
+00017f88 mov        r0, r6                                   
+00017f8a add        r5, pc                                   
+00017f8c blx        r5                                       
+00017f8e ldr        r1, [pc, #0xb4]                          literal 0x44422
+00017f90 add        r6, sp, #0x24                            
+00017f92 add        r1, pc                                   
+00017f94 mov        r0, r6                                   
+00017f96 blx        r4                                       
+00017f98 add        r1, sp, #0x2c                            
+00017f9a blx        sb                                       
+00017f9c mov        r0, r6                                   
+00017f9e blx        r5                                       
+00017fa0 ldr        r1, [pc, #0xa4]                          literal 0x4442a
+00017fa2 add        r6, sp, #0x24                            
+00017fa4 add        r1, pc                                   
+00017fa6 mov        r0, r6                                   
+00017fa8 blx        r4                                       
+00017faa mov        r1, sl                                   
+00017fac blx        sb                                       
+00017fae mov        r0, r6                                   
+00017fb0 blx        r5                                       
+00017fb2 mov        r0, sl                                   
+00017fb4 blx        r5                                       
+00017fb6 add        r0, sp, #0x2c                            
+00017fb8 blx        r5                                       
+00017fba add        r0, sp, #0x30                            
+00017fbc blx        r5                                       
+00017fbe blx        #0x13c14                                 I_GetAlcPtr
+00017fc2 cbz        r0, #0x18006                             
+00017fc4 blx        #0x13c14                                 I_GetAlcPtr
+00017fc8 ldr        r1, [r0]                                 
+00017fca mov.w      ip, #0x13c                               
+00017fce mov.w      lr, #0                                   
+00017fd2 mov.w      r3, #0x8000000                           
+00017fd6 ldr.w      sb, [r1, #4]                             
+00017fda ldrd       r1, r2, [r8, #0x88]                      
+00017fde str        r1, [sp, #0x20]                          
+00017fe0 ldr        r1, [pc, #0x68]                          literal 0x44402
+00017fe2 ldr        r5, [pc, #0x6c]                          literal 0x3496d
+00017fe4 ldr        r6, [pc, #0x6c]                          literal 0x436d7
+00017fe6 add        r1, pc                                   
+00017fe8 ldr        r4, [pc, #0x6c]                          literal 0x3495d
+00017fea add        r5, pc                                   
+00017fec add        r6, pc                                   
+00017fee strd       r3, lr, [sp]                             
+00017ff2 add        r4, pc                                   
+00017ff4 strd       r4, r6, [sp, #8]                         
+00017ff8 strd       r5, ip, [sp, #0x10]                      
+00017ffc strd       r1, r2, [sp, #0x18]                      
+00018000 movs       r1, #8                                   
+00018002 movs       r2, #0                                   
+00018004 blx        sb                                       
+00018006 ldr.w      r0, [fp]                                 
+0001800a ldr        r1, [sp, #0x34]                          
+0001800c subs       r0, r0, r1                               
+0001800e itttt      eq                                       
+00018010 moveq      r0, #1                                   
+00018012 vpopeq     {d1, d2, d3, d4, d5, d6, d7, d8, d9, d10} 
+00018016 addeq      sp, #4                                   
+00018018 popeq.w    {r8, sb, sl, fp}                         
+0001801c it         eq                                       
+0001801e popeq      {r4, r5, r6, r7, pc}                     
+00018020 blx        #0x13a28                                 __stack_chk_fail
+00018024 movs       r0, r0                                   
+00018026 movs       r0, r0                                   
+00018028 ldr        r6, [r0, #0x24]                          
+0001802a movs       r5, r0                                   
+0001802c ldr        r2, [r7, #0x1c]                          
+0001802e movs       r5, r0                                   
+00018030 add        r0, ip                                   
+00018032 movs       r4, r0                                   
+00018034 add        r2, r5                                   
+00018036 movs       r4, r0                                   
+00018038 b          #0x18602                                 

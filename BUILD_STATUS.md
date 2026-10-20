@@ -163,3 +163,9 @@ The build deliberately removes failed final outputs. It will not label an incomp
 - Recovered paint/capture gates and wrapping counter increment. Original reloads state after external effects; the decision helper must be re-evaluated after drawing.
 - Added 576 original Thumb paint comparisons and 2 synchronous counter-mutation cases; all pass alongside prior 424 cases. Native sanitizer and ARM Thumb compile-only tests pass.
 - Device/canvas methods are mocked in emulation. Helpers remain prerequisites, not an installed CoverUtil callback. No replacement SO.
+
+## Cover capture RGB arithmetic
+
+- Recovered event 0x17 request/ready transitions and valid RGB/RGBA average arithmetic, preserving float32 accumulation and dimension-based divisor. Helper rejects unsupported malformed buffers; this is not invented original validation.
+- 30 original Thumb/VFP arithmetic/state cases pass in addition to prior 1,002 cover-state cases. Native sanitizer and ARM Thumb compile-only checks pass.
+- Stops before external formatter operations; remaining string/configuration effects and actual observer integration are incomplete. See analysis/COVER_RGB_CALLBACK.md. No replacement SO.
