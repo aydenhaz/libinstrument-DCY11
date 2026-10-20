@@ -8,7 +8,7 @@ CGString::CGString() {}
 CGString::~CGString() {}
 namespace NS_MultiScreenBase {
 struct CoverUtilTestAccess {
- static void prepare(CoverUtil& c,uint8_t* data){c.bytes_=data;c.width_=2;c.height_=1;c.length_=8;c.stride_=4;c.image_=&c;c.enabled_=1;c.requested_=1;c.state_=0;c.counter_=9;c.surface_.scalar[7]=7;}
+ static void prepare(CoverUtil& c,uint8_t* data){c.screenshot_.bytes=data;c.screenshot_.width=2;c.screenshot_.height=1;c.screenshot_.length=8;c.screenshot_.stride=4;c.image_=&c;c.enabled_=1;c.requested_=1;c.state_=0;c.counter_=9;c.surface_.scalar[7]=7;}
  static bool defaults(const CoverUtil& c){return c.threshold_==2&&!c.image_&&!c.enabled_&&!c.requested_&&!c.state_&&!c.counter_&&c.unknown94_==1&&c.surface_.scalar[7]==0xffffffffu;}
  static bool requested(const CoverUtil& c){return c.requested_;}
  static bool ready(const CoverUtil& c){return c.state_;}

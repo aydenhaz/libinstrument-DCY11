@@ -188,3 +188,9 @@ The build deliberately removes failed final outputs. It will not label an incomp
 - Added a concrete dual-observer CoverUtil with original constructor state, map/capture processing and first-render predicate. ARM32 size 0xa8, 14 field offsets and 44-byte vtable group/slot order pass checks.
 - Native sanitizer tests instantiate the class and dispatch through both observer bases; all 32 production units pass ARM Linux musl compile-only checking.
 - Still not wired into Packet: setConfig, drawing/capture service calls, logging, host bases and registration remain incomplete. See analysis/COVER_OBSERVER_CLASS.md. No replacement SO.
+
+## Concrete CoverUtil top-render callback
+
+- Added actual TopRenderCoverCallback implementation using verified canvas drawImgEx and screenshot-device slots. Recovered polymorphic CGRect layout and grouped screenshot fields into a typed subobject without moving ARM32 offsets.
+- Preserves request-flag ordering, false capture return handling, wrapping increments and external callback state reloads. Native sanitizer dispatch/config tests and ARM32 layout probes pass; all 32 production units pass ARM Linux musl compile-only.
+- Actual device/image configuration, logging, callback registration and Packet construction remain incomplete. See analysis/COVER_TOP_RENDER_IMPLEMENTATION.md. No replacement SO.

@@ -5,6 +5,7 @@
 #include <DiceString16.h>
 #include <cstdint>
 #include <cstddef>
+#include "../abi/CoverGraphics.h"
 namespace NS_MultiScreenBase {
 struct CoverUtilTestAccess;
 class CoverUtil : public hsl::MapSurfaceViewObserver, public bl::IBLMapBusinessDataObserver {
@@ -14,7 +15,8 @@ public:
     void MapSurfaceViewStatusChange(int,MAPSURFACE,void*,int,int,int) override;
     bool onBusinessDataObserver(int,const void*,void*) override;
     bool isUIFirstRenderFinish();
-    // Configuration, draw/capture services and full module integration are still
+    void TopRenderCoverCallback(GNS_FRAME::CGCanvas*);
+    // Configuration and full module integration are still
     // unrecovered. This class is not enabled in the Packet factory.
 private:
     friend struct CoverUtilTestAccess;
@@ -28,13 +30,7 @@ private:
     SurfaceConfig surface_;
     uint8_t enabled_=0;
     uint8_t padding71_[3];
-    uint32_t unknown74_=0, unknown78_=0;
-    int8_t stride_=0;
-    uint8_t padding7d_[3];
-    int32_t width_=0,height_=0;
-    uint8_t* bytes_=nullptr;
-    uint32_t length_=0;
-    uint16_t unknown90_=0,padding92_;
+    bl::ScreenShotInfo screenshot_;
     int32_t unknown94_=1;
     uint8_t requested_=0;
     uint8_t padding99_[3];

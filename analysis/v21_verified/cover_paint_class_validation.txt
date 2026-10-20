@@ -1,0 +1,11 @@
+Concrete CoverUtil paint dispatch native ASan/UBSan test: PASS
+Concrete CoverUtil config/base-interface native ASan/UBSan test: PASS
+ARM32 field-offset/size probe: PASS
+Production ARM Linux musl compile-only: 32/32 PASS
+PASS: 424 original Thumb/helper comparisons; I_GetAlcPtr mocked null
+PASS: 576 original paint/helper comparisons; draw/capture effects mocked
+PASS: capture callback counter mutation is reloaded before increment
+PASS: draw callback counter mutation is reloaded before capture decision
+PASS: 30 original RGB/RGBA accumulation and state comparisons; stopped before formatter
+PASS: primary and secondary (+4 this adjustment) original callback traces, temporary cleanup and ignored events; services mocked
+External graphics/capture/string/config services mocked; no Android link or runtime validation.
