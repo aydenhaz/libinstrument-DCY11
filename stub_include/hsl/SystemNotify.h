@@ -6,6 +6,7 @@ public:
     void AddInstrumentPannelObserver(void*);
     void RemoveInstrumentPannelObserver(void*);
     void AddMapSurfaceViewObserver(void*);
+    void RemoveMapSurfaceViewObserver(void*);
     void AddMapSurfaceObserver(void*);
     void AddLanguageSwitchObserver(void*, bool);
     void AddNetObserver(void*);

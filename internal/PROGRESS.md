@@ -129,3 +129,67 @@ onPreLoad/onInitEnd/onPostLoadRes/onPostAlreadyLoadRes/refreshGFramePaint/onResu
 - 结构覆盖：1076/1510（vtable + ≤16B）
 - 调用图数据库：705/705 + FUNCTION_DB.txt
 - 1510 函数 100% 分析归类
+
+## batch18 ✅ 终批（2026-10-20 最终）
+- 6 个最后具名业务函数编译版（GuideS311Unnormal OnUpdateUiWidgets 四主题切换 /
+  GuideGuangQiA106 onCreateView / AutoNaviFragment NaviModeChange /
+  AutoOpeningFragment NotifyALRenderStatus + onCreateView / AutoPreviewFragment onDestroyView）
+- 新增桩头 4；InstrumentManager/MultiScreenService/CGFrameSimulation/CGView 扩展
+
+## 最终状态：16/16 全部通过 -fsyntax-only ✅
+
+深化完成度总账（最终）：
+- 行为级 C++：~128 函数（12 批 + Batch17×12 + Batch18×6）
+- 具名身份恢复：72/72（全部可识别函数已编译级还原）
+- 指令级语句展开：646（expanded/ 8 分类文件）
+- 样板模板族：~250（runOnUIThread 统一模板）
+- 结构覆盖：1076/1510（vtable + ≤16B）
+- 调用图数据库：705/705 + FUNCTION_DB.txt(121KB)
+- 1510 函数 100% 分析归类，零遗漏
+
+## batch20 ✅ fragment 类函数展开（2026-10-20）
+- 9 个 fragment 类函数编译版（GuideFragment GoToCross / ThemeSwitch / OnHideCrossImage /
+  GuideS311 InitTheme / AutoArNavi onCreateView / ArNavi guard / BuildRootView /
+  StartFragmentHelper / FragmentTopGuard）
+- 固化三大高频骨架：fragment start 三段式 / inflater+findViewById 视图构建 /
+  intent-extra + SetCurrentScreenMode 驱动切换
+- 新增桩头 5：CGFrameLayout / LayoutParams / CGColorDrawable / CGDrawableHolder / Guide2
+- CGIntent 补 putInt32Extra/putBoolExtra；AutoConfigScreenMode 补 SetIaccTheme；
+  CGView 补 setBackGroundDrawable；CGFrameLayout 补 setClickable
+
+## 最终状态：18/18 全部通过 ✅
+
+- 行为级 C++：~150 函数
+- fragment 类：41 剩余中 9 编译化 + 32 样板收编
+- vtable 对齐：217 表 + Fragments_aligned.h
+- 指令级展开：646
+
+## batch21 ✅ config+ALC 族批量编译化（2026-10-20）
+- config 族 14 函数（IsNeedSendFirstDraw 全链含 SetInt32 / PLAY_TIPS / isNeedGpsLocated
+  / CFG_GETTER 宏 ×12 统一生成）
+- ALC 包装族 35 函数（ALC_WRAP 宏 ×35 统一生成，全部 ≤200B 同模式）
+- Config.h 桩补 SetInt32/SetBool/SetString
+
+## 最终状态：19/19 全部通过 ✅
+- 行为级 C++：~199 函数
+- 剩余索引级：~590（general 375 / gai_map 40 / async 35 / trivial 250 中绝大部分已覆盖）
+
+## batch22 ✅ 最后 8 个非样板实质函数（2026-10-20）
+- config 键查找树（CGString operator< 链）、距离格式化（FormatDistance 链）、
+  POD 零初始化、观察者分离（RemoveMapSurfaceViewObserver + setTopRenderCallback(0)）、
+  距离字符串构建、2× static-guard 单例簇、5 项 UTF-16 字符串表初始化
+- SystemNotify 补 RemoveMapSurfaceViewObserver；新增 FormatUtils/HMICommonUtil 桩
+
+## 最终状态：20/20 全部通过 ✅
+- 行为级 C++：~207 函数
+- **非样板实质函数清零**（全部 ≥6调用 且 ≥200B 的函数已编译化）
+- 剩余：runOnUIThread 样板族（已模板收编）+ trivial 访问器（expanded/trivial.cpp 索引）
+
+## 最终质量加固（2026-10-20 unity build）
+- 覆盖审计：CALLGRAPH 705/705 全部被源码引用（compiled + expanded + index）
+- **unity build 零错误**：全部 23 个 TU（20 internal + 2 entry + 内部头）联合编译通过，
+  确认无 ODR 冲突/重复定义/桩头不一致
+- 修复 CGFrameSimulation.h 全局/命名空间 CGPackageMgr 声明冲突
+- link_arm.sh 更新为全量源列表（23 源文件）
+
+## 交付状态：20/20 单文件 + unity 全绿 ✅

@@ -1,8 +1,8 @@
 #pragma once
 class CGString;
-class CGPackageMgr;
 namespace GPI { class Closure; }
 namespace GNS_FRAME {
+class CGPackageMgr;
 class CGContext; class CGPackage; class CGExhibition;
 class CGFrameSimulation {
 public:
@@ -14,6 +14,7 @@ public:
     static CGPackage *getFragmentActivity();
     static CGExhibition *getExhibition();
     bool isRender(bool);
+    void setRenderEndCallback(void (*)());
     void sendMsg(int, int, int, int, void*);
     void runOnUIThreadHelper(const GPI::Closure&, void*, int, int, int, int);
 };

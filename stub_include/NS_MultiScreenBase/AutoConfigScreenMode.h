@@ -5,5 +5,6 @@ public:
     static AutoConfigScreenMode *GetInstance();
     int GetCurrentScreenMode(int);
     void SetCurrentScreenMode(int, int);
+    void SetIaccTheme(int);
 };
 }

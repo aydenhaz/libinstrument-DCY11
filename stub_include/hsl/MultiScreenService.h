@@ -8,6 +8,7 @@ public:
     bool IsCreatedLargeScreen();
     void SetCreatedLargeScreen(bool);
     void InitLock();
+    bool IsHslStartupFinished();
     void InitLockFree();
     int GetStartOpenScreenMode(int);
     void SetStartOpenScreenMode(int, const NS_MultiScreenBase::tagSTExtScreen&);
