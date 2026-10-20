@@ -1,0 +1,44 @@
+001e50b8 push       {r4, r5, r7, lr}                         
+001e50ba add        r7, sp, #8                               
+001e50bc ldr        r3, [pc, #0x78]                          literal 0x1eb13e
+001e50be mov        r4, r0                                   
+001e50c0 movs       r5, #0                                   
+001e50c2 mov.w      r1, #-1                                  
+001e50c6 add        r3, pc                                   
+001e50c8 strd       r5, r5, [r4]                             
+001e50cc strd       r5, r5, [r4, #8]                         
+001e50d0 movs       r0, #3                                   
+001e50d2 strd       r1, r5, [r4, #0x10]                      
+001e50d6 add.w      r1, r4, #0x18                            
+001e50da adds       r3, #8                                   
+001e50dc stm        r1!, {r0, r3, r5}                        
+001e50de add.w      r0, r4, #0x38                            
+001e50e2 mov.w      r2, #0x3f800000                          
+001e50e6 strd       r5, r2, [r4, #0x24]                      
+001e50ea strd       r3, r5, [r4, #0x2c]                      
+001e50ee str        r5, [r4, #0x34]                          
+001e50f0 bl         #0x1213b0                                
+001e50f4 add.w      r0, r4, #0x48                            
+001e50f8 bl         #0x1213b0                                
+001e50fc ldr        r0, [pc, #0x3c]                          literal 0x1f67d6
+001e50fe mov.w      r1, #-1                                  
+001e5102 add        r0, pc                                   
+001e5104 adds       r0, #8                                   
+001e5106 strd       r5, r0, [r4, #0x58]                      
+001e510a add.w      r0, r4, #0x70                            
+001e510e strd       r5, r5, [r4, #0x60]                      
+001e5112 strd       r5, r5, [r4, #0x68]                      
+001e5116 blx        #0x10cb58                                _ZN9GNS_FRAME11CGSchedulerC2Ei
+001e511a add.w      r0, r4, #0xac                            
+001e511e blx        #0x10c3c0                                _ZN8CGStringC1Ev
+001e5122 add.w      r0, r4, #0xc4                            
+001e5126 bl         #0x16a390                                
+001e512a mov        r0, r4                                   
+001e512c strd       r5, r5, [r4, #0x1d8]                     
+001e5130 strh.w     r5, [r4, #0x1d4]                         
+001e5134 pop        {r4, r5, r7, pc}                         
+001e5136 nop                                                 
+001e5138 cbz        r6, #0x1e514a                            
+001e513a movs       r6, r3                                   
+001e513c str        r6, [r2, #0x7c]                          
+001e513e movs       r7, r3                                   

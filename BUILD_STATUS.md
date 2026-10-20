@@ -194,3 +194,9 @@ The build deliberately removes failed final outputs. It will not label an incomp
 - Added actual TopRenderCoverCallback implementation using verified canvas drawImgEx and screenshot-device slots. Recovered polymorphic CGRect layout and grouped screenshot fields into a typed subobject without moving ARM32 offsets.
 - Preserves request-flag ordering, false capture return handling, wrapping increments and external callback state reloads. Native sanitizer dispatch/config tests and ARM32 layout probes pass; all 32 production units pass ARM Linux musl compile-only.
 - Actual device/image configuration, logging, callback registration and Packet construction remain incomplete. See analysis/COVER_TOP_RENDER_IMPLEMENTATION.md. No replacement SO.
+
+## Image allocation and CGSize ABI
+
+- Replaced one-byte CGImage placeholder with verified opaque 0x1e0 extent. Corrected CGSize to its 12-byte ARM32 polymorphic layout, CGImage::create success return, and observed cover color value 0x101.
+- Native sanitizer allocation/argument contract and ARM probe pass; all 32 production source units pass ARM Linux musl compile-only checking.
+- Recovered full setConfig signature, including by-value nontrivial SurfaceConfig. Its implementation and Packet integration remain incomplete. See analysis/IMAGE_ALLOCATION_ABI.md. No replacement SO.

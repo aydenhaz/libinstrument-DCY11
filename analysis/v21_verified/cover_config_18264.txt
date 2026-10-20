@@ -1,0 +1,377 @@
+00018264 push       {r4, r5, r6, r7, lr}                     
+00018266 add        r7, sp, #0xc                             
+00018268 push.w     {r8, sb, sl, fp}                         
+0001826c sub        sp, #0x144                               
+0001826e str        r0, [sp, #0x40]                          
+00018270 mov        fp, r3                                   
+00018272 ldr        r0, [pc, #0x3b4]                         literal 0x5667a
+00018274 mov        r8, r2                                   
+00018276 mov        r4, r1                                   
+00018278 ldr        r6, [r7, #8]                             
+0001827a add        r0, pc                                   
+0001827c ldr        r0, [r0]                                 
+0001827e str        r0, [sp, #0x38]                          
+00018280 ldr        r0, [r0]                                 
+00018282 str        r0, [sp, #0x140]                         
+00018284 blx        #0x13c14                                 I_GetAlcPtr
+00018288 ldr        r1, [pc, #0x3a0]                         literal 0x34861
+0001828a cmp        r0, #0                                   
+0001828c ldr        r0, [pc, #0x3a0]                         literal 0x43433
+0001828e add        r1, pc                                   
+00018290 add        r0, pc                                   
+00018292 str        r0, [sp, #0x3c]                          
+00018294 ldr        r5, [pc, #0x39c]                         literal 0x346b9
+00018296 add        r5, pc                                   
+00018298 beq        #0x182e6                                 
+0001829a mov        sb, r4                                   
+0001829c mov        sl, r1                                   
+0001829e blx        #0x13c14                                 I_GetAlcPtr
+000182a2 ldr        r1, [r0]                                 
+000182a4 mov        r4, fp                                   
+000182a6 ldrd       r2, r3, [r6]                             
+000182aa mov        fp, r5                                   
+000182ac ldr.w      ip, [r6, #0x1c]                          
+000182b0 ldr.w      lr, [r1]                                 
+000182b4 add        r1, sp, #0x20                            
+000182b6 ldrb       r5, [r6, #9]                             
+000182b8 stm        r1!, {r2, r3, r5}                        
+000182ba movs       r5, #0                                   
+000182bc mov.w      r3, #0x8000000                           
+000182c0 ldr        r2, [pc, #0x374]                         literal 0x348ae
+000182c2 movs       r1, #0x9e                                
+000182c4 strd       r3, r5, [sp]                             
+000182c8 mov        r5, fp                                   
+000182ca ldr        r3, [sp, #0x3c]                          
+000182cc add        r2, pc                                   
+000182ce str        r5, [sp, #8]                             
+000182d0 mov        fp, r4                                   
+000182d2 strd       r3, sl, [sp, #0xc]                       
+000182d6 add        r3, sp, #0x14                            
+000182d8 stm.w      r3, {r1, r2, ip}                         
+000182dc movs       r1, #8                                   
+000182de movs       r2, #0                                   
+000182e0 blx        lr                                       
+000182e2 mov        r1, sl                                   
+000182e4 mov        r4, sb                                   
+000182e6 cmp        r4, #0                                   
+000182e8 str        r1, [sp, #0x34]                          
+000182ea beq.w      #0x18844                                 
+000182ee cmp.w      r8, #0                                   
+000182f2 it         ne                                       
+000182f4 cmpne.w    fp, #0                                   
+000182f8 beq.w      #0x18844                                 
+000182fc ldr.w      sb, [sp, #0x40]                          
+00018300 mov        r1, r6                                   
+00018302 str        r5, [sp, #0x30]                          
+00018304 movs       r2, #0x24                                
+00018306 add.w      r0, sb, #8                               
+0001830a stm.w      r0, {r4, r8, fp}                         
+0001830e add.w      r0, sb, #0x20                            
+00018312 blx        #0x13a1c                                 __aeabi_memcpy
+00018316 add.w      r0, sb, #0x44                            
+0001831a add.w      r1, r6, #0x24                            
+0001831e blx        #0x13e60                                 _ZN8CGStringaSERKS_
+00018322 add.w      r0, r6, #0x3c                            
+00018326 add.w      r1, sb, #0x5c                            
+0001832a add.w      r8, sb, #0x18                            
+0001832e ldm        r0!, {r2, r3, r4, r5}                    
+00018330 stm        r1!, {r2, r3, r4, r5}                    
+00018332 ldrb       r0, [r0]                                 
+00018334 strb       r0, [r1]                                 
+00018336 mov        r0, r8                                   
+00018338 ldr        r1, [pc, #0x300]                         literal 0x44120
+0001833a add        r1, pc                                   
+0001833c bl         #0x181b0                                 
+00018340 blx        #0x13d64                                 _ZN3hsl3HSL15GetConfigHandleEv
+00018344 ldr        r1, [pc, #0x2f8]                         literal 0x44112
+00018346 add        r6, sp, #0x8c                            
+00018348 ldr        r5, [pc, #0x2f8]                         literal 0xffffdf07
+0001834a mov        r4, r0                                   
+0001834c add        r1, pc                                   
+0001834e mov        r0, r6                                   
+00018350 add        r5, pc                                   
+00018352 blx        r5                                       
+00018354 mov        r0, r4                                   
+00018356 mov        r1, r6                                   
+00018358 mov        r2, r8                                   
+0001835a movs       r3, #0                                   
+0001835c mov.w      sl, #0                                   
+00018360 blx        #0x13e6c                                 _ZN3hsl6Config9GetStringERKN4dice8String16ERS2_NS0_14VALUE_STRATEGYE
+00018364 mov        r0, r6                                   
+00018366 bl         #0x1629a                                 
+0001836a ldr        r1, [pc, #0x2dc]                         literal 0x4412c
+0001836c add        r4, sp, #0x44                            
+0001836e add        r1, pc                                   
+00018370 mov        r0, r4                                   
+00018372 blx        r5                                       
+00018374 blx        #0x13d64                                 _ZN3hsl3HSL15GetConfigHandleEv
+00018378 ldr        r1, [pc, #0x2d0]                         literal 0x4411e
+0001837a add.w      fp, sp, #0x8c                            
+0001837e mov        r6, r0                                   
+00018380 add        r1, pc                                   
+00018382 mov        r0, fp                                   
+00018384 blx        r5                                       
+00018386 mov        r0, r6                                   
+00018388 mov        r1, fp                                   
+0001838a mov        r2, r4                                   
+0001838c movs       r3, #0                                   
+0001838e blx        #0x13e6c                                 _ZN3hsl6Config9GetStringERKN4dice8String16ERS2_NS0_14VALUE_STRATEGYE
+00018392 mov        r0, fp                                   
+00018394 bl         #0x1629a                                 
+00018398 ldr        r0, [sp, #0x44]                          
+0001839a cmp        r0, #0                                   
+0001839c it         ne                                       
+0001839e addne      r0, #8                                   
+000183a0 blx        #0x13e78                                 _ZN3asl13String16Utils4atoiEPKt
+000183a4 str.w      r0, [sb, #0x1c]                          
+000183a8 blx        #0x13c14                                 I_GetAlcPtr
+000183ac cbz        r0, #0x183ea                             
+000183ae blx        #0x13c14                                 I_GetAlcPtr
+000183b2 ldr        r1, [r0]                                 
+000183b4 mov.w      r5, #0x8000000                           
+000183b8 ldr        r2, [sp, #0x40]                          
+000183ba movs       r4, #0xb1                                
+000183bc ldr        r3, [r1, #4]                             
+000183be ldrd       r1, r2, [r2, #0x18]                      
+000183c2 str        r2, [sp, #0x20]                          
+000183c4 cmp        r1, #0                                   
+000183c6 it         ne                                       
+000183c8 addne      r1, #8                                   
+000183ca ldr        r2, [pc, #0x284]                         literal 0x4410a
+000183cc strd       r5, sl, [sp]                             
+000183d0 ldr        r5, [sp, #0x30]                          
+000183d2 add        r2, pc                                   
+000183d4 str        r5, [sp, #8]                             
+000183d6 ldr        r5, [sp, #0x3c]                          
+000183d8 str        r5, [sp, #0xc]                           
+000183da ldr        r5, [sp, #0x34]                          
+000183dc strd       r5, r4, [sp, #0x10]                      
+000183e0 strd       r2, r1, [sp, #0x18]                      
+000183e4 movs       r1, #8                                   
+000183e6 movs       r2, #0                                   
+000183e8 blx        r3                                       
+000183ea ldr        r0, [sp, #0x40]                          
+000183ec add        r4, sp, #0x8c                            
+000183ee ldr        r2, [r0, #0x3c]                          
+000183f0 mov        r0, r4                                   
+000183f2 ldr        r1, [pc, #0x260]                         literal 0x43fa0
+000183f4 add        r1, pc                                   
+000183f6 blx        #0x13e84                                 _ZN3hsl11StringUtils6FormatEPKtz
+000183fa mov        r0, r8                                   
+000183fc mov        r1, r4                                   
+000183fe movs       r2, #0                                   
+00018400 mov.w      sl, #0                                   
+00018404 blx        #0x13e90                                 _ZN3hsl11StringUtils7FindStrERKN4dice8String16ES4_j
+00018408 mov        r4, r0                                   
+0001840a blx        #0x13c14                                 I_GetAlcPtr
+0001840e cbz        r0, #0x1844c                             
+00018410 blx        #0x13c14                                 I_GetAlcPtr
+00018414 ldr        r1, [r0]                                 
+00018416 mov.w      r6, #0x8000000                           
+0001841a mov.w      ip, #0xc0                                
+0001841e ldr        r3, [r1, #4]                             
+00018420 ldr        r1, [sp, #0x8c]                          
+00018422 str        r4, [sp, #0x20]                          
+00018424 cmp        r1, #0                                   
+00018426 it         ne                                       
+00018428 addne      r1, #8                                   
+0001842a ldr        r2, [pc, #0x22c]                         literal 0x4419a
+0001842c ldr        r5, [pc, #0x22c]                         literal 0x34909
+0001842e strd       r6, sl, [sp]                             
+00018432 add        r2, pc                                   
+00018434 ldr        r6, [sp, #0x30]                          
+00018436 add        r5, pc                                   
+00018438 str        r6, [sp, #8]                             
+0001843a ldr        r6, [sp, #0x3c]                          
+0001843c strd       r6, r5, [sp, #0xc]                       
+00018440 strd       ip, r2, [sp, #0x14]                      
+00018444 movs       r2, #0                                   
+00018446 str        r1, [sp, #0x1c]                          
+00018448 movs       r1, #8                                   
+0001844a blx        r3                                       
+0001844c add        r0, sp, #0x8c                            
+0001844e bl         #0x1629a                                 
+00018452 ldr        r1, [sp, #0x40]                          
+00018454 mvns       r0, r4                                   
+00018456 lsrs       r0, r0, #0x1f                            
+00018458 cmp        r4, #0                                   
+0001845a strb.w     r0, [r1, #0x70]                          
+0001845e bmi.w      #0x1883e                                 
+00018462 ldr        r1, [pc, #0x1fc]                         literal 0x344e7
+00018464 add        r0, sp, #0x8c                            
+00018466 ldr        r4, [pc, #0x1fc]                         literal 0x3473d
+00018468 add        r1, pc                                   
+0001846a str        r1, [sp, #0x34]                          
+0001846c add        r4, pc                                   
+0001846e mov        r2, r4                                   
+00018470 bl         #0x165f0                                 
+00018474 ldr        r0, [pc, #0x1f0]                         literal 0x50cf8
+00018476 ldr        r2, [sp, #0x40]                          
+00018478 add        r0, pc                                   
+0001847a adds       r0, #8                                   
+0001847c str        r0, [sp, #0x48]                          
+0001847e ldrd       r0, r1, [r2, #0x20]                      
+00018482 strd       r0, r1, [sp, #0x4c]                      
+00018486 ldr.w      r0, [r2, #0x9c]                          
+0001848a cbz        r0, #0x1849c                             
+0001848c blx        #0x13e48                                 _ZN9GNS_FRAME7CGImageD1Ev
+00018490 blx        #0x13ba8                                 _ZdlPv
+00018494 ldr        r1, [sp, #0x40]                          
+00018496 movs       r0, #0                                   
+00018498 str.w      r0, [r1, #0x9c]                          
+0001849c mov.w      r0, #0x1e0                               
+000184a0 blx        #0x13b84                                 _Znwj
+000184a4 blx        #0x13e9c                                 _ZN9GNS_FRAME7CGImageC1Ev
+000184a8 ldr        r1, [sp, #0x40]                          
+000184aa movw       r2, #0x101                               
+000184ae movs       r3, #0                                   
+000184b0 str.w      r0, [r1, #0x9c]                          
+000184b4 add        r1, sp, #0x48                            
+000184b6 blx        #0x13ea8                                 _ZN9GNS_FRAME7CGImage6createERKN3GPI6CGSizeE12EGColorType_Ph
+000184ba ldr.w      sl, [sp, #0x3c]                          
+000184be cmp        r0, #0                                   
+000184c0 beq.w      #0x185d8                                 
+000184c4 str        r4, [sp, #0x30]                          
+000184c6 add        r0, sp, #0x6c                            
+000184c8 ldr        r1, [pc, #0x394]                         literal 0x44078
+000184ca add        r1, pc                                   
+000184cc bl         #0x1625a                                 
+000184d0 add        r4, sp, #0x64                            
+000184d2 mov        r0, r4                                   
+000184d4 bl         #0x18c8a                                 
+000184d8 ldr        r1, [pc, #0x388]                         literal 0x4407e
+000184da add.w      r8, sp, #0x74                            
+000184de add        r1, pc                                   
+000184e0 mov        r0, r8                                   
+000184e2 bl         #0x1625a                                 
+000184e6 mov        r1, r4                                   
+000184e8 movs       r2, #3                                   
+000184ea blx        #0x13eb4                                 _ZN3hsl8UtilPath20GetPathRelativeToResERKN4dice8String16ERS2_NS_9PathType_E
+000184ee mov        r0, r8                                   
+000184f0 bl         #0x1629a                                 
+000184f4 blx        #0x13c14                                 I_GetAlcPtr
+000184f8 ldr        r5, [pc, #0x36c]                         literal 0x347f3
+000184fa add        r5, pc                                   
+000184fc cbz        r0, #0x1853c                             
+000184fe blx        #0x13c14                                 I_GetAlcPtr
+00018502 ldr        r1, [sp, #0x64]                          
+00018504 movs       r4, #0                                   
+00018506 mov        r6, r5                                   
+00018508 movw       ip, #0x151                               
+0001850c cmp        r1, #0                                   
+0001850e it         ne                                       
+00018510 addne      r1, #8                                   
+00018512 ldr        r2, [r0]                                 
+00018514 mov.w      r5, #0x8000000                           
+00018518 ldr        r3, [r2, #4]                             
+0001851a ldr        r2, [pc, #0x350]                         literal 0x44050
+0001851c ldr.w      sl, [sp, #0x3c]                          
+00018520 str        r4, [sp, #4]                             
+00018522 add        r2, pc                                   
+00018524 ldr        r4, [sp, #0x34]                          
+00018526 str        r5, [sp]                                 
+00018528 mov        r5, r6                                   
+0001852a strd       r4, sl, [sp, #8]                         
+0001852e strd       r6, ip, [sp, #0x10]                      
+00018532 strd       r2, r1, [sp, #0x18]                      
+00018536 movs       r1, #8                                   
+00018538 movs       r2, #0                                   
+0001853a blx        r3                                       
+0001853c ldr        r1, [sp, #0x6c]                          
+0001853e add        r0, sp, #0x64                            
+00018540 bl         #0x18ca0                                 
+00018544 blx        #0x13ec0                                 _ZN3hsl9FileUtils11IsExistFileERKN4dice8String16E
+00018548 cmp        r0, #0                                   
+0001854a beq.w      #0x1866c                                 
+0001854e ldr        r1, [sp, #0x40]                          
+00018550 movs       r0, #1                                   
+00018552 strb       r0, [r1, #0x15]                          
+00018554 ldr.w      r0, [r1, #0x9c]                          
+00018558 cmp        r0, #0                                   
+0001855a beq.w      #0x186b6                                 
+0001855e add        r4, sp, #0x74                            
+00018560 ldr        r1, [sp, #0x64]                          
+00018562 mov        r0, r4                                   
+00018564 cmp        r1, #0                                   
+00018566 it         ne                                       
+00018568 addne      r1, #8                                   
+0001856a blx        #0x13e00                                 _ZN8CGStringC1EPKt
+0001856e ldr        r6, [sp, #0x40]                          
+00018570 mov.w      r8, #0                                   
+00018574 mov        r1, r4                                   
+00018576 mov.w      r2, #-1                                  
+0001857a movs       r3, #0                                   
+0001857c ldr.w      r0, [r6, #0x9c]                          
+00018580 strd       r8, r8, [sp]                             
+00018584 blx        #0x13ecc                                 _ZN9GNS_FRAME7CGImage17loadImageFromFileERK8CGStringibbPS1_
+00018588 strb.w     r0, [r6, #0xa0]                          
+0001858c blx        #0x13c14                                 I_GetAlcPtr
+00018590 cbz        r0, #0x185cc                             
+00018592 blx        #0x13c14                                 I_GetAlcPtr
+00018596 ldr        r1, [r0]                                 
+00018598 mov        r6, r5                                   
+0001859a mov.w      r5, #0x8000000                           
+0001859e mov.w      r4, #0x162                               
+000185a2 ldr        r3, [r1]                                 
+000185a4 ldr        r1, [sp, #0x40]                          
+000185a6 ldrb.w     r1, [r1, #0xa0]                          
+000185aa ldr        r2, [pc, #0x2c8]                         literal 0x34778
+000185ac ldr.w      sl, [sp, #0x3c]                          
+000185b0 str        r5, [sp]                                 
+000185b2 add        r2, pc                                   
+000185b4 ldr        r5, [sp, #0x34]                          
+000185b6 str.w      r8, [sp, #4]                             
+000185ba strd       r5, sl, [sp, #8]                         
+000185be strd       r6, r4, [sp, #0x10]                      
+000185c2 strd       r2, r1, [sp, #0x18]                      
+000185c6 movs       r1, #0x20                                
+000185c8 movs       r2, #0                                   
+000185ca blx        r3                                       
+000185cc add        r0, sp, #0x74                            
+000185ce blx        #0x13d58                                 _ZN8CGStringD1Ev
+000185d2 add.w      r8, sp, #0x74                            
+000185d6 b          #0x186b6                                 
+000185d8 ldr        r0, [sp, #0x40]                          
+000185da mov        r5, r4                                   
+000185dc ldr.w      r0, [r0, #0x9c]                          
+000185e0 cbz        r0, #0x185ea                             
+000185e2 blx        #0x13e48                                 _ZN9GNS_FRAME7CGImageD1Ev
+000185e6 blx        #0x13ba8                                 _ZdlPv
+000185ea ldr        r0, [sp, #0x40]                          
+000185ec movs       r4, #0                                   
+000185ee str.w      r4, [r0, #0x9c]                          
+000185f2 blx        #0x13c14                                 I_GetAlcPtr
+000185f6 cmp        r0, #0                                   
+000185f8 beq.w      #0x18838                                 
+000185fc blx        #0x13c14                                 I_GetAlcPtr
+00018600 ldr        r1, [r0]                                 
+00018602 mov.w      r6, #0x8000000                           
+00018606 movs       r2, #0xda                                
+00018608 ldr        r3, [r1]                                 
+0001860a ldr        r1, [pc, #0x250]                         literal 0x345c5
+0001860c strd       r6, r4, [sp]                             
+00018610 ldr        r4, [sp, #0x34]                          
+00018612 add        r1, pc                                   
+00018614 strd       r4, sl, [sp, #8]                         
+00018618 strd       r5, r2, [sp, #0x10]                      
+0001861c movs       r2, #0                                   
+0001861e str        r1, [sp, #0x18]                          
+00018620 movs       r1, #8                                   
+00018622 blx        r3                                       
+00018624 b          #0x18838                                 
+00018626 nop                                                 
+00018628 str        r2, [r7, #0x64]                          
+0001862a movs       r5, r0                                   
+0001862c ldr        r0, [pc, #0x184]                         literal 0x30010f00
+0001862e movs       r3, r0                                   
+00018630 adds       r4, #0x33                                
+00018632 movs       r4, r0                                   
+00018634 mov        sb, r7                                   
+00018636 movs       r3, r0                                   
+00018638 ldr        r0, [pc, #0x2b8]                         literal 0x900a3008
+0001863a movs       r3, r0                                   
+0001863c asrs       r0, r4                                   
+0001863e movs       r4, r0                                   
+00018640 asrs       r2, r2                                   
+00018642 movs       r4, r0                                   
+00018644 svc        #7                                       

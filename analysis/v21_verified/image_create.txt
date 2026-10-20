@@ -1,0 +1,54 @@
+001e5fc8 push       {r4, r5, r6, r7, lr}                     
+001e5fca add        r7, sp, #0xc                             
+001e5fcc push.w     {r3, r4, r5, r6, r7, r8, sb, sl, fp}     
+001e5fd0 str        r3, [sp, #0x10]                          
+001e5fd2 mov        sb, r2                                   
+001e5fd4 mov        fp, r1                                   
+001e5fd6 mov        r4, r0                                   
+001e5fd8 blx        #0x10e4e4                                _ZN9GNS_FRAME7CGImage7destroyEv
+001e5fdc mov        sl, r4                                   
+001e5fde ldr        r0, [sl, #0x38]!                         
+001e5fe2 ldr        r1, [r0, #8]                             
+001e5fe4 mov        r0, sl                                   
+001e5fe6 blx        r1                                       
+001e5fe8 blx        #0x10c348                                _ZN3asl9TimeUtils14getTickCountUSEv
+001e5fec mov.w      r8, #0                                   
+001e5ff0 mov        r5, r4                                   
+001e5ff2 str.w      r8, [r4, #0xc8]                          
+001e5ff6 str.w      r4, [r4, #0x110]                         
+001e5ffa str        r0, [r5, #0xc4]!                         
+001e5ffe ldr.w      r0, [fp, #4]                             
+001e6002 str.w      r0, [r4, #0xd0]                          
+001e6006 ldr.w      r0, [fp, #8]                             
+001e600a str.w      r0, [r4, #0xd4]                          
+001e600e movs       r0, #0x48                                
+001e6010 blx        #0x10c354                                _Znwj
+001e6014 mov        r6, r0                                   
+001e6016 bl         #0x150c28                                
+001e601a ldr        r3, [sp, #0x10]                          
+001e601c movs       r0, #1                                   
+001e601e strd       r8, r0, [sp]                             
+001e6022 mov        r0, r6                                   
+001e6024 mov        r1, fp                                   
+001e6026 mov        r2, sb                                   
+001e6028 str.w      r8, [sp, #8]                             
+001e602c bl         #0x150d20                                
+001e6030 bl         #0x13f674                                
+001e6034 mov        r1, r5                                   
+001e6036 mov        r2, r6                                   
+001e6038 bl         #0x1fcb44                                
+001e603c mov        r0, r4                                   
+001e603e mov        r1, r6                                   
+001e6040 bl         #0x1e551a                                
+001e6044 ldrd       r0, r1, [fp, #4]                         
+001e6048 strd       r0, r1, [r4, #0x20]                      
+001e604c movs       r0, #1                                   
+001e604e strb.w     r0, [r4, #0x1d4]                         
+001e6052 ldr.w      r0, [sl]                                 
+001e6056 ldr        r1, [r0, #0xc]                           
+001e6058 mov        r0, sl                                   
+001e605a blx        r1                                       
+001e605c movs       r0, #1                                   
+001e605e add        sp, #0x14                                
+001e6060 pop.w      {r8, sb, sl, fp}                         
+001e6064 pop        {r4, r5, r6, r7, pc}                     
