@@ -1,0 +1,54 @@
+00030e2c push       {r4, r6, r7, lr}                         
+00030e2e add        r7, sp, #8                               
+00030e30 mov        r4, r0                                   
+00030e32 ldr        r0, [pc, #0x14]                          literal 0x3ae24
+00030e34 add        r0, pc                                   
+00030e36 add.w      r1, r0, #8                               
+00030e3a mov        r0, r4                                   
+00030e3c str        r1, [r0], #0x10                          
+00030e40 bl         #0x30db4                                 
+00030e44 mov        r0, r4                                   
+00030e46 pop        {r4, r6, r7, pc}                         
+00030e48 add        r6, sp, #0x90                            
+00030e4a movs       r3, r0                                   
+00030e4c push       {r7, lr}                                 
+00030e4e mov        r7, sp                                   
+00030e50 bl         #0x30e2c                                 
+00030e54 pop.w      {r7, lr}                                 
+00030e58 b.w        #0x45574                                 
+00030e5c adds       r0, #4                                   
+00030e5e bx         lr                                       
+00030e60 adds       r0, #8                                   
+00030e62 bx         lr                                       
+00030e64 ldr        r3, [r0, #0xc]                           
+00030e66 ldrd       r2, r1, [r0, #4]                         
+00030e6a add.w      r0, r2, r3, asr #1                       
+00030e6e lsls       r2, r3, #0x1f                            
+00030e70 itt        ne                                       
+00030e72 ldrne      r2, [r0]                                 
+00030e74 ldrne      r1, [r2, r1]                             
+00030e76 bx         r1                                       
+00030e78 push       {r4, r6, r7, lr}                         
+00030e7a add        r7, sp, #8                               
+00030e7c mov        r4, r0                                   
+00030e7e ldr        r0, [pc, #0x1c]                          literal 0x3adbc
+00030e80 add        r0, pc                                   
+00030e82 add.w      r1, r0, #8                               
+00030e86 mov        r0, r4                                   
+00030e88 str        r1, [r0], #0xc                           
+00030e8c bl         #0x30e2c                                 
+00030e90 mov        r0, r4                                   
+00030e92 pop.w      {r4, r6, r7, lr}                         
+00030e96 b.w        #0x45594                                 
+00030e9a nop                                                 
+00030e9c add        r5, sp, #0x2f0                           
+00030e9e movs       r3, r0                                   
+00030ea0 push       {r7, lr}                                 
+00030ea2 mov        r7, sp                                   
+00030ea4 bl         #0x30e78                                 
+00030ea8 pop.w      {r7, lr}                                 
+00030eac b.w        #0x45574                                 
+00030eb0 ldr        r1, [r0, #0xc]!                          
+00030eb4 ldr        r1, [r1, #4]                             
+00030eb6 bx         r1                                       
+00030eb8 b.w        #0x45574                                 

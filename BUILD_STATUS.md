@@ -60,3 +60,11 @@ The build deliberately removes failed final outputs. It will not label an incomp
 - MemberCallableWrapper now models the wrapper's four vtable entries and target/member pointer representation. Host ASan/UBSan tests pass for direct invocation, clone ownership, and virtual dispatch through a secondary base. It is deliberately not wired to the unrecovered Callable/shared-control ABI. ARM size assertions await the restored NDK.
 - NDK download made no progress in this environment and was stopped. No fresh Android compile/link result is claimed.
 - Build output is cleared before compilation; the linker writes a pending file, published only on success. The fake-compiler contract test passes compile failure, missing hosts, link failure and success cases. This tests artifact publication, not Android compatibility.
+
+## Void callback model checkpoint
+
+- Recovered the separate wrapper and shared-method ownership model. GFrame's 0x129256 copy clones wrapper slot 3 and copies shared ownership at +12.
+- Corrected interpretation of Callable slot 4: callback equality, not invocation.
+- VoidCallable model and ASan/UBSan tests added; not integrated with GPI or Android scheduling.
+- Correct scheduleTaskHelper declaration added. Host probe emits exactly the original imported mangled name. No new Android build or usable SO is claimed.
+- See analysis/CALLABLE_RECOVERY.md for remaining RTTI, libc++ and object-lifetime blockers.

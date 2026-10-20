@@ -1,0 +1,72 @@
+00016390 push       {r4, r5, r7, lr}                         
+00016392 add        r7, sp, #8                               
+00016394 mov        r4, r0                                   
+00016396 ldr        r0, [pc, #0x1c]                          literal 0x52c9e
+00016398 mov        r5, r4                                   
+0001639a add        r0, pc                                   
+0001639c adds       r0, #8                                   
+0001639e stm        r5!, {r0}                                
+000163a0 add.w      r0, r4, #0xc                             
+000163a4 bl         #0x1515c                                 
+000163a8 mov        r0, r5                                   
+000163aa bl         #0x163b8                                 
+000163ae mov        r0, r4                                   
+000163b0 pop        {r4, r5, r7, pc}                         
+000163b2 nop                                                 
+000163b4 cmp        r4, #0x9e                                
+000163b6 movs       r5, r0                                   
+000163b8 mov        r1, r0                                   
+000163ba ldr        r0, [r0]                                 
+000163bc cbz        r0, #0x163c8                             
+000163be ldr        r2, [r1, #4]                             
+000163c0 cbz        r2, #0x163ca                             
+000163c2 ldr        r2, [r0]                                 
+000163c4 mov        r0, r1                                   
+000163c6 bx         r2                                       
+000163c8 bx         lr                                       
+000163ca ldr        r1, [r0]                                 
+000163cc ldr        r1, [r1, #4]                             
+000163ce bx         r1                                       
+000163d0 push       {r7, lr}                                 
+000163d2 mov        r7, sp                                   
+000163d4 bl         #0x16390                                 
+000163d8 pop.w      {r7, lr}                                 
+000163dc b.w        #0x45574                                 
+000163e0 ldr        r1, [r0, #8]                             
+000163e2 cbnz       r1, #0x163e8                             
+000163e4 ldr        r1, [r0, #4]                             
+000163e6 cbz        r1, #0x163ec                             
+000163e8 movs       r0, #0                                   
+000163ea bx         lr                                       
+000163ec ldr        r0, [r0, #0xc]                           
+000163ee clz        r0, r0                                   
+000163f2 lsrs       r0, r0, #5                               
+000163f4 bx         lr                                       
+000163f6 push       {r4, r6, r7, lr}                         
+000163f8 add        r7, sp, #8                               
+000163fa mov        r4, r0                                   
+000163fc adds       r0, #4                                   
+000163fe bl         #0x163b8                                 
+00016402 movs       r0, #0                                   
+00016404 strd       r0, r0, [r4, #4]                         
+00016408 add.w      r0, r4, #0xc                             
+0001640c pop.w      {r4, r6, r7, lr}                         
+00016410 b.w        #0x15224                                 
+00016414 push       {r4, r6, r7, lr}                         
+00016416 add        r7, sp, #8                               
+00016418 ldr        r4, [r0, #0xc]                           
+0001641a cbz        r4, #0x16432                             
+0001641c ldr        r0, [r1]                                 
+0001641e ldr        r2, [r0, #0x14]                          
+00016420 mov        r0, r1                                   
+00016422 blx        r2                                       
+00016424 mov        r1, r0                                   
+00016426 ldr        r0, [r4]                                 
+00016428 ldr        r2, [r0]                                 
+0001642a mov        r0, r4                                   
+0001642c pop.w      {r4, r6, r7, lr}                         
+00016430 bx         r2                                       
+00016432 movs       r0, #0                                   
+00016434 pop        {r4, r6, r7, pc}                         
+00016436 ldr        r0, [r0, #0xc]                           
+00016438 bx         lr                                       
