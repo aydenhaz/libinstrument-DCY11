@@ -26,4 +26,12 @@ int main() {
     assert(!coverUiFirstRenderFinished(true,true,true,2,2));
     assert(coverUiFirstRenderFinished(true,true,true,3,2));
     assert(!coverUiFirstRenderFinished(true,true,true,-1,2));
+    assert(IPL_ABI::coverPaintNextCounter(INT_MAX)==INT_MIN);
+    assert(IPL_ABI::coverPaintNextCounter(-1)==0);
+    auto atLimit=IPL_ABI::coverPaintDecision(true,true,true,2,2,false,false);
+    assert(atLimit.active && atLimit.drawImage && !atLimit.requestCapture);
+    auto capture=IPL_ABI::coverPaintDecision(true,true,true,10,2,false,false);
+    assert(capture.requestCapture && !capture.drawImage);
+    assert(!IPL_ABI::coverPaintDecision(true,true,true,10,2,true,false).requestCapture);
+    assert(!IPL_ABI::coverPaintDecision(true,true,true,10,2,false,true).requestCapture);
 }

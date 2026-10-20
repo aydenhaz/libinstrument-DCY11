@@ -21,3 +21,11 @@ python3 tests/cover_original_differential_test.py /path/to/original/libInstrumen
 ```
 
 Original instruction evidence is stored in v21_verified/cover_constructor.txt, cover_first_render_finish.txt and cover_surface_status.txt. No strict Android link or replacement SO is claimed.
+
+## Top render callback transitions
+
+Original 0x18898 checks signed counter <= threshold before drawing (only when state +0xa0 is set). With image and enabled gates satisfied, count==10 requests a capture only if inhibit byte +0x15 and requested byte +0x98 are both clear. It sets +0x98 before calling device vtable +0x128, passing the secondary business observer at CoverUtil+4. Every active paint increments counter, even beyond threshold. Increment is wrapping 32-bit ARM ADDS; the helper avoids C++ signed-overflow UB.
+
+Draw and capture are external effects and can mutate state synchronously. The original reloads counter after draw before capture gating, and again after capture before increment. A caller must re-evaluate the decision helper after drawing and reload state after capture; computing all effects from one initial snapshot is incorrect.
+
+Extended differential validation passes 576 paint cases plus two synchronous mutation cases (capture changes counter to 201, draw changes it from 2 to 10). Total with prior checks: 1,002 comparisons/cases. Canvas draw and device capture methods are intercepted; this validates decisions, observer adjustment, flag ordering and counter updates, not the real graphics/capture services. Full TopRenderCoverCallback is not yet wired into a real CoverUtil class.

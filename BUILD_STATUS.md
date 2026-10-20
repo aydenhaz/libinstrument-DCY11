@@ -157,3 +157,9 @@ The build deliberately removes failed final outputs. It will not label an incomp
 - Extracted exact first-render predicate (including signed <= boundary) and gated surface-event counter reset from original CoverUtil instructions. Constructor evidence records threshold 2 and related default state.
 - Native ASan/UBSan and ARM Thumb compile-only checks pass. Unicorn differential execution against the SHA256-verified original binary passes all 424 cases with I_GetAlcPtr mocked null.
 - Helpers are not yet wired into Packet: full CoverUtil observer class, second interface and construction remain incomplete. See analysis/COVER_RENDER_STATE.md. No replacement SO.
+
+## Cover paint state transitions
+
+- Recovered paint/capture gates and wrapping counter increment. Original reloads state after external effects; the decision helper must be re-evaluated after drawing.
+- Added 576 original Thumb paint comparisons and 2 synchronous counter-mutation cases; all pass alongside prior 424 cases. Native sanitizer and ARM Thumb compile-only tests pass.
+- Device/canvas methods are mocked in emulation. Helpers remain prerequisites, not an installed CoverUtil callback. No replacement SO.

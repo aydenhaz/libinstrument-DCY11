@@ -47,6 +47,8 @@ with tempfile.TemporaryDirectory() as directory:
     root=Path(directory)
     source=root/'helper.cpp'
     source.write_text('#include "'+str(header)+'"\nextern "C" bool finished(bool i,bool e,bool s,int32_t c,int32_t t){return IPL_ABI::coverUiFirstRenderFinished(i,e,s,c,t);}\nextern "C" int32_t changed(int32_t configured,int32_t surface,int32_t event,bool image,bool enabled,int32_t counter){IPL_ABI::coverSurfaceStatusChanged(configured,surface,event,image,enabled,counter);return counter;}\n')
+    with source.open('a') as output:
+        output.write('extern "C" int paint(bool image,bool enabled,bool flag,int32_t counter,int32_t threshold,bool inhibit,bool requested){auto p=IPL_ABI::coverPaintDecision(image,enabled,flag,counter,threshold,inhibit,requested);return (p.active?1:0)|(p.drawImage?2:0)|(p.requestCapture?4:0); }\nextern "C" int32_t advance(int32_t counter){return IPL_ABI::coverPaintNextCounter(counter); }\n')
     subprocess.run(['g++','-std=c++11','-shared','-fPIC',str(source),'-o',str(root/'helper.so')],check=True)
     lib=ctypes.CDLL(str(root/'helper.so'))
     lib.finished.argtypes=[ctypes.c_bool]*3+[ctypes.c_int32]*2
@@ -68,3 +70,63 @@ with tempfile.TemporaryDirectory() as directory:
         assert actual==lib.changed(7,surface,event,image,enabled,9),(same,event,image,enabled,actual)
         comparisons+=1
     print(f'PASS: {comparisons} original Thumb/helper comparisons; I_GetAlcPtr mocked null')
+
+# Test original TopRenderCoverCallback with only external canvas/capture effects mocked.
+canvas,canvasTable,device,deviceTable=0x101000,0x102000,0x103000,0x104000
+drawStub,captureStub=0x301000,0x302000
+mu.mem_write(canvas,struct.pack('<I',canvasTable))
+mu.mem_write(canvasTable+0xcc,struct.pack('<I',drawStub|1))
+mu.mem_write(device,struct.pack('<I',deviceTable))
+mu.mem_write(deviceTable+0x128,struct.pack('<I',captureStub|1))
+effects=[]
+capture_counter_override=None
+draw_counter_override=None
+def effect_hook(emu,address,size,data):
+    if address in (drawStub,captureStub):
+        effects.append('draw' if address==drawStub else 'capture')
+        if address==drawStub and draw_counter_override is not None:word(0xa4,draw_counter_override)
+        if address==captureStub:
+            assert emu.reg_read(UC_ARM_REG_R3)==obj+4,'wrong business observer subobject'
+            assert mu.mem_read(obj+0x98,1)[0]==1,'request flag must be set before callback'
+            if capture_counter_override is not None:word(0xa4,capture_counter_override)
+        emu.reg_write(UC_ARM_REG_PC,emu.reg_read(UC_ARM_REG_LR))
+mu.hook_add(UC_HOOK_CODE,effect_hook)
+lib.paint.argtypes=[ctypes.c_bool]*3+[ctypes.c_int32]*2+[ctypes.c_bool]*2
+lib.paint.restype=ctypes.c_int
+lib.advance.argtypes=[ctypes.c_int32]
+lib.advance.restype=ctypes.c_int32
+paint_cases=0
+for image,enabled,flag,count,threshold,inhibit,requested in product((0,1),(0,1),(0,1),[-2147483648,-1,0,2,3,9,10,11,2147483647],[2,10],(0,1),(0,1)):
+    word(0x9c,image);word(0x10,device);word(0xa4,count);word(0x1c,threshold)
+    for offset,value in ((0x70,enabled),(0xa0,flag),(0x15,inhibit),(0x98,requested)):
+        mu.mem_write(obj+offset,bytes([value]))
+    effects.clear()
+    decision=lib.paint(image,enabled,flag,count,threshold,inhibit,requested)
+    invoke(0x18898,obj,canvas)
+    expected_effects=(['draw'] if decision&2 else [])+(['capture'] if decision&4 else [])
+    assert effects==expected_effects,(image,enabled,flag,count,threshold,inhibit,requested,effects,expected_effects)
+    actual=struct.unpack('<i',mu.mem_read(obj+0xa4,4))[0]
+    assert actual==(lib.advance(count) if decision&1 else count),(count,actual)
+    assert mu.mem_read(obj+0x98,1)[0]==(1 if decision&4 else requested)
+    paint_cases+=1
+print(f'PASS: {paint_cases} original paint/helper comparisons; draw/capture effects mocked')
+
+# Original reloads the counter after the external capture method returns.
+capture_counter_override=201
+word(0x9c,1);word(0x10,device);word(0xa4,10);word(0x1c,2)
+for offset,value in ((0x70,1),(0xa0,1),(0x15,0),(0x98,0)):mu.mem_write(obj+offset,bytes([value]))
+effects.clear()
+invoke(0x18898,obj,canvas)
+assert effects==['capture']
+assert struct.unpack('<i',mu.mem_read(obj+0xa4,4))[0]==lib.advance(201)==202
+print('PASS: capture callback counter mutation is reloaded before increment')
+
+capture_counter_override=None
+draw_counter_override=10
+word(0xa4,2);mu.mem_write(obj+0x98,b'\x00');effects.clear()
+invoke(0x18898,obj,canvas)
+assert effects==['draw','capture']
+assert lib.paint(1,1,1,2,2,0,0)&2
+assert lib.paint(1,1,1,10,2,0,0)&4
+assert struct.unpack('<i',mu.mem_read(obj+0xa4,4))[0]==11
+print('PASS: draw callback counter mutation is reloaded before capture decision')
