@@ -1,15 +1,18 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.12)
 project(InstrumentPannelLarge CXX)
-
 set(CMAKE_CXX_STANDARD 11)
-
-# ABI note: the original is 32-bit ARM EABI soft-float (armeabi).
-# With the NDK toolchain file use:
-#   -DANDROID_ABI=armeabi-v7a -DCMAKE_ANDROID_ARM_MODE=ON
-#   -DCMAKE_CXX_FLAGS="-mfloat-abi=soft -mthumb"
-add_library(InstrumentPannelLarge SHARED
-    src/InstrumentPannelLarge.cpp
-    src/module_init.cpp)
-target_include_directories(InstrumentPannelLarge PRIVATE include)
-target_compile_options(InstrumentPannelLarge PRIVATE -fvisibility=hidden -mthumb)
+file(GLOB_RECURSE IPL_INTERNAL CONFIGURE_DEPENDS internal/*.cpp expanded/*.cpp)
+add_library(InstrumentPannelLarge SHARED src/InstrumentPannelLarge.cpp src/module_init.cpp ${IPL_INTERNAL})
+target_include_directories(InstrumentPannelLarge PRIVATE include stub_include internal internal/NS_MultiScreenBase internal/NS_InstrumentPannelLarge)
+if(ANDROID_ABI STREQUAL "armeabi-v7a")
+    target_compile_options(InstrumentPannelLarge PRIVATE -mthumb)
+endif()
+set(IPL_HOST_LIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/host_libs" CACHE PATH "Host shared library directory")
+foreach(name GFrame hsl Gbl GAdaptor GAdaptorInterface GPlatformInterface Common GSQuirrel base_utils)
+    if(NOT EXISTS "${IPL_HOST_LIB_DIR}/lib${name}.so")
+        message(FATAL_ERROR "Missing ${name}: provide matching ARM32 hosts; restore libGbl.so.gz if needed")
+    endif()
+    target_link_libraries(InstrumentPannelLarge PRIVATE "${IPL_HOST_LIB_DIR}/lib${name}.so")
+endforeach()
+set_property(TARGET InstrumentPannelLarge APPEND_STRING PROPERTY LINK_FLAGS " -Wl,--no-undefined")
 set_target_properties(InstrumentPannelLarge PROPERTIES OUTPUT_NAME "InstrumentPannelLarge")

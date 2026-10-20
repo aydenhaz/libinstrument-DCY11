@@ -1,8 +1,8 @@
 #pragma once
 class CGString;
-class CGPackageMgr;
-namespace GPI { class Closure; }
+namespace GPI { class Closure; class MessageCtrl; template<class T> class ScopedRefptr; }
 namespace GNS_FRAME {
+class CGPackageMgr;
 class CGContext; class CGPackage; class CGExhibition;
 class CGFrameSimulation {
 public:
@@ -14,7 +14,8 @@ public:
     static CGPackage *getFragmentActivity();
     static CGExhibition *getExhibition();
     bool isRender(bool);
-    void sendMsg(int, int, int, int, void*);
+    void sendMsg(int, int, int, unsigned long long, GPI::ScopedRefptr<GPI::MessageCtrl>*);
+    void showFpsInfo(bool, CGString&, int);
     void runOnUIThreadHelper(const GPI::Closure&, void*, int, int, int, int);
 };
 }

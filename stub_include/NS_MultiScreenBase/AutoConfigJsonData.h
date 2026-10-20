@@ -1,3 +1,4 @@
+#include <AbiTypes.h>
 #pragma once
 #include <vector>
 namespace NS_MultiScreenBase {
@@ -7,7 +8,9 @@ class AutoConfigJsonData {
 public:
     static AutoConfigJsonData *GetInstance();
     void Init();
-    void GetSurfaceConfig(int, SurfaceConfig&);
-    void GetMultiViewModeInfo(int, std::vector<tagMultiViewModeInfo>&);
+    void GetSurfaceConfig(ScreenType, SurfaceConfig&) const;
+    void GetSurfaceConfig(int screen, SurfaceConfig& config) const { GetSurfaceConfig(static_cast<ScreenType>(screen), config); }
+    void GetMultiViewModeInfo(ScreenType, std::vector<tagMultiViewModeInfo>&);
+    void GetMultiViewModeInfo(int screen, std::vector<tagMultiViewModeInfo>& modes) { GetMultiViewModeInfo(static_cast<ScreenType>(screen), modes); }
 };
 }

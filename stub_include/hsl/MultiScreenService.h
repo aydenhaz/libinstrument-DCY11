@@ -1,6 +1,7 @@
+#include <AbiTypes.h>
 #pragma once
 namespace NS_MultiScreenBase { struct tagSTExtScreen; }
-namespace bl { typedef int MapEngineID; }
+namespace bl {  }
 namespace hsl {
 class MultiScreenService {
 public:

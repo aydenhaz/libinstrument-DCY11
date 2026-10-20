@@ -82,7 +82,7 @@ void CGIPLPacket::onDestroy() {
     GNS_FRAME::CGWorkStation::ownWorkStation()->setTopRenderCallback(0);
     /* 2. CGString(); showFpsInfo(false, name, 0x24=36) */
     CGString empty;
-    GNS_FRAME::CGWorkStation::ownWorkStation()->showFpsInfo(false, empty, 0x24);
+    GNS_FRAME::CGFrameSimulation::ownWorkStation()->showFpsInfo(false, empty, 0x24);
     /* 3. AsyncObject::cancelScheduleTaskHelper(x2) + closeAllFragments */
     GNS_FRAME::CGAsyncObject::cancelScheduleTaskHelper(0);
     GNS_FRAME::CGAsyncObject::cancelScheduleTaskHelper(0);

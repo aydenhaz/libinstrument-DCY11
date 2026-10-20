@@ -1,6 +1,7 @@
+#include <AbiTypes.h>
 #pragma once
 namespace GPI { class Closure; }
-namespace bl { typedef int MapEngineID; }
+namespace bl {  }
 namespace hsl {
 class UIObject {
 public:

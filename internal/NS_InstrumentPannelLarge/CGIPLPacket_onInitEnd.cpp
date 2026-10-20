@@ -130,7 +130,7 @@ void CGIPLPacket::onInitEnd() {
     hsl::MultiScreenService::GetInstance()->SetStartOpenScreenMode(mode_, st);
 
     /* 10. Crash-log breadcrumb */
-    CGString s; s.Format("%s", "onInitEnd");
+    CGString s; s.Format(reinterpret_cast<const unsigned short*>(u"onInitEnd"));
     GNS_FRAME::CGGFrameCrashLogger::exportToAndroidLogCat(0, "onInitEnd", 0, s);
 }
 

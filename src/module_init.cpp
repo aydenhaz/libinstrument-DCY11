@@ -28,6 +28,8 @@
 
 extern "C" int __cxa_atexit(void (*fn)(void *), void *arg, void *dso);
 
+extern "C" void *__dso_handle;
+
 namespace {
 
 struct StaticFrame { void *node; };
@@ -41,22 +43,18 @@ void dtor3(void *p) { (void)p; }
 
 /* init_array[0] — original @0x14cf9 */
 __attribute__((constructor(101))) static void IPL_Ctor0(void) {
-    extern void *__dso_handle;
     __cxa_atexit(dtor0, &g_frames[0], &__dso_handle);
 }
 /* init_array[1] — original @0x14d31 */
 __attribute__((constructor(102))) static void IPL_Ctor1(void) {
-    extern void *__dso_handle;
     __cxa_atexit(dtor1, &g_frames[1], &__dso_handle);
 }
 /* init_array[2] — original @0x14d69 */
 __attribute__((constructor(103))) static void IPL_Ctor2(void) {
-    extern void *__dso_handle;
     __cxa_atexit(dtor2, &g_frames[2], &__dso_handle);
 }
 /* init_array[3] — original @0x14d9d */
 __attribute__((constructor(104))) static void IPL_Ctor3(void) {
-    extern void *__dso_handle;
     __cxa_atexit(dtor3, &g_frames[3], &__dso_handle);
 }
 

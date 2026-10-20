@@ -39,7 +39,7 @@ using dice::String16;
 namespace bl { typedef int IMapDevice; }
 namespace NS_MultiScreenBase {
 struct SurfaceConfig; struct tagMultiViewModeInfo;
-enum ScreenType { SCREEN_TYPE_MAIN=0 };
+// ScreenType is shared in AbiTypes.h.
 enum ENaviMode_ { }; enum ECruiseMode_ { };
 
 /* sub_38ce8 (1780B) — AutoOpeningFragment::EnableMapRender(bool, RenderReason) */
@@ -139,7 +139,7 @@ void AutoOpeningFragment_OnDeviceRender(int32_t dev, int egl, void *self) {
     if (!firstCam) {
         /* runOnUIThread closure: "runOnUIThread pTarget must is this" assert */
         /* runOnUIThread closure dispatch ("runOnUIThread pTarget must is this" assert site) */
-        CGString s; s.Format("OnDeviceRender dev=%d", dev);
+        CGString s; s.Format(reinterpret_cast<const unsigned short*>(u"OnDeviceRender dev=%d"), dev);
         GNS_FRAME::CGGFrameCrashLogger::exportToAndroidLogCat(0, "OnDeviceRender", 0, s);
     }
 }

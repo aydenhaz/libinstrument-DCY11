@@ -1,3 +1,4 @@
+#include <AbiTypes.h>
 /*
  * Batch 15 — distinct named functions (192, excl. runOnUIThread family)
  * Auto-generated from analysis/CALLGRAPH.pkl; call traces verbatim.
@@ -14,7 +15,7 @@
 #include <NS_MultiScreenBase/AutoConfigScreenMode.h>
 #include <NS_MultiScreenBase/AutoConfigJsonData.h>
 
-namespace bl { typedef int MapEngineID; }
+namespace bl {  }
 
 namespace GPI { struct CGCanvas; }
 namespace NS_MultiScreenBase {

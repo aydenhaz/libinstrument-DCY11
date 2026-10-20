@@ -1,6 +1,7 @@
+#include <AbiTypes.h>
 #pragma once
-namespace bl { typedef int MapEngineID; typedef int MapDeviceID; struct ObjectRuntimeInfo { explicit ObjectRuntimeInfo(void*){} }; struct CarLoc { double lat, lon; }; struct LocInfo {}; }
-enum ModuleType { MODULE_TYPE_DEFAULT = 1, MODULE_TYPE_MAP = 0x180 };
+namespace bl {  typedef int MapDeviceID; struct ObjectRuntimeInfo { explicit ObjectRuntimeInfo(void*){} }; struct CarLoc { double lat, lon; }; struct LocInfo {}; }
+
 namespace hsl {
 class SystemNotify; class Config; class Guide; class MapView;
 class HSL {

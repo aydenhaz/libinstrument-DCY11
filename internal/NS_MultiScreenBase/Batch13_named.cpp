@@ -1,3 +1,4 @@
+#include <AbiTypes.h>
 /*
  * Batch 13 — named business functions, ranks 33-52 (20 functions)
  */
@@ -16,7 +17,7 @@
 
 namespace GPI { struct CGCanvas; }
 namespace asl { class RefBase; }
-namespace bl { typedef int MapEngineID; }
+namespace bl {  }
 namespace NS_MultiScreenBase {
 
 struct tagSTExtScreen; struct tagSTStartCrossInfo;
@@ -128,8 +129,8 @@ void RunOnUIThread_A() {
 }
 
 /* sub_24f8c (620B) AutoNaviFragment::UpdateNaviInfoOnUI() */
-void AutoNaviFragment::UpdateNaviInfoOnUI() {
-}
+// Definition retained in Batch17_compiled.cpp.
+
 
 /* sub_2be04 (620B) AutoMultiScreenConfig::GetMapViewModeConfig() */
 MapViewModeConfig AutoMultiScreenConfig::GetMapViewModeConfig() {

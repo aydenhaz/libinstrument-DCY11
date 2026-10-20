@@ -2,7 +2,7 @@
 #include <cstdint>
 namespace bl { struct ObjectRuntimeInfo; }
 namespace GPI { class Closure; }
-namespace GNS_FRAME { class CGIntent; class CGFragment; class CGPackage; class CGContext; }
+namespace GNS_FRAME { class CGCanvas; class CGIntent; class CGFragment; class CGPackage; class CGContext; }
 namespace hsl { class UITaskThreadProxy; class IActivateVerification; }
 namespace NS_InstrumentPannelLarge {
 
@@ -31,7 +31,7 @@ public:
     void ScreenModeListen();             // sub_2ace0  3788B
     void OnMapServiceEvent();            // sub_24094  3176B
 
-    static void TopRenderCallback(void*);
+    static void TopRenderCallback(GNS_FRAME::CGCanvas*);
 
 private:
     // batch5 members
