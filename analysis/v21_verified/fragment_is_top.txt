@@ -1,0 +1,88 @@
+00297d98 push       {r4, r5, r6, r7, lr}                     
+00297d9a add        r7, sp, #0xc                             
+00297d9c str        fp, [sp, #-0x4]!                         
+00297da0 sub        sp, #0x38                                
+00297da2 mov        r4, r0                                   
+00297da4 ldr        r0, [pc, #0xcc]                          literal 0x1519a6
+00297da6 add        r0, pc                                   
+00297da8 ldr        r5, [r0]                                 
+00297daa ldr        r0, [r5]                                 
+00297dac str        r0, [sp, #0x34]                          
+00297dae add.w      r0, r4, #0xb0                            
+00297db2 blx        #0x10c96c                                _ZNK9GNS_FRAME8CGObjMem16checkObjMemValidEv
+00297db6 ldr.w      r0, [r4, #0x18c]                         
+00297dba cbz        r0, #0x297de0                            
+00297dbc mov        r0, r4                                   
+00297dbe blx        #0x1133f8                                _ZN9GNS_FRAME10CGFragment20getHostFragmentStackEv
+00297dc2 ldr        r1, [r0]                                 
+00297dc4 ldr        r2, [r1, #8]                             
+00297dc6 ldr        r1, [r5]                                 
+00297dc8 ldr        r3, [sp, #0x34]                          
+00297dca subs       r1, r1, r3                               
+00297dcc it         ne                                       
+00297dce blxne      #0x10c2b8                                
+00297dd2 mov        r1, r4                                   
+00297dd4 add        sp, #0x38                                
+00297dd6 ldr        fp, [sp], #4                             
+00297dda pop.w      {r4, r5, r6, r7, lr}                     
+00297dde bx         r2                                       
+00297de0 add        r5, sp, #0x1c                            
+00297de2 mov        r0, r5                                   
+00297de4 blx        #0x10c3c0                                _ZN8CGStringC1Ev
+00297de8 ldr        r4, [pc, #0x8c]                          literal 0x110042
+00297dea add        r4, pc                                   
+00297dec mov        r1, r4                                   
+00297dee blx        #0x10c3cc                                _ZN8CGString6FormatEPKtz
+00297df2 ldr        r0, [pc, #0x88]                          literal 0xdf3dd
+00297df4 movw       r2, #0x4e4                               
+00297df8 ldr        r1, [pc, #0x84]                          literal 0xdfafc
+00297dfa mov        r3, r5                                   
+00297dfc add        r0, pc                                   
+00297dfe adds       r0, #0x2f                                
+00297e00 add        r1, pc                                   
+00297e02 blx        #0x10c3d8                                _ZN9GNS_FRAME19CGGFrameCrashLogger21exportToAndroidLogCatEPKcS2_jRK8CGString
+00297e06 blx        #0x10c384                                I_GetAlcPtr
+00297e0a cbz        r0, #0x297e70                            
+00297e0c blx        #0x10c390                                I_GetAlcDevPtr
+00297e10 cbz        r0, #0x297e70                            
+00297e12 blx        #0x10c390                                I_GetAlcDevPtr
+00297e16 mov        r5, r0                                   
+00297e18 blx        #0x10c39c                                _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEv
+00297e1c ldrd       r2, r3, [r0, #0x20]                      
+00297e20 ldr        r0, [r5]                                 
+00297e22 ldr        r1, [r0, #0x40]                          
+00297e24 mov        r0, r5                                   
+00297e26 blx        r1                                       
+00297e28 cbz        r0, #0x297e70                            
+00297e2a blx        #0x10c390                                I_GetAlcDevPtr
+00297e2e ldr        r1, [r0]                                 
+00297e30 ldr        r2, [r1, #0x44]                          
+00297e32 movs       r1, #0x80                                
+00297e34 blx        r2                                       
+00297e36 cbz        r0, #0x297e70                            
+00297e38 blx        #0x10c384                                I_GetAlcPtr
+00297e3c mov        r5, r0                                   
+00297e3e blx        #0x10c39c                                _ZN9GNS_FRAME13CGFrameAlcLog11getInstanceEv
+00297e42 ldr        r1, [r5]                                 
+00297e44 movw       ip, #0x4e4                               
+00297e48 ldr.w      lr, [r1, #4]                             
+00297e4c ldrd       r0, r1, [r0, #0x20]                      
+00297e50 ldr        r6, [pc, #0x30]                          literal 0xdfab4
+00297e52 ldr        r2, [pc, #0x34]                          literal 0xe9f4d
+00297e54 ldr        r3, [pc, #0x34]                          literal 0xe9f44
+00297e56 add        r6, pc                                   
+00297e58 add        r2, pc                                   
+00297e5a add        r3, pc                                   
+00297e5c stm.w      sp, {r0, r1, r3}                         
+00297e60 add        r0, sp, #0xc                             
+00297e62 stm.w      r0, {r2, r6, ip}                         
+00297e66 mov        r0, r5                                   
+00297e68 movs       r1, #0x80                                
+00297e6a movs       r2, #0                                   
+00297e6c str        r4, [sp, #0x18]                          
+00297e6e blx        lr                                       
+00297e70 blx        #0x10c2dc                                abort
+00297e74 adds       r6, r4, r6                               
+00297e76 movs       r5, r2                                   
+00297e78 lsls       r2, r0, #1                               
+00297e7a movs       r1, r2                                   

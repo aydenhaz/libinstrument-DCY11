@@ -133,3 +133,9 @@ The build deliberately removes failed final outputs. It will not label an incomp
 - I_Assert now takes a Boolean condition; original calls pass a normalized Fragment state, not a string address. Removed two fabricated context-string calls from incomplete flows rather than substituting an unverified condition.
 - Original release host implementation is BX LR; no rebuilt no-op implementation was introduced. Original Fragment state and receiver recovery remain necessary. See analysis/ASSERT_ABI.md.
 - ARM signature probe confirms literal true/false use r0=1/0 and import I_Assert. All 31 production units still pass ARM Linux musl compile-only checking; no replacement SO.
+
+## Fragment view receiver ABI
+
+- inflater, findViewById and isTopFragment corrected from static declarations to instance methods, based on original host field accesses and argument forwarding. Their mangled names did not expose the prior receiver omission.
+- Receiver-less placeholder paths explicitly remain unresolved. The existing derived GuideGuangQiA106Fragment now forwards its actual this in Batch18, but object construction, IDs and widget behavior remain incomplete.
+- ARM probe confirms this/ID/parent register forwarding; all 31 source units pass ARM Linux musl compile-only checking. See analysis/FRAGMENT_VIEW_ABI.md. No Android strict link or replacement SO.

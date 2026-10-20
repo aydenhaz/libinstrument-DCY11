@@ -105,7 +105,7 @@ private:
 
 /* sub_268e0 (536B) AutoNaviFragment::NaviModeChange */
 void AutoNaviFragment::NaviModeChange() {
-    if (!CGFragment::isTopFragment()) return;
+    if (!CGFragment::isTopFragmentUnrecovered()) return;
     hsl::Config *cfg = hsl::HSL::GetConfigHandle();
     bool flag = false;
     cfg->GetBool(dice::String16("naviModeFlag"), flag, hsl::Config::VALUE_STRATEGY_DEFAULT);
@@ -137,7 +137,7 @@ GNS_FRAME::CGViewGroup *AutoOpeningFragment::onCreateView(GNS_FRAME::CGViewGroup
     }
     uint64_t t = hsl::TimerUtilsFuns::GetElapsedTimeById(timerId_, false);
     (void)t;
-    return CGFragment::inflater(0, parent);
+    return CGFragment::inflaterUnrecovered(0, parent);
 }
 
 /* sub_3c2d8 (448B) AutoPreviewFragment::onDestroyView() */

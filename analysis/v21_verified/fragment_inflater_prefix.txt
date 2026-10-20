@@ -1,0 +1,40 @@
+00296680 push       {r4, r5, r6, r7, lr}                     
+00296682 add        r7, sp, #0xc                             
+00296684 push.w     {r8, sb, sl, fp}                         
+00296688 sub        sp, #0x5c                                
+0029668a mov        r5, r0                                   
+0029668c ldr        r0, [pc, #0x35c]                         literal 0x1530ba
+0029668e mov        r8, r2                                   
+00296690 mov        sb, r1                                   
+00296692 add        r0, pc                                   
+00296694 ldr.w      sl, [r0]                                 
+00296698 ldr.w      r0, [sl]                                 
+0029669c str        r0, [sp, #0x58]                          
+0029669e add.w      r0, r5, #0xb0                            
+002966a2 blx        #0x10c96c                                _ZNK9GNS_FRAME8CGObjMem16checkObjMemValidEv
+002966a6 ldrb.w     r0, [r5, #0x214]                         
+002966aa clz        r0, r0                                   
+002966ae lsrs       r0, r0, #5                               
+002966b0 blx        #0x111760                                I_Assert
+002966b4 cmp.w      r8, #0                                   
+002966b8 beq.w      #0x296886                                
+002966bc ldr.w      r2, [r5, #0x258]                         
+002966c0 cbnz       r2, #0x2966e2                            
+002966c2 blx        #0x10c768                                _ZN9GNS_FRAME13CGWorkStation14ownWorkStationEv
+002966c6 blx        #0x112f78                                _ZN9GNS_FRAME13CGWorkStation20getPackageContextMgrEv
+002966ca mov        r1, sb                                   
+002966cc bl         #0x128824                                
+002966d0 mov        r1, r0                                   
+002966d2 mov        r0, r5                                   
+002966d4 blx        #0x10e568                                _ZN9GNS_FRAME10CGFragment10setContextEPNS_9CGContextE
+002966d8 ldr.w      r2, [r5, #0x258]                         
+002966dc cmp        r2, #0                                   
+002966de beq.w      #0x296ae4                                
+002966e2 ldr.w      r0, [r5, #0x26c]                         
+002966e6 mov        r1, sb                                   
+002966e8 blx        #0x115b40                                _ZN9GNS_FRAME20CGFragmentSwitchTime16setContentViewIdEiPNS_9CGContextE
+002966ec ldr.w      r4, [r5, #0x26c]                         
+002966f0 blx        #0x10f8e8                                I_TimeGetTickCount
+002966f4 str.w      r0, [r4, #0x144]                         
+002966f8 bl         #0x27ae04                                
+002966fc cmp        r0, #0                                   

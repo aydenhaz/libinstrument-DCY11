@@ -64,7 +64,7 @@ int32_t AutoExscreenUtil::IsOnlyShowCrossImage() {
 
 /* sub_26038 (664B) AutoNaviFragment::ShowCrossImageOnUIEx(asl::RefBase*) */
 void AutoNaviFragment::ShowCrossImageOnUIEx(void *obj) {
-    if (!CGFragment::isTopFragment()) return;
+    if (!CGFragment::isTopFragmentUnrecovered()) return;
     GuideInfoCard::UpdateCrossDistance();
     void *guide = hsl::HSL::GetGuideHandle();
     (void)guide; (void)obj;
@@ -74,9 +74,9 @@ void AutoNaviFragment::ShowCrossImageOnUIEx(void *obj) {
 /* sub_3e7ac (484B) CGInstrumentPannelLargeCruiseFragment::onCreateView(CGViewGroup*) */
 GNS_FRAME::CGViewGroup *CruiseFragment::onCreateView(GNS_FRAME::CGViewGroup *parent) {
     /* plat fetch */
-    GNS_FRAME::CGViewGroup *root = CGFragment::inflater(0, parent);
+    GNS_FRAME::CGViewGroup *root = CGFragment::inflaterUnrecovered(0, parent);
     /* dynamic_cast widget wiring x2 (findViewById) */
-    GNS_FRAME::CGView *v = CGFragment::findViewById(0);
+    GNS_FRAME::CGView *v = CGFragment::findViewByIdUnrecovered(0);
     /* v->hide(false); */
     return root;
 }
@@ -110,7 +110,7 @@ GNS_FRAME::CGViewGroup *AutoCruiseFragment::onCreateView(GNS_FRAME::CGViewGroup 
     if (pos) { bl::LocInfo li; static_cast<hsl::Pos*>(pos)->GetLocInfo(li); }
     /* "GoToCarLocation (%f,%f)" / "invalid car loc" */
     /* AddConfigObserver + CGBroadcaster::getInstance x2 tail */
-    return CGFragment::inflater(0, parent);
+    return CGFragment::inflaterUnrecovered(0, parent);
 }
 
 /* sub_35e2c (840B) AutoOpeningFragment::OnMapLevelChanged(uint32_t, bool) */
@@ -168,7 +168,7 @@ void AutoNaviFragment::UpdateNaviInfoOnUI() {
 
 /* sub_20784 (568B) AutoArNaviFragment::ShowCrossImageOnUI(void*) */
 void AutoArNaviFragment::ShowCrossImageOnUI(void *obj) {
-    if (!CGFragment::isTopFragment()) return;
+    if (!CGFragment::isTopFragmentUnrecovered()) return;
     GuideInfoCard::UpdateCrossDistance();
     void *guide = hsl::HSL::GetGuideHandle();
     (void)guide; (void)obj;
@@ -184,7 +184,7 @@ GNS_FRAME::CGViewGroup *AutoPreviewFragment::onCreateView(GNS_FRAME::CGViewGroup
     static std::mutex m; m.lock();
     /* inflater + widget wiring */
     m.unlock();
-    return CGFragment::inflater(0, parent);
+    return CGFragment::inflaterUnrecovered(0, parent);
 }
 
 } // namespace

@@ -44,7 +44,7 @@ enum ENaviMode_ { }; enum ECruiseMode_ { };
 
 /* sub_38ce8 (1780B) — AutoOpeningFragment::EnableMapRender(bool, RenderReason) */
 void AutoOpeningFragment_EnableMapRender(bool enable, int reason) {
-    if (!CGFragment::isTopFragment()) return;
+    if (!CGFragment::isTopFragmentUnrecovered()) return;
     /* "isSurfaceVisable==false" early-out */
     CGFrameSimulation *sim = CGFrameSimulation::ownWorkStation();
     bool isRender = sim->isRender(enable);
@@ -113,19 +113,19 @@ void AutoCruiseFragment_onCreateView(void *parent, void *self) {
 /* sub_31538 (1168B) — GuideGuangQiA106Fragment::onCreateView
    sub_42a04 (1080B) — GuideFragment::onCreateView (same body family) */
 void GuideFragment_onCreateView(void *parent, bool a106, void *self) {
-    GNS_FRAME::CGViewGroup *root = CGFragment::inflater(0, static_cast<GNS_FRAME::CGViewGroup*>(parent));
+    GNS_FRAME::CGViewGroup *root = CGFragment::inflaterUnrecovered(0, static_cast<GNS_FRAME::CGViewGroup*>(parent));
     /* findViewById + dynamic_cast chains; CGView::show();
        CGTextView::setEllipsizeType; "maneuverIconOnLine has data already!" */
 }
 
 /* sub_32e30 (1120B) — GuideS311UnnormalFragment::InitTheme() */
 void GuideS311UnnormalFragment_InitTheme() {
-    CGViewGroup *root = CGFragment::inflater(0, nullptr);
+    CGViewGroup *root = CGFragment::inflaterUnrecovered(0, nullptr);
     hsl::Config *c = hsl::HSL::GetConfigHandle();
     int customType = 0;
     c->GetInt32(dice::String16("largeInstrumentCustomType"), customType, hsl::Config::VALUE_STRATEGY_DEFAULT);
     /* container null asserts: _guideViewContainer / _classicViewContainer / _motionViewContainer / _techViewContainer */
-    GNS_FRAME::CGView *v = (GNS_FRAME::CGView*)CGFragment::findViewById(0);
+    GNS_FRAME::CGView *v = (GNS_FRAME::CGView*)CGFragment::findViewByIdUnrecovered(0);
     v->setBackGround(0);
 }
 

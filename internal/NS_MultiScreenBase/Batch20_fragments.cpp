@@ -108,14 +108,14 @@ void AutoExscreenNotifyObserver_OnHideCrossImage(void *self, int crossType) {
 /* sub_31ad0 (460B) — CGInstrumentPannelLargeGuideS311Fragment::InitTheme
    (inflater + findViewById + setBackGround + hide 链) */
 void GuideS311Fragment_InitTheme_impl(void *self) {
-    CGViewGroup *root = CGFragment::inflater(0, (CGViewGroup*)0);
+    CGViewGroup *root = CGFragment::inflaterUnrecovered(0, (CGViewGroup*)0);
     /* dynamic_cast checks */
-    CGView *bg = CGFragment::findViewById(0);
+    CGView *bg = CGFragment::findViewByIdUnrecovered(0);
     bg->setBackGround(0);
-    CGView *w1 = CGFragment::findViewById(1); /* cast */ w1->hide(false);
-    CGView *w2 = CGFragment::findViewById(2); /* cast */ w2->hide(false);
-    CGView *w3 = CGFragment::findViewById(3); /* cast */ w3->hide(false);
-    CGView *w4 = CGFragment::findViewById(4); /* cast */ w4->hide(false);
+    CGView *w1 = CGFragment::findViewByIdUnrecovered(1); /* cast */ w1->hide(false);
+    CGView *w2 = CGFragment::findViewByIdUnrecovered(2); /* cast */ w2->hide(false);
+    CGView *w3 = CGFragment::findViewByIdUnrecovered(3); /* cast */ w3->hide(false);
+    CGView *w4 = CGFragment::findViewByIdUnrecovered(4); /* cast */ w4->hide(false);
     AutoConfigScreenMode::GetInstance();
 }
 
@@ -128,14 +128,14 @@ void AutoArNaviFragment_onCreateView_impl(void *self, CGViewGroup *parent) {
     hsl::HSL::GetGuideHandle();
     hsl::HSL::GetPosHandle();
     GNS_FRAME::CGBroadcaster::getInstance(0);
-    CGFragment::isTopFragment();
+    CGFragment::isTopFragmentUnrecovered();
     AlcExport("onCreateView", "...AutoArNaviFragment::onCreateView(CGViewGroup*)", 0, self);
 }
 
 /* sub_271f0 (316B) — ALC + isTopFragment guard */
 bool ArNaviFragment_guard_impl(void *self) {
     AlcExport("guard", "...", 0, self);
-    if (!CGFragment::isTopFragment()) return false;
+    if (!CGFragment::isTopFragmentUnrecovered()) return false;
     AlcExport("guard", "...", 0, self);
     return true;
 }
@@ -173,7 +173,7 @@ void StartFragmentHelper_impl(const CGIntent &intent, int mode) {
 
 /* sub_20ddc (108B) — isTopFragment guard (ScreenType param) */
 bool FragmentTopGuard_impl(int32_t screenType) {
-    CGFragment::isTopFragment();
+    CGFragment::isTopFragmentUnrecovered();
     (void)screenType;
     return true;
 }
