@@ -4,7 +4,7 @@ import argparse, struct, subprocess
 from pathlib import Path
 import capstone
 
-p=argparse.ArgumentParser();p.add_argument('elf',type=Path);p.add_argument('start',type=lambda s:int(s,0));p.add_argument('size',type=lambda s:int(s,0));a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('elf',type=Path);p.add_argument('start',type=lambda s:int(s,0));p.add_argument('size',type=lambda s:int(s,0));p.add_argument('--arm',action='store_true',help='decode ARM instructions, e.g. after a Thumb BX PC veneer');a=p.parse_args()
 b=a.elf.read_bytes()
 if b[:5] != b'\x7fELF\x01':raise SystemExit('ELF32 required')
 phoff,shoff=struct.unpack_from('<II',b,28);phents,phnum,shents,shnum,shstr=struct.unpack_from('<5H',b,42)
@@ -23,10 +23,10 @@ for off in range(sym[4],sym[4]+sym[5],16):
 r=ss['.rel.plt'];plt=ss['.plt'];calls={}
 for i,off in enumerate(range(r[4],r[4]+r[5],8)):
  _,info=struct.unpack_from('<II',b,off);calls[plt[3]+20+12*i]=syms[info>>8]
-md=capstone.Cs(capstone.CS_ARCH_ARM,capstone.CS_MODE_THUMB|capstone.CS_MODE_LITTLE_ENDIAN)
+md=capstone.Cs(capstone.CS_ARCH_ARM,(capstone.CS_MODE_ARM if a.arm else capstone.CS_MODE_THUMB)|capstone.CS_MODE_LITTLE_ENDIAN)
 for ins in md.disasm(read(a.start,a.size),a.start):
  extra=''
- if ins.mnemonic in ('bl','blx','b.w') and ins.op_str.startswith('#'):
+ if ins.mnemonic in ('bl','blx','b.w','b') and ins.op_str.startswith('#'):
   target=int(ins.op_str[1:],0);extra=calls.get(target,'')
  if ins.mnemonic.startswith('ldr') and '[pc,' in ins.op_str:
   import re

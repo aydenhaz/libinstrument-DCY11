@@ -1,0 +1,13 @@
+0002eb58 push       {r4, r6, r7, lr}                         
+0002eb5a add        r7, sp, #8                               
+0002eb5c mov        r4, r0                                   
+0002eb5e adds       r0, #0xc0                                
+0002eb60 bl         #0x17dfc                                 
+0002eb64 mov        r0, r4                                   
+0002eb66 pop.w      {r4, r6, r7, lr}                         
+0002eb6a b.w        #0x456b4                                 
+0002eb6e push       {r7, lr}                                 
+0002eb70 mov        r7, sp                                   
+0002eb72 bl         #0x2eb58                                 
+0002eb76 pop.w      {r7, lr}                                 
+0002eb7a b.w        #0x45574                                 

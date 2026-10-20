@@ -14,9 +14,6 @@ public:
     CGIPLPacket();
     ~CGIPLPacket();
 
-    // script-binding glue (sub_30dc8)
-    static CGIPLPacket *ScriptThis(void *obj);
-
     // lifecycle family (string xref verified)
     void onInitEnd();                    // sub_2eb88  1892B  batch5
     void onPreLoad();                    // sub_2f464   400B  batch8

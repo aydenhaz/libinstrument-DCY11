@@ -24,6 +24,7 @@
 #include <hsl/HSL.h>
 #include <hsl/SystemNotify.h>
 #include <hsl/MultiScreenService.h>
+#include <hsl/ThirdManager.h>
 #include <new>
 
 namespace NS_InstrumentPannelLarge {
@@ -51,8 +52,9 @@ void CGIPLPacket::onPostLoadRes() {
     /* 2. allocate 0x56(86B) object; store via vtable ptrs (0x2f698 pool) */
     void *obj = operator new(0x56);
     /* 3. init member chain this+0x34c etc. */
-    /* 4. AsyncObject::cancelScheduleTaskHelper(this) at tail */
-    GNS_FRAME::CGAsyncObject::cancelScheduleTaskHelper(this);
+    /* CORRECTION: original tail dispatches Packet vtable slot 6 after
+       registering fragment builders. It does not cancel a task here.
+       Builder registration and the dispatch remain to be reconstructed. */
 }
 
 /* ---- onPostAlreadyLoadRes sub_2fc30 (112B) ---- */
@@ -85,21 +87,27 @@ void CGIPLPacket::onResume() {
 
 /* ---- onDestroy sub_2f2f0 (372B) ---- */
 void CGIPLPacket::onDestroy() {
-    AlcExport(0, 0, /*tag*/ 0xea, this);     /* f04f0cea */
+    IPL_ABI::packetTrace("onDestroy", "virtual void NS_InstrumentPannelLarge::CGIPLPacket::onDestroy()", 0xea, true);
     /* 1. clear render callbacks */
     GNS_FRAME::CGWorkStation::ownWorkStation()->setMapRenderCallback(0);
     GNS_FRAME::CGWorkStation::ownWorkStation()->setTopRenderCallback(0);
-    /* 2. CGString(); showFpsInfo(false, name, 0x24=36) */
+    /* 2. V21 0x2f374: size argument is 0x18 (24). */
     CGString empty;
-    GNS_FRAME::CGFrameSimulation::ownWorkStation()->showFpsInfo(false, empty, 0x24);
-    /* 3. AsyncObject::cancelScheduleTaskHelper(x2) + closeAllFragments */
-    GNS_FRAME::CGAsyncObject::cancelScheduleTaskHelper(0);
-    GNS_FRAME::CGAsyncObject::cancelScheduleTaskHelper(0);
-    GNS_FRAME::CGPackage::closeAllFragments();
-    /* 4. observers removal + MultiScreenService cleanup (tail region) */
-    hsl::SystemNotify *sn = hsl::HSL::GetSystemNotifyHandle();
-    sn->RemoveInstrumentPannelObserver(this);
-    /* MultiScreenService::GetInstance()->Reset... */
+    GNS_FRAME::CGFrameSimulation::ownWorkStation()->showFpsInfo(false, empty, 0x18);
+    /* 3. Instance calls: original primary host base is at offset zero.
+       TODO: host lock at Packet+8 must surround task cancellation. */
+    void (CGIPLPacket::*refresh)() = &CGIPLPacket::refreshGFramePaint;
+    uintptr_t entry = 0;
+    std::memcpy(&entry, &refresh, sizeof(entry));
+    reinterpret_cast<GNS_FRAME::CGAsyncObject*>(this)->cancelScheduleTaskHelper(
+        reinterpret_cast<void*>(entry));
+    reinterpret_cast<GNS_FRAME::CGPackage*>(this)->closeAllFragments();
+    /* No RemoveInstrumentPannelObserver call exists in this original method.
+       TODO: restore map facility lookup/destruction, then proxy deletion at
+       +0x168 and singleton clearing. Packet layout/factory are still incomplete. */
+    reinterpret_cast<hsl::ThirdManager*>(hsl::HSL::Get3rdHandle())
+        ->RemoveUITaskThread(hsl::UI_TASK_DEVICE_INSTRUMENT);
+
 }
 
 } // namespace

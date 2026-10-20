@@ -7,7 +7,7 @@ class CGPackage {
 public:
     static CGPackage *getHostFragmentActivity();
     static CGContext *getContext();
-    static void closeAllFragments();
+    void closeAllFragments();
 };
 class CGFragment {
 public:

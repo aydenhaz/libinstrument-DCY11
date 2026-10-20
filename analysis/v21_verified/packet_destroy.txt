@@ -1,0 +1,128 @@
+0002f2f0 push       {r4, r5, r6, r7, lr}                     
+0002f2f2 add        r7, sp, #0xc                             
+0002f2f4 push.w     {r8, sb, sl, fp}                         
+0002f2f8 sub        sp, #0x44                                
+0002f2fa mov        fp, r0                                   
+0002f2fc ldr        r0, [pc, #0x144]                         literal 0x3f5f6
+0002f2fe add        r0, pc                                   
+0002f300 ldr.w      sb, [r0]                                 
+0002f304 ldr.w      r0, [sb]                                 
+0002f308 str        r0, [sp, #0x40]                          
+0002f30a blx        #0x13c14                                 I_GetAlcPtr
+0002f30e ldr        r6, [pc, #0x138]                         literal 0x25935
+0002f310 ldr        r4, [pc, #0x138]                         literal 0x2c3ad
+0002f312 ldr        r5, [pc, #0x13c]                         literal 0x256b7
+0002f314 add        r6, pc                                   
+0002f316 add        r4, pc                                   
+0002f318 add        r5, pc                                   
+0002f31a cbz        r0, #0x2f34c                             
+0002f31c blx        #0x13c14                                 I_GetAlcPtr
+0002f320 ldr        r1, [r0]                                 
+0002f322 mov        r2, r6                                   
+0002f324 mov.w      ip, #0xea                                
+0002f328 mov.w      lr, #0                                   
+0002f32c mov.w      r6, #0x8000000                           
+0002f330 ldr        r3, [r1]                                 
+0002f332 ldr        r1, [pc, #0x120]                         literal 0x25951
+0002f334 str        r6, [sp]                                 
+0002f336 mov        r6, r2                                   
+0002f338 add        r1, pc                                   
+0002f33a strd       lr, r5, [sp, #4]                         
+0002f33e strd       r4, r2, [sp, #0xc]                       
+0002f342 movs       r2, #0                                   
+0002f344 strd       ip, r1, [sp, #0x14]                      
+0002f348 movs       r1, #8                                   
+0002f34a blx        r3                                       
+0002f34c mov        sl, r5                                   
+0002f34e str        r6, [sp, #0x24]                          
+0002f350 blx        #0x13e30                                 _ZN9GNS_FRAME13CGWorkStation14ownWorkStationEv
+0002f354 movs       r1, #0                                   
+0002f356 blx        #0x146a0                                 _ZN9GNS_FRAME13CGWorkStation20setMapRenderCallbackEPFvvE
+0002f35a blx        #0x13e30                                 _ZN9GNS_FRAME13CGWorkStation14ownWorkStationEv
+0002f35e movs       r1, #0                                   
+0002f360 blx        #0x13e3c                                 _ZN9GNS_FRAME13CGWorkStation20setTopRenderCallbackEPFvPNS_8CGCanvasEE
+0002f364 add        r5, sp, #0x28                            
+0002f366 mov        r0, r5                                   
+0002f368 blx        #0x13d04                                 _ZN8CGStringC1Ev
+0002f36c blx        #0x141d8                                 _ZN9GNS_FRAME17CGFrameSimulation14ownWorkStationEv
+0002f370 movs       r1, #0                                   
+0002f372 mov        r2, r5                                   
+0002f374 movs       r3, #0x18                                
+0002f376 blx        #0x146ac                                 _ZN9GNS_FRAME17CGFrameSimulation11showFpsInfoEbR8CGStringi
+0002f37a mov        r5, fp                                   
+0002f37c ldr        r0, [r5, #8]!                            
+0002f380 ldr        r1, [r0, #8]                             
+0002f382 mov        r0, r5                                   
+0002f384 blx        r1                                       
+0002f386 ldr        r1, [pc, #0xd0]                          literal 0x19a7
+0002f388 mov        r0, fp                                   
+0002f38a add        r1, pc                                   
+0002f38c blx        #0x146b8                                 _ZN9GNS_FRAME13CGAsyncObject24cancelScheduleTaskHelperEPv
+0002f390 ldr        r0, [r5]                                 
+0002f392 ldr        r1, [r0, #0xc]                           
+0002f394 mov        r0, r5                                   
+0002f396 blx        r1                                       
+0002f398 mov        r0, fp                                   
+0002f39a blx        #0x146c4                                 _ZN9GNS_FRAME9CGPackage17closeAllFragmentsEv
+0002f39e blx        #0x13cd4                                 _ZN3hsl3HSL19GetMapServiceHandleEv
+0002f3a2 cbz        r0, #0x2f3fe                             
+0002f3a4 mov        r5, r0                                   
+0002f3a6 ldr        r0, [r0]                                 
+0002f3a8 movs       r1, #5                                   
+0002f3aa ldr        r2, [r0, #0x3c]                          
+0002f3ac mov        r0, r5                                   
+0002f3ae blx        r2                                       
+0002f3b0 cbz        r0, #0x2f3fe                             
+0002f3b2 mov        r6, r0                                   
+0002f3b4 ldr        r0, [r0]                                 
+0002f3b6 ldr.w      r1, [r0, #0xa8]                          
+0002f3ba mov        r0, r6                                   
+0002f3bc blx        r1                                       
+0002f3be mov        r8, r0                                   
+0002f3c0 blx        #0x13c14                                 I_GetAlcPtr
+0002f3c4 cbz        r0, #0x2f3f6                             
+0002f3c6 blx        #0x13c14                                 I_GetAlcPtr
+0002f3ca ldr        r1, [r0]                                 
+0002f3cc mov.w      lr, #0                                   
+0002f3d0 mov.w      r2, #0x8000000                           
+0002f3d4 mov.w      ip, #0xff                                
+0002f3d8 ldr        r3, [r1]                                 
+0002f3da ldr        r1, [pc, #0x80]                          literal 0x258c0
+0002f3dc strd       r2, lr, [sp]                             
+0002f3e0 add        r1, pc                                   
+0002f3e2 ldr        r2, [sp, #0x24]                          
+0002f3e4 strd       sl, r4, [sp, #8]                         
+0002f3e8 strd       r2, ip, [sp, #0x10]                      
+0002f3ec movs       r2, #0                                   
+0002f3ee strd       r1, r8, [sp, #0x18]                      
+0002f3f2 movs       r1, #8                                   
+0002f3f4 blx        r3                                       
+0002f3f6 mov        r0, r5                                   
+0002f3f8 mov        r1, r6                                   
+0002f3fa blx        #0x146d0                                 _ZN3hsl18MapViewServiceImpl22DestroyDisplayFacilityEPNS_11MapViewBaseE
+0002f3fe blx        #0x145e0                                 _ZN3hsl3HSL12Get3rdHandleEv
+0002f402 movs       r1, #2                                   
+0002f404 blx        #0x146dc                                 _ZN3hsl12ThirdManager18RemoveUITaskThreadENS_17UI_TASK_DEVICE_IDE
+0002f408 ldr.w      r0, [fp, #0x168]                         
+0002f40c cbz        r0, #0x2f41a                             
+0002f40e ldr        r1, [r0]                                 
+0002f410 ldr        r1, [r1, #4]                             
+0002f412 blx        r1                                       
+0002f414 movs       r0, #0                                   
+0002f416 str.w      r0, [fp, #0x168]                         
+0002f41a movs       r0, #0                                   
+0002f41c str.w      r0, [fp, #0x168]                         
+0002f420 ldr        r1, [pc, #0x3c]                          literal 0x40922
+0002f422 add        r1, pc                                   
+0002f424 str        r0, [r1]                                 
+0002f426 add        r0, sp, #0x28                            
+0002f428 blx        #0x13d58                                 _ZN8CGStringD1Ev
+0002f42c ldr.w      r0, [sb]                                 
+0002f430 ldr        r1, [sp, #0x40]                          
+0002f432 subs       r0, r0, r1                               
+0002f434 ittt       eq                                       
+0002f436 addeq      sp, #0x44                                
+0002f438 popeq.w    {r8, sb, sl, fp}                         
+0002f43c popeq      {r4, r5, r6, r7, pc}                     
+0002f43e blx        #0x13a28                                 __stack_chk_fail
+0002f442 nop                                                 

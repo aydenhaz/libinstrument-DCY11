@@ -68,3 +68,10 @@ The build deliberately removes failed final outputs. It will not label an incomp
 - VoidCallable model and ASan/UBSan tests added; not integrated with GPI or Android scheduling.
 - Correct scheduleTaskHelper declaration added. Host probe emits exactly the original imported mangled name. No new Android build or usable SO is claimed.
 - See analysis/CALLABLE_RECOVERY.md for remaining RTTI, libc++ and object-lifetime blockers.
+
+## Packet teardown checkpoint
+
+- Corrected cancelScheduleTaskHelper and closeAllFragments to instance declarations; previous static declarations omitted this at call sites.
+- onDestroy now clears render callbacks, hides FPS with size 24, cancels one refresh-identity task, closes fragments and removes device-2 UI thread registration. Host boundary test passes.
+- Removed invented observer removal and post-load cancellation. ScriptThis was also invented from method equality and is withdrawn.
+- Locking, map facility destruction, proxy deletion, singleton clearing and real Packet construction remain incomplete. These partial changes do not make onDestroy or the library replacement-ready. See analysis/PACKET_TEARDOWN_RECOVERY.md.

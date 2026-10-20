@@ -1,0 +1,33 @@
+00017cac push       {r4, r5, r7, lr}                         
+00017cae add        r7, sp, #8                               
+00017cb0 movs       r5, #0                                   
+00017cb2 mov        r4, r0                                   
+00017cb4 strh       r5, [r0, #0x14]                          
+00017cb6 ldr        r0, [pc, #0x58]                          literal 0x5145c
+00017cb8 add        r0, pc                                   
+00017cba add.w      r1, r0, #0x20                            
+00017cbe adds       r0, #8                                   
+00017cc0 stm.w      r4, {r0, r1, r5}                         
+00017cc4 add.w      r0, r4, #0x18                            
+00017cc8 movs       r1, #0                                   
+00017cca strd       r5, r5, [r4, #0xc]                       
+00017cce bl         #0x1625a                                 
+00017cd2 movs       r0, #2                                   
+00017cd4 str        r0, [r4, #0x1c]                          
+00017cd6 add.w      r0, r4, #0x20                            
+00017cda bl         #0x16302                                 
+00017cde add.w      r0, r4, #0x80                            
+00017ce2 movs       r1, #0x12                                
+00017ce4 strb.w     r5, [r4, #0x7c]                          
+00017ce8 strd       r5, r5, [r4, #0x74]                      
+00017cec strb.w     r5, [r4, #0x70]                          
+00017cf0 blx        #0x13e18                                 __aeabi_memclr4
+00017cf4 movs       r0, #1                                   
+00017cf6 str.w      r5, [r4, #0xa4]                          
+00017cfa strb.w     r5, [r4, #0xa0]                          
+00017cfe str.w      r5, [r4, #0x9c]                          
+00017d02 strb.w     r5, [r4, #0x98]                          
+00017d06 str.w      r0, [r4, #0x94]                          
+00017d0a mov        r0, r4                                   
+00017d0c pop        {r4, r5, r7, pc}                         
+00017d0e nop                                                 
