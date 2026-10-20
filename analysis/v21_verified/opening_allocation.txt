@@ -1,0 +1,9 @@
+0002ecfc mov.w      r0, #0x440                               
+0002ed00 blx        #0x13b84                                 _Znwj
+0002ed04 ldr        r1, [pc, #0x1cc]                         literal 0x271b1
+0002ed06 mov        r6, r0                                   
+0002ed08 add        r1, pc                                   
+0002ed0a bl         #0x41954                                 
+0002ed0e ldr        r0, [pc, #0x1c8]                         literal 0x3fc5e
+0002ed10 ldr        r1, [pc, #0x1c8]                         literal 0x3dca8
+0002ed12 add        r0, pc                                   

@@ -10,7 +10,7 @@ The reference was extracted locally and read; the earlier download blockage no l
 ## Reproduced checks
 
 - All 31 translation units compile with Android NDK r27c, ARM32 API 21.
-- Strict --no-undefined link still fails on 25 symbols; see analysis/REBUILD_LINK_ERRORS.txt.
+- Last persisted strict --no-undefined link failed on 25 symbols; analysis/REBUILD_LINK_ERRORS.txt records that pre-withdrawal run. The prior transient 22-symbol run was lost during workspace cleanup; the two lifecycle changes have since been recovered and host-tested. A fresh Android build is required; no successful link is claimed.
 - Four duplicate definitions removed, retaining their Batch17 definitions.
 - Entry contract mock test passes: initial load, duplicate-start rejection, unload, ALC stack words.
 - Dice String16 tests pass with AddressSanitizer and UndefinedBehaviorSanitizer (LeakSanitizer disabled because its /proc process inspection fails in this environment). These are host tests, not Android runtime tests.
@@ -29,7 +29,9 @@ The reference was extracted locally and read; the earlier download blockage no l
 ## Remaining functional and ABI blockers
 
 - Original .init_array has FIVE entries: 0x14cf9,0x14d31,0x14d69,0x14d9d,0x14e41. module_init.cpp is still a nonfunctional four-entry skeleton; factory registration has not been recovered. Adding a fifth empty constructor would not fix this.
-- CGIPLPacket is not a layout-compatible reconstructed object. Original observer subobjects are at +0x36c (map surface), +0x37c (network), +0x430 (instrument). Current small classes do not reproduce those bases or their vtables. Simply casting this to the desired observer pointer would be invalid.
+- CORRECTION: +0x36c (map surface), +0x37c (network), +0x430 (instrument) belong to the newly allocated 0x440-byte Opening Fragment (r6), NOT CGIPLPacket. Packet factory allocates 0x16c bytes, initializes script binding at +0xc0 and proxy pointer at +0x168. Current classes still do not reproduce these layouts.
+- The primary Packet vtable has 16 slots. Imported getExecutorId/getUIThreadId entries have zero raw words plus R_ARM_ABS32 relocations; the previous scanner stopped there incorrectly. See analysis/v21_verified/packet_vtable.txt.
+- Four wrongly owned Batch7 methods are withdrawn, with source retained in analysis/rejected. This is removal of invalid implementations, not restoration of their real behaviors.
 - Closure callbacks, ownership and missing internal business methods remain incomplete. No empty callbacks, unresolved-symbol allowances or duplicate-symbol allowances were added to make a misleading SO.
 - Many expanded functions are commented call/index records. Some classes are separately re-declared with inconsistent definitions across translation units. Compilation does not establish C++ ODR or behavior equivalence.
 - This target is ARM32 for V21, not an arm64 drop-in for 9.5.
@@ -43,3 +45,10 @@ python3 build_android.py --ndk /path/to/android-ndk-r27c
 ```
 
 The build deliberately removes failed final outputs. It will not label an incompletely linked file as a replacement.
+
+## Recovery verification
+
+- Reference APK and source archive recovered after environment cleanup; reference SHA-256 rechecked.
+- refreshGFramePaint restores sendMsg(0x30,0,0,source-token,nullptr), including line 0xe0 in token high word.
+- onPostAlreadyLoadRes dispatches primary vtable slot 14. Both use the verified seven-stack-word Packet ALC call.
+- tests/packet_lifecycle_contract_test.cpp passes with host mocks. This validates call arguments and dispatch only, not Android loading or complete class layout.

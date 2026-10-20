@@ -1,0 +1,26 @@
+0002eb08 push       {r4, r5, r7, lr}                         
+0002eb0a add        r7, sp, #8                               
+0002eb0c mov        r4, r0                                   
+0002eb0e mov.w      r0, #0x16c                               
+0002eb12 blx        #0x13b84                                 _Znwj
+0002eb16 mov        r1, r4                                   
+0002eb18 mov        r5, r0                                   
+0002eb1a blx        #0x145bc                                 _ZN9GNS_FRAME17CGFragmentPackageC2EPNS_9CGContextE
+0002eb1e adds       r0, #0xc0                                
+0002eb20 bl         #0x17cac                                 
+0002eb24 movs       r0, #0                                   
+0002eb26 str.w      r0, [r5, #0x168]                         
+0002eb2a ldr        r0, [pc, #0x24]                          literal 0x3ccc8
+0002eb2c add        r0, pc                                   
+0002eb2e add.w      r1, r0, #0x78                            
+0002eb32 add.w      r2, r0, #0x60                            
+0002eb36 strd       r2, r1, [r5, #0xc0]                      
+0002eb3a add.w      r1, r0, #0x50                            
+0002eb3e str        r1, [r5, #0x40]                          
+0002eb40 adds       r0, #8                                   
+0002eb42 str        r0, [r5]                                 
+0002eb44 ldr        r0, [pc, #0xc]                           literal 0x411fe
+0002eb46 add        r0, pc                                   
+0002eb48 str        r5, [r0]                                 
+0002eb4a mov        r0, r5                                   
+0002eb4c pop        {r4, r5, r7, pc}                         

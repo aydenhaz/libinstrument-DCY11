@@ -11,6 +11,9 @@
  */
 #include "CGIPLPacket.h"
 #include "../AlcExport.h"
+#include "../abi/V21PacketTrace.h"
+#include <cstring>
+#include <cstdint>
 #include <GFrame/CGString.h>
 #include <GFrame/GblAlc.h>
 #include <GFrame/CGWorkStation.h>
@@ -54,12 +57,18 @@ void CGIPLPacket::onPostLoadRes() {
 
 /* ---- onPostAlreadyLoadRes sub_2fc30 (112B) ---- */
 void CGIPLPacket::onPostAlreadyLoadRes() {
-    /* small: ALC export + member update; see analysis */
+    IPL_ABI::packetTrace("onPostAlreadyLoadRes", "virtual void NS_InstrumentPannelLarge::CGIPLPacket::onPostAlreadyLoadRes()", 0x115, false);
+    void** table;
+    std::memcpy(&table,this,sizeof(table));
+    reinterpret_cast<void (*)(CGIPLPacket*)>(table[14])(this);
 }
 
 /* ---- refreshGFramePaint sub_30d34 (128B) ---- */
 void CGIPLPacket::refreshGFramePaint() {
-    /* small paint invalidation: member write + return */
+    IPL_ABI::packetTrace("refreshGFramePaint", "void NS_InstrumentPannelLarge::CGIPLPacket::refreshGFramePaint()", 0xdf, true);
+    static const char source[]="/home/jenkins/build/AutoCpp/app/components/MultiScreen/InstrumentPannelLarge/func/GIPLPacket.cpp";
+    const uint64_t token=(uint64_t(0xe0)<<32)|uint32_t(reinterpret_cast<uintptr_t>(source));
+    GNS_FRAME::CGFrameSimulation::ownWorkStation()->sendMsg(0x30,0,0,token,nullptr);
 }
 
 /* ---- onResume sub_3f080 (692B) ---- */

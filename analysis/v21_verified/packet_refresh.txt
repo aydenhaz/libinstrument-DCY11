@@ -1,0 +1,51 @@
+00030d34 push       {r4, r5, r6, r7, lr}                     
+00030d36 add        r7, sp, #0xc                             
+00030d38 str        fp, [sp, #-0x4]!                         
+00030d3c sub        sp, #0x20                                
+00030d3e blx        #0x13c14                                 I_GetAlcPtr
+00030d42 cbz        r0, #0x30d7c                             
+00030d44 blx        #0x13c14                                 I_GetAlcPtr
+00030d48 ldr        r1, [r0]                                 
+00030d4a mov.w      ip, #0xdf                                
+00030d4e mov.w      lr, #0                                   
+00030d52 mov.w      r2, #0x8000000                           
+00030d56 ldr        r3, [r1]                                 
+00030d58 ldr        r1, [pc, #0x44]                          literal 0x23e1f
+00030d5a ldr        r4, [pc, #0x48]                          literal 0x23dda
+00030d5c ldr        r5, [pc, #0x48]                          literal 0x2a95f
+00030d5e add        r1, pc                                   
+00030d60 ldr        r6, [pc, #0x48]                          literal 0x23c65
+00030d62 add        r4, pc                                   
+00030d64 add        r5, pc                                   
+00030d66 strd       r2, lr, [sp]                             
+00030d6a add        r6, pc                                   
+00030d6c movs       r2, #0                                   
+00030d6e strd       r6, r5, [sp, #8]                         
+00030d72 strd       r4, ip, [sp, #0x10]                      
+00030d76 str        r1, [sp, #0x18]                          
+00030d78 movs       r1, #8                                   
+00030d7a blx        r3                                       
+00030d7c blx        #0x141d8                                 _ZN9GNS_FRAME17CGFrameSimulation14ownWorkStationEv
+00030d80 ldr        r3, [pc, #0x2c]                          literal 0x23d55
+00030d82 movs       r1, #0                                   
+00030d84 movs       r2, #0xe0                                
+00030d86 add        r3, pc                                   
+00030d88 strd       r3, r2, [sp]                             
+00030d8c str        r1, [sp, #8]                             
+00030d8e movs       r1, #0x30                                
+00030d90 movs       r2, #0                                   
+00030d92 movs       r3, #0                                   
+00030d94 blx        #0x1479c                                 _ZN9GNS_FRAME17CGFrameSimulation7sendMsgEiiiyPN3GPI12ScopedRefptrINS1_11MessageCtrlEEE
+00030d98 add        sp, #0x20                                
+00030d9a ldr        fp, [sp], #4                             
+00030d9e pop        {r4, r5, r6, r7, pc}                     
+00030da0 subs       r6, #0x1f                                
+00030da2 movs       r2, r0                                   
+00030da4 subs       r5, #0xda                                
+00030da6 movs       r2, r0                                   
+00030da8 add        r1, sp, #0x17c                           
+00030daa movs       r2, r0                                   
+00030dac subs       r4, #0x65                                
+00030dae movs       r2, r0                                   
+00030db0 subs       r5, #0x55                                
+00030db2 movs       r2, r0                                   

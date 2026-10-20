@@ -26,12 +26,6 @@ public:
     void onResume();                     // sub_3f080   692B  batch8
     void onDestroy();                    // sub_2f2f0   372B  batch8
 
-    // major internals (batch7)
-    void MainInit();                     // sub_3a45c  4760B
-    void OnMapSurfaceViewNotify(int,int,int); // sub_1c798 5696B
-    void ScreenModeListen();             // sub_2ace0  3788B
-    void OnMapServiceEvent();            // sub_24094  3176B
-
     static void TopRenderCallback(GNS_FRAME::CGCanvas*);
 
 private:

@@ -1,0 +1,44 @@
+0002fc30 push       {r4, r5, r6, r7, lr}                     
+0002fc32 add        r7, sp, #0xc                             
+0002fc34 str        r8, [sp, #-0x4]!                         
+0002fc38 sub        sp, #0x20                                
+0002fc3a mov        r4, r0                                   
+0002fc3c blx        #0x13c14                                 I_GetAlcPtr
+0002fc40 cbz        r0, #0x2fc7c                             
+0002fc42 blx        #0x13c14                                 I_GetAlcPtr
+0002fc46 ldr        r1, [r0]                                 
+0002fc48 movw       ip, #0x115                               
+0002fc4c mov.w      lr, #0                                   
+0002fc50 mov.w      r3, #0x8000000                           
+0002fc54 ldr.w      r8, [r1]                                 
+0002fc58 ldr        r1, [pc, #0x34]                          literal 0x24dcc
+0002fc5a ldr        r5, [pc, #0x38]                          literal 0x24d7d
+0002fc5c ldr        r6, [pc, #0x38]                          literal 0x2ba5f
+0002fc5e add        r1, pc                                   
+0002fc60 ldr        r2, [pc, #0x38]                          literal 0x24d65
+0002fc62 add        r5, pc                                   
+0002fc64 add        r6, pc                                   
+0002fc66 strd       r3, lr, [sp]                             
+0002fc6a add        r2, pc                                   
+0002fc6c strd       r2, r6, [sp, #8]                         
+0002fc70 movs       r2, #0                                   
+0002fc72 strd       r5, ip, [sp, #0x10]                      
+0002fc76 str        r1, [sp, #0x18]                          
+0002fc78 movs       r1, #8                                   
+0002fc7a blx        r8                                       
+0002fc7c ldr        r0, [r4]                                 
+0002fc7e ldr        r1, [r0, #0x38]                          
+0002fc80 mov        r0, r4                                   
+0002fc82 add        sp, #0x20                                
+0002fc84 ldr        r8, [sp], #4                             
+0002fc88 pop.w      {r4, r5, r6, r7, lr}                     
+0002fc8c bx         r1                                       
+0002fc8e nop                                                 
+0002fc90 ldr        r5, [pc, #0x330]                         literal 0x3e9a2
+0002fc92 movs       r2, r0                                   
+0002fc94 ldr        r5, [pc, #0x1f4]                         literal 0x1e9c4
+0002fc96 movs       r2, r0                                   
+0002fc98 rev16      r7, r3                                   
+0002fc9a movs       r2, r0                                   
+0002fc9c ldr        r5, [pc, #0x194]                         literal 0x4620f805
+0002fc9e movs       r2, r0                                   
