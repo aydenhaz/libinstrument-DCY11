@@ -1,0 +1,73 @@
+libInstrumentPannelLarge.so
+00029548 push       {r4, r5, r6, r7, lr}                     
+0002954a add        r7, sp, #0xc                             
+0002954c push.w     {r8, sb, fp}                             
+00029550 sub        sp, #0x70                                
+00029552 mov        r5, r0                                   
+00029554 ldr        r0, [pc, #0xac]                          literal 0x4539c
+00029556 mov        r8, r1                                   
+00029558 add        r0, pc                                   
+0002955a ldr.w      sb, [r0]                                 
+0002955e ldr.w      r0, [sb]                                 
+00029562 str        r0, [sp, #0x6c]                          
+00029564 mov        r0, r5                                   
+00029566 blx        #0x1440c                                 _ZN9GNS_FRAME10CGFragment12onCreateViewEPNS_11CGViewGroupE
+0002956a mov        r0, r5                                   
+0002956c blx        #0x13fd4                                 _ZN9GNS_FRAME10CGFragment10getContextEv
+00029570 mov        r4, r0                                   
+00029572 movw       r0, #0x464                               
+00029576 blx        #0x13b84                                 _Znwj
+0002957a mov        r1, r4                                   
+0002957c mov        r6, r0                                   
+0002957e blx        #0x14418                                 _ZN9GNS_FRAME13CGFrameLayoutC1EPNS_9CGContextE
+00029582 add        r4, sp, #0x14                            
+00029584 mov        r1, r6                                   
+00029586 mov        r0, r4                                   
+00029588 blx        #0x14148                                 _ZN9GNS_FRAME12LayoutParams15getLayoutParamsEPNS_6CGViewE
+0002958c mov.w      r0, #-1                                  
+00029590 mov        r1, r4                                   
+00029592 strd       r0, r0, [sp, #0x24]                      
+00029596 mov        r0, r6                                   
+00029598 blx        #0x14154                                 _ZN9GNS_FRAME12LayoutParams15setLayoutParamsEPNS_6CGViewERS0_
+0002959c movs       r0, #0                                   
+0002959e movs       r1, #0                                   
+000295a0 str        r0, [sp]                                 
+000295a2 add        r0, sp, #8                               
+000295a4 movs       r2, #0                                   
+000295a6 movs       r3, #0                                   
+000295a8 blx        #0x14424                                 _ZN7CGColorC1Ehhhh
+000295ac blx        #0x14430                                 _ZN9GNS_FRAME15CGColorDrawable19createColorDrawableERK7CGColor
+000295b0 str        r0, [sp, #0x10]                          
+000295b2 cbz        r0, #0x295bc                             
+000295b4 adds       r0, #4                                   
+000295b6 add        r1, sp, #0x10                            
+000295b8 blx        #0x14100                                 _ZNK3asl7RefBase9incStrongEPKv
+000295bc add        r1, sp, #0x10                            
+000295be mov        r0, r6                                   
+000295c0 blx        #0x1443c                                 _ZN9GNS_FRAME6CGView13setBackGroundERKNS_13CGDrawablePtrE
+000295c4 ldr        r0, [sp, #0x10]                          
+000295c6 cbz        r0, #0x295d0                             
+000295c8 adds       r0, #4                                   
+000295ca add        r1, sp, #0x10                            
+000295cc blx        #0x1410c                                 _ZNK3asl7RefBase9decStrongEPKv
+000295d0 add        r0, sp, #8                               
+000295d2 blx        #0x14448                                 _ZN7CGColorD1Ev
+000295d6 mov        r0, r5                                   
+000295d8 mov        r1, r6                                   
+000295da mov        r2, r8                                   
+000295dc blx        #0x14454                                 _ZN9GNS_FRAME10CGFragment8inflaterEPNS_6CGViewEPNS_11CGViewGroupE
+000295e0 mov        r0, r6                                   
+000295e2 movs       r1, #1                                   
+000295e4 blx        #0x14460                                 _ZN9GNS_FRAME6CGView12setClickableEb
+000295e8 add        r0, sp, #0x14                            
+000295ea blx        #0x14160                                 _ZN9GNS_FRAME12LayoutParamsD1Ev
+000295ee ldr.w      r0, [sb]                                 
+000295f2 ldr        r1, [sp, #0x6c]                          
+000295f4 subs       r0, r0, r1                               
+000295f6 ittt       eq                                       
+000295f8 addeq      sp, #0x70                                
+000295fa popeq.w    {r8, sb, fp}                             
+000295fe popeq      {r4, r5, r6, r7, pc}                     
+00029600 blx        #0x13a28                                 __stack_chk_fail
+00029604 strh       r4, [r3, r6]                             
+00029606 movs       r4, r0                                   

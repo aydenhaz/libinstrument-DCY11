@@ -1,3 +1,5 @@
+> Historical reconstruction notes. Current authoritative status and corrections are in BUILD_STATUS.md. Claims below were not all substantiated by actual build/runtime checks.
+
 # 交接文档 — libInstrumentPannelLarge.so 逆向重建工程
 
 日期：2026-10-20

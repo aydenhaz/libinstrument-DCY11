@@ -1,6 +1,8 @@
+#include <AbiTypes.h>
 #pragma once
-namespace bl { typedef int MapEngineID; }
+namespace bl {  }
 namespace hsl {
+class ArTrafficLightObserver; class ArNaviMapViewObserver; class ArStatusObserver;
 class ArNaviMapView {
 public:
     void SetScreenSize(unsigned, unsigned);
@@ -11,9 +13,9 @@ public:
     bool IsArReplaying();
     void StopArReplaying();
     void SetArScreenViewType(bl::MapEngineID);
-    void SetTrafficLightListener(void*);
-    void SetArMapViewObserver(void*);
-    void SetArStatusObserver(void*);
+    void SetTrafficLightListener(ArTrafficLightObserver*);
+    void SetArMapViewObserver(ArNaviMapViewObserver*);
+    void SetArStatusObserver(ArStatusObserver*);
 };
 class ArMapViewInstance {
 public:

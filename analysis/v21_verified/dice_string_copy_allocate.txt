@@ -1,0 +1,53 @@
+libhsl.so
+0013ce82 push       {r4, r5, r7, lr}                         
+0013ce84 add        r7, sp, #8                               
+0013ce86 mov        r5, r1                                   
+0013ce88 movs       r1, #0                                   
+0013ce8a str        r1, [r0]                                 
+0013ce8c mov        r4, r0                                   
+0013ce8e ldr        r0, [r5]                                 
+0013ce90 cbz        r0, #0x13ce94                            
+0013ce92 ldr        r1, [r0]                                 
+0013ce94 mov        r0, r4                                   
+0013ce96 bl         #0x13cebe                                
+0013ce9a ldr        r1, [r5]                                 
+0013ce9c cmp        r1, #0                                   
+0013ce9e it         ne                                       
+0013cea0 addne      r1, #8                                   
+0013cea2 ldr        r2, [r4]                                 
+0013cea4 cmp        r2, #0                                   
+0013cea6 mov        r0, r2                                   
+0013cea8 it         ne                                       
+0013ceaa addne      r0, #8                                   
+0013ceac cmp        r2, #0                                   
+0013ceae itte       ne                                       
+0013ceb0 ldrne      r2, [r2]                                 
+0013ceb2 lslne      r2, r2, #1                               
+0013ceb4 moveq      r2, #0                                   
+0013ceb6 blx        #0x1266bc                                __aeabi_memcpy
+0013ceba mov        r0, r4                                   
+0013cebc pop        {r4, r5, r7, pc}                         
+0013cebe mov        r2, r1                                   
+0013cec0 b.w        #0x13cec4                                
+0013cec4 push       {r4, r5, r6, r7, lr}                     
+0013cec6 add        r7, sp, #0xc                             
+0013cec8 str        fp, [sp, #-0x4]!                         
+0013cecc mov        r6, r0                                   
+0013cece ldr        r0, [r0]                                 
+0013ced0 mov        r4, r2                                   
+0013ced2 mov        r5, r1                                   
+0013ced4 cbz        r0, #0x13cedc                            
+0013ced6 mov        r0, r6                                   
+0013ced8 bl         #0x13cd86                                
+0013cedc movs       r0, #0xf                                 
+0013cede add.w      r0, r0, r4, lsl #1                       
+0013cee2 bic        r0, r0, #3                               
+0013cee6 blx        #0x126800                                _Znaj
+0013ceea add.w      r1, r0, r5, lsl #1                       
+0013ceee movs       r2, #0                                   
+0013cef0 str        r0, [r6]                                 
+0013cef2 str        r5, [r0]                                 
+0013cef4 strh       r2, [r1, #8]                             
+0013cef6 str        r4, [r0, #4]                             
+0013cef8 ldr        fp, [sp], #4                             
+0013cefc pop        {r4, r5, r6, r7, pc}                     

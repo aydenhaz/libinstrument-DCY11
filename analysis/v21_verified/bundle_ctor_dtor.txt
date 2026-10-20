@@ -1,0 +1,29 @@
+libhsl.so
+001eaaa8 push       {r4, r6, r7, lr}                         
+001eaaaa add        r7, sp, #8                               
+001eaaac mov        r4, r0                                   
+001eaaae ldr        r0, [pc, #0x14]                          literal 0x4c4fc8
+001eaab0 add        r0, pc                                   
+001eaab2 ldr        r0, [r0]                                 
+001eaab4 add.w      r1, r0, #8                               
+001eaab8 mov        r0, r4                                   
+001eaaba stm        r0!, {r1}                                
+001eaabc blx        #0x12b2d0                                _ZN5turbo6BundleC1Ev
+001eaac0 mov        r0, r4                                   
+001eaac2 pop        {r4, r6, r7, pc}                         
+001eaac4 ldr        r7, [pc, #0x320]                         literal 0x4604eaaa
+001eaac6 lsls       r4, r1, #1                               
+001eaac8 push       {r4, r6, r7, lr}                         
+001eaaca add        r7, sp, #8                               
+001eaacc mov        r4, r0                                   
+001eaace ldr        r0, [pc, #0x14]                          literal 0x4c4fa8
+001eaad0 add        r0, pc                                   
+001eaad2 ldr        r0, [r0]                                 
+001eaad4 add.w      r1, r0, #8                               
+001eaad8 mov        r0, r4                                   
+001eaada stm        r0!, {r1}                                
+001eaadc blx        #0x12b2dc                                _ZN5turbo6BundleD1Ev
+001eaae0 mov        r0, r4                                   
+001eaae2 pop        {r4, r6, r7, pc}                         
+001eaae4 ldr        r7, [pc, #0x2a0]                         literal 0x46304604
+001eaae6 lsls       r4, r1, #1                               

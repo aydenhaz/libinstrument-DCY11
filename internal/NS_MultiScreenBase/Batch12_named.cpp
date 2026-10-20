@@ -106,9 +106,8 @@ void AutoMultiScreenConfig::SetMapLevel(int mapEngineId, int level) {
 }
 
 /* sub_35e2c (840B) AutoOpeningFragment::OnMapLevelChanged(uint32_t, bool) */
-void AutoOpeningFragment::OnMapLevelChanged(uint32_t level, bool animated) {
-    /* "mapLevel:%d" log; GetMapViewHandle->setMapLevel(level, animated) */
-}
+// Definition retained in Batch17_compiled.cpp.
+
 
 /* sub_347c0 (824B) — unnamed; calls: GetSurfaceConfig/GetMultiViewModeInfo/GAI_ExScreenRenderStatusNotify */
 void ExScreenRenderSync() {
@@ -128,9 +127,8 @@ void AutoExscreenNotifyObserver_Ctor() {
 }
 
 /* sub_37470 (800B) AutoOpeningFragment::OnMapPreviewExitOnUI(uint32_t) */
-void AutoOpeningFragment::OnMapPreviewExitOnUI(uint32_t id) {
-    /* ownWorkStation()->getExhibition(); findFragmentById; hide/show chain on UI thread */
-}
+// Definition retained in Batch17_compiled.cpp.
+
 
 /* sub_3c498 (792B) AutoPreviewFragment::ShowPreview() */
 void AutoPreviewFragment::ShowPreview() {
@@ -138,9 +136,8 @@ void AutoPreviewFragment::ShowPreview() {
 }
 
 /* sub_1f614 (780B) AutoArNaviFragment::onResume() */
-void AutoArNaviFragment::onResume() {
-    /* ArNaviMapView resume: SetScreenSize + observer re-arm */
-}
+// Definition retained in Batch17_compiled.cpp.
+
 
 /* sub_41484 (760B) AutoCruiseFragment::SetCarlocationToLocAtHMI() */
 void AutoCruiseFragment::SetCarlocationToLocAtHMI() {

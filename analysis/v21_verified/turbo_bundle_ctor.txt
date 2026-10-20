@@ -1,0 +1,19 @@
+libturbo.so
+0000be6c movs       r1, #0                                   
+0000be6e str        r1, [r0]                                 
+0000be70 bx         lr                                       
+0000be72 push       {r4, r6, r7, lr}                         
+0000be74 add        r7, sp, #8                               
+0000be76 mov        r4, r0                                   
+0000be78 blx        #0x9c6c                                  _ZN5turbo6Bundle5ResetEv
+0000be7c mov        r0, r4                                   
+0000be7e pop        {r4, r6, r7, pc}                         
+0000be80 push       {r4, r6, r7, lr}                         
+0000be82 add        r7, sp, #8                               
+0000be84 mov        r4, r0                                   
+0000be86 ldr        r0, [r0]                                 
+0000be88 cbz        r0, #0xbe92                              
+0000be8a blx        #0x9ac8                                  asl_cJSON_Delete
+0000be8e movs       r0, #0                                   
+0000be90 str        r0, [r4]                                 
+0000be92 pop        {r4, r6, r7, pc}                         

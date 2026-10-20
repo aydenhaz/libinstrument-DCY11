@@ -1,0 +1,18 @@
+libGFrame.so
+002837f4 push       {r4, r6, r7, lr}                         
+002837f6 add        r7, sp, #8                               
+002837f8 mov        r4, r0                                   
+002837fa movs       r0, #0                                   
+002837fc strd       r0, r0, [r4, #0xc]                       
+00283800 ldr        r1, [pc, #0x1c]                          literal 0x166922
+00283802 add        r1, pc                                   
+00283804 ldr        r1, [r1]                                 
+00283806 adds       r1, #8                                   
+00283808 str        r1, [r4]                                 
+0028380a mov        r1, r4                                   
+0028380c str        r0, [r1, #8]!                            
+00283810 mov        r0, r4                                   
+00283812 str        r1, [r0, #4]!                            
+00283816 bl         #0x283824                                
+0028381a mov        r0, r4                                   
+0028381c pop        {r4, r6, r7, pc}                         

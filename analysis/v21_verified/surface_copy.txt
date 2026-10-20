@@ -1,0 +1,98 @@
+libCommon.so
+0034aebc push       {r4, r5, r6, r7, lr}                     
+0034aebe add        r7, sp, #0xc                             
+0034aec0 push.w     {r8, sb, sl, fp}                         
+0034aec4 sub        sp, #0x24                                
+0034aec6 mov        r8, r2                                   
+0034aec8 mov        r5, r1                                   
+0034aeca mov        r6, r0                                   
+0034aecc ldrb       r4, [r0, #0x10]                          
+0034aece blx        #0x318018                                I_GetAlcPtr
+0034aed2 cbz        r4, #0x34af52                            
+0034aed4 cbz        r0, #0x34af1e                            
+0034aed6 blx        #0x318018                                I_GetAlcPtr
+0034aeda ldrb       r2, [r5]                                 
+0034aedc mov.w      ip, #0x99                                
+0034aee0 ldr        r1, [r5, #8]                             
+0034aee2 mov.w      sl, #0                                   
+0034aee6 add.w      sb, r6, #0x5c                            
+0034aeea lsls       r2, r2, #0x1f                            
+0034aeec it         eq                                       
+0034aeee addeq      r1, r5, #1                               
+0034aef0 ldr        r2, [r0]                                 
+0034aef2 ldr.w      lr, [r2]                                 
+0034aef6 ldr        r2, [pc, #0xd4]                          literal 0x41860b
+0034aef8 ldr        r4, [pc, #0xd4]                          literal 0x418593
+0034aefa ldr        r3, [pc, #0xd8]                          literal 0x4fde81
+0034aefc add        r2, pc                                   
+0034aefe add        r4, pc                                   
+0034af00 add        r3, pc                                   
+0034af02 mov        fp, r2                                   
+0034af04 mov.w      r2, #0x8000000                           
+0034af08 strd       r2, sl, [sp]                             
+0034af0c movs       r2, #0                                   
+0034af0e strd       sb, r3, [sp, #8]                         
+0034af12 strd       r4, ip, [sp, #0x10]                      
+0034af16 strd       fp, r1, [sp, #0x18]                      
+0034af1a movs       r1, #8                                   
+0034af1c blx        lr                                       
+0034af1e add.w      sb, r6, #0x24                            
+0034af22 mov        r4, sb                                   
+0034af24 mov        r6, sb                                   
+0034af26 ldr        r4, [r4]                                 
+0034af28 cbz        r4, #0x34af3e                            
+0034af2a add.w      r0, r4, #0x10                            
+0034af2e mov        r1, r5                                   
+0034af30 bl         #0x34a8f0                                
+0034af34 cmp        r0, #0                                   
+0034af36 ite        eq                                       
+0034af38 moveq      r6, r4                                   
+0034af3a addne      r4, #4                                   
+0034af3c b          #0x34af26                                
+0034af3e cmp        sb, r6                                   
+0034af40 beq        #0x34af4e                                
+0034af42 add.w      r1, r6, #0x10                            
+0034af46 mov        r0, r5                                   
+0034af48 bl         #0x34a8f0                                
+0034af4c cbz        r0, #0x34af8a                            
+0034af4e movs       r4, #0                                   
+0034af50 b          #0x34afb4                                
+0034af52 movs       r4, #0                                   
+0034af54 cbz        r0, #0x34afb4                            
+0034af56 blx        #0x318018                                I_GetAlcPtr
+0034af5a ldr        r1, [r0]                                 
+0034af5c mov.w      r3, #0x8000000                           
+0034af60 adds       r6, #0x5c                                
+0034af62 mov.w      ip, #0x95                                
+0034af66 ldr.w      lr, [r1]                                 
+0034af6a ldr        r1, [pc, #0x54]                          literal 0x4fd394
+0034af6c ldr        r5, [pc, #0x54]                          literal 0x418517
+0034af6e ldr        r2, [pc, #0x58]                          literal 0x4fde09
+0034af70 add        r1, pc                                   
+0034af72 stm.w      sp, {r3, r4, r6}                         
+0034af76 add        r3, sp, #0xc                             
+0034af78 add        r2, pc                                   
+0034af7a add        r5, pc                                   
+0034af7c stm.w      r3, {r2, r5, ip}                         
+0034af80 movs       r2, #0                                   
+0034af82 str        r1, [sp, #0x18]                          
+0034af84 movs       r1, #8                                   
+0034af86 blx        lr                                       
+0034af88 b          #0x34afb4                                
+0034af8a add.w      r1, r6, #0x1c                            
+0034af8e mov        r0, r8                                   
+0034af90 movs       r2, #0x24                                
+0034af92 blx        #0x317e98                                __aeabi_memcpy
+0034af96 add.w      r0, r8, #0x24                            
+0034af9a add.w      r1, r6, #0x40                            
+0034af9e blx        #0x3181bc                                _ZN8CGStringaSERKS_
+0034afa2 add.w      r0, r6, #0x58                            
+0034afa6 add.w      r1, r8, #0x3c                            
+0034afaa ldm        r0!, {r2, r3, r4, r5}                    
+0034afac stm        r1!, {r2, r3, r4, r5}                    
+0034afae movs       r4, #1                                   
+0034afb0 ldrb       r0, [r0]                                 
+0034afb2 strb       r0, [r1]                                 
+0034afb4 mov        r0, r4                                   
+0034afb6 add        sp, #0x24                                
+0034afb8 pop.w      {r8, sb, sl, fp}                         

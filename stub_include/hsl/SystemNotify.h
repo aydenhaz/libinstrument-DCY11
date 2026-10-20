@@ -1,8 +1,9 @@
+#include "HSL.h"
 #pragma once
 namespace hsl {
 class SystemNotify {
 public:
-    static SystemNotify *GetSystemNotifyHandle();
+    static SystemNotify *GetSystemNotifyHandle() { return HSL::GetSystemNotifyHandle(); }
     void AddInstrumentPannelObserver(void*);
     void RemoveInstrumentPannelObserver(void*);
     void AddMapSurfaceViewObserver(void*);

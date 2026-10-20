@@ -1,3 +1,4 @@
+#include <GFrame/CGDrawablePtr.h>
 /*
  * Batch 20 — fragment-class expansion (9 functions, compiled)
  * Decoded from expanded/fragments category; all verified against binary.
@@ -62,7 +63,7 @@ void GuideFragment_GoToCross_impl(void *self, int32_t index, bool flag) {
 void ThemeSwitch_impl(void *self, int32_t iaccTheme, int32_t screenMode) {
     AlcExport("ThemeSwitch", "...", 0, self);
     AutoConfigScreenMode *sm = AutoConfigScreenMode::GetInstance();
-    sm->SetIaccTheme(iaccTheme);
+    sm->SetIaccTheme(SCREEN_TYPE_MAIN, iaccTheme != 0); // V21 0x33ae0 / 0x33c2e.
     sm->SetCurrentScreenMode(0, screenMode);
     int cur = sm->GetCurrentScreenMode(0);
     sm->SetCurrentScreenMode(0, screenMode);
@@ -141,17 +142,19 @@ bool ArNaviFragment_guard_impl(void *self) {
 
 /* sub_29548 (192B) — root view builder: CGFrameLayout + LayoutParams
    + CGColorDrawable background + setClickable */
-GNS_FRAME::CGView *BuildRootView_impl(void *ctx, CGView *parent) {
-    /* base onCreateView(parent) */
-    /* CGFragment::getContext() */
-    GNS_FRAME::CGFrameLayout *root = new GNS_FRAME::CGFrameLayout(static_cast<GNS_FRAME::CGContext*>(ctx));
+GNS_FRAME::CGView *BuildRootView_impl(CGFragment *self, CGViewGroup *parent) {
+    // V21 0x29548..0x29600, including allocation and ownership operations.
+    self->onCreateView(parent);
+    GNS_FRAME::CGFrameLayout *root = new GNS_FRAME::CGFrameLayout(self->getContext());
     GNS_FRAME::LayoutParams lp = GNS_FRAME::LayoutParams::getLayoutParams(root);
+    lp.matchParent();
     GNS_FRAME::LayoutParams::setLayoutParams(root, lp);
-    CGColor c(0, 0, 0, 255);
-    GNS_FRAME::CGColorDrawable *bg = GNS_FRAME::CGColorDrawable::createColorDrawable(c);
-    root->setBackGroundDrawable(reinterpret_cast<GNS_FRAME::CGDrawableHolder*>(bg));
-    /* ref counting via asl::RefBase */
-    /* inflater(root layout) */
+    {
+        CGColor color(0, 0, 0, 0);
+        GNS_FRAME::CGDrawablePtr background(GNS_FRAME::CGColorDrawable::createColorDrawable(color));
+        root->setBackGround(background);
+    }
+    self->inflater(root, parent);
     root->setClickable(true);
     return root;
 }

@@ -84,12 +84,19 @@ void CGIPLPacket::onInitEnd() {
 
     /* 3. UI task thread wiring */
     third_ = hsl::HSL::Get3rdHandle();
-    int execId = GNS_FRAME::CGFrameSimulation::getRenderThreadExecutorId();
-    uiThreadProxy_ = new hsl::UITaskThreadProxy(execId);
-    int engineId = hsl::CommonUtils::GetEngineIdByDeviceId(0);
-    static_cast<hsl::ThirdManager*>(third_)->SetUITaskThread(0, engineId, 0, false, uiThreadProxy_);
-    GNS_FRAME::CGFrameSimulation::getRenderThreadId();
-    hsl::UIObject::SetUITaskThread(GNS_FRAME::CGFrameSimulation::getId(), engineId);
+    if (third_) { // V21 0x2ec58..0x2ecc2.
+        if (!uiThreadProxy_) {
+            const int executor = GNS_FRAME::CGFrameSimulation::getRenderThreadExecutorId();
+            uiThreadProxy_ = new hmi::UITaskThreadProxy(executor);
+        }
+        const int executor = GNS_FRAME::CGFrameSimulation::getRenderThreadExecutorId();
+        const uint32_t render_thread = GNS_FRAME::CGFrameSimulation::getRenderThreadId();
+        static_cast<hsl::ThirdManager*>(third_)->SetUITaskThread(
+            hsl::UI_TASK_DEVICE_INSTRUMENT, executor,
+            static_cast<long long>(render_thread), true, uiThreadProxy_->taskInterface());
+        const int engine = hsl::CommonUtils::GetEngineIdByDeviceId(hsl::UI_TASK_DEVICE_INSTRUMENT);
+        hsl::UIObject::SetUITaskThread(engine, GNS_FRAME::CGFrameSimulation::getId());
+    }
 
     /* 4. Fragment context + runtime info */
     GNS_FRAME::CGFrameSimulation::ownWorkStation();
@@ -130,7 +137,7 @@ void CGIPLPacket::onInitEnd() {
     hsl::MultiScreenService::GetInstance()->SetStartOpenScreenMode(mode_, st);
 
     /* 10. Crash-log breadcrumb */
-    CGString s; s.Format("%s", "onInitEnd");
+    CGString s; s.Format(reinterpret_cast<const unsigned short*>(u"onInitEnd"));
     GNS_FRAME::CGGFrameCrashLogger::exportToAndroidLogCat(0, "onInitEnd", 0, s);
 }
 

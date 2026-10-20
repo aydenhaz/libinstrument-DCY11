@@ -1,0 +1,12 @@
+libGPlatformInterface.so
+00051e5c movs       r1, #0                                   
+00051e5e mov        r2, r0                                   
+00051e60 str        r1, [r2, #0x14]!                         
+00051e64 ldr        r3, [pc, #0x10]                          literal 0x78b6e
+00051e66 add        r3, pc                                   
+00051e68 ldr        r3, [r3]                                 
+00051e6a adds       r3, #8                                   
+00051e6c strd       r3, r2, [r0]                             
+00051e70 strd       r1, r1, [r0, #8]                         
+00051e74 str        r1, [r0, #0x10]                          
+00051e76 bx         lr                                       

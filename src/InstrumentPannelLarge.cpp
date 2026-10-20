@@ -13,6 +13,7 @@
 #include "InstrumentPannelLarge.h"
 
 #include <cstring>
+#include <cstdint>
 
 /* Host framework headers. In the product tree these resolve to the real
  * GFrame/hsl headers; here they resolve to the verified stubs in stub_include/.
@@ -55,32 +56,22 @@ static const char kExitSig[]   = "void ExitInstrumentPannelLarge(void *)";
  *   fn(alc, 8, 0, &block)            // BLX r3 @0x3131a / BLX lr @0x3141c
  * The exact protocol is host-private; this models it faithfully.
  * ---------------------------------------------------------------------- */
-typedef void (*AlcExportFn)(void *alc, int count, int reserved, const void *block);
-
-struct AlcExportBlock {
-    const void *zero0;      /* 0        */
-    const void *zero1;      /* 0        */
-    const char *module;     /* "HMI_PANNELLARGE"          */
-    const char *aux;        /* secondary descriptor slot  */
-    int         tag;        /* 25 (Startup) / 56 (Exit)   */
-    const char *signature;  /* ALC export signature       */
-    const char *name;       /* exported function name     */
-};
-
+// V21 ALC vtable call: r0=alc, r1=8, r2=0; seven words are
+// placed directly on the stack. They are NOT passed through a block pointer.
+// r3 is preserved as observed: callee address on Startup, module on Exit.
+typedef void (*AlcExportFn)(void*, int, int, uintptr_t,
+                          uint32_t, uint32_t, const char*, const char*,
+                          const char*, int, const char*);
 static void AlcRegister(const char *name, const char *sig, int tag) {
     void *alc = I_GetAlcPtr();
-    if (alc == 0) {
-        return;                                   /* CBZ -> skip block */
-    }
-    alc = I_GetAlcPtr();                          /* second call, as in original */
-    if (alc == 0) {
-        return;
-    }
+    if (!alc) return;
+    alc = I_GetAlcPtr();
+    if (!alc) return;
     void **table = *reinterpret_cast<void ***>(alc);
     AlcExportFn fn = reinterpret_cast<AlcExportFn>(*table);
-
-    AlcExportBlock block = { 0, 0, kAlcModule, 0, tag, sig, name };
-    fn(alc, 8, 0, &block);
+    const uintptr_t r3 = tag == 25 ? reinterpret_cast<uintptr_t>(fn)
+                                 : reinterpret_cast<uintptr_t>(kAlcModule);
+    fn(alc, 8, 0, r3, 0x08000000u, 0, kAlcModule, "", sig, tag, name);
 }
 
 /* ------------------------------------------------------------------------
@@ -91,9 +82,8 @@ extern "C" int StartupInstrumentPannelLarge(void * /*ctx*/) {
 
     hsl::MultiScreenService *svc = hsl::MultiScreenService::GetInstance();
     if (svc != 0) {
-        if (!svc->IsCreatedLargeScreen()) {
-            svc->SetCreatedLargeScreen(true);
-        }
+        if (svc->IsCreatedLargeScreen()) return 0; // V21 0x31324..0x3132c.
+        svc->SetCreatedLargeScreen(true);
     }
 
     GNS_FRAME::CGPackageMgr *pm = GNS_FRAME::CGFrameSimulation::getPackageMgr();

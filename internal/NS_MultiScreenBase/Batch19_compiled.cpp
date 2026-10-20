@@ -86,10 +86,10 @@ void InitArNaviMapView(void *arp, int eng) {
     hsl::InstrumentManager::GetInstrumentMapSize(mw, mh, mx, my);
     ar->SetMapSize(mw, mh);
     ar->SetMapStartPos(mx, my);
-    ar->ResetMapView(eng);
+    ar->ResetMapView(static_cast<bl::MapEngineID>(eng));
     ar->ResetArMapView();
     if (ar->IsArReplaying()) ar->StopArReplaying();
-    ar->SetArScreenViewType(eng);
+    ar->SetArScreenViewType(static_cast<bl::MapEngineID>(eng));
     ar->SetTrafficLightListener(0);
     ar->SetArMapViewObserver(0);
     ar->SetArStatusObserver(0);

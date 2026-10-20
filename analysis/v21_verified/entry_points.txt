@@ -1,0 +1,96 @@
+libInstrumentPannelLarge.so
+000312c4 push       {r4, r5, r6, r7, lr}                     
+000312c6 add        r7, sp, #0xc                             
+000312c8 push.w     {r8, sb, fp}                             
+000312cc sub        sp, #0x50                                
+000312ce mov        sb, r0                                   
+000312d0 ldr        r0, [pc, #0xcc]                          literal 0x3d622
+000312d2 add        r0, pc                                   
+000312d4 ldr.w      r8, [r0]                                 
+000312d8 ldr.w      r0, [r8]                                 
+000312dc str        r0, [sp, #0x4c]                          
+000312de blx        #0x13c14                                 I_GetAlcPtr
+000312e2 cbz        r0, #0x3131c                             
+000312e4 blx        #0x13c14                                 I_GetAlcPtr
+000312e8 ldr        r1, [r0]                                 
+000312ea mov.w      ip, #0x19                                
+000312ee mov.w      lr, #0                                   
+000312f2 mov.w      r4, #0x8000000                           
+000312f6 ldr        r3, [r1]                                 
+000312f8 ldr        r1, [pc, #0xa8]                          literal 0x23b2a
+000312fa ldr        r5, [pc, #0xac]                          literal 0x23afc
+000312fc ldr        r6, [pc, #0xac]                          literal 0x2a3bf
+000312fe add        r1, pc                                   
+00031300 ldr        r2, [pc, #0xac]                          literal 0x236c5
+00031302 add        r5, pc                                   
+00031304 add        r6, pc                                   
+00031306 strd       r4, lr, [sp]                             
+0003130a add        r2, pc                                   
+0003130c strd       r2, r6, [sp, #8]                         
+00031310 movs       r2, #0                                   
+00031312 strd       r5, ip, [sp, #0x10]                      
+00031316 str        r1, [sp, #0x18]                          
+00031318 movs       r1, #8                                   
+0003131a blx        r3                                       
+0003131c blx        #0x13c2c                                 _ZN3hsl18MultiScreenService11GetInstanceEv
+00031320 cbz        r0, #0x31336                             
+00031322 mov        r5, r0                                   
+00031324 blx        #0x147d8                                 _ZN3hsl18MultiScreenService20IsCreatedLargeScreenEv
+00031328 cbz        r0, #0x3132e                             
+0003132a movs       r0, #0                                   
+0003132c b          #0x3138a                                 
+0003132e mov        r0, r5                                   
+00031330 movs       r1, #1                                   
+00031332 blx        #0x147e4                                 _ZN3hsl18MultiScreenService21SetCreatedLargeScreenEb
+00031336 mov        r0, sb                                   
+00031338 blx        #0x147f0                                 _ZN9GNS_FRAME17CGFrameSimulation13getPackageMgrEv
+0003133c ldr        r1, [pc, #0x74]                          literal 0x2b768
+0003133e add        r4, sp, #0x34                            
+00031340 mov        r5, r0                                   
+00031342 add        r1, pc                                   
+00031344 mov        r0, r4                                   
+00031346 blx        #0x13e00                                 _ZN8CGStringC1EPKt
+0003134a add        r6, sp, #0x20                            
+0003134c mov        r0, r6                                   
+0003134e blx        #0x13c5c                                 _ZN9GNS_FRAME8CGIntentC1Ev
+00031352 ldr        r1, [pc, #0x64]                          literal 0x2b78e
+00031354 ldr        r2, [pc, #0x64]                          literal 0x23aed
+00031356 add        r1, pc                                   
+00031358 add        r2, pc                                   
+0003135a blx        #0x147fc                                 _ZN9GNS_FRAME8CGIntent14putStringExtraEPKtPKc
+0003135e ldr        r1, [pc, #0x60]                          literal 0x2b798
+00031360 mov        r0, r6                                   
+00031362 ldr        r2, [pc, #0x60]                          literal 0x23afc
+00031364 add        r1, pc                                   
+00031366 add        r2, pc                                   
+00031368 blx        #0x147fc                                 _ZN9GNS_FRAME8CGIntent14putStringExtraEPKtPKc
+0003136c movs       r0, #0                                   
+0003136e mov        r1, r4                                   
+00031370 str        r0, [sp]                                 
+00031372 mov        r0, r5                                   
+00031374 mov        r2, r6                                   
+00031376 movs       r3, #0                                   
+00031378 blx        #0x14808                                 _ZN9GNS_FRAME12CGPackageMgr11loadPackageER8CGStringRNS_8CGIntentEbb
+0003137c mov        r0, r6                                   
+0003137e blx        #0x13ce0                                 _ZN9GNS_FRAME8CGIntentD1Ev
+00031382 mov        r0, r4                                   
+00031384 blx        #0x13d58                                 _ZN8CGStringD1Ev
+00031388 movs       r0, #1                                   
+0003138a ldr.w      r1, [r8]                                 
+0003138e ldr        r2, [sp, #0x4c]                          
+00031390 subs       r1, r1, r2                               
+00031392 ittt       eq                                       
+00031394 addeq      sp, #0x50                                
+00031396 popeq.w    {r8, sb, fp}                             
+0003139a popeq      {r4, r5, r6, r7, pc}                     
+0003139c blx        #0x13a28                                 __stack_chk_fail
+000313a0 bvs        #0x313e8                                 
+000313a2 movs       r3, r0                                   
+000313a4 subs       r3, #0x2a                                
+000313a6 movs       r2, r0                                   
+000313a8 subs       r2, #0xfc                                
+000313aa movs       r2, r0                                   
+000313ac adr        r3, #0x2fc                               
+000313ae movs       r2, r0                                   
+000313b0 adds       r6, #0xc5                                
+000313b2 movs       r2, r0                                   

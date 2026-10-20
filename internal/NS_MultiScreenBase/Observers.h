@@ -1,6 +1,7 @@
+#include <AbiTypes.h>
 #pragma once
 #include <cstdint>
-namespace bl { typedef int MapEngineID; }
+namespace bl {  }
 namespace GPI { class Closure; }
 namespace NS_MultiScreenBase {
 

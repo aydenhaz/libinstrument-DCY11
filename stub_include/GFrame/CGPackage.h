@@ -11,7 +11,7 @@ public:
 };
 class CGFragment {
 public:
-    static CGFragment *tryStartExistFragment(const CGIntent&, int, CGContext*);
+    static CGFragment *tryStartExistFragment(const CGIntent&, int, void*);
     void setContext(CGContext*);
     void setType(void*);
     void startNewFragment(void*, int, const CGIntent&, int);
@@ -19,6 +19,6 @@ public:
 class CGExhibition;
 class CGActivity {
 public:
-    void setFragment(int, CGFragment*, CGIntent&);
+    void setFragment(int, CGFragment*, const CGIntent&);
 };
 }

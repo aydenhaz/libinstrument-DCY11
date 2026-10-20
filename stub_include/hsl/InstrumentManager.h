@@ -1,5 +1,6 @@
 #pragma once
 namespace hsl {
+enum InstrumentType : int {};
 class InstrumentManager {
 public:
     static bool GetFirstCameraImageFlag();
@@ -8,6 +9,7 @@ public:
     static void SetInstrumentScreenSize(unsigned, unsigned);
     static void SetInstrumentMapSize(unsigned, unsigned, unsigned, unsigned);
     static int GetInstrumentViewType();
-    static void SetInstrumentViewType(int);
+    static void SetInstrumentViewType(InstrumentType);
+    static void SetInstrumentViewType(int value) { SetInstrumentViewType(static_cast<InstrumentType>(value)); }
 };
 }

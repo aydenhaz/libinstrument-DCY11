@@ -1,0 +1,37 @@
+{
+  "libcmb_InstrumentPannelLargePackage.so": {
+    "bytes": 225716,
+    "sha256": "daa1fe1d8e78ecfb3117fdeede954d8478e31b430ed383e505505c6a1424b9de"
+  },
+  "libInstrumentPannelLarge.so": {
+    "bytes": 452284,
+    "sha256": "6f5bd54c8e694ac40f02cd4280f6c6a049ea34896703e1eb5547fbc9e41d65e3"
+  },
+  "libGFrame.so": {
+    "bytes": 4126760,
+    "sha256": "45252a215427ba52fd0165417de517ee835d079a31bc8eaa8e68e04d841bde35",
+    "matches_supplied_host": true
+  },
+  "libhsl.so": {
+    "bytes": 7042748,
+    "sha256": "79c98162a024c0778971b950d571a4787aeb1c22bc2f77031039c8d3371c0194",
+    "matches_supplied_host": true
+  },
+  "libGPlatformInterface.so": {
+    "bytes": 833380,
+    "sha256": "25d62c8ebb59c3d43b57da5cb3b9e732bf5400a40e1dc58f702f22188b2c3373",
+    "matches_supplied_host": true
+  },
+  "libCommon.so": {
+    "bytes": 10295016,
+    "sha256": "d3c12c435516340e50300acc69fa164b1d3139c1319beae7ec831b5493f7589f",
+    "matches_supplied_host": true
+  },
+  "init_array": [
+    "0x14cf9",
+    "0x14d31",
+    "0x14d69",
+    "0x14d9d",
+    "0x14e41"
+  ]
+}

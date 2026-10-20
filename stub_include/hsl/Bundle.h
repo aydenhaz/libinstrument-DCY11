@@ -1,3 +1,17 @@
 #pragma once
-namespace dice { class String16 { public: String16(const char* = 0) {} const unsigned short* c_str() const { return 0; } }; }
-namespace hsl { class Bundle { public: Bundle(); void PutBundle(const dice::String16&, const Bundle&); bool GetBundle(const dice::String16&, Bundle&); }; }
+#include <DiceString16.h>
+namespace hsl {
+// hsl ctor 0x1eaaa8 stores vptr at +0 and calls turbo::Bundle ctor
+// at this+4; turbo ctor 0xbe6c initializes one pointer. ARM32 size = 8.
+class Bundle {
+    alignas(4) unsigned char abi_storage_[8];
+public:
+    Bundle();
+    ~Bundle();
+    Bundle(const Bundle&) = delete;
+    Bundle& operator=(const Bundle&) = delete;
+    void PutBundle(const dice::String16&, const Bundle&);
+    bool GetBundle(const dice::String16&, Bundle&);
+};
+static_assert(sizeof(Bundle) == 8, "V21 ARM32 hsl::Bundle layout");
+}
