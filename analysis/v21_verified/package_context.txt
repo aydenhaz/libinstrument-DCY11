@@ -1,0 +1,2 @@
+001b6bc8 ldr        r0, [r0, #0x5c]                          
+001b6bca bx         lr                                       

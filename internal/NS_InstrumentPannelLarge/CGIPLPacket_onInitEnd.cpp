@@ -15,7 +15,7 @@
  *      CommonUtils::GetEngineIdByDeviceId(id); CGFrameSimulation::getId()
  *      UIObject::SetUITaskThread(frameId, engineId)
  *   4. Fragment context:
- *      ownWorkStation(); getFragmentActivity(); CGPackage::getContext()
+ *      ownWorkStation(); getFragmentActivity(); CGPackage::getContextUnrecovered()
  *      new bl::ObjectRuntimeInfo(BLObject*)
  *   5. Timer: TimerUtilsFuns::InsertTimerById((long long)... )
  *   6. AutoConfigJsonData::GetInstance()->Init()
@@ -101,7 +101,7 @@ void CGIPLPacket::onInitEnd() {
     /* 4. Fragment context + runtime info */
     GNS_FRAME::CGFrameSimulation::ownWorkStation();
     GNS_FRAME::CGPackage *pkg = GNS_FRAME::CGFrameSimulation::getFragmentActivity();
-    legacy_.ctx_ = GNS_FRAME::CGPackage::getContext();
+    legacy_.ctx_ = GNS_FRAME::CGPackage::getContextUnrecovered();
     bl::ObjectRuntimeInfo *rti = new bl::ObjectRuntimeInfo(legacy_.blObject_);
 
     /* 5. Init timer by id */

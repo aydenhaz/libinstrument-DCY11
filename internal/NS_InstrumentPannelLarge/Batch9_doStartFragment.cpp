@@ -56,7 +56,7 @@ int32_t LargeScreenImpl::doStartFragment(int index,
     /* log(fragment, index, _bProject311_) */
 
     GNS_FRAME::CGPackage *pkg = GNS_FRAME::CGFrameSimulation::getFragmentActivity();
-    GNS_FRAME::CGContext *ctx = GNS_FRAME::CGPackage::getContext();
+    GNS_FRAME::CGContext *ctx = GNS_FRAME::CGPackage::getContextUnrecovered();
     /* Original assertion requires the real Fragment state, not a context string.
        Restore it together with the correct receiver/layout. */
 

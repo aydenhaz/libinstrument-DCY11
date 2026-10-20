@@ -1,0 +1,43 @@
+001b71e4 push       {r4, r5, r6, r7, lr}                     
+001b71e6 add        r7, sp, #0xc                             
+001b71e8 str        fp, [sp, #-0x4]!                         
+001b71ec sub        sp, #0x38                                
+001b71ee mov        r4, r0                                   
+001b71f0 ldr        r0, [pc, #0x1c4]                         literal 0x23255a
+001b71f2 add        r0, pc                                   
+001b71f4 ldr        r5, [r0]                                 
+001b71f6 ldr        r0, [r5]                                 
+001b71f8 str        r0, [sp, #0x34]                          
+001b71fa add.w      r0, r4, #0x40                            
+001b71fe blx        #0x10c96c                                _ZNK9GNS_FRAME8CGObjMem16checkObjMemValidEv
+001b7202 ldr        r6, [r4, #0x68]                          
+001b7204 blx        #0x10c768                                _ZN9GNS_FRAME13CGWorkStation14ownWorkStationEv
+001b7208 cmp        r6, r0                                   
+001b720a bne        #0x1b7236                                
+001b720c ldr        r0, [r4, #0x68]                          
+001b720e cmp        r0, #0                                   
+001b7210 beq        #0x1b72b0                                
+001b7212 ldr.w      r0, [r0, #0x138]                         
+001b7216 cmp        r0, #0                                   
+001b7218 beq.w      #0x1b7322                                
+001b721c ldr        r1, [r5]                                 
+001b721e ldr        r2, [sp, #0x34]                          
+001b7220 subs       r1, r1, r2                               
+001b7222 itttt      eq                                       
+001b7224 addeq      sp, #0x38                                
+001b7226 ldreq      fp, [sp], #4                             
+001b722a popeq.w    {r4, r5, r6, r7, lr}                     
+001b722e beq.w      #0x300cc8                                
+001b7232 blx        #0x10c2b8                                __stack_chk_fail
+001b7236 add        r5, sp, #0x1c                            
+001b7238 mov        r0, r5                                   
+001b723a blx        #0x10c3c0                                _ZN8CGStringC1Ev
+001b723e ldr        r4, [pc, #0x17c]                         literal 0x1d7658
+001b7240 add        r4, pc                                   
+001b7242 mov        r1, r4                                   
+001b7244 blx        #0x10c3cc                                _ZN8CGString6FormatEPKtz
+001b7248 ldr        r0, [pc, #0x174]                         literal 0x19b7ee
+001b724a movw       r2, #0x203                               
+001b724e ldr        r1, [pc, #0x174]                         literal 0x19bcb5
+001b7250 mov        r3, r5                                   
+001b7252 add        r0, pc                                   

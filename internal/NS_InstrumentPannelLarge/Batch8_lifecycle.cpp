@@ -51,7 +51,7 @@ void CGIPLPacket::onPostLoadRes() {
     AlcExport(0, 0, 0x7c8d, this);           /* f44f7c8d */
     /* 1. CGString(u"...") pool @0x2f670 -> resolve widget name */
     CGString name(reinterpret_cast<const unsigned short*>(u""));
-    void *ctx = GNS_FRAME::CGPackage::getContext();
+    void *ctx = GNS_FRAME::CGPackage::getContextUnrecovered();
     /* 2. allocate 0x56(86B) object; store via vtable ptrs (0x2f698 pool) */
     void *obj = operator new(0x56);
     /* 3. init member chain this+0x34c etc. */

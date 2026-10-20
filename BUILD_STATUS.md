@@ -145,3 +145,9 @@ The build deliberately removes failed final outputs. It will not label an incomp
 - Added an ELF object/host symbol inventory with global/weak classification, export visibility filtering and ELF identity checks. It is not a linker or ABI compatibility validator.
 - Fresh 31-object ARM Linux musl inventory: 177 names supplied by hosts, 2 supplied by rebuilt objects, 43 unprovided names. These include deliberate Unrecovered blockers and runtime/toolchain differences; this is not an updated Android link error count.
 - std::__1 vs host std::__ndk1 explains additional C++ boundary mismatches; do not alias incompatible standard-library ABIs. See analysis/CURRENT_SYMBOL_INVENTORY.md. No replacement SO.
+
+## Package receiver ABI
+
+- getContext and getHostFragmentActivity corrected to instance methods. Original getContext reads package+0x5c; the prior static call omitted the required receiver.
+- Original callers pass the same package to both methods. Activity return type remains unverified and cannot be treated as a package/context source.
+- Receiver-less incomplete flows explicitly remain unresolved; the Packet still lacks constructed host bases. ARM signature forwarding and 31-unit Linux musl compile-only checks pass. See analysis/PACKAGE_RECEIVER_ABI.md. No replacement SO.

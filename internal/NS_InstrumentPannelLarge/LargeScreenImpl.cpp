@@ -56,7 +56,7 @@ int32_t LargeScreenImpl::QueryInterface(int32_t id, void **out) {
  * Flow verified from call trace:
  *   1. Config::GetInt32(String16 key, int&, VALUE_STRATEGY) reads target mode
  *   2. For each of 4 screen-mode branches:
- *        CGPackage::getHostFragmentActivity() / getContext()
+ *        CGPackage::getHostFragmentActivityUnrecovered() / getContext()
  *        I_Assert(ctx) ; fragment = tryStartExistFragment(intent, 2, ctx)
  *        frag = __dynamic_cast(frag, CGFragment -> concrete fragment class)
  *        if frag: CGFrameSimulation::ownWorkStation()/getExhibition()
@@ -72,8 +72,8 @@ void LargeScreenImpl::OnChangeScreenMode(int32_t screenType, int32_t mode, const
     /* key literal pool @0x2e16e-0x2e198 region (String16) */
     /* cfg->GetInt32(key, cur, hsl::Config::VALUE_STRATEGY_DEFAULT); */
 
-    GNS_FRAME::CGPackage *pkg = GNS_FRAME::CGPackage::getHostFragmentActivity();
-    GNS_FRAME::CGContext *ctx = GNS_FRAME::CGPackage::getContext();
+    GNS_FRAME::CGPackage *pkg = GNS_FRAME::CGPackage::getHostFragmentActivityUnrecovered();
+    GNS_FRAME::CGContext *ctx = GNS_FRAME::CGPackage::getContextUnrecovered();
     /* Original assertion requires the real Fragment state, not a context string.
        Restore it together with the correct receiver/layout. */
 

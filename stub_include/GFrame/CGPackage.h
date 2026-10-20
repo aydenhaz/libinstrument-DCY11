@@ -6,8 +6,11 @@ class CGIntent;
 class CGFragment;
 class CGPackage {
 public:
-    static CGPackage *getHostFragmentActivity();
-    static CGContext *getContext();
+    CGPackage *getHostFragmentActivity(); // pointed-to activity type still unverified
+    static CGPackage *getHostFragmentActivityUnrecovered();
+    CGContext *getContext();
+    // Legacy paths do not yet provide the constructed package receiver.
+    static CGContext *getContextUnrecovered();
     void closeAllFragments();
 };
 class CGExhibition;
