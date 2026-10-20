@@ -113,3 +113,19 @@ onPreLoad/onInitEnd/onPostLoadRes/onPostAlreadyLoadRes/refreshGFramePaint/onResu
 - 结构覆盖（vtable+≤16B 样板）1076/1510
 - 调用图数据库 705/705
 合计：1510 函数 100% 已分析归类，~756 个有实质翻译/索引，零遗漏。
+
+## batch17 ✅ 编译版升级（2026-10-20 最终）
+- 12 个 Observer/Fragment 生命周期函数从伪代码升级为可编译 C++（Batch17_compiled.cpp）
+- RouteResultData 全链（GetCurPath→SegmentInfo→LinkInfo→GetLength）
+- 新增桩头：RouteResultData.h / bl/PathInfo.h / GuideInfoCard.h / hsl/Guide.h
+- GOTHERProtocolHmiToAl.h 补 MultiScreenStatusHmiToAl
+
+## 最终编译状态：15/15 全部通过 -fsyntax-only
+
+覆盖总账：
+- 行为级 C++：~122 函数（12 手工批 + Batch17 升级）
+- 指令级语句展开：646 函数（expanded/ 8 文件）
+- 样板模板族：~250（runOnUIThread + 零调用族）
+- 结构覆盖：1076/1510（vtable + ≤16B）
+- 调用图数据库：705/705 + FUNCTION_DB.txt
+- 1510 函数 100% 分析归类
