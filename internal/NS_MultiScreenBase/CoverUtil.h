@@ -6,7 +6,10 @@
 #include <cstdint>
 #include <cstddef>
 #include "../abi/CoverGraphics.h"
+namespace GNS_FRAME { class CGContext; }
+namespace bl { class IMapDevice; class IMapView; }
 namespace NS_MultiScreenBase {
+enum class CoverConfigurationStage { InvalidInputs, Disabled, NeedsImageSetup };
 struct CoverUtilTestAccess;
 class CoverUtil : public hsl::MapSurfaceViewObserver, public bl::IBLMapBusinessDataObserver {
 public:
@@ -16,11 +19,13 @@ public:
     bool onBusinessDataObserver(int,const void*,void*) override;
     bool isUIFirstRenderFinish();
     void TopRenderCoverCallback(GNS_FRAME::CGCanvas*);
+    // Explicit prefix operation, not the unrecovered complete setConfig method.
+    CoverConfigurationStage prepareConfiguration(GNS_FRAME::CGContext*,bl::IMapDevice*,bl::IMapView*,SurfaceConfig);
     // Configuration and full module integration are still
     // unrecovered. This class is not enabled in the Packet factory.
 private:
     friend struct CoverUtilTestAccess;
-    uint32_t unknown08_=0;
+    GNS_FRAME::CGContext* context_=nullptr;
     void* unknown0c_=nullptr;
     void* unknown10_=nullptr;
     uint8_t unknown14_=0, inhibitCapture_=0;

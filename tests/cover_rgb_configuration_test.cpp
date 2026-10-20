@@ -4,8 +4,15 @@
 #include <cstdarg>
 #include <string>
 #include <vector>
+#include <hsl/HSL.h>
+#include <hsl/Config.h>
+#include <asl/String16Utils.h>
+#include <map>
+#include <cstdlib>
 CGString::CGString() {}
 CGString::~CGString() {}
+CGString::CGString(const CGString&) {}
+CGString& CGString::operator=(const CGString&){return *this;}
 namespace NS_MultiScreenBase {
 struct CoverUtilTestAccess {
  static void prepare(CoverUtil& c,uint8_t* data){c.screenshot_.bytes=data;c.screenshot_.width=2;c.screenshot_.height=1;c.screenshot_.length=8;c.screenshot_.stride=4;c.image_=&c;c.enabled_=1;c.requested_=1;c.state_=0;c.counter_=9;c.surface_.scalar[7]=7;}
@@ -13,6 +20,10 @@ struct CoverUtilTestAccess {
  static bool requested(const CoverUtil& c){return c.requested_;}
  static bool ready(const CoverUtil& c){return c.state_;}
  static int count(const CoverUtil& c){return c.counter_;}
+ static int threshold(const CoverUtil& c){return c.threshold_;}
+ static bool enabled(const CoverUtil& c){return c.enabled_;}
+ static GNS_FRAME::CGContext* context(const CoverUtil& c){return c.context_;}
+ static int surface(const CoverUtil& c){return static_cast<int>(c.surface_.scalar[7]);}
 };
 }
 static std::vector<std::string> calls;
@@ -29,6 +40,19 @@ dice::String16 hsl::StringUtils::Format(const unsigned short* format,...){
 }
 void CAutoUtil::setSMConfigValue(const dice::String16& key,const dice::String16& value){
     calls.push_back(text(key)+"="+text(value));
+}
+static std::map<std::string,std::string> configuration;
+static int configLookups;
+hsl::Config* hsl::HSL::GetConfigHandle(){static hsl::Config config;++configLookups;return &config;}
+bool hsl::Config::GetString(const dice::String16& key,dice::String16& value,VALUE_STRATEGY strategy){
+ assert(strategy==VALUE_STRATEGY_DEFAULT);
+ auto found=configuration.find(text(key));
+ if(found==configuration.end())return false;
+ value=dice::String16(found->second.c_str());return true;
+}
+int asl::String16Utils::atoi(const unsigned short* value){std::string s;while(*value)s+=char(*value++);return std::atoi(s.c_str());}
+int hsl::StringUtils::FindStr(const dice::String16& value,const dice::String16& needle,unsigned start){
+ auto pos=text(value).find(text(needle),start);return pos==std::string::npos?-1:static_cast<int>(pos);
 }
 int main(){
     IPL_ABI::writeCoverRgbConfiguration({0,127,255});
@@ -60,4 +84,22 @@ int main(){
     assert(business->onBusinessDataObserver(23,nullptr,nullptr));
     assert(!Access::requested(cover)&&Access::ready(cover)&&calls==expected);
     assert(!cover.isUIFirstRenderFinish());
+    using Stage=NS_MultiScreenBase::CoverConfigurationStage;
+    NS_MultiScreenBase::SurfaceConfig config;
+    config.scalar[7]=0;
+    auto* context=reinterpret_cast<GNS_FRAME::CGContext*>(&config);
+    auto* device=reinterpret_cast<bl::IMapDevice*>(&config);
+    auto* view=reinterpret_cast<bl::IMapView*>(&config);
+    const int before=configLookups;
+    assert(cover.prepareConfiguration(nullptr,device,view,config)==Stage::InvalidInputs);
+    assert(configLookups==before&&Access::context(cover)==nullptr);
+    configuration.clear();
+    assert(cover.prepareConfiguration(context,device,view,config)==Stage::NeedsImageSetup);
+    assert(Access::enabled(cover)&&Access::threshold(cover)==2&&Access::context(cover)==context);
+    config.scalar[7]=1;
+    assert(cover.prepareConfiguration(context,device,view,config)==Stage::Disabled);
+    configuration["sm_enable_widgetCoverForWndId"]="10";
+    configuration["sm_support_widgetCoverMaxFrame"]="-1";
+    assert(cover.prepareConfiguration(context,device,view,config)==Stage::NeedsImageSetup);
+    assert(Access::enabled(cover)&&Access::threshold(cover)==-1&&Access::surface(cover)==1);
 }

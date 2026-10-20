@@ -200,3 +200,10 @@ The build deliberately removes failed final outputs. It will not label an incomp
 - Replaced one-byte CGImage placeholder with verified opaque 0x1e0 extent. Corrected CGSize to its 12-byte ARM32 polymorphic layout, CGImage::create success return, and observed cover color value 0x101.
 - Native sanitizer allocation/argument contract and ARM probe pass; all 32 production source units pass ARM Linux musl compile-only checking.
 - Recovered full setConfig signature, including by-value nontrivial SurfaceConfig. Its implementation and Packet integration remain incomplete. See analysis/IMAGE_ALLOCATION_ABI.md. No replacement SO.
+
+## Cover configuration prefix and policy
+
+- Added explicit prepareConfiguration prefix operation with required-input checks, pointer/config storage, by-value SurfaceConfig copy, and original list/threshold policy reads. Enabled results report NeedsImageSetup rather than claiming complete initialization.
+- Preserves defaults "0"/"2", substring matching, ignored GetString status and unclamped atoi result. Context field is now pointer-typed without shifting ARM32 layout.
+- Native sanitizer policy/base-interface tests and ARM32 layout probe pass; all 33 production units pass ARM Linux musl compile-only checking. See analysis/COVER_CONFIG_POLICY.md.
+- Image/file/buffer setup, registration, optional closure and Packet integration remain incomplete. No replacement SO.
