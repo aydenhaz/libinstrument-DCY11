@@ -12,6 +12,8 @@
 #include "CGIPLPacket.h"
 #include "../AlcExport.h"
 #include "../abi/V21PacketTrace.h"
+#include "../abi/V21MapTeardown.h"
+#include "../abi/V21PacketTaskLock.h"
 #include <cstring>
 #include <cstdint>
 #include <GFrame/CGString.h>
@@ -87,24 +89,28 @@ void CGIPLPacket::onResume() {
 
 /* ---- onDestroy sub_2f2f0 (372B) ---- */
 void CGIPLPacket::onDestroy() {
-    IPL_ABI::packetTrace("onDestroy", "virtual void NS_InstrumentPannelLarge::CGIPLPacket::onDestroy()", 0xea, true);
+    IPL_ABI::packetTrace("CGIPLPacket destructor", "virtual void NS_InstrumentPannelLarge::CGIPLPacket::onDestroy()", 0xea, true);
     /* 1. clear render callbacks */
     GNS_FRAME::CGWorkStation::ownWorkStation()->setMapRenderCallback(0);
     GNS_FRAME::CGWorkStation::ownWorkStation()->setTopRenderCallback(0);
     /* 2. V21 0x2f374: size argument is 0x18 (24). */
     CGString empty;
     GNS_FRAME::CGFrameSimulation::ownWorkStation()->showFpsInfo(false, empty, 0x18);
-    /* 3. Instance calls: original primary host base is at offset zero.
-       TODO: host lock at Packet+8 must surround task cancellation. */
+    /* 3. Original primary host base is at offset zero. Cancellation is
+       protected by the constructed host lock at Packet+8. */
     void (CGIPLPacket::*refresh)() = &CGIPLPacket::refreshGFramePaint;
     uintptr_t entry = 0;
     std::memcpy(&entry, &refresh, sizeof(entry));
-    reinterpret_cast<GNS_FRAME::CGAsyncObject*>(this)->cancelScheduleTaskHelper(
-        reinterpret_cast<void*>(entry));
+    {
+        IPL_ABI::PacketTaskLock guard(this);
+        reinterpret_cast<GNS_FRAME::CGAsyncObject*>(this)->cancelScheduleTaskHelper(
+            reinterpret_cast<void*>(entry));
+    }
     reinterpret_cast<GNS_FRAME::CGPackage*>(this)->closeAllFragments();
-    /* No RemoveInstrumentPannelObserver call exists in this original method.
-       TODO: restore map facility lookup/destruction, then proxy deletion at
-       +0x168 and singleton clearing. Packet layout/factory are still incomplete. */
+    /* V21 destroys engine-5 map facility before unregistering its UI thread. */
+    IPL_ABI::destroyInstrumentMapFacility();
+    /* TODO: proxy deletion at +0x168 and singleton clearing.
+       Packet layout/factory are still incomplete. */
     reinterpret_cast<hsl::ThirdManager*>(hsl::HSL::Get3rdHandle())
         ->RemoveUITaskThread(hsl::UI_TASK_DEVICE_INSTRUMENT);
 

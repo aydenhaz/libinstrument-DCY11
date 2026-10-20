@@ -14,7 +14,7 @@ it does not reconstruct the complete Packet or teardown method.
 6. Unlock Packet+8 (virtual slot 3).
 7. Call CGPackage::closeAllFragments with Packet as this.
 8. If MapService exists, query facility for engine 5 (slot 15); if present,
-   query its state (slot 42), log it, then DestroyDisplayFacility.
+   query its device identifier (slot 42), log it, then DestroyDisplayFacility.
 9. ThirdManager::RemoveUITaskThread(device 2).
 10. If Packet+0x168 proxy is nonnull, call its deleting destructor (slot 1),
     then clear that field and the Packet singleton pointer.
@@ -25,16 +25,21 @@ subobjects belong to Opening Fragment, whose lifetime is separate.
 
 ## Applied
 
-Correct ALC trace, size 24, one cancellation with method identity, instance
-this arguments for cancellation/fragment closure, and device-2 thread removal.
+Correct ALC trace (exact name "CGIPLPacket destructor"), size 24, one
+cancellation with method identity, host lock/unlock surrounding cancellation,
+instance this arguments for cancellation/fragment closure, engine-5 map facility
+query/destruction, and device-2 thread removal. The device log carries the
+facility's actual device ID; it is not assumed to equal engine 5.
 Removed invented observer removal and the invented post-load cancellation.
 Original onPostLoadRes ends with primary virtual slot 6 after builder
 registration; both registration and that tail dispatch are still incomplete.
 
 The host boundary test verifies arguments and order of the applied operations.
-It does not verify locks, map cleanup, proxy deletion, singleton clearing,
-Android calling conventions or actual task cancellation. These are still
-blockers; onDestroy must not be treated as complete.
+It checks lock/unlock order and map-service-null, facility-null, facility-present,
+and ALC-disabled branches. Proxy deletion, singleton clearing, Android calling
+conventions and actual task cancellation remain unverified. A real constructed
+Packet host base is required: the present empty Packet constructor does not
+create the lock. onDestroy and the library remain incomplete.
 
 ## Construction/destruction findings
 

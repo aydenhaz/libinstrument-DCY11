@@ -1,5 +1,6 @@
 // Tests only corrected host-call boundaries; teardown is still incomplete.
 #include <cassert>
+#include <cstdarg>
 #include <cstdint>
 #include <cstring>
 #include <vector>
@@ -10,16 +11,36 @@
 #include <GFrame/CGString.h>
 #include <hsl/HSL.h>
 #include <hsl/ThirdManager.h>
+#include <hsl/MapViewServiceImpl.h>
 #include "NS_InstrumentPannelLarge/CGIPLPacket.h"
 using NS_InstrumentPannelLarge::CGIPLPacket;
 static void* packet;
 static std::vector<int> events;
-static void emit(void*,int n,int zero,uintptr_t target,uint32_t flag,uint32_t reserved,const char* module,const char* aux,const char* sig,int line,const char* name){
+static void* mapService;
+static bool locked;
+static bool traceEnabled=true;
+static void lockTask(void* self){assert(self==static_cast<unsigned char*>(packet)+8&&!locked);locked=true;events.push_back(11);}
+static void unlockTask(void* self){assert(self==static_cast<unsigned char*>(packet)+8&&locked);locked=false;events.push_back(12);}
+static void* lockSlots[4]={nullptr,nullptr,reinterpret_cast<void*>(&lockTask),reinterpret_cast<void*>(&unlockTask)};
+static bool hasFacility;
+static void* serviceSlots[16];
+static void* facilitySlots[43];
+struct HostObject {void** vtable;};
+static HostObject serviceObject={serviceSlots},facilityObject={facilitySlots};
+static hsl::MapViewBase* lookup(void* service,int engine){
+ assert(service==&serviceObject&&engine==5);events.push_back(7);
+ return hasFacility?reinterpret_cast<hsl::MapViewBase*>(&facilityObject):nullptr;
+}
+static int deviceId(hsl::MapViewBase* facility){assert(static_cast<void*>(facility)==&facilityObject);events.push_back(8);return 17;}
+
+static void emit(void*,int n,int zero,uintptr_t target,uint32_t flag,uint32_t reserved,const char* module,const char* aux,const char* sig,int line,const char* name,...){
  assert(n==8&&zero==0&&target==reinterpret_cast<uintptr_t>(&emit));
  assert(flag==0x08000000&&reserved==0&&!std::strcmp(module,"HMI_PANNELLARGE")&&!aux[0]);
- assert(!std::strcmp(name,"onDestroy")&&line==0xea&&sig[0]);events.push_back(0);
+ assert(sig[0]);
+ if(!std::strcmp(name,"CGIPLPacket destructor")){assert(line==0xea);events.push_back(0);}
+ else{assert(!std::strcmp(name,"deviceId:%d")&&line==0xff);va_list values;va_start(values,name);assert(va_arg(values,int)==17);va_end(values);events.push_back(9);}
 }
-extern "C" void* I_GetAlcPtr(){static void* table[]={reinterpret_cast<void*>(&emit)};static void** object=table;return &object;}
+extern "C" void* I_GetAlcPtr(){if(!traceEnabled)return nullptr;static void* table[]={reinterpret_cast<void*>(&emit)};static void** object=table;return &object;}
 CGString::CGString(){}
 CGString::~CGString(){}
 namespace GNS_FRAME {
@@ -30,14 +51,24 @@ CGFrameSimulation* CGFrameSimulation::ownWorkStation(){static CGFrameSimulation 
 void CGFrameSimulation::showFpsInfo(bool enabled,CGString&,int size){assert(!enabled&&size==24);events.push_back(3);}
 void CGFrameSimulation::sendMsg(int,int,int,unsigned long long,GPI::ScopedRefptr<GPI::MessageCtrl>*){}
 void CGAsyncObject::cancelScheduleTaskHelper(void* identity){
- assert(static_cast<void*>(this)==packet);
+ assert(static_cast<void*>(this)==packet&&locked);
  void (CGIPLPacket::*method)()=&CGIPLPacket::refreshGFramePaint;uintptr_t entry;std::memcpy(&entry,&method,sizeof(entry));
  assert(identity==reinterpret_cast<void*>(entry));events.push_back(4);
 }
-void CGPackage::closeAllFragments(){assert(static_cast<void*>(this)==packet);events.push_back(5);}
+void CGPackage::closeAllFragments(){assert(static_cast<void*>(this)==packet&&!locked);events.push_back(5);}
 }
 namespace hsl {
+void* HSL::GetMapServiceHandle(){return mapService;}
 HSL* HSL::Get3rdHandle(){static HSL service;return &service;}
+void MapViewServiceImpl::DestroyDisplayFacility(MapViewBase* facility){assert(static_cast<void*>(this)==&serviceObject&&static_cast<void*>(facility)==&facilityObject);events.push_back(10);}
 void ThirdManager::RemoveUITaskThread(UI_TASK_DEVICE_ID device){assert(device==UI_TASK_DEVICE_INSTRUMENT);events.push_back(6);}
 }
-int main(){CGIPLPacket object;packet=&object;object.onDestroy();assert((events==std::vector<int>{0,1,2,3,4,5,6}));}
+int main(){
+ CGIPLPacket object;packet=&object;
+ void** lockTable=lockSlots;std::memcpy(static_cast<unsigned char*>(packet)+8,&lockTable,sizeof(lockTable));
+ serviceSlots[15]=reinterpret_cast<void*>(&lookup);facilitySlots[42]=reinterpret_cast<void*>(&deviceId);
+ mapService=nullptr;object.onDestroy();assert((events==std::vector<int>{0,1,2,3,11,4,12,5,6}));
+ events.clear();mapService=&serviceObject;hasFacility=false;object.onDestroy();assert((events==std::vector<int>{0,1,2,3,11,4,12,5,7,6}));
+ events.clear();hasFacility=true;object.onDestroy();assert((events==std::vector<int>{0,1,2,3,11,4,12,5,7,8,9,10,6}));
+ events.clear();traceEnabled=false;object.onDestroy();assert((events==std::vector<int>{1,2,3,11,4,12,5,7,8,10,6}));
+}

@@ -75,3 +75,10 @@ The build deliberately removes failed final outputs. It will not label an incomp
 - onDestroy now clears render callbacks, hides FPS with size 24, cancels one refresh-identity task, closes fragments and removes device-2 UI thread registration. Host boundary test passes.
 - Removed invented observer removal and post-load cancellation. ScriptThis was also invented from method equality and is withdrawn.
 - Locking, map facility destruction, proxy deletion, singleton clearing and real Packet construction remain incomplete. These partial changes do not make onDestroy or the library replacement-ready. See analysis/PACKET_TEARDOWN_RECOVERY.md.
+
+## Map teardown and task locking
+
+- Restored engine-5 facility query through V21 service slot 15, device-ID query through facility slot 42, device-ID ALC logging and DestroyDisplayFacility before UI-thread removal.
+- Restored host Packet+8 lock/unlock around refresh task cancellation. The actual host base must have been constructed; the current empty constructor remains a blocker.
+- Shutdown contract test passes service-null, facility-null, facility-present and logging-disabled paths; it verifies cancellation occurs under the lock and fragment closure occurs after unlock.
+- Corrected onDestroy trace name to the original "CGIPLPacket destructor". Proxy deletion at +0x168 and singleton clearing are still missing. No Android build or replacement SO is claimed.
