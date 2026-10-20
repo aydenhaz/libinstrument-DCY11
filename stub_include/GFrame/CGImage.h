@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+class CGString;
 // V21 CGSize RTTI: STGSize_ base at +4 following the virtual pointer.
 struct STGSize_ { int32_t w,h; };
 namespace GPI {
@@ -20,6 +21,7 @@ public:
     CGImage();
     ~CGImage();
     bool create(const GPI::CGSize&, EGColorType, unsigned char*);
+    bool loadImageFromFile(const CGString&,int,bool,bool,CGString*);
     uint32_t getDataLen() const;
     unsigned char* getData() const;
 };

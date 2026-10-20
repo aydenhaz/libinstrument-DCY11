@@ -10,6 +10,7 @@ namespace GNS_FRAME { class CGContext; }
 namespace GPI { struct CGSize; }
 namespace bl { class IMapDevice; class IMapView; }
 namespace NS_MultiScreenBase {
+enum class CoverResourceResult { MissingFile, Loaded, LoadFailed, NoImage };
 enum class CoverConfigurationStage { InvalidInputs, Disabled, NeedsImageSetup };
 struct CoverUtilTestAccess;
 class CoverUtil : public hsl::MapSurfaceViewObserver, public bl::IBLMapBusinessDataObserver {
@@ -22,6 +23,7 @@ public:
     void TopRenderCoverCallback(GNS_FRAME::CGCanvas*);
     // Explicit stages; resource-file loading must precede the buffer binding.
     bool recreateImageStorage();
+    CoverResourceResult loadConfiguredResourceImage();
     bool bindScreenshotSource(const GPI::CGSize& finalSize);
     // Explicit prefix operation, not the unrecovered complete setConfig method.
     CoverConfigurationStage prepareConfiguration(GNS_FRAME::CGContext*,bl::IMapDevice*,bl::IMapView*,SurfaceConfig);

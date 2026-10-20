@@ -213,3 +213,9 @@ The build deliberately removes failed final outputs. It will not label an incomp
 - Added explicit recreateImageStorage and bindScreenshotSource stages: destroy old image, create verified-size replacement, clean up failure, then separately bind final dimensions and host data length/pointer in original order.
 - Native sanitizer lifecycle contract passes, including replacement failure and subsequent recreation. All 34 production units pass ARM Linux musl compile-only checking; getter references match host exports.
 - File loading, registration, complete setConfig and Packet integration remain incomplete. See analysis/COVER_IMAGE_STAGES.md. No replacement SO.
+
+## Cover resource image load stage
+
+- Restored HmiResPath/type-3 resolution, direct sm_cover.png append, existence branch and exact host image-load arguments. Preserves inhibit flag on failed load and prior state on missing-file branch while setting byte +0x91.
+- Native sanitizer path/state tests and host symbol checks pass; all 35 production units pass ARM Linux musl compile-only checking.
+- Complete initialization orchestration, observer/closure registration and Packet construction remain incomplete. See analysis/COVER_RESOURCE_IMAGE.md. No replacement SO.

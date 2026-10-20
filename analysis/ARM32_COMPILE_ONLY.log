@@ -52,6 +52,8 @@ internal/NS_MultiScreenBase/CoverUtilConfig.cpp: 0
 
 internal/NS_MultiScreenBase/CoverUtilImage.cpp: 0
 
+internal/NS_MultiScreenBase/CoverUtilResource.cpp: 0
+
 internal/UnnamedResidue.cpp: 0
 
 expanded/alc_wrappers.cpp: 0

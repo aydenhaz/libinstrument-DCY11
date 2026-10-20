@@ -1,0 +1,27 @@
+0001866c blx        #0x13c14                                 I_GetAlcPtr
+00018670 cbz        r0, #0x186ae                             
+00018672 blx        #0x13c14                                 I_GetAlcPtr
+00018676 ldr        r1, [sp, #0x64]                          
+00018678 mov        r4, r5                                   
+0001867a movs       r5, #0                                   
+0001867c mov.w      r6, #0x8000000                           
+00018680 cmp        r1, #0                                   
+00018682 it         ne                                       
+00018684 addne      r1, #8                                   
+00018686 ldr        r2, [r0]                                 
+00018688 movw       ip, #0x157                               
+0001868c ldr        r3, [r2, #4]                             
+0001868e ldr        r2, [pc, #0x1e0]                         literal 0x43f04
+00018690 ldr.w      sl, [sp, #0x3c]                          
+00018694 strd       r6, r5, [sp]                             
+00018698 add        r2, pc                                   
+0001869a ldr        r5, [sp, #0x34]                          
+0001869c strd       r5, sl, [sp, #8]                         
+000186a0 strd       r4, ip, [sp, #0x10]                      
+000186a4 strd       r2, r1, [sp, #0x18]                      
+000186a8 movs       r1, #8                                   
+000186aa movs       r2, #0                                   
+000186ac blx        r3                                       
+000186ae ldr        r1, [sp, #0x40]                          
+000186b0 movs       r0, #1                                   
+000186b2 strb.w     r0, [r1, #0x91]                          
