@@ -147,7 +147,10 @@ void AutoPreviewFragment::onDestroyView() {
     static std::mutex m;
     { std::lock_guard<std::mutex> lk(m);
       operator delete(impl_); impl_ = 0; }
-    hsl::SystemNotify::GetSystemNotifyHandle()->RemoveTestNumObserver(this);
+    // The matching TestNumObserver subobject used by onCreateView is +0x2e4.
+    auto *testObserver = reinterpret_cast<hsl::TestNumObserver*>(
+        reinterpret_cast<uint8_t*>(this) + 0x2e4);
+    hsl::SystemNotify::GetSystemNotifyHandle()->RemoveTestNumObserver(testObserver);
     void *guide = hsl::HSL::GetGuideHandle();
     (void)guide;
     hsl::IRouteLayer::Destroy(static_cast<hsl::IRouteLayer*>(routeLayer_));
