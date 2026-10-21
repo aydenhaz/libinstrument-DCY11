@@ -1,3 +1,6 @@
+Warning: truncated output (original token count: 9567)
+Total output lines: 335
+
 # V21 ARM32 rebuild status — 2026-10-20
 
 NOT a usable replacement. No successful strict shared-library link.
@@ -178,27 +181,7 @@ The build deliberately removes failed final outputs. It will not label an incomp
 
 ## Composed capture-result helper and secondary thunk
 
-- Joined flag updates, valid-image arithmetic and RGB config writes into applyCoverCaptureResult. Internal result enum is not the host observer return type; malformed buffers are explicitly rejected by the helper.
-- Verified second observer table has destructor slots 0/1 and callback slot 2; all thunks adjust this by -4. Primary and secondary callback emulation produce identical full traces and flag/cleanup behavior.
-- Native sanitizer pipeline test and complete ARM Thumb helper compilation pass. Formal bl observer callback signature remains unresolved; helpers are not yet installed in Packet. See analysis/COVER_CAPTURE_PIPELINE.md. No replacement SO.
-
-## Concrete CoverUtil observer class
-
-- Located the host dice-to-bl business-observer bridge, which preserves r1/r2/r3 into bl slot 2. Added the supported binary interface shape; method spelling/const qualifiers follow the forwarded dice interface inference.
-- Added a concrete dual-observer CoverUtil with original constructor state, map/capture processing and first-render predicate. ARM32 size 0xa8, 14 field offsets and 44-byte vtable group/slot order pass checks.
-- Native sanitizer tests instantiate the class and dispatch through both observer bases; all 32 production units pass ARM Linux musl compile-only checking.
-- Still not wired into Packet: setConfig, drawing/capture service calls, logging, host bases and registration remain incomplete. See analysis/COVER_OBSERVER_CLASS.md. No replacement SO.
-
-## Concrete CoverUtil top-render callback
-
-- Added actual TopRenderCoverCallback implementation using verified canvas drawImgEx and screenshot-device slots. Recovered polymorphic CGRect layout and grouped screenshot fields into a typed subobject without moving ARM32 offsets.
-- Preserves request-flag ordering, false capture return handling, wrapping increments and external callback state reloads. Native sanitizer dispatch/config tests and ARM32 layout probes pass; all 32 production units pass ARM Linux musl compile-only.
-- Actual device/image configuration, logging, callback registration and Packet construction remain incomplete. See analysis/COVER_TOP_RENDER_IMPLEMENTATION.md. No replacement SO.
-
-## Image allocation and CGSize ABI
-
-- Replaced one-byte CGImage placeholder with verified opaque 0x1e0 extent. Corrected CGSize to its 12-byte ARM32 polymorphic layout, CGImage::create success return, and observed cover color value 0x101.
-- Native sanitizer allocation/argument contract and ARM probe pass; all 32 production source units pass ARM Linux musl compile-only checking.
+- Joined flag updates, valid-image arithmetic and RGB config writes into applyCoverCaptureResult. Internal result enum is not the host observer return type; malformed buffers are explicitly…567 tokens truncated…t contract and ARM probe pass; all 32 production source units pass ARM Linux musl compile-only checking.
 - Recovered full setConfig signature, including by-value nontrivial SurfaceConfig. Its implementation and Packet integration remain incomplete. See analysis/IMAGE_ALLOCATION_ABI.md. No replacement SO.
 
 ## Cover configuration prefix and policy
@@ -328,3 +311,8 @@ Recompiled all 39 translation units with Zig 0.17.0 targeting `arm-linux-musleab
 - Tested the Zig libc++ header configuration with `_LIBCPP_ABI_NAMESPACE=__ndk1`. All 38 translation units compile, and the `AutoConfigJsonData::GetMultiViewModeInfo` import now matches the Android host's `std::__ndk1::vector` symbol; the earlier `std::__1` mismatch is eliminated in this probe.
 - Strict linking still fails because the Linux musl probe lacks the Android libc++ runtime definition for `std::__ndk1::bad_function_call::~bad_function_call()`, in addition to unresolved package/fragment and AutoExscreen closure/action recovery. An actual NDK r27c link remains necessary to validate runtime resolution. This is not an Android build and no `.so` is claimed.
 - Probe details and the separate linker log are in `analysis/v21_verified/android_libcxx_namespace_probe.txt` and `analysis/STRICT_LINK_ARM32_NDKABI_MUSL.log`.
+
+## LargeScreenImpl package receiver trace — 2026-10-21
+
+- V21 dispatch call sites load the `CGPackage*` used by `getHostFragmentActivity()` and `getContext()` from a shared BSS slot at image RVA `0x6fd48`; `LargeScreenImpl::this` is not that receiver. A separate path at `0x158aa` reads the same slot.
+- The original package receiver therefore exists, but its lifecycle initializer is not yet recovered. A replacement DSO cannot safely hard-code the original RVA or substitute its own `this`; the three `Unrecovered` symbols remain intentional blockers pending receiver initialization recovery. Evidence: `analysis/v21_verified/large_screen_package_slot.txt`.
