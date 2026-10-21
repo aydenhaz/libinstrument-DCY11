@@ -100,7 +100,10 @@ void AutoNavi2dCrossView::ShowCrossView(bool show, void *seg) {
 
 /* sub_3eb3c (1348B) AutoCruiseFragment::onCreateView(CGViewGroup*) — full body */
 GNS_FRAME::CGViewGroup *AutoCruiseFragment::onCreateView(GNS_FRAME::CGViewGroup *parent) {
-    hsl::SystemNotify::GetSystemNotifyHandle()->AddTestNumObserver(this);
+    // V21 passes the embedded TestNumObserver subobject at fragment+0x5f0.
+    auto *testObserver = reinterpret_cast<hsl::TestNumObserver*>(
+        reinterpret_cast<uint8_t*>(this) + 0x5f0);
+    hsl::SystemNotify::GetSystemNotifyHandle()->AddTestNumObserver(testObserver);
     void *mv = hsl::HSL::GetMapViewHandle((bl::MapEngineID)0);
     void *guide = hsl::HSL::GetGuideHandle();
     (void)mv; (void)guide;
@@ -176,7 +179,10 @@ void AutoArNaviFragment::ShowCrossImageOnUI(void *obj) {
 
 /* sub_3bf98 (552B) AutoPreviewFragment::onCreateView(CGViewGroup*) */
 GNS_FRAME::CGViewGroup *AutoPreviewFragment::onCreateView(GNS_FRAME::CGViewGroup *parent) {
-    hsl::SystemNotify::GetSystemNotifyHandle()->AddTestNumObserver(this);
+    // V21 observer subobject is at fragment+0x2e4.
+    auto *testObserver = reinterpret_cast<hsl::TestNumObserver*>(
+        reinterpret_cast<uint8_t*>(this) + 0x2e4);
+    hsl::SystemNotify::GetSystemNotifyHandle()->AddTestNumObserver(testObserver);
     void *guide = hsl::HSL::GetGuideHandle();
     (void)guide;
     GNS_FRAME::CGBroadcaster::getInstance(0);
