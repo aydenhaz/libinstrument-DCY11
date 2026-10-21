@@ -18,7 +18,7 @@ extern "C" {
  * Registers itself with the host ALC table, marks the large screen created
  * in hsl::MultiScreenService, then loads the "InstrumentPannelLargePackage"
  * UI package with two string extras (fromPackage / packageType).           */
-int  StartupInstrumentPannelLarge(void *ctx);
+bool StartupInstrumentPannelLarge(void *ctx);
 
 /* @0x313c9 (Thumb). ALC export signature:
  *   "void ExitInstrumentPannelLarge(void *)"

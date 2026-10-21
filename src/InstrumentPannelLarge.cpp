@@ -68,7 +68,7 @@ static void AlcRegister(const char *name, const char *sig, int tag) {
 /* ------------------------------------------------------------------------
  * Entry points
  * ---------------------------------------------------------------------- */
-extern "C" int StartupInstrumentPannelLarge(void *ctx) {
+extern "C" bool StartupInstrumentPannelLarge(void *ctx) {
     AlcRegister(kStartName, kStartSig, 25);
 
     hsl::MultiScreenService *svc = hsl::MultiScreenService::GetInstance();
