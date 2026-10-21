@@ -86,16 +86,16 @@ void CGIPLPacket::onInitEnd() {
     legacy_.third_ = hsl::HSL::Get3rdHandle();
     if (legacy_.third_) { // V21 0x2ec58..0x2ecc2.
         if (!uiThreadProxy_) {
-            const int executor = GNS_FRAME::CGFrameSimulation::getRenderThreadExecutorId();
+            const int executor = GNS_FRAME::CGFrameSimulation::ownWorkStation()->getRenderThreadExecutorId();
             uiThreadProxy_ = new hmi::UITaskThreadProxy(executor);
         }
-        const int executor = GNS_FRAME::CGFrameSimulation::getRenderThreadExecutorId();
-        const uint32_t render_thread = GNS_FRAME::CGFrameSimulation::getRenderThreadId();
+        const int executor = GNS_FRAME::CGFrameSimulation::ownWorkStation()->getRenderThreadExecutorId();
+        const uint32_t render_thread = GNS_FRAME::CGFrameSimulation::ownWorkStation()->getRenderThreadId();
         static_cast<hsl::ThirdManager*>(legacy_.third_)->SetUITaskThread(
             hsl::UI_TASK_DEVICE_INSTRUMENT, executor,
             static_cast<long long>(render_thread), true, uiThreadProxy_->taskInterface());
         const int engine = hsl::CommonUtils::GetEngineIdByDeviceId(hsl::UI_TASK_DEVICE_INSTRUMENT);
-        hsl::UIObject::SetUITaskThread(engine, GNS_FRAME::CGFrameSimulation::getId());
+        hsl::UIObject::SetUITaskThread(engine, GNS_FRAME::CGFrameSimulation::ownWorkStation()->getId());
     }
 
     /* 4. Fragment context + runtime info */

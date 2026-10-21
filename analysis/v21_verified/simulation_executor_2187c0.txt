@@ -1,0 +1,21 @@
+002187c0 push       {r4, r5, r6, r7, lr}                     
+002187c2 add        r7, sp, #0xc                             
+002187c4 push.w     {r8, sb, fp}                             
+002187c8 sub        sp, #0x48                                
+002187ca mov        r4, r0                                   
+002187cc ldr        r0, [pc, #0xd8]                          literal 0x1d0f7e
+002187ce add        r0, pc                                   
+002187d0 ldr        r1, [r0]                                 
+002187d2 ldr        r0, [r1]                                 
+002187d4 str        r0, [sp, #0x44]                          
+002187d6 ldr.w      r0, [r4, #0x218]                         
+002187da cbz        r0, #0x2187f2                            
+002187dc ldr        r0, [r0, #0x34]                          
+002187de ldr        r1, [r1]                                 
+002187e0 ldr        r2, [sp, #0x44]                          
+002187e2 subs       r1, r1, r2                               
+002187e4 ittt       eq                                       
+002187e6 addeq      sp, #0x48                                
+002187e8 popeq.w    {r8, sb, fp}                             
+002187ec popeq      {r4, r5, r6, r7, pc}                     
+002187ee blx        #0x10c2b8                                __stack_chk_fail

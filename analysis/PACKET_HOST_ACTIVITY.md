@@ -19,3 +19,11 @@ CGPackage::getContext at 0x1b6bc8 reads +0x5c, NOT the context passed to constru
 ## Validation
 
 A new Unicorn test executes host instructions for the +0x5c context getter, cached activity getter and package-to-activity chain, mocking object validation and workstation lookup. Lazy allocation and abort paths are NOT tested. ARM signature probe enforces the instance getter and correct pointer types. ARM Linux musl compile-only remains 39/39; no Android strict link or replacement SO. Native source runtime coverage is not claimed for the incomplete Packet constructor/onInitEnd.
+
+## Thread getter receiver audit (2026-10-21)
+
+Three more falsely static declarations corrected to instance methods: getId, getRenderThreadExecutorId, getRenderThreadId. getId (host 0x216c16) validates this+0x54 and reads this+0x180. Executor getter (0x2187c0) reads adapter from this+0x218 and its executor at adapter+0x34. Render-thread getter (0x2182d4) reads the same adapter and tail-dispatches through veneer 0x301a68 to CGRenderThreadAdapter::getRenderThreadId (PLT 0x112de0). Adapter-null paths diagnose/abort; they do not yield a default ID. Return declarations retain existing int types; formal signedness is not established by these instruction traces. Packet explicitly converts the returned render-thread bits to uint32_t before widening to the third-manager 64-bit argument, matching original r3=0.
+
+Packet original 0x2ec6e/0x2ec72, 0x2ec88/0x2ec8a, 0x2ec90/0x2ec92 and 0x2ecb8/0x2ecba call ownWorkStation before EACH getter. Partial rebuilt initialization now follows this receiver pattern. Batch11/12 already called ownWorkStation but discarded its return before getId; these are now one receiver-bearing call. No cache of a potentially changing workstation was introduced.
+
+Original host-instruction regression now also covers all three getters with a nonnull adapter, including a high-bit thread ID to ensure all 32 bits are preserved. The adapter's external method is mocked and null-adapter abort branches remain untested. ARM compile-time member-function probes cover all three methods. Complete source compilation remains 39/39 for ARM Linux musl only; no Android strict-link or valid Packet construction. Other static declarations in this header are not automatically verified by this audit.

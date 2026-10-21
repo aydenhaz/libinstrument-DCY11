@@ -19,6 +19,9 @@ trace=[]
 def hook(e,a,n,d):
  if a==0x10c96c:trace.append(e.reg_read(UC_ARM_REG_R0))
  elif a==0x10c768:e.reg_write(UC_ARM_REG_R0,station)
+ elif a==0x112de0:
+  assert e.reg_read(UC_ARM_REG_R0)==0x504000
+  trace.append(0x504000);e.reg_write(UC_ARM_REG_R0,0xf2345678)
  elif a==0x11095c:
   # Resolve this PLT entry to the real host implementation, preserving LR/r0.
   e.reg_write(UC_ARM_REG_PC,0x21a135);return
@@ -37,3 +40,10 @@ assert invoke(0x21a134,simulation)==activity and trace==[simulation+0x54]
 trace.clear()
 assert invoke(0x1b71e4,package)==activity and trace==[package+0x40,simulation+0x54]
 print('PASS: host package context +0x5c, cached simulation activity +0x1fc, and package -> workstation -> simulation -> activity chain; validity checks mocked')
+
+# Thread getters require a simulation receiver and its adapter at +0x218.
+write(simulation+0x180,0x13572468);write(simulation+0x218,0x504000);write(0x504000+0x34,0x24681357)
+trace.clear();assert invoke(0x216c16,simulation)==0x13572468 and trace==[simulation+0x54]
+trace.clear();assert invoke(0x2187c0,simulation)==0x24681357 and trace==[]
+assert invoke(0x2182d4,simulation)==0xf2345678 and trace==[0x504000]
+print('PASS: original simulation ID, executor ID and render-thread adapter receiver; adapter call mocked, missing-adapter abort path untested')

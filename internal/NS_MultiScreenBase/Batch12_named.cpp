@@ -86,8 +86,7 @@ bool AutoExscreenNotifyObserver::OnOpenExScreenUi(const tagSTExtScreen &st) {
     hsl::MultiScreenService::GetInstance()->SetNaviType(0, 0);
     NS_MultiScreenBase::SurfaceConfig sc;
     NS_MultiScreenBase::AutoConfigJsonData::GetInstance()->GetSurfaceConfig(0, sc);
-    GNS_FRAME::CGFrameSimulation::ownWorkStation();
-    GNS_FRAME::CGFrameSimulation::getId();
+    GNS_FRAME::CGFrameSimulation::ownWorkStation()->getId();
     /* GAI_SurfaceSizeGet(); */
     return true;
 }

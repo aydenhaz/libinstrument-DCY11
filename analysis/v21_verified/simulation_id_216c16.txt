@@ -1,0 +1,7 @@
+00216c16 push       {r4, r6, r7, lr}                         
+00216c18 add        r7, sp, #8                               
+00216c1a mov        r4, r0                                   
+00216c1c adds       r0, #0x54                                
+00216c1e blx        #0x10c96c                                _ZNK9GNS_FRAME8CGObjMem16checkObjMemValidEv
+00216c22 ldr.w      r0, [r4, #0x180]                         
+00216c26 pop        {r4, r6, r7, pc}                         

@@ -9,9 +9,9 @@ class CGFrameSimulation {
 public:
     static CGPackageMgr *getPackageMgr();
     static CGFrameSimulation *ownWorkStation();
-    static int getId();
-    static int getRenderThreadExecutorId();
-    static int getRenderThreadId();
+    int getId();
+    int getRenderThreadExecutorId();
+    int getRenderThreadId();
     CGFragmentActivity *getFragmentActivity();
     static CGExhibition *getExhibition();
     bool isRender(bool);

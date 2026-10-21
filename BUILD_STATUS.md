@@ -249,3 +249,7 @@ Recovered Packet+0xc0 -> Opening+0x40c non-owning Cover pointer chain and setter
 ## Packet host activity boundary checkpoint (2026-10-21)
 
 Corrected simulation activity getter from static to instance, and simulation/package activity return types from CGPackage* to CGFragmentActivity*. Packet partial onInitEnd now supplies the simulation receiver and separately reads context through Packet's package base. Removed unused invalid Batch9 activity call. Host original-instruction getter/receiver chain regression and ARM signature probe pass; compile-only 39/39. Factory/base construction and full initialization remain incomplete. Details: analysis/PACKET_HOST_ACTIVITY.md. No replacement SO.
+
+## Simulation thread receiver audit (2026-10-21)
+
+Corrected getId/getRenderThreadExecutorId/getRenderThreadId from static to instance and supplied ownWorkStation receivers in Packet and Batch11/12. Original host-instruction regression verifies each getter and adapter dispatch, ARM signature probes pass, and compile-only remains 39/39. Null-adapter abort branches and full Packet runtime remain untested; no replacement SO.
