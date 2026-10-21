@@ -1,0 +1,12 @@
+00035bbe ldr.w      r0, [r4, #0x394]                         
+00035bc2 add.w      r1, r4, #0x374                           
+00035bc6 blx        #0x1494c                                 _ZN3hsl12SystemNotify28RemoveLanguageSwitchObserverEPNS_22LanguageSwitchObserverE
+00035bca ldr.w      r0, [r4, #0x40c]                         
+00035bce cbz        r0, #0x35bd4                             
+00035bd0 bl         #0x18078                                 
+00035bd4 movs       r0, #0                                   
+00035bd6 mov.w      r1, #-1                                  
+00035bda str.w      r0, [sl, #0x48]                          
+00035bde str.w      r0, [r4, #0x388]                         
+00035be2 ldr        r0, [pc, #0x138]                         literal 0x3941c
+00035be4 add        r0, pc                                   

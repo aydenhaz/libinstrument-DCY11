@@ -237,3 +237,7 @@ The build deliberately removes failed final outputs. It will not label an incomp
 ## Cover release checkpoint (2026-10-20)
 
 Recovered original 0x18078 cleanup effects as `CoverUtil::releaseConfiguredCover`: buffer reference reset, RGB defaults 127, observer removal, optional host/private callback clearing, image deletion. Preserves original guards and fields not reset by original. Source and evidence in analysis/COVER_RELEASE.md. Native ASan/UBSan integration passes; ARM Linux musl compile-only 38/38 passes. Original caller naming/Packet integration and Android NDK strict linking remain unfinished; no replacement .so is available.
+
+## Cover caller and original trace checkpoint (2026-10-21)
+
+Located release caller at 0x35bd0 in AutoOpeningFragment::onDestroyView, receiver from Fragment+0x40c. No incorrect Packet destructor wiring added: Fragment layout and base remain unrecovered. Added five original Thumb cleanup trace cases and native reentrant image-removal regression; tests pass. Quarantined wrong Batch11 CoverUtil_setConfig free function. ARM Linux musl compile-only remains 38/38; no Android strict-link success or replacement SO.

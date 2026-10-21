@@ -36,7 +36,6 @@ using GNS_FRAME::CGViewGroup;
 using GNS_FRAME::CGImage;
 using hsl::Bundle;
 using dice::String16;
-namespace bl { typedef int IMapDevice; }
 namespace NS_MultiScreenBase {
 struct SurfaceConfig; struct tagMultiViewModeInfo;
 // ScreenType is shared in AbiTypes.h.
@@ -69,21 +68,7 @@ void AutoExscreenUtil_SetMapParamsToUiConfig(const SurfaceConfig &cfg) {
     /* int32EagleEyeEnable / int32CrossControl / int32MapLevel ... via PutBundle */
 }
 
-/* sub_18264 (1588B) — CoverUtil::setConfig(CGContext*, IMapDevice*, bl) */
-void CoverUtil_setConfig(void *ctx, bl::IMapDevice *dev) {
-    CGString cover;
-    hsl::Config *c = hsl::HSL::GetConfigHandle();
-    dice::String16 s;
-    c->GetString(dice::String16("sm_enable_widgetCoverForWndId"), s, hsl::Config::VALUE_STRATEGY_DEFAULT);
-    int maxFrame = 0;
-    c->GetString(dice::String16("sm_support_widgetCoverMaxFrame"), s, hsl::Config::VALUE_STRATEGY_DEFAULT);
-    maxFrame = asl::String16Utils::atoi(s.c_str());
-    /* "sm_ WidgetCoverForWndId=%s, WidgetCoverMaxFrame=%d" */
-    GNS_FRAME::CGImage *img = new GNS_FRAME::CGImage();
-    img->create(GPI::CGSize(), EGColorType_RGBA, nullptr);
-    /* ... cover widget setup ... */
-    delete img;
-}
+// Original 0x18264 is implemented by CoverUtil::setConfig and its staged helpers.
 
 /* sub_1ba40 (1452B) — config bundle reader (unnamed, keys recovered) */
 bool ReadMapInt32Bundle(hsl::Config *cfg_, void *self) {

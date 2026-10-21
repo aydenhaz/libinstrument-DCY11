@@ -41,6 +41,7 @@ struct CoverUtilTestAccess {
 };
 }
 static std::vector<std::string> calls;
+static NS_MultiScreenBase::CoverUtil* removeImageDuringConfig;
 static std::string text(const dice::String16& value){
     std::string out;
     for(unsigned i=0;i<value.size();++i)out+=char(value.c_str()[i]);
@@ -54,6 +55,10 @@ dice::String16 hsl::StringUtils::Format(const unsigned short* format,...){
 }
 void CAutoUtil::setSMConfigValue(const dice::String16& key,const dice::String16& value){
     calls.push_back(text(key)+"="+text(value));
+    if(removeImageDuringConfig){
+        NS_MultiScreenBase::CoverUtilTestAccess::cleanup(*removeImageDuringConfig);
+        removeImageDuringConfig=nullptr;
+    }
 }
 static std::map<std::string,std::string> configuration;
 static int configLookups;
@@ -186,5 +191,9 @@ int main(){
     assert(calls.empty()&&Access::info(empty).bytes==boundPixels&&removals==1);
     Access::enable(empty);empty.releaseConfiguredCover();
     assert(removals==2&&topRegistrations==3); // Optional top callback untouched.
+    empty.setConfig(context,device,view,config);
+    calls.clear();removeImageDuringConfig=&empty;empty.releaseConfiguredCover();
+    assert((calls==std::vector<std::string>{"widgetCoverR=127","widgetCoverG=127","widgetCoverB=127"}));
+    assert(removals==2&&topRegistrations==3); // Image rechecked after external calls.
 
 }
