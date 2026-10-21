@@ -3,6 +3,10 @@ namespace GNS_FRAME {
 class CGViewGroup; class CGView; class CGIntent; class CGContext;
 class CGFragment {
 public:
+    // Interface projection only: original constructor takes ELaunchMode and
+    // initializes multiple bases. Empty host objects must never be allocated.
+    CGFragment() = delete;
+    static CGFragment* createFragmentUnrecovered();
     CGFragment *tryStartExistFragment(const CGIntent&, int, void*);
     // Intentionally undefined: legacy callers lack a valid parent/type identity.
     // Never alias these to real host methods just to make the linker pass.

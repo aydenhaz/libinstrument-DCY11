@@ -1,0 +1,60 @@
+00294380 push       {r4, r5, r6, r7, lr}                     
+00294382 add        r7, sp, #0xc                             
+00294384 push.w     {r8, sb, sl, fp}                         
+00294388 sub        sp, #0x54                                
+0029438a mov        r4, r0                                   
+0029438c ldr        r0, [pc, #0x350]                         literal 0x1553bc
+0029438e movs       r5, #0                                   
+00294390 add        r0, pc                                   
+00294392 ldr        r0, [r0]                                 
+00294394 str        r0, [sp, #0x38]                          
+00294396 ldr        r0, [r0]                                 
+00294398 str        r0, [sp, #0x50]                          
+0029439a add.w      r0, r4, #8                               
+0029439e strd       r0, r0, [r4, #8]                         
+002943a2 mov.w      r0, #0x100                               
+002943a6 str        r5, [r4, #0x10]                          
+002943a8 strh       r0, [r4, #4]                             
+002943aa ldr        r0, [pc, #0x338]                         literal 0x155d9c
+002943ac add        r0, pc                                   
+002943ae ldr        r0, [r0]                                 
+002943b0 adds       r0, #8                                   
+002943b2 str        r0, [r4]                                 
+002943b4 add.w      r0, r4, #0x14                            
+002943b8 str        r0, [sp, #0x34]                          
+002943ba bl         #0x29472c                                
+002943be strb.w     r5, [r4, #0x5c]                          
+002943c2 ldr        r0, [pc, #0x324]                         literal 0x147670
+002943c4 add        r0, pc                                   
+002943c6 adds       r0, #8                                   
+002943c8 str        r0, [r4, #0x58]                          
+002943ca add.w      r0, r4, #0x70                            
+002943ce strd       r5, r5, [r4, #0x60]                      
+002943d2 strd       r5, r5, [r4, #0x68]                      
+002943d6 blx        #0x110518                                _ZN9GNS_FRAME10CGUIObjectC2Ev
+002943da add.w      r0, r4, #0xd0                            
+002943de strd       r0, r0, [r4, #0xd0]                      
+002943e2 add.w      r0, r4, #0xbc                            
+002943e6 strd       r5, r5, [r4, #0xd8]                      
+002943ea strh.w     r5, [r4, #0xcc]                          
+002943ee ldr        r1, [pc, #0x2fc]                         literal 0x155d8c
+002943f0 add        r1, pc                                   
+002943f2 ldr        r1, [r1]                                 
+002943f4 add.w      r2, r1, #0xfc                            
+002943f8 str.w      r2, [r4, #0xb0]                          
+002943fc add.w      r2, r1, #0xe4                            
+00294400 str        r2, [r4, #0x70]                          
+00294402 add.w      r2, r1, #0xd4                            
+00294406 str        r2, [r4, #0x58]                          
+00294408 add.w      r2, r1, #0xac                            
+0029440c str        r2, [r4, #0x14]                          
+0029440e adds       r1, #8                                   
+00294410 str        r1, [r4]                                 
+00294412 strd       r0, r0, [r4, #0xbc]                      
+00294416 add.w      r0, r4, #0xe0                            
+0029441a mov        r1, r4                                   
+0029441c strd       r5, r4, [r4, #0xc4]                      
+00294420 bl         #0x1a533c                                
+00294424 add.w      r0, r4, #0x104                           
+00294428 mov        r1, r4                                   
+0029442a bl         #0x1a533c                                

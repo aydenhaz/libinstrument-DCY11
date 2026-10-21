@@ -2,10 +2,12 @@
 namespace GNS_FRAME { class CGFragment; }
 namespace NS_InstrumentPannelLarge {
 
-// concrete fragment classes derive from CGFragment (stub: use void* factory here)
+// Declaration-only legacy factory names; actual class layouts/constructors are
+// not recovered. Never instantiate these declarations as host objects.
 #define IPL_FRAGMENT_HEAD(cls) \
 class cls { \
 public: \
+    cls() = delete; \
     static GNS_FRAME::CGFragment *create(); \
     void destroy(); \
 };

@@ -1,7 +1,7 @@
 #include <GFrame/CGDrawablePtr.h>
 /*
  * Batch 20 — fragment-class expansion (9 functions, compiled)
- * Decoded from expanded/fragments category; all verified against binary.
+ * Legacy partial reconstruction. Remaining placeholders are not verified host objects.
  */
 #include <cstdint>
 #include <GFrame/CGString.h>
@@ -51,7 +51,7 @@ void GuideFragment_GoToCross_impl(void *self, int32_t index, bool flag) {
         CGFragment *frag = CGFragment::tryStartExistFragmentUnrecovered(intent, 2, /*ctx*/0);
         frag = frag;
         if (!frag) {
-            frag = new CGFragment();
+            frag = CGFragment::createFragmentUnrecovered();
             frag->setContext(/*ctx*/0);
             frag->startNewFragmentUnrecovered(0, 0, intent, 2);
         }
@@ -73,7 +73,7 @@ void ThemeSwitch_impl(void *self, int32_t iaccTheme, int32_t screenMode) {
     CGFragment *frag = CGFragment::tryStartExistFragmentUnrecovered(intent, 2, 0);
     frag = frag;
     if (!frag) {
-        frag = new CGFragment();
+        frag = CGFragment::createFragmentUnrecovered();
         frag->setContext(0);
         frag->startNewFragmentUnrecovered(0, 0, intent, 2);
     }
@@ -96,7 +96,7 @@ void AutoExscreenNotifyObserver_OnHideCrossImage(void *self, int crossType) {
     CGFragment *frag = CGFragment::tryStartExistFragmentUnrecovered(intent, 2, 0);
     frag = frag;
     if (!frag) {
-        frag = new CGFragment();
+        frag = CGFragment::createFragmentUnrecovered();
         frag->setContext(0);
         frag->startNewFragmentUnrecovered(0, 0, intent, 2);
     }
@@ -165,7 +165,7 @@ void StartFragmentHelper_impl(const CGIntent &intent, int mode) {
     CGFragment *frag = CGFragment::tryStartExistFragmentUnrecovered(intent, 2, 0);
     frag = frag;
     if (!frag) {
-        frag = new CGFragment();
+        frag = CGFragment::createFragmentUnrecovered();
         frag->setContext(0);
         frag->startNewFragmentUnrecovered(0, 0, intent, 2);
     }

@@ -265,3 +265,7 @@ Executed original startup/exit with mocked host effects and verified exact inten
 ## Package registration component checkpoint (2026-10-21)
 
 Recovered host ClassNode_CGPackage layout (0x20 ARM32), imported ctor/dtor and original CGIPLPacket/class alias registration parameters. Added explicit factory-taking registration component with scoped ownership. Removed four inert placeholder module constructors; originals archived. Native sanitizer and original init instruction traces pass; compile-only 39/39. Component is not auto-registered: real Packet/base construction and other module initializers are unfinished. No replacement SO.
+
+## Unsafe Fragment factory isolation (2026-10-21)
+
+Found concrete one-byte allocation followed by 0x80-byte memset/embedded writes in legacy A106 factory. Quarantined Fragments.cpp/Fragments_batch4.cpp implementations and prohibited default construction of their ten empty types. Prohibited empty CGFragment construction; four fallback allocations now explicitly require an unrecovered factory. ARM negative construction contract and compile-only 39/39 pass. This removes unsafe invented code, not completes host factories. Real Packet/Fragment construction, Android linking and replacement SO remain unavailable. Details: analysis/FRAGMENT_FACTORY_QUARANTINE.md.
