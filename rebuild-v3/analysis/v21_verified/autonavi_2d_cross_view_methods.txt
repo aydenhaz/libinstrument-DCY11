@@ -35,6 +35,12 @@ Binary: libInstrumentPannelLarge.so. Addresses are Thumb code addresses.
 - AutoNaviFragment::ShowCross at 0x26038 calls ShowCrossView (0x1b8a4); AutoNaviFragment::HideCross at 0x27fb4 calls HideCrossView (0x1b6bc).
 - AutoArNaviFragment::ShowCross at 0x20784 calls ShowCrossView; AutoArNaviFragment::HideCross at 0x209bc calls HideCrossView.
 
+## AutoNaviFragment::ShowCross helper gate (0x26038)
+
+- The method returns through its common exit when `isTopFragment()` is false.
+- The call to `AutoNavi2dCrossView::ShowCrossView` at 0x261f2 is reached only when the cross-type argument is not numeric value 4, the earlier cross-view state query is false/zero, and the helper pointer at `this+0x87c` is non-null. The state query's semantic name is not established by this function alone, so its zero result is recorded as a machine-level condition rather than assigned a meaning.
+- The helper call passes a boolean-like value in r1 (derived from request data) and the cross-type value in r2. Value 4 takes a separate path and does not invoke this helper display call. This does not by itself establish what CrossType 4 means or whether other UI work is skipped.
+
 The callers share the same helper implementation and field offsets, while each Fragment owns its own helper at +0x87c. This establishes the helper's real view lifecycle across the Guide and AR Guide variants.
 
 Guide construction at 0x4281c allocates/initializes this object, sets +0x28 to the map engine id, and writes a short bounded string at +0x2c. The Guide onCreateView caller supplies the view/container pointers; the AutoNavi base show/hide methods then use them. This closes the helper's construction-to-view-use-to-teardown path, but does not recover the full Fragment base constructor, all HSL host objects, or an implementable replacement Fragment class.
