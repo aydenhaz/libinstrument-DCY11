@@ -1,0 +1,8 @@
+0021a240 push       {r4, r6, r7, lr}                         
+0021a242 add        r7, sp, #8                               
+0021a244 mov        r4, r0                                   
+0021a246 blx        #0x11095c                                _ZN9GNS_FRAME17CGFrameSimulation19getFragmentActivityEv
+0021a24a ldr.w      r1, [r4, #0x200]                         
+0021a24e str        r0, [r1, #4]                             
+0021a250 mov        r0, r1                                   
+0021a252 pop        {r4, r6, r7, pc}                         

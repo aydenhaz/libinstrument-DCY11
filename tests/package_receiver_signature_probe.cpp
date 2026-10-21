@@ -15,3 +15,7 @@ int probe_getRenderThreadExecutorId(GNS_FRAME::CGFrameSimulation* simulation){re
 
 static_assert(std::is_member_function_pointer<decltype(&GNS_FRAME::CGFrameSimulation::getRenderThreadId)>::value,"simulation getter requires receiver");
 int probe_getRenderThreadId(GNS_FRAME::CGFrameSimulation* simulation){return simulation->getRenderThreadId();}
+
+static_assert(std::is_member_function_pointer<decltype(&GNS_FRAME::CGFrameSimulation::getPackageMgr)>::value,"getter requires simulation receiver");
+
+static_assert(std::is_member_function_pointer<decltype(&GNS_FRAME::CGFrameSimulation::getExhibition)>::value,"getter requires simulation receiver");

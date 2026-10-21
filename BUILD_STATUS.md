@@ -253,3 +253,7 @@ Corrected simulation activity getter from static to instance, and simulation/pac
 ## Simulation thread receiver audit (2026-10-21)
 
 Corrected getId/getRenderThreadExecutorId/getRenderThreadId from static to instance and supplied ownWorkStation receivers in Packet and Batch11/12. Original host-instruction regression verifies each getter and adapter dispatch, ARM signature probes pass, and compile-only remains 39/39. Null-adapter abort branches and full Packet runtime remain untested; no replacement SO.
+
+## Entry package-manager receiver checkpoint (2026-10-21)
+
+Corrected getPackageMgr/getExhibition to instance methods. Startup/Exit now forward their incoming simulation argument instead of discarding it. Exhibition calls supply ownWorkStation; original getter's activity refresh verified. Entry ASan/UBSan regression with distinct receivers, original host instruction checks and ARM signature probes pass; 39/39 compile-only. No replacement SO or Android strict-link success.

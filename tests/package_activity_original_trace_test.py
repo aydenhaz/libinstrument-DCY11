@@ -22,6 +22,9 @@ def hook(e,a,n,d):
  elif a==0x112de0:
   assert e.reg_read(UC_ARM_REG_R0)==0x504000
   trace.append(0x504000);e.reg_write(UC_ARM_REG_R0,0xf2345678)
+ elif a==0x112f6c:
+  assert e.reg_read(UC_ARM_REG_R0)==station
+  trace.append(station);e.reg_write(UC_ARM_REG_R0,0x505000)
  elif a==0x11095c:
   # Resolve this PLT entry to the real host implementation, preserving LR/r0.
   e.reg_write(UC_ARM_REG_PC,0x21a135);return
@@ -47,3 +50,10 @@ trace.clear();assert invoke(0x216c16,simulation)==0x13572468 and trace==[simulat
 trace.clear();assert invoke(0x2187c0,simulation)==0x24681357 and trace==[]
 assert invoke(0x2182d4,simulation)==0xf2345678 and trace==[0x504000]
 print('PASS: original simulation ID, executor ID and render-thread adapter receiver; adapter call mocked, missing-adapter abort path untested')
+
+write(simulation+0x17c,station);trace.clear()
+assert invoke(0x21d090,simulation)==0x505000 and trace==[station]
+write(simulation+0x200,0x506000);write(0x506004,0xdeadbeef);trace.clear()
+assert invoke(0x21a240,simulation)==0x506000
+assert struct.unpack('<I',m.mem_read(0x506004,4))[0]==activity and trace==[simulation+0x54]
+print('PASS: package-manager workstation forwarding and exhibition activity refresh; manager method mocked')

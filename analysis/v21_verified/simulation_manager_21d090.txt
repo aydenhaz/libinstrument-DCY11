@@ -1,0 +1,20 @@
+0021d090 push       {r4, r5, r6, r7, lr}                     
+0021d092 add        r7, sp, #0xc                             
+0021d094 str        fp, [sp, #-0x4]!                         
+0021d098 sub        sp, #0x38                                
+0021d09a ldr        r1, [pc, #0xbc]                          literal 0x1cc6b0
+0021d09c add        r1, pc                                   
+0021d09e ldr        r1, [r1]                                 
+0021d0a0 ldr        r2, [r1]                                 
+0021d0a2 str        r2, [sp, #0x34]                          
+0021d0a4 ldr.w      r0, [r0, #0x17c]                         
+0021d0a8 cbz        r0, #0x21d0c4                            
+0021d0aa ldr        r1, [r1]                                 
+0021d0ac ldr        r2, [sp, #0x34]                          
+0021d0ae subs       r1, r1, r2                               
+0021d0b0 it         ne                                       
+0021d0b2 blxne      #0x10c2b8                                
+0021d0b6 add        sp, #0x38                                
+0021d0b8 ldr        fp, [sp], #4                             
+0021d0bc pop.w      {r4, r5, r6, r7, lr}                     
+0021d0c0 b.w        #0x301ba8                                

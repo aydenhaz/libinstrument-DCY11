@@ -13,6 +13,9 @@ namespace {
 bool created = false;
 int loads = 0, unloads = 0, sets = 0, extras = 0, alc_calls = 0;
 GNS_FRAME::CGPackageMgr package_mgr;
+GNS_FRAME::CGFrameSimulation simulation, second_simulation;
+GNS_FRAME::CGFrameSimulation* expected_simulation=&simulation;
+int manager_queries=0;
 hsl::MultiScreenService service;
 void alc_emit(void*, int count, int reserved, uintptr_t fourth,
               uint32_t flags, uint32_t zero, const char* module,
@@ -43,7 +46,7 @@ namespace GNS_FRAME {
 CGIntent::CGIntent() {}
 CGIntent::~CGIntent() {}
 void CGIntent::putStringExtra(const unsigned short*, const char*) { ++extras; }
-CGPackageMgr* CGFrameSimulation::getPackageMgr() { return &package_mgr; }
+CGPackageMgr* CGFrameSimulation::getPackageMgr() { assert(this==expected_simulation);++manager_queries;return &package_mgr; }
 bool CGPackageMgr::loadPackage(CGString&, CGIntent&, bool a, bool b) {
     assert(!a && !b); ++loads; return true;
 }
@@ -55,11 +58,14 @@ bool MultiScreenService::IsCreatedLargeScreen() { return created; }
 void MultiScreenService::SetCreatedLargeScreen(bool value) { created = value; ++sets; }
 }
 int main() {
-    assert(StartupInstrumentPannelLarge(nullptr) == 1);
+    assert(StartupInstrumentPannelLarge(&simulation) == 1);
     assert(created && sets == 1 && loads == 1 && extras == 2);
-    assert(StartupInstrumentPannelLarge(nullptr) == 0);
+    assert(StartupInstrumentPannelLarge(&simulation) == 0);
     assert(sets == 1 && loads == 1 && extras == 2);
-    ExitInstrumentPannelLarge(nullptr);
+    assert(manager_queries==1);
+    expected_simulation=&second_simulation;
+    ExitInstrumentPannelLarge(&second_simulation);
+    assert(manager_queries==2);
     assert(unloads == 1 && alc_calls == 3);
     LogInit();
 }

@@ -7,13 +7,13 @@ class CGFragmentActivity;
 class CGContext; class CGPackage; class CGExhibition;
 class CGFrameSimulation {
 public:
-    static CGPackageMgr *getPackageMgr();
+    CGPackageMgr *getPackageMgr();
     static CGFrameSimulation *ownWorkStation();
     int getId();
     int getRenderThreadExecutorId();
     int getRenderThreadId();
     CGFragmentActivity *getFragmentActivity();
-    static CGExhibition *getExhibition();
+    CGExhibition *getExhibition();
     bool isRender(bool);
     void setRenderEndCallback(void (*)());
     void sendMsg(int, int, int, unsigned long long, GPI::ScopedRefptr<GPI::MessageCtrl>*);

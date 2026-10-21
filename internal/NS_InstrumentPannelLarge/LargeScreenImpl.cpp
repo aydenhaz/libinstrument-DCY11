@@ -83,7 +83,7 @@ void LargeScreenImpl::OnChangeScreenMode(int32_t screenType, int32_t mode, const
     /* __dynamic_cast to one of the 10 concrete CGInstrumentPannelLarge*Fragment types */
 
     if (frag) {
-        GNS_FRAME::CGExhibition *exh = GNS_FRAME::CGFrameSimulation::getExhibition();
+        GNS_FRAME::CGExhibition *exh = GNS_FRAME::CGFrameSimulation::ownWorkStation()->getExhibition();
         CGString name(reinterpret_cast<const unsigned short*>(u""));  /* per-branch name, pool @0x2e2d6 */
         exh->appendFragment(3, name, intent, 0);
         return;

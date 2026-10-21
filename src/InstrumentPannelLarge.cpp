@@ -77,7 +77,7 @@ static void AlcRegister(const char *name, const char *sig, int tag) {
 /* ------------------------------------------------------------------------
  * Entry points
  * ---------------------------------------------------------------------- */
-extern "C" int StartupInstrumentPannelLarge(void * /*ctx*/) {
+extern "C" int StartupInstrumentPannelLarge(void *ctx) {
     AlcRegister(kStartName, kStartSig, 25);
 
     hsl::MultiScreenService *svc = hsl::MultiScreenService::GetInstance();
@@ -86,7 +86,7 @@ extern "C" int StartupInstrumentPannelLarge(void * /*ctx*/) {
         svc->SetCreatedLargeScreen(true);
     }
 
-    GNS_FRAME::CGPackageMgr *pm = GNS_FRAME::CGFrameSimulation::getPackageMgr();
+    GNS_FRAME::CGPackageMgr *pm = static_cast<GNS_FRAME::CGFrameSimulation*>(ctx)->getPackageMgr();
     CGString pkg(reinterpret_cast<const unsigned short*>(kPackageName));
     GNS_FRAME::CGIntent intent;
     intent.putStringExtra(reinterpret_cast<const unsigned short*>(kKeyFrom), kFromPackage);
@@ -96,10 +96,10 @@ extern "C" int StartupInstrumentPannelLarge(void * /*ctx*/) {
     return 1;
 }
 
-extern "C" void ExitInstrumentPannelLarge(void * /*ctx*/) {
+extern "C" void ExitInstrumentPannelLarge(void *ctx) {
     AlcRegister(kExitName, kExitSig, 56);
 
-    GNS_FRAME::CGPackageMgr *pm = GNS_FRAME::CGFrameSimulation::getPackageMgr();
+    GNS_FRAME::CGPackageMgr *pm = static_cast<GNS_FRAME::CGFrameSimulation*>(ctx)->getPackageMgr();
     CGString pkg(reinterpret_cast<const unsigned short*>(kPackageName));
     pm->unloadPackage(pkg, false);
 }
