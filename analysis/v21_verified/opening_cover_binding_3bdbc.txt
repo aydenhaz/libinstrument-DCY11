@@ -1,0 +1,79 @@
+0003bdbc push       {r4, r5, r6, r7, lr}                     
+0003bdbe add        r7, sp, #0xc                             
+0003bdc0 push.w     {r8, sb, sl, fp}                         
+0003bdc4 sub        sp, #0x74                                
+0003bdc6 mov        r4, r0                                   
+0003bdc8 ldr        r0, [pc, #0xc8]                          literal 0x32b28
+0003bdca mov        r5, r1                                   
+0003bdcc add        r0, pc                                   
+0003bdce ldr.w      fp, [r0]                                 
+0003bdd2 ldr.w      r0, [fp]                                 
+0003bdd6 str        r0, [sp, #0x70]                          
+0003bdd8 blx        #0x13c14                                 I_GetAlcPtr
+0003bddc cbz        r0, #0x3be1c                             
+0003bdde blx        #0x13c14                                 I_GetAlcPtr
+0003bde2 ldr        r1, [r0]                                 
+0003bde4 mov.w      ip, #0xb3                                
+0003bde8 mov.w      r8, #0                                   
+0003bdec add.w      r3, r4, #0x30c                           
+0003bdf0 ldr.w      lr, [r1]                                 
+0003bdf4 ldr        r1, [pc, #0xa0]                          literal 0x1ccd3
+0003bdf6 ldr        r2, [pc, #0xa4]                          literal 0x1cc75
+0003bdf8 ldr        r6, [pc, #0xa4]                          literal 0x1f8c5
+0003bdfa add        r1, pc                                   
+0003bdfc add        r2, pc                                   
+0003bdfe add        r6, pc                                   
+0003be00 mov        sb, r1                                   
+0003be02 mov.w      r1, #0x8000000                           
+0003be06 strd       r1, r8, [sp]                             
+0003be0a movs       r1, #8                                   
+0003be0c strd       r3, r6, [sp, #8]                         
+0003be10 strd       r2, ip, [sp, #0x10]                      
+0003be14 movs       r2, #0                                   
+0003be16 strd       sb, r5, [sp, #0x18]                      
+0003be1a blx        lr                                       
+0003be1c str.w      r5, [r4, #0x40c]                         
+0003be20 cbz        r5, #0x3be7e                             
+0003be22 blx        #0x13cd4                                 _ZN3hsl3HSL19GetMapServiceHandleEv
+0003be26 cbz        r0, #0x3be7e                             
+0003be28 mov        r5, r0                                   
+0003be2a ldr.w      r0, [r4, #0x388]                         
+0003be2e cbz        r0, #0x3be7e                             
+0003be30 ldr        r1, [r0]                                 
+0003be32 ldr.w      r1, [r1, #0xa8]                          
+0003be36 blx        r1                                       
+0003be38 mov        r1, r0                                   
+0003be3a ldr        r0, [r5]                                 
+0003be3c ldr        r2, [r0, #0x20]                          
+0003be3e mov        r0, r5                                   
+0003be40 blx        r2                                       
+0003be42 mov        r8, r0                                   
+0003be44 mov        r0, r4                                   
+0003be46 ldr.w      sb, [r4, #0x40c]                         
+0003be4a blx        #0x13fd4                                 _ZN9GNS_FRAME10CGFragment10getContextEv
+0003be4e mov        sl, r0                                   
+0003be50 ldr.w      r0, [r4, #0x388]                         
+0003be54 ldr        r1, [r0]                                 
+0003be56 ldr        r1, [r1, #0x24]                          
+0003be58 blx        r1                                       
+0003be5a add.w      r1, r4, #0x3a0                           
+0003be5e add        r4, sp, #0x20                            
+0003be60 mov        r5, r0                                   
+0003be62 mov        r0, r4                                   
+0003be64 bl         #0x1de64                                 
+0003be68 mov        r0, sb                                   
+0003be6a mov        r1, sl                                   
+0003be6c mov        r2, r8                                   
+0003be6e mov        r3, r5                                   
+0003be70 str        r4, [sp]                                 
+0003be72 bl         #0x18264                                 
+0003be76 add.w      r0, r4, #0x24                            
+0003be7a blx        #0x13d58                                 _ZN8CGStringD1Ev
+0003be7e ldr.w      r0, [fp]                                 
+0003be82 ldr        r1, [sp, #0x70]                          
+0003be84 subs       r0, r0, r1                               
+0003be86 ittt       eq                                       
+0003be88 addeq      sp, #0x74                                
+0003be8a popeq.w    {r8, sb, sl, fp}                         
+0003be8e popeq      {r4, r5, r6, r7, pc}                     
+0003be90 blx        #0x13a28                                 __stack_chk_fail

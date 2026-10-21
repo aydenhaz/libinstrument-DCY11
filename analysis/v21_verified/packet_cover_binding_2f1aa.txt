@@ -1,0 +1,13 @@
+0002f1aa ldr        r0, [sp, #0x34]                          
+0002f1ac ldr        r0, [r0]                                 
+0002f1ae ldr        r1, [sp, #0x68]                          
+0002f1b0 subs       r0, r0, r1                               
+0002f1b2 ldr        r0, [sp, #0x38]                          
+0002f1b4 it         ne                                       
+0002f1b6 blxne      #0x13a28                                 
+0002f1ba add.w      r1, r0, #0xc0                            
+0002f1be mov        r0, r6                                   
+0002f1c0 add        sp, #0x6c                                
+0002f1c2 pop.w      {r8, sb, sl, fp}                         
+0002f1c6 pop.w      {r4, r5, r6, r7, lr}                     
+0002f1ca b.w        #0x3bdbc                                 

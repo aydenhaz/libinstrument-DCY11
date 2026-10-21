@@ -241,3 +241,7 @@ Recovered original 0x18078 cleanup effects as `CoverUtil::releaseConfiguredCover
 ## Cover caller and original trace checkpoint (2026-10-21)
 
 Located release caller at 0x35bd0 in AutoOpeningFragment::onDestroyView, receiver from Fragment+0x40c. No incorrect Packet destructor wiring added: Fragment layout and base remain unrecovered. Added five original Thumb cleanup trace cases and native reentrant image-removal regression; tests pass. Quarantined wrong Batch11 CoverUtil_setConfig free function. ARM Linux musl compile-only remains 38/38; no Android strict-link success or replacement SO.
+
+## Opening Cover binding checkpoint (2026-10-21)
+
+Recovered Packet+0xc0 -> Opening+0x40c non-owning Cover pointer chain and setter at 0x3bdbc. Added explicit bindOpeningCover adapter for genuinely constructed V21 ARM32 fragments, preserving service/facility guards, vtable slots, field reload ordering, and one by-value SurfaceConfig copy. Native ASan/UBSan and five original Thumb binding traces pass. ARM Linux musl compile-only 39/39 passes. Adapter is not registered with the incomplete Fragment/Packet factory; no Android strict-link success or replacement SO. See analysis/OPENING_COVER_BINDING.md.
