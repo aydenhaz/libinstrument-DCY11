@@ -1,0 +1,25 @@
+Android libc++ namespace probe — 2026-10-21
+
+The ARM Linux musl Zig toolchain normally emits `std::__1` symbols. A
+non-production probe wrapper was tested with:
+`-U_LIBCPP_ABI_NAMESPACE -D_LIBCPP_ABI_NAMESPACE=__ndk1`
+
+Command:
+`python3 -u rebuild-v3/build_android.py --cxx /tmp/ipl-arm-cxx-ndkabi --out /tmp/ipl-buildsym11`
+
+All 38 translation units compiled. `readelf -Ws /tmp/ipl-buildsym11/10.o`
+confirms the unresolved host call now uses
+`NS_MultiScreenBase::AutoConfigJsonData::GetMultiViewModeInfo(ScreenType,
+std::__ndk1::vector<...>&)`, exactly matching the host import. The previous
+`std::__1` mismatch is gone.
+
+The strict probe link still fails. The Zig musl environment does not provide
+`std::__ndk1::bad_function_call::~bad_function_call()`; the Android NDK's
+libc++ runtime should provide that symbol, but this environment has no NDK, so
+that production driver/runtime path cannot be verified. Remaining application
+blockers in the probe are package/fragment receiver recovery and the
+AutoExscreen closure/bind/action implementation. Full log:
+`analysis/STRICT_LINK_ARM32_NDKABI_MUSL.log`.
+
+This is an ABI namespace experiment only, not an Android build and not a
+replacement shared object.
