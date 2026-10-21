@@ -322,3 +322,9 @@ Recompiled all 39 translation units with Zig 0.17.0 targeting `arm-linux-musleab
 - Inspected V21 Thumb call sites at `sub_2a5a8`, `sub_2a7e0`, and `sub_2aa28`, plus the provider in `libhsl.so`. Host API takes `GPI::Closure::Callable<void()> const&`, `bl::MapEngineID`, `unsigned int`, and `unsigned long long`; reconstructed declaration instead uses `GPI::Closure const&` and `int`.
 - The call sites construct shared wrapper state and clean it up around scheduling. `Closure::bind` has no body and the source's `ActionA/B/C` targets are not independently recovered. An incomplete return-type edit failed compilation and was reverted; no placeholder callable was introduced.
 - Re-run after reverting: 38/38 sources compile, strict link remains at nine unresolved categories. Current evidence is in `analysis/v21_verified/auto_exscreen_closure_abi.txt`; full linker diagnostics are in `analysis/STRICT_LINK_ARM32_MUSL.log`. No usable `.so` exists yet.
+
+## Android libc++ namespace probe — 2026-10-21
+
+- Tested the Zig libc++ header configuration with `_LIBCPP_ABI_NAMESPACE=__ndk1`. All 38 translation units compile, and the `AutoConfigJsonData::GetMultiViewModeInfo` import now matches the Android host's `std::__ndk1::vector` symbol; the earlier `std::__1` mismatch is eliminated in this probe.
+- Strict linking still fails because the Linux musl probe lacks the Android libc++ runtime definition for `std::__ndk1::bad_function_call::~bad_function_call()`, in addition to unresolved package/fragment and AutoExscreen closure/action recovery. An actual NDK r27c link remains necessary to validate runtime resolution. This is not an Android build and no `.so` is claimed.
+- Probe details and the separate linker log are in `analysis/v21_verified/android_libcxx_namespace_probe.txt` and `analysis/STRICT_LINK_ARM32_NDKABI_MUSL.log`.
