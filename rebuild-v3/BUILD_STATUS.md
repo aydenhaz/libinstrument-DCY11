@@ -304,3 +304,10 @@ Recompiled all 39 translation units with Zig 0.17.0 targeting `arm-linux-musleab
 - Confirmed the requested production ABI is `armeabi-v7a` (ARMv7-A, Thumb, softfp calling convention); the original V21 binary and supplied host DSOs report ELF32 ARMv7 / EABI soft-float ABI tag.
 - Added `Application.mk` for `armeabi-v7a` / Android API 21 and explicit ARMv7-A + softfp flags for NDK builds. The custom `--cxx` launcher remains responsible for its own target configuration.
 - Fresh 38/38 compile-only check passed, and the output object reports ELF32 ARM, ARMv7, Thumb-2, soft-float ABI. This used Zig's Linux/musl target, not Android NDK. No Android NDK is installed in this environment, so no Android link or `.so` is claimed.
+
+## Fragment receiver symbol repair — 2026-10-21
+
+- Replaced receiver-less `CGFragment::*Unrecovered` calls in reconstructed AutoNavi, AutoCruise, AutoArNavi, AutoPreview, AutoOpening, and Cruise fragment methods with the actual instance methods `isTopFragment`, `inflater`, and `findViewById`. Their original call records and fragment vtable groups confirm these are constructed Fragment receivers.
+- Removed two unreferenced Batch11 helper functions that had no `this` pointer but called Fragment instance methods anyway; they were not viable implementations.
+- Added the Packet top-render callback bridge to the recovered private CoverUtil dispatcher. It resolves the missing Packet callback symbol without exporting std::function through the host ABI; Packet/factory wiring is still incomplete.
+- Strict link now reports 11 undefined symbol categories (down from 16), with 38/38 translation units compiling. Remaining blockers are package/fragment receiver recovery, AutoExscreen closure/action implementation, TestNumObserver base adjustment, and the `std::__1` vs Android `std::__ndk1` vector ABI. See `analysis/STRICT_LINK_ARM32_MUSL.log`; no `.so` produced.
