@@ -1,0 +1,56 @@
+# V21 TestNumObserver subobject offsets
+
+The calls use the concrete imported symbols `AddTestNumObserver(TestNumObserver*)` and `RemoveTestNumObserver(TestNumObserver*)`. ARM32 Thumb instructions show the pointer passed in r1 is an interior subobject, not the fragment's `this` pointer.
+
+AutoCruiseFragment::onCreateView at sub_3eb3c: this is saved in the frame, restored, then `+0x30c` is formed; just before AddTestNumObserver, `+0x2e4` is added to that pointer, yielding `this+0x5f0`.
+
+```asm
+0003eb8a: add.w    r4, r2, #0x30c
+0003eb8e: mov.w    r2, #0x8000000
+0003eb92: strd     r2, r6, [sp]
+0003eb96: str      r4, [sp, #8]
+0003eb98: ldrd     r2, r4, [sp, #0x64]
+0003eb9c: str      r2, [sp, #0xc]
+0003eb9e: ldr      r2, [sp, #0x50]
+0003eba0: strd     r2, ip, [sp, #0x10]
+0003eba4: movs     r2, #0
+0003eba6: str      r1, [sp, #0x18]
+0003eba8: movs     r1, #8
+0003ebaa: blx      r3
+0003ebac: mov      r0, r4
+0003ebae: mov      r1, r5
+0003ebb0: bl       #0x41a50
+0003ebb4: blx      #0x13bfc
+0003ebb8: add.w    r1, r4, #0x2e4
+0003ebbc: blx      #0x1431c
+0003ebc0: ldr.w    r0, [r4, #0x308]
+0003ebc4: blx      #0x13d7c
+```
+
+AutoPreviewFragment::onCreateView at sub_3bf98 passes `this+0x2e4`:
+
+```asm
+0003bff4: mov      r0, r4
+0003bff6: mov      r1, sb
+0003bff8: bl       #0x41a50
+0003bffc: blx      #0x13bfc
+0003c000: add.w    r1, r4, #0x2e4
+0003c004: blx      #0x1431c
+0003c008: blx      #0x13f14
+0003c00c: ldr      r1, [r0]
+0003c00e: ldr      r1, [r1, #0x20]
+0003c010: blx      r1
+0003c012: ldr      r1, [r0]
+```
+
+AutoPreviewFragment::onDestroyView at sub_3c2d8 removes the same `this+0x2e4` pointer:
+
+```asm
+0003c3e6: blx      #0x13bfc
+0003c3ea: add.w    r1, r4, #0x2e4
+0003c3ee: blx      #0x14340
+0003c3f2: ldr      r0, [r4]
+0003c3f4: ldr.w    r1, [r0, #0xbc]
+0003c3f8: mov      r0, r4
+0003c3fa: blx      r1
+```
