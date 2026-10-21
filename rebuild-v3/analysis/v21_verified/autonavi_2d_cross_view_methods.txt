@@ -4,7 +4,7 @@ Binary: libInstrumentPannelLarge.so. Addresses are Thumb code addresses.
 
 0x1b454 — `AutoNavi2dCrossView::InitView` (FUNCTION_DB association)
 
-- The recorded signature string says `InitView(ScreenType, const ViewGroup, CGContext*, bool)`. Runtime call sites, however, pass a view/container pointer in r1 and two view-like values in r2/r3; the function stores these at receiver+0x4, +0x8 and (when the stack boolean is true) +0xc. The +0xc object is the progress bar because it is used with `CGProgressBar::setProgress` and `CGView::hide`. The exact source type for r1 and the `ViewGroup` ABI remain unresolved because the signature text and observed pointer use do not line up cleanly.
+- The recorded signature string says `InitView(ScreenType, const ViewGroup, CGContext*, bool)`, but the call-site ABI disproves that parameter list: Guide `onCreateView` loads the view-group child with ID `0x4072800d` into r1, dynamically casts the child found under ID `0x40728009` into r2, and dynamically casts the child found under ID `0x4072800d` into r3. It passes `getContext()` and literal `true` as the two stack arguments. Thus the runtime r1/r2/r3 arguments are pointers, despite the signature string's `ScreenType` first parameter; treat the recorded signature as stale or malformed. The exact class types returned by the two casts are not yet resolved. `InitView` stores these values at receiver+0x4, +0x8 and +0xc. The +0xc object is the progress bar because it is used with `CGProgressBar::setProgress` and `CGView::hide`.
 - It clears receiver+0x20. The layout routine later branches on values 0–2 from this field; its public enum/name is not established.
 - The `CGContext*` stack argument, when non-null, is called through its vtable entry at byte offset 0x60 with constant 0x20200310 and an output pointer to receiver+0x24. That result becomes cross-view progress-bar height. The exact C++ method/type is not identified here.
 - It calls `hsl::MultiScreenService::SetCrossViewProgressBarHeight(MapEngineID, int)` using receiver+0x28 as MapEngineID and receiver+0x24 as the height.
@@ -29,7 +29,7 @@ Binary: libInstrumentPannelLarge.so. Addresses are Thumb code addresses.
 
 ## Direct lifecycle callers
 
-- GuideFragment::onCreateView at 0x42a04 invokes InitView at 0x1b454 with the helper pointer loaded from this+0x87c, then calls GetProgessBarView at 0x1b840. This follows view lookup/dynamic-cast and passes the resolved views, optional progress bar/config object, and context-related arguments.
+- GuideFragment::onCreateView at 0x42a04 invokes InitView at 0x1b454 with the helper pointer loaded from this+0x87c, then calls GetProgessBarView at 0x1b840. Before the call, it obtains r1 from the guide container using child ID `0x4072800d`, r2 from a dynamic cast of child ID `0x40728009`, and r3 from a dynamic cast of child ID `0x4072800d`; it passes `getContext()` and `true` on the stack. The exact cast target classes remain unverified.
 - The A106 GuideFragment view-creation body at 0x31538 also calls InitView and GetProgessBarView on its +0x87c helper.
 - ARGuideFragment::onCreateView at 0x19ae4 calls InitView and GetProgessBarView on its +0x87c helper.
 - AutoNaviFragment::ShowCross at 0x26038 calls ShowCrossView (0x1b8a4); AutoNaviFragment::HideCross at 0x27fb4 calls HideCrossView (0x1b6bc).
@@ -37,4 +37,4 @@ Binary: libInstrumentPannelLarge.so. Addresses are Thumb code addresses.
 
 The callers share the same helper implementation and field offsets, while each Fragment owns its own helper at +0x87c. This establishes the helper's real view lifecycle across the Guide and AR Guide variants.
 
-Guide construction at 0x4281c allocates/initializes this object, sets +0x28 to the map engine id, and writes a short bounded string at +0x2c. The Guide onCreateView caller establishes its view fields; the AutoNavi base show/hide methods then use them. This closes the helper's construction-to-view-use-to-teardown path, but does not recover the full Fragment base constructor, all HSL host objects, or an implementable replacement Fragment class.
+Guide construction at 0x4281c allocates/initializes this object, sets +0x28 to the map engine id, and writes a short bounded string at +0x2c. The Guide onCreateView caller supplies the view/container pointers; the AutoNavi base show/hide methods then use them. This closes the helper's construction-to-view-use-to-teardown path, but does not recover the full Fragment base constructor, all HSL host objects, or an implementable replacement Fragment class.
