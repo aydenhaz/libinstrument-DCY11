@@ -285,3 +285,10 @@ Mapped Guide->AutoNavi base construction and cleanup. AutoNavi constructor initi
 ## Fresh ARM32 compile and strict-link attempt (2026-10-21)
 
 Recompiled all 39 translation units with Zig 0.17.0 targeting `arm-linux-musleabi`; 39/39 compile. A strict `--no-undefined` link against the supplied ARM host libraries then failed with 24 unresolved symbols. The blockers include deliberately unresolved Fragment construction/view entrypoints, observer registrations whose concrete observer interfaces are not implemented, missing callback bodies, and C++ ABI differences (`std::__1` objects cannot satisfy host `std::__ndk1` signatures). The detailed linker output is in `analysis/STRICT_LINK_ARM32_MUSL.log`. This is a Linux/musl toolchain probe, not an Android NDK link. No unresolved-symbol suppression, fake host implementations, or replacement library was produced.
+
+## Undefined-symbol repair checkpoint — 2026-10-21
+
+- Rebuilt with `/tmp/ipl-arm-cxx` (Zig ARM Linux musl), not Android NDK: all 38 translation units compile; strict host link still fails.
+- Removed an unused, receiver-less `CGPackage::getContextUnrecovered()` call from `LargeScreenImpl::doStartFragment`; that call was not used by the recovered function body.
+- Latest strict link log: `analysis/STRICT_LINK_ARM32_MUSL.log`. It still reports 20 undefined-symbol categories, including fake fragment snippets, incorrect `SystemNotify(void*)` observer signatures, unimplemented closure callbacks, the `std::__1` versus Android `std::__ndk1` ABI mismatch, and missing valid package/fragment receivers. These are not papered over with empty stubs or linker suppression.
+- No `.so` was produced. A valid Android NDK build and recovered class/observer/callback layouts are still required.
