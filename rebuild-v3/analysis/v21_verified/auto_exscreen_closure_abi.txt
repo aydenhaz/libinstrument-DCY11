@@ -1,0 +1,25 @@
+AutoExscreenNotifyObserver async closure ABI observations (V21)
+
+Original image: v21-original/libInstrumentPannelLarge.so, ELF32 ARM/Thumb-2.
+
+The three routines at 0x2a5a8, 0x2a7e0 and 0x2aa28 call the imported
+`_ZN3hsl8UIObject23RunAsyncDelayByEngineIdERKN3GPI7Closure8CallableIFvvEEEN2bl11MapEngineIDEjy`.
+The imported signature is therefore:
+`hsl::UIObject::RunAsyncDelayByEngineId(GPI::Closure::Callable<void()> const&, bl::MapEngineID, unsigned int, unsigned long long)`.
+
+The corresponding host implementation is exported by `v21-original/libhsl.so`.
+The local placeholder declaration currently emits a different symbol taking
+`GPI::Closure const&` and `int`, so it cannot resolve to that host export.
+
+All three routines construct wrapper/shared state before the call (two heap
+allocations, atomic reference-count updates, and cleanup after the call). The
+source's `Closure::bind` declaration has no implementation, and `ActionA/B/C`
+are guessed member targets absent from the imported symbol table. The closure
+object layout, ownership/destruction contract, and callable targets have not
+been recovered. A header-only imitation or linker alias would therefore be
+unsafe. This finding is diagnostic; it does not claim a fix.
+
+Probe build after reverting the incomplete callable declaration experiment:
+`python3 -u rebuild-v3/build_android.py --cxx /tmp/ipl-arm-cxx --out /tmp/ipl-buildsym10`
+Result: 38/38 translation units compile; strict link fails with nine distinct
+undefined-symbol categories. See `analysis/STRICT_LINK_ARM32_MUSL.log`.
