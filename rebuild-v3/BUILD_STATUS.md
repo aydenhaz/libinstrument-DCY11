@@ -298,3 +298,9 @@ Recompiled all 39 translation units with Zig 0.17.0 targeting `arm-linux-musleab
 - Removed four invalid SystemNotify registrations from `CGIPLPacket::onInitEnd()`: original V21 layout evidence places those observer interfaces in the 0x440-byte Opening Fragment; Packet is only 0x16c bytes. The registration code had passed Packet `this` under wrong `void*` signatures.
 - Rebuilt with the ARM Linux musl probe: 38/38 translation units compile; strict link falls from 20 to 16 undefined-symbol categories (see `analysis/STRICT_LINK_ARM32_MUSL.log`).
 - Still blocked on intentionally unrecovered Fragment receivers/factories, callback/closure bodies, an incomplete AutoOpeningFragment helper, and the `std::__1`/`std::__ndk1` standard-library boundary. No fake stubs or linker suppression added; no `.so` produced.
+
+## Android ABI target confirmation — 2026-10-21
+
+- Confirmed the requested production ABI is `armeabi-v7a` (ARMv7-A, Thumb, softfp calling convention); the original V21 binary and supplied host DSOs report ELF32 ARMv7 / EABI soft-float ABI tag.
+- Added `Application.mk` for `armeabi-v7a` / Android API 21 and explicit ARMv7-A + softfp flags for NDK builds. The custom `--cxx` launcher remains responsible for its own target configuration.
+- Fresh 38/38 compile-only check passed, and the output object reports ELF32 ARM, ARMv7, Thumb-2, soft-float ABI. This used Zig's Linux/musl target, not Android NDK. No Android NDK is installed in this environment, so no Android link or `.so` is claimed.
