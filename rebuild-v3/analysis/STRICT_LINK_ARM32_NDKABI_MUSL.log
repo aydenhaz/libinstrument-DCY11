@@ -1,0 +1,43 @@
+ld.lld: error: undefined symbol: GNS_FRAME::CGPackage::getHostFragmentActivityUnrecovered()
+>>> referenced by LargeScreenImpl.cpp:75 (rebuild-v3/internal/NS_InstrumentPannelLarge/LargeScreenImpl.cpp:75)
+>>>               /tmp/ipl-buildsym11/9.o:(NS_InstrumentPannelLarge::LargeScreenImpl::OnChangeScreenMode(int, int, GNS_FRAME::CGIntent const&))
+
+ld.lld: error: undefined symbol: GNS_FRAME::CGPackage::getContextUnrecovered()
+>>> referenced by LargeScreenImpl.cpp:76 (rebuild-v3/internal/NS_InstrumentPannelLarge/LargeScreenImpl.cpp:76)
+>>>               /tmp/ipl-buildsym11/9.o:(NS_InstrumentPannelLarge::LargeScreenImpl::OnChangeScreenMode(int, int, GNS_FRAME::CGIntent const&))
+
+ld.lld: error: undefined symbol: GNS_FRAME::CGFragment::tryStartExistFragmentUnrecovered(GNS_FRAME::CGIntent const&, int, void*)
+>>> referenced by LargeScreenImpl.cpp:82 (rebuild-v3/internal/NS_InstrumentPannelLarge/LargeScreenImpl.cpp:82)
+>>>               /tmp/ipl-buildsym11/9.o:(NS_InstrumentPannelLarge::LargeScreenImpl::OnChangeScreenMode(int, int, GNS_FRAME::CGIntent const&))
+
+ld.lld: error: undefined symbol: GPI::Closure GPI::Closure::bind<NS_MultiScreenBase::AutoExscreenNotifyObserver, void (NS_MultiScreenBase::AutoExscreenNotifyObserver::*)()>(NS_MultiScreenBase::AutoExscreenNotifyObserver*, void (NS_MultiScreenBase::AutoExscreenNotifyObserver::*)())
+>>> referenced by AutoExscreenNotifyObserver.cpp:57 (rebuild-v3/internal/NS_MultiScreenBase/AutoExscreenNotifyObserver.cpp:57)
+>>>               /tmp/ipl-buildsym11/10.o:(NS_MultiScreenBase::AutoExscreenNotifyObserver::DeferActionA())
+>>> referenced by AutoExscreenNotifyObserver.cpp:62 (rebuild-v3/internal/NS_MultiScreenBase/AutoExscreenNotifyObserver.cpp:62)
+>>>               /tmp/ipl-buildsym11/10.o:(NS_MultiScreenBase::AutoExscreenNotifyObserver::DeferActionB())
+>>> referenced by AutoExscreenNotifyObserver.cpp:68 (rebuild-v3/internal/NS_MultiScreenBase/AutoExscreenNotifyObserver.cpp:68)
+>>>               /tmp/ipl-buildsym11/10.o:(NS_MultiScreenBase::AutoExscreenNotifyObserver::DeferActionC())
+
+ld.lld: error: undefined symbol: hsl::UIObject::RunAsyncDelayByEngineId(GPI::Closure const&, bl::MapEngineID, int)
+>>> referenced by AutoExscreenNotifyObserver.cpp:57 (rebuild-v3/internal/NS_MultiScreenBase/AutoExscreenNotifyObserver.cpp:57)
+>>>               /tmp/ipl-buildsym11/10.o:(NS_MultiScreenBase::AutoExscreenNotifyObserver::DeferActionA())
+>>> referenced by AutoExscreenNotifyObserver.cpp:62 (rebuild-v3/internal/NS_MultiScreenBase/AutoExscreenNotifyObserver.cpp:62)
+>>>               /tmp/ipl-buildsym11/10.o:(NS_MultiScreenBase::AutoExscreenNotifyObserver::DeferActionB())
+>>> referenced by AutoExscreenNotifyObserver.cpp:68 (rebuild-v3/internal/NS_MultiScreenBase/AutoExscreenNotifyObserver.cpp:68)
+>>>               /tmp/ipl-buildsym11/10.o:(NS_MultiScreenBase::AutoExscreenNotifyObserver::DeferActionC())
+
+ld.lld: error: undefined symbol: NS_MultiScreenBase::AutoExscreenNotifyObserver::ActionA()
+>>> referenced by AutoExscreenNotifyObserver.cpp:0 (rebuild-v3/internal/NS_MultiScreenBase/AutoExscreenNotifyObserver.cpp:0)
+>>>               /tmp/ipl-buildsym11/10.o:(NS_MultiScreenBase::AutoExscreenNotifyObserver::DeferActionA())
+
+ld.lld: error: undefined symbol: NS_MultiScreenBase::AutoExscreenNotifyObserver::ActionB()
+>>> referenced by AutoExscreenNotifyObserver.cpp:0 (rebuild-v3/internal/NS_MultiScreenBase/AutoExscreenNotifyObserver.cpp:0)
+>>>               /tmp/ipl-buildsym11/10.o:(NS_MultiScreenBase::AutoExscreenNotifyObserver::DeferActionB())
+
+ld.lld: error: undefined symbol: NS_MultiScreenBase::AutoExscreenNotifyObserver::ActionC()
+>>> referenced by AutoExscreenNotifyObserver.cpp:0 (rebuild-v3/internal/NS_MultiScreenBase/AutoExscreenNotifyObserver.cpp:0)
+>>>               /tmp/ipl-buildsym11/10.o:(NS_MultiScreenBase::AutoExscreenNotifyObserver::DeferActionC())
+
+ld.lld: error: undefined symbol: std::__ndk1::bad_function_call::~bad_function_call()
+>>> referenced by function.h:0 (/tmp/ipl-zig/ziglang/lib/libcxx/include/__functional/function.h:0)
+>>>               /tmp/ipl-buildsym11/27.o:(std::__ndk1::__throw_bad_function_call[abi:nie220108]())
