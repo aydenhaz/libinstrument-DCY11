@@ -46,19 +46,10 @@ static const char kStartSig[]  = "bool StartupInstrumentPannelLarge(void *)"; //
 static const char kExitName[]  = "ExitInstrumentPannelLarge";
 static const char kExitSig[]   = "void ExitInstrumentPannelLarge(void *)";
 
-/* ------------------------------------------------------------------------
- * ALC self-registration block.
- *
- * Original layout (Startup @0x312f6-0x3131a): after the second I_GetAlcPtr
- * call it loads fn = **(void***)alc, builds this 7-word block on the stack
- *   { 0, 0, kAlcModule, <aux>, 25, kStartSig, kStartName }
- * (25 = 0x19 in r12; 56 = 0x38 for Exit) and invokes
- *   fn(alc, 8, 0, &block)            // BLX r3 @0x3131a / BLX lr @0x3141c
- * The exact protocol is host-private; this models it faithfully.
- * ---------------------------------------------------------------------- */
-// V21 ALC vtable call: r0=alc, r1=8, r2=0; seven words are
-// placed directly on the stack. They are NOT passed through a block pointer.
-// r3 is preserved as observed: callee address on Startup, module on Exit.
+// Original ALC call: r0=alc, r1=8, r2=0. Seven metadata words are
+// passed directly on the stack: flags, zero, module, auxiliary text,
+// signature, line/tag, name. r3 is the callee address for Startup and
+// the module pointer for Exit. This is not a pointer-to-block argument.
 typedef void (*AlcExportFn)(void*, int, int, uintptr_t,
                           uint32_t, uint32_t, const char*, const char*,
                           const char*, int, const char*);

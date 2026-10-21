@@ -11,6 +11,7 @@
 
 namespace {
 bool created = false;
+bool service_available=true, load_result=true;
 int loads = 0, unloads = 0, sets = 0, extras = 0, alc_calls = 0;
 GNS_FRAME::CGPackageMgr package_mgr;
 GNS_FRAME::CGFrameSimulation simulation, second_simulation;
@@ -45,15 +46,20 @@ CGString::~CGString() {}
 namespace GNS_FRAME {
 CGIntent::CGIntent() {}
 CGIntent::~CGIntent() {}
-void CGIntent::putStringExtra(const unsigned short*, const char*) { ++extras; }
+void CGIntent::putStringExtra(const unsigned short* key, const char* value) {
+    const std::u16string k(reinterpret_cast<const char16_t*>(key));
+    if(extras%2==0){assert(k==u"fromPackage");assert(std::strcmp(value,"instrumentPannelLargePackage")==0);}
+    else {assert(k==u"packageType");assert(std::strcmp(value,"com.autonavi.package.GIPLPacket")==0);}
+    ++extras;
+}
 CGPackageMgr* CGFrameSimulation::getPackageMgr() { assert(this==expected_simulation);++manager_queries;return &package_mgr; }
 bool CGPackageMgr::loadPackage(CGString&, CGIntent&, bool a, bool b) {
-    assert(!a && !b); ++loads; return true;
+    assert(!a && !b); ++loads; return load_result;
 }
 bool CGPackageMgr::unloadPackage(CGString&, bool a) { assert(!a); ++unloads; return true; }
 }
 namespace hsl {
-MultiScreenService* MultiScreenService::GetInstance() { return &service; }
+MultiScreenService* MultiScreenService::GetInstance() { return service_available?&service:nullptr; }
 bool MultiScreenService::IsCreatedLargeScreen() { return created; }
 void MultiScreenService::SetCreatedLargeScreen(bool value) { created = value; ++sets; }
 }
@@ -67,5 +73,11 @@ int main() {
     ExitInstrumentPannelLarge(&second_simulation);
     assert(manager_queries==2);
     assert(unloads == 1 && alc_calls == 3);
+    expected_simulation=&simulation;created=false;load_result=false;
+    assert(StartupInstrumentPannelLarge(&simulation)==1);
+    assert(created&&sets==2&&loads==2&&extras==4&&manager_queries==3);
+    service_available=false;created=false;
+    assert(StartupInstrumentPannelLarge(&simulation)==1);
+    assert(!created&&sets==2&&loads==3&&extras==6&&manager_queries==4);
     LogInit();
 }

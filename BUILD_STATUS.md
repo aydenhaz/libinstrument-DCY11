@@ -257,3 +257,7 @@ Corrected getId/getRenderThreadExecutorId/getRenderThreadId from static to insta
 ## Entry package-manager receiver checkpoint (2026-10-21)
 
 Corrected getPackageMgr/getExhibition to instance methods. Startup/Exit now forward their incoming simulation argument instead of discarding it. Exhibition calls supply ownWorkStation; original getter's activity refresh verified. Entry ASan/UBSan regression with distinct receivers, original host instruction checks and ARM signature probes pass; 39/39 compile-only. No replacement SO or Android strict-link success.
+
+## Original entry behavior audit (2026-10-21)
+
+Executed original startup/exit with mocked host effects and verified exact intent literals, load/unload flags, object receivers, destruction order, service-null and duplicate-start branches. Confirmed startup ignores loadPackage result and returns 1 after the attempt. Native entry ASan/UBSan regression expanded and passes. Corrected stale ALC documentation. No production behavior change; previous 39/39 compile-only baseline retained. No Android load success or replacement SO. See analysis/ENTRY_ORIGINAL_TRACE.md.
