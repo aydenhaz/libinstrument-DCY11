@@ -1,0 +1,67 @@
+00023da0 push       {r4, r5, r6, r7, lr}                     
+00023da2 add        r7, sp, #0xc                             
+00023da4 str        r8, [sp, #-0x4]!                         
+00023da8 sub        sp, #0x20                                
+00023daa mov        r4, r0                                   
+00023dac ldr        r0, [pc, #0xb0]                          literal 0x469ba
+00023dae add        r0, pc                                   
+00023db0 add.w      r6, r0, #0x324                           
+00023db4 add.w      r1, r0, #0x30c                           
+00023db8 add.w      ip, r0, #0x354                           
+00023dbc add.w      r3, r0, #0x33c                           
+00023dc0 strd       r1, r6, [r4, #0x38c]                     
+00023dc4 add.w      r1, r0, #0x2ec                           
+00023dc8 add.w      r2, r0, #0x348                           
+00023dcc add.w      r5, r0, #0x330                           
+00023dd0 strd       r5, r3, [r4, #0x394]                     
+00023dd4 strd       r2, ip, [r4, #0x39c]                     
+00023dd8 add.w      r2, r0, #0x1dc                           
+00023ddc strd       r2, r1, [r4, #0x364]                     
+00023de0 add.w      r1, r0, #0x1d0                           
+00023de4 str.w      r1, [r4, #0x2e4]                         
+00023de8 add.w      r1, r0, #0x1c0                           
+00023dec str.w      r1, [r4, #0xb0]                          
+00023df0 add.w      r1, r0, #0x1a8                           
+00023df4 str        r1, [r4, #0x70]                          
+00023df6 add.w      r1, r0, #0x198                           
+00023dfa str        r1, [r4, #0x58]                          
+00023dfc add.w      r1, r0, #0x170                           
+00023e00 str        r1, [r4, #0x14]                          
+00023e02 adds       r0, #8                                   
+00023e04 str        r0, [r4]                                 
+00023e06 blx        #0x13c14                                 I_GetAlcPtr
+00023e0a cbz        r0, #0x23e46                             
+00023e0c blx        #0x13c14                                 I_GetAlcPtr
+00023e10 ldr        r1, [r0]                                 
+00023e12 mov.w      ip, #0x44                                
+00023e16 add.w      r2, r4, #0x30c                           
+00023e1a mov.w      lr, #0                                   
+00023e1e mov.w      r3, #0x8000000                           
+00023e22 ldr.w      r8, [r1]                                 
+00023e26 ldr        r1, [pc, #0x3c]                          literal 0x2ede1
+00023e28 ldr        r5, [pc, #0x3c]                          literal 0x2ed9d
+00023e2a ldr        r6, [pc, #0x40]                          literal 0x3788f
+00023e2c add        r1, pc                                   
+00023e2e add        r5, pc                                   
+00023e30 strd       r3, lr, [sp]                             
+00023e34 add        r6, pc                                   
+00023e36 strd       r2, r6, [sp, #8]                         
+00023e3a movs       r2, #0                                   
+00023e3c strd       r5, ip, [sp, #0x10]                      
+00023e40 str        r1, [sp, #0x18]                          
+00023e42 movs       r1, #8                                   
+00023e44 blx        r8                                       
+00023e46 add.w      r0, r4, #0x3b8                           
+00023e4a bl         #0x350d8                                 
+00023e4e mov        r0, r4                                   
+00023e50 add        sp, #0x20                                
+00023e52 ldr        r8, [sp], #4                             
+00023e56 pop.w      {r4, r5, r6, r7, lr}                     
+00023e5a b.w        #0x23a88                                 
+00023e5e nop                                                 
+00023e60 ldr        r2, [r7, #0x18]                          
+00023e62 movs       r4, r0                                   
+00023e64 stcl       p0, c0, [r1, #8]!                        
+00023e68 ldc        p0, c0, [sp, #8]                         
+00023e6c ldrb       r7, [r1, #2]                             
+00023e6e movs       r3, r0                                   

@@ -1,0 +1,93 @@
+0004281c push       {r4, r5, r6, r7, lr}                     
+0004281e add        r7, sp, #0xc                             
+00042820 push.w     {r8, sb, sl, fp}                         
+00042824 sub        sp, #0xbc                                
+00042826 mov        r4, r0                                   
+00042828 ldr        r0, [pc, #0xec]                          literal 0x2c0ca
+0004282a add        r0, pc                                   
+0004282c ldr.w      sl, [r0]                                 
+00042830 ldr.w      r0, [sl]                                 
+00042834 str        r0, [sp, #0xb8]                          
+00042836 mov        r0, r4                                   
+00042838 bl         #0x23b7c                                 
+0004283c mov.w      fp, #0                                   
+00042840 add.w      lr, r4, #0x38c                           
+00042844 str.w      fp, [r4, #0x89c]                         
+00042848 add.w      r8, sp, #4                               
+0004284c ldr        r0, [pc, #0xcc]                          literal 0x2bb26
+0004284e add        r0, pc                                   
+00042850 add.w      r1, r0, #0x30c                           
+00042854 add.w      r2, r0, #0x348                           
+00042858 add.w      r6, r0, #0x330                           
+0004285c add.w      r5, r0, #0x324                           
+00042860 stm.w      lr!, {r1, r5, r6}                        
+00042864 add.w      r1, r0, #0x2ec                           
+00042868 add.w      r3, r0, #0x33c                           
+0004286c strd       r3, r2, [r4, #0x398]                     
+00042870 add.w      ip, r0, #0x354                           
+00042874 str.w      ip, [r4, #0x3a0]                         
+00042878 add.w      r2, r0, #0x1dc                           
+0004287c strd       r2, r1, [r4, #0x364]                     
+00042880 add.w      r1, r0, #0x1d0                           
+00042884 str.w      r1, [r4, #0x2e4]                         
+00042888 add.w      r1, r0, #0x1c0                           
+0004288c str.w      r1, [r4, #0xb0]                          
+00042890 add.w      r1, r0, #0x1a8                           
+00042894 str        r1, [r4, #0x70]                          
+00042896 add.w      r1, r0, #0x198                           
+0004289a str        r1, [r4, #0x58]                          
+0004289c add.w      r1, r0, #0x170                           
+000428a0 str        r1, [r4, #0x14]                          
+000428a2 adds       r0, #8                                   
+000428a4 str        r0, [r4]                                 
+000428a6 add.w      r1, r4, #0x30c                           
+000428aa ldr        r2, [pc, #0x74]                          literal 0x18daa
+000428ac mov        r0, r8                                   
+000428ae add        r2, pc                                   
+000428b0 bl         #0x165f0                                 
+000428b4 movs       r0, #0x40                                
+000428b6 blx        #0x13b84                                 _Znwj
+000428ba mov        r6, r0                                   
+000428bc ldr.w      sb, [r4, #0x308]                         
+000428c0 ldr        r0, [pc, #0x60]                          literal 0x272a0
+000428c2 movs       r1, #0x24                                
+000428c4 add        r0, pc                                   
+000428c6 adds       r0, #8                                   
+000428c8 str        r0, [r6]                                 
+000428ca adds       r0, r6, #4                               
+000428cc blx        #0x13e18                                 __aeabi_memclr4
+000428d0 add.w      r5, r6, #0x2c                            
+000428d4 movs       r1, #0x14                                
+000428d6 str.w      sb, [r6, #0x28]                          
+000428da mov        r0, r5                                   
+000428dc strd       fp, fp, [r6, #0x10]                      
+000428e0 strd       fp, fp, [r6, #0x18]                      
+000428e4 blx        #0x13a94                                 __aeabi_memclr
+000428e8 ldr        r2, [pc, #0x3c]                          literal 0xb1c7
+000428ea mov        r0, r5                                   
+000428ec movs       r1, #0x13                                
+000428ee mov        r3, sb                                   
+000428f0 add        r2, pc                                   
+000428f2 blx        #0x14190                                 _ZN3asl12String8Utils8snprintfEPciPKcz
+000428f6 mov        r0, r8                                   
+000428f8 str.w      r6, [r4, #0x87c]                         
+000428fc bl         #0x16674                                 
+00042900 ldr.w      r0, [sl]                                 
+00042904 ldr        r1, [sp, #0xb8]                          
+00042906 subs       r0, r0, r1                               
+00042908 itttt      eq                                       
+0004290a moveq      r0, r4                                   
+0004290c addeq      sp, #0xbc                                
+0004290e popeq.w    {r8, sb, sl, fp}                         
+00042912 popeq      {r4, r5, r6, r7, pc}                     
+00042914 blx        #0x13a28                                 __stack_chk_fail
+00042918 stm        r0!, {r1, r3, r6, r7}                    
+0004291a movs       r2, r0                                   
+0004291c cbnz       r6, #0x42968                             
+0004291e movs       r2, r0                                   
+00042920 ldrh       r2, [r5, #0x2c]                          
+00042922 movs       r1, r0                                   
+00042924 strb       r0, [r4, #0xa]                           
+00042926 movs       r2, r0                                   
+00042928 cbz        r7, #0x4295c                             
+0004292a movs       r0, r0                                   

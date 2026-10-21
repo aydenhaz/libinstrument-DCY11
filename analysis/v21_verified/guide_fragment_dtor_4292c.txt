@@ -1,0 +1,68 @@
+0004292c push       {r4, r5, r6, r7, lr}                     
+0004292e add        r7, sp, #0xc                             
+00042930 str        r8, [sp, #-0x4]!                         
+00042934 sub        sp, #0xb8                                
+00042936 mov        r4, r0                                   
+00042938 ldr        r0, [pc, #0xac]                          literal 0x2bfb6
+0004293a add.w      lr, r4, #0x38c                           
+0004293e add        r0, pc                                   
+00042940 ldr.w      r8, [r0]                                 
+00042944 ldr.w      r0, [r8]                                 
+00042948 str        r0, [sp, #0xb4]                          
+0004294a ldr        r0, [pc, #0xa0]                          literal 0x2ba28
+0004294c add        r0, pc                                   
+0004294e add.w      r1, r0, #0x30c                           
+00042952 add.w      r2, r0, #0x348                           
+00042956 add.w      r6, r0, #0x330                           
+0004295a add.w      r5, r0, #0x324                           
+0004295e stm.w      lr!, {r1, r5, r6}                        
+00042962 add.w      r1, r0, #0x2ec                           
+00042966 add.w      r3, r0, #0x33c                           
+0004296a strd       r3, r2, [r4, #0x398]                     
+0004296e add.w      ip, r0, #0x354                           
+00042972 str.w      ip, [r4, #0x3a0]                         
+00042976 add.w      r2, r0, #0x1dc                           
+0004297a strd       r2, r1, [r4, #0x364]                     
+0004297e add.w      r1, r0, #0x1d0                           
+00042982 str.w      r1, [r4, #0x2e4]                         
+00042986 add.w      r1, r0, #0x1c0                           
+0004298a str.w      r1, [r4, #0xb0]                          
+0004298e add.w      r1, r0, #0x1a8                           
+00042992 str        r1, [r4, #0x70]                          
+00042994 add.w      r1, r0, #0x198                           
+00042998 str        r1, [r4, #0x58]                          
+0004299a add.w      r1, r0, #0x170                           
+0004299e str        r1, [r4, #0x14]                          
+000429a0 adds       r0, #8                                   
+000429a2 str        r0, [r4]                                 
+000429a4 add.w      r1, r4, #0x30c                           
+000429a8 ldr        r2, [pc, #0x44]                          literal 0x18fc1
+000429aa mov        r0, sp                                   
+000429ac add        r2, pc                                   
+000429ae bl         #0x165f0                                 
+000429b2 ldr.w      r0, [r4, #0x87c]                         
+000429b6 cbz        r0, #0x429c4                             
+000429b8 ldr        r1, [r0]                                 
+000429ba ldr        r1, [r1, #4]                             
+000429bc blx        r1                                       
+000429be movs       r0, #0                                   
+000429c0 str.w      r0, [r4, #0x87c]                         
+000429c4 mov        r0, sp                                   
+000429c6 bl         #0x16674                                 
+000429ca mov        r0, r4                                   
+000429cc bl         #0x23da0                                 
+000429d0 ldr.w      r0, [r8]                                 
+000429d4 ldr        r1, [sp, #0xb4]                          
+000429d6 subs       r0, r0, r1                               
+000429d8 itttt      eq                                       
+000429da moveq      r0, r4                                   
+000429dc addeq      sp, #0xb8                                
+000429de ldreq      r8, [sp], #4                             
+000429e2 popeq      {r4, r5, r6, r7, pc}                     
+000429e4 blx        #0x13a28                                 __stack_chk_fail
+000429e8 itet       lt                                       
+000429ea movs       r2, r0                                   
+000429ec revge      r0, r5                                   
+000429ee movs       r2, r0                                   
+000429f0 ldrh       r1, [r0, #0x3e]                          
+000429f2 movs       r1, r0                                   

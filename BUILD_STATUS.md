@@ -277,3 +277,7 @@ Corrected prior factory/destructor confusion: 0x31474 is complete destructor; 0x
 ## Startup return and A106 constructor audit (2026-10-21)
 
 Changed exported StartupInstrumentPannelLarge declaration/definition from int to original bool. Rechecked entry ASan/UBSan and original A106 instruction traces; full ARM Linux musl compile-only result recorded alongside this checkpoint. A106 base construction calls AutoNaviFragment ctor and owns an additional +0x87c object; full Fragment definition remains incomplete. No Android strict link or replacement SO.
+
+## AutoNavi base ownership trace (2026-10-21)
+
+Mapped Guide->AutoNavi base construction and cleanup. AutoNavi constructor initializes through +0x89c and accesses HSL services. Guide owns a 0x40-byte object at +0x87c, deleted through virtual slot 1 before AutoNavi teardown. Added full disassembly evidence. A106 emulator and relevant package/registration/observer tests pass; earlier ARM32 compile-only is 39/39. No full base implementation or replacement SO.
