@@ -316,3 +316,9 @@ Recompiled all 39 translation units with Zig 0.17.0 targeting `arm-linux-musleab
 
 - Corrected SystemNotify declarations to the host's typed `TestNumObserver*` signatures. Original Thumb disassembly shows AutoCruise registers fragment+0x5f0; AutoPreview registers and removes fragment+0x2e4. Source now passes those exact subobject pointers, and the produced ARM objects import the exact host mangled symbols.
 - Strict link falls to 9 undefined-symbol categories with all 38 translation units compiling. Remaining blockers are AutoExscreen closure/action recovery, package receiver recovery, and the NDK libc++ vector ABI. See `analysis/v21_verified/test_num_observer_offsets.txt` and latest `analysis/STRICT_LINK_ARM32_MUSL.log`. No `.so` was published.
+
+## Closure ABI inspection — 2026-10-21
+
+- Inspected V21 Thumb call sites at `sub_2a5a8`, `sub_2a7e0`, and `sub_2aa28`, plus the provider in `libhsl.so`. Host API takes `GPI::Closure::Callable<void()> const&`, `bl::MapEngineID`, `unsigned int`, and `unsigned long long`; reconstructed declaration instead uses `GPI::Closure const&` and `int`.
+- The call sites construct shared wrapper state and clean it up around scheduling. `Closure::bind` has no body and the source's `ActionA/B/C` targets are not independently recovered. An incomplete return-type edit failed compilation and was reverted; no placeholder callable was introduced.
+- Re-run after reverting: 38/38 sources compile, strict link remains at nine unresolved categories. Current evidence is in `analysis/v21_verified/auto_exscreen_closure_abi.txt`; full linker diagnostics are in `analysis/STRICT_LINK_ARM32_MUSL.log`. No usable `.so` exists yet.
