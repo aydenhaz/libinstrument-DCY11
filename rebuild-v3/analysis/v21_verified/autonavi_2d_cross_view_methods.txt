@@ -27,4 +27,14 @@ Binary: libInstrumentPannelLarge.so. Addresses are Thumb code addresses.
 
 - Calls InitCrossViewLayout, shows the view at +0x4, then shows the view at +0x8 and chooses a background using an HSL boolean. The progress bar at +0xc is shown or hidden according to its argument. It emits diagnostic callbacks using the string stored at +0x2c.
 
-The Guide constructor at 0x4281c only allocates/initializes this object, sets +0x28 to the map engine id, and writes a short bounded string at +0x2c. The method cluster confirms the meaning of +0x28 and +0x2c; it does not show that InitView has already run or that any view pointers are valid at constructor return. These view pointers are populated if/when InitView is called; a direct caller for this helper instance is not yet identified. Complete Fragment construction still depends on the AutoNavi host services and recovered base state.
+## Direct lifecycle callers
+
+- GuideFragment::onCreateView at 0x42a04 invokes InitView at 0x1b454 with the helper pointer loaded from this+0x87c, then calls GetProgessBarView at 0x1b840. This follows view lookup/dynamic-cast and passes the resolved views, optional progress bar/config object, and context-related arguments.
+- The A106 GuideFragment view-creation body at 0x31538 also calls InitView and GetProgessBarView on its +0x87c helper.
+- ARGuideFragment::onCreateView at 0x19ae4 calls InitView and GetProgessBarView on its +0x87c helper.
+- AutoNaviFragment::ShowCross at 0x26038 calls ShowCrossView (0x1b8a4); AutoNaviFragment::HideCross at 0x27fb4 calls HideCrossView (0x1b6bc).
+- AutoArNaviFragment::ShowCross at 0x20784 calls ShowCrossView; AutoArNaviFragment::HideCross at 0x209bc calls HideCrossView.
+
+The callers share the same helper implementation and field offsets, while each Fragment owns its own helper at +0x87c. This establishes the helper's real view lifecycle across the Guide and AR Guide variants.
+
+Guide construction at 0x4281c allocates/initializes this object, sets +0x28 to the map engine id, and writes a short bounded string at +0x2c. The Guide onCreateView caller establishes its view fields; the AutoNavi base show/hide methods then use them. This closes the helper's construction-to-view-use-to-teardown path, but does not recover the full Fragment base constructor, all HSL host objects, or an implementable replacement Fragment class.
