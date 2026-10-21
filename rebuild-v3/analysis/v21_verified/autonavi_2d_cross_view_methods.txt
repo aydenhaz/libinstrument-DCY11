@@ -4,9 +4,9 @@ Binary: libInstrumentPannelLarge.so. Addresses are Thumb code addresses.
 
 0x1b454 — `AutoNavi2dCrossView::InitView` (FUNCTION_DB association)
 
-- Receiver is in r0. The first two view arguments are saved at receiver+0x4 and +0x8. The third view-like argument in r3 is saved at +0xc when the corresponding stack argument is non-null; this third object is used via `CGProgressBar::setProgress` and `CGView::hide`, so it is the progress bar.
-- It clears receiver+0x20. The layout routine later treats this field as a selector/state value (it branches for values 0–2); its exact public enum name is not established here.
-- If the optional object in the fifth argument is non-null, it invokes that object's vtable entry at byte offset 0x60 with the constant 0x20200310 and an output pointer to receiver+0x24. This call provides the value subsequently consumed as cross-view progress-bar height. Its exact C++ method/type is not identified here.
+- The recorded signature string says `InitView(ScreenType, const ViewGroup, CGContext*, bool)`. Runtime call sites, however, pass a view/container pointer in r1 and two view-like values in r2/r3; the function stores these at receiver+0x4, +0x8 and (when the stack boolean is true) +0xc. The +0xc object is the progress bar because it is used with `CGProgressBar::setProgress` and `CGView::hide`. The exact source type for r1 and the `ViewGroup` ABI remain unresolved because the signature text and observed pointer use do not line up cleanly.
+- It clears receiver+0x20. The layout routine later branches on values 0–2 from this field; its public enum/name is not established.
+- The `CGContext*` stack argument, when non-null, is called through its vtable entry at byte offset 0x60 with constant 0x20200310 and an output pointer to receiver+0x24. That result becomes cross-view progress-bar height. The exact C++ method/type is not identified here.
 - It calls `hsl::MultiScreenService::SetCrossViewProgressBarHeight(MapEngineID, int)` using receiver+0x28 as MapEngineID and receiver+0x24 as the height.
 - It calls 0x1b524 (`InitCrossViewLayout`) and tail-branches to 0x1b6bc (`HideCrossView`).
 
