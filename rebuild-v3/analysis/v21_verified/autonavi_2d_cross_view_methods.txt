@@ -1,0 +1,30 @@
+AutoNavi2dCrossView method cluster (V21 original)
+
+Binary: libInstrumentPannelLarge.so. Addresses are Thumb code addresses.
+
+0x1b454 — `AutoNavi2dCrossView::InitView` (FUNCTION_DB association)
+
+- Receiver is in r0. The first two view arguments are saved at receiver+0x4 and +0x8. The third view-like argument in r3 is saved at +0xc when the corresponding stack argument is non-null; this third object is used via `CGProgressBar::setProgress` and `CGView::hide`, so it is the progress bar.
+- It clears receiver+0x20. The layout routine later treats this field as a selector/state value (it branches for values 0–2); its exact public enum name is not established here.
+- If the optional object in the fifth argument is non-null, it invokes that object's vtable entry at byte offset 0x60 with the constant 0x20200310 and an output pointer to receiver+0x24. This call provides the value subsequently consumed as cross-view progress-bar height. Its exact C++ method/type is not identified here.
+- It calls `hsl::MultiScreenService::SetCrossViewProgressBarHeight(MapEngineID, int)` using receiver+0x28 as MapEngineID and receiver+0x24 as the height.
+- It calls 0x1b524 (`InitCrossViewLayout`) and tail-branches to 0x1b6bc (`HideCrossView`).
+
+0x1b524 — `AutoNavi2dCrossView::InitCrossViewLayout` (FUNCTION_DB association)
+
+- Reads receiver+0x20 as a selector/state value and gets geometry from `hsl::MapViewBaseImpl` (call 0x1c380 and offsets +0x114, +0x188, +0x194). It computes rectangle data and compares 16 bytes against receiver+0x10.
+- When changed, it retrieves LayoutParams for the view pointers at receiver+0x4 and +0x8, updates their bounds, and writes the LayoutParams back. The precise names and units for each geometry field are not established by this body alone.
+
+0x1b6bc — `AutoNavi2dCrossView::HideCrossView` (FUNCTION_DB association)
+
+- Hides the view at +0x8 and the progress bar at +0xc; resets progress to zero. It reads an HSL boolean config that controls whether it sets a background on the second view; the function hides that view at entry and does not show it. The first view at +0x4 is hidden at function exit.
+
+0x1b840 — `AutoNavi2dCrossView::GetProgessBarView`
+
+- Returns receiver+0xc.
+
+0x1b8a4 — `AutoNavi2dCrossView::ShowCrossView` (FUNCTION_DB association)
+
+- Calls InitCrossViewLayout, shows the view at +0x4, then shows the view at +0x8 and chooses a background using an HSL boolean. The progress bar at +0xc is shown or hidden according to its argument. It emits diagnostic callbacks using the string stored at +0x2c.
+
+The Guide constructor at 0x4281c only allocates/initializes this object, sets +0x28 to the map engine id, and writes a short bounded string at +0x2c. The method cluster confirms the meaning of +0x28 and +0x2c; it does not show that InitView has already run or that any view pointers are valid at constructor return. These view pointers are populated if/when InitView is called; a direct caller for this helper instance is not yet identified. Complete Fragment construction still depends on the AutoNavi host services and recovered base state.
