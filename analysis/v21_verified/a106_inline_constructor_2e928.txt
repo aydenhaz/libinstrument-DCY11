@@ -1,0 +1,39 @@
+0002e928 mov.w      r0, #0x8a0                               
+0002e92c blx        #0x13b84                                 _Znwj
+0002e930 movs       r1, #1                                   
+0002e932 mov        r5, r0                                   
+0002e934 bl         #0x4281c                                 
+0002e938 ldr        r0, [pc, #0x18c]                         literal 0x3d3aa
+0002e93a add        r0, pc                                   
+0002e93c add.w      r1, r0, #0x324                           
+0002e940 add.w      r2, r0, #0x30c                           
+0002e944 add.w      ip, r0, #0x354                           
+0002e948 add.w      r3, r0, #0x33c                           
+0002e94c strd       r2, r1, [r5, #0x38c]                     
+0002e950 add.w      r1, r0, #0x2ec                           
+0002e954 add.w      r4, r0, #0x330                           
+0002e958 add.w      lr, r0, #0x348                           
+0002e95c strd       r4, r3, [r5, #0x394]                     
+0002e960 add.w      r2, r0, #0x1dc                           
+0002e964 strd       lr, ip, [r5, #0x39c]                     
+0002e968 strd       r2, r1, [r5, #0x364]                     
+0002e96c add.w      r1, r0, #0x1d0                           
+0002e970 str.w      r1, [r5, #0x2e4]                         
+0002e974 add.w      r1, r0, #0x1c0                           
+0002e978 str.w      r1, [r5, #0xb0]                          
+0002e97c add.w      r1, r0, #0x1a8                           
+0002e980 str        r1, [r5, #0x70]                          
+0002e982 add.w      r1, r0, #0x198                           
+0002e986 str        r1, [r5, #0x58]                          
+0002e988 add.w      r1, r0, #0x170                           
+0002e98c str        r1, [r5, #0x14]                          
+0002e98e adds       r0, #8                                   
+0002e990 str        r0, [r5]                                 
+0002e992 add.w      r1, r5, #0x30c                           
+0002e996 ldr        r2, [pc, #0x134]                         literal 0x26529
+0002e998 add        r0, sp, #0x3c                            
+0002e99a add        r2, pc                                   
+0002e99c bl         #0x165f0                                 
+0002e9a0 bl         #0x16674                                 
+0002e9a4 mov        r0, r5                                   
+0002e9a6 mov        r1, r8                                   

@@ -269,3 +269,7 @@ Recovered host ClassNode_CGPackage layout (0x20 ARM32), imported ctor/dtor and o
 ## Unsafe Fragment factory isolation (2026-10-21)
 
 Found concrete one-byte allocation followed by 0x80-byte memset/embedded writes in legacy A106 factory. Quarantined Fragments.cpp/Fragments_batch4.cpp implementations and prohibited default construction of their ten empty types. Prohibited empty CGFragment construction; four fallback allocations now explicitly require an unrecovered factory. ARM negative construction contract and compile-only 39/39 pass. This removes unsafe invented code, not completes host factories. Real Packet/Fragment construction, Android linking and replacement SO remain unavailable. Details: analysis/FRAGMENT_FACTORY_QUARANTINE.md.
+
+## Real A106 construction path checkpoint (2026-10-21)
+
+Corrected prior factory/destructor confusion: 0x31474 is complete destructor; 0x31528 deleting destructor. Primary vtable has 88 slots; slots 2/3 read bytes +4/+5. Actual inline construction at 0x2e928 allocates 0x8a0 and calls Guide base 0x4281c with mode 1 before 14 derived vptr stores. FT helpers operate on stack logging storage, not Fragment memory. Retired unused wrong four-slot header. Original instruction regressions pass with base/allocation/log callees mocked. No recovered complete factory or replacement SO; previous 39/39 compile-only baseline unchanged.

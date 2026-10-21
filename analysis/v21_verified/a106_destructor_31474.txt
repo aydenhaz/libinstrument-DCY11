@@ -1,0 +1,60 @@
+00031474 push       {r4, r5, r6, r7, lr}                     
+00031476 add        r7, sp, #0xc                             
+00031478 str        r8, [sp, #-0x4]!                         
+0003147c sub        sp, #0xb8                                
+0003147e mov        r4, r0                                   
+00031480 ldr        r0, [pc, #0x98]                          literal 0x3d46e
+00031482 add.w      lr, r4, #0x38c                           
+00031486 add        r0, pc                                   
+00031488 ldr.w      r8, [r0]                                 
+0003148c ldr.w      r0, [r8]                                 
+00031490 str        r0, [sp, #0xb4]                          
+00031492 ldr        r0, [pc, #0x8c]                          literal 0x3a850
+00031494 add        r0, pc                                   
+00031496 add.w      r1, r0, #0x30c                           
+0003149a add.w      r2, r0, #0x348                           
+0003149e add.w      r6, r0, #0x330                           
+000314a2 add.w      r5, r0, #0x324                           
+000314a6 stm.w      lr!, {r1, r5, r6}                        
+000314aa add.w      r1, r0, #0x2ec                           
+000314ae add.w      r3, r0, #0x33c                           
+000314b2 strd       r3, r2, [r4, #0x398]                     
+000314b6 add.w      ip, r0, #0x354                           
+000314ba str.w      ip, [r4, #0x3a0]                         
+000314be add.w      r2, r0, #0x1dc                           
+000314c2 strd       r2, r1, [r4, #0x364]                     
+000314c6 add.w      r1, r0, #0x1d0                           
+000314ca str.w      r1, [r4, #0x2e4]                         
+000314ce add.w      r1, r0, #0x1c0                           
+000314d2 str.w      r1, [r4, #0xb0]                          
+000314d6 add.w      r1, r0, #0x1a8                           
+000314da str        r1, [r4, #0x70]                          
+000314dc add.w      r1, r0, #0x198                           
+000314e0 str        r1, [r4, #0x58]                          
+000314e2 add.w      r1, r0, #0x170                           
+000314e6 str        r1, [r4, #0x14]                          
+000314e8 adds       r0, #8                                   
+000314ea str        r0, [r4]                                 
+000314ec add.w      r1, r4, #0x30c                           
+000314f0 ldr        r2, [pc, #0x30]                          literal 0x23acf
+000314f2 mov        r0, sp                                   
+000314f4 add        r2, pc                                   
+000314f6 bl         #0x165f0                                 
+000314fa bl         #0x16674                                 
+000314fe mov        r0, r4                                   
+00031500 bl         #0x4292c                                 
+00031504 ldr.w      r0, [r8]                                 
+00031508 ldr        r1, [sp, #0xb4]                          
+0003150a subs       r0, r0, r1                               
+0003150c itttt      eq                                       
+0003150e moveq      r0, r4                                   
+00031510 addeq      sp, #0xb8                                
+00031512 ldreq      r8, [sp], #4                             
+00031516 popeq      {r4, r5, r6, r7, pc}                     
+00031518 blx        #0x13a28                                 __stack_chk_fail
+0003151c bmi        #0x315fc                                 
+0003151e movs       r3, r0                                   
+00031520 add        r0, sp, #0x140                           
+00031522 movs       r3, r0                                   
+00031524 subs       r2, #0xcf                                
+00031526 movs       r2, r0                                   
