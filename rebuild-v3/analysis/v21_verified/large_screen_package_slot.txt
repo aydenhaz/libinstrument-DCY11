@@ -1,0 +1,23 @@
+LargeScreenImpl package-receiver slot — V21 static trace
+
+`LargeScreenImpl::OnChangeScreenMode` (`sub_2e0f8`) does not use its own
+`this` as a `CGPackage`. Its Thumb dispatch branches load a package pointer
+from one shared position-relative data slot at image RVA `0x6fd48`, then pass
+that pointer as r0 to the host instance methods
+`CGPackage::getHostFragmentActivity()` and `CGPackage::getContext()`.
+`CGFragment::tryStartExistFragment(...)` is then called with the returned
+activity object as r0. The relevant reads are at `0x2e20e`, `0x2e2fa`,
+`0x2e36e`, and `0x2e3ea`.
+
+An independent call path at `0x158aa` also loads the pointer slot at RVA
+`0x6fd48` and then calls the same two instance methods. This confirms the
+receiver is shared module state, not `LargeScreenImpl::this` and not a context
+parameter. The exact GFrame instance-method ABI is recorded in
+`analysis/PACKAGE_RECEIVER_ABI.md`.
+
+The slot is in the original DSO's BSS. The static call-site scan identifies
+its readers, but has not yet identified who initializes it during the package
+lifecycle. A replacement DSO has its own BSS address and cannot reuse the
+original slot by hard-coded RVA; receiver creation/registration must be
+recovered before replacing the `Unrecovered` calls with real method calls.
+No source shim or arbitrary cast is justified by this evidence.
