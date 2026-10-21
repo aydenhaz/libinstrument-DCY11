@@ -1,0 +1,32 @@
+0021a134 push       {r4, r5, r6, r7, lr}                     
+0021a136 add        r7, sp, #0xc                             
+0021a138 str        fp, [sp, #-0x4]!                         
+0021a13c sub        sp, #0x38                                
+0021a13e mov        r4, r0                                   
+0021a140 ldr        r0, [pc, #0xdc]                          literal 0x1cf60a
+0021a142 add        r0, pc                                   
+0021a144 ldr        r5, [r0]                                 
+0021a146 ldr        r0, [r5]                                 
+0021a148 str        r0, [sp, #0x34]                          
+0021a14a add.w      r0, r4, #0x54                            
+0021a14e blx        #0x10c96c                                _ZNK9GNS_FRAME8CGObjMem16checkObjMemValidEv
+0021a152 ldr.w      r0, [r4, #0x1fc]                         
+0021a156 cbnz       r0, #0x21a176                            
+0021a158 ldr.w      r0, [r4, #0x17c]                         
+0021a15c cbz        r0, #0x21a18a                            
+0021a15e mov.w      r0, #0x114                               
+0021a162 blx        #0x10c354                                _Znwj
+0021a166 blx        #0x112e94                                _ZN9GNS_FRAME18CGFragmentActivityC2Ev
+0021a16a ldr        r1, [pc, #0xd0]                          literal 0x1c0c08
+0021a16c add        r1, pc                                   
+0021a16e adds       r1, #8                                   
+0021a170 str        r1, [r0]                                 
+0021a172 ldr.w      r0, [r4, #0x1fc]                         
+0021a176 ldr        r1, [r5]                                 
+0021a178 ldr        r2, [sp, #0x34]                          
+0021a17a subs       r1, r1, r2                               
+0021a17c ittt       eq                                       
+0021a17e addeq      sp, #0x38                                
+0021a180 ldreq      fp, [sp], #4                             
+0021a184 popeq      {r4, r5, r6, r7, pc}                     
+0021a186 blx        #0x10c2b8                                __stack_chk_fail

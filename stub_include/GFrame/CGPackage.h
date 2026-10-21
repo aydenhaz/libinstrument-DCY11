@@ -2,11 +2,12 @@
 #include <GFrame/CGFragment.h>
 namespace GNS_FRAME {
 class CGContext;
+class CGFragmentActivity;
 class CGIntent;
 class CGFragment;
 class CGPackage {
 public:
-    CGPackage *getHostFragmentActivity(); // pointed-to activity type still unverified
+    CGFragmentActivity *getHostFragmentActivity();
     static CGPackage *getHostFragmentActivityUnrecovered();
     CGContext *getContext();
     // Legacy paths do not yet provide the constructed package receiver.

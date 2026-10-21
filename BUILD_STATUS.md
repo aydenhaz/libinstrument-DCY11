@@ -245,3 +245,7 @@ Located release caller at 0x35bd0 in AutoOpeningFragment::onDestroyView, receive
 ## Opening Cover binding checkpoint (2026-10-21)
 
 Recovered Packet+0xc0 -> Opening+0x40c non-owning Cover pointer chain and setter at 0x3bdbc. Added explicit bindOpeningCover adapter for genuinely constructed V21 ARM32 fragments, preserving service/facility guards, vtable slots, field reload ordering, and one by-value SurfaceConfig copy. Native ASan/UBSan and five original Thumb binding traces pass. ARM Linux musl compile-only 39/39 passes. Adapter is not registered with the incomplete Fragment/Packet factory; no Android strict-link success or replacement SO. See analysis/OPENING_COVER_BINDING.md.
+
+## Packet host activity boundary checkpoint (2026-10-21)
+
+Corrected simulation activity getter from static to instance, and simulation/package activity return types from CGPackage* to CGFragmentActivity*. Packet partial onInitEnd now supplies the simulation receiver and separately reads context through Packet's package base. Removed unused invalid Batch9 activity call. Host original-instruction getter/receiver chain regression and ARM signature probe pass; compile-only 39/39. Factory/base construction and full initialization remain incomplete. Details: analysis/PACKET_HOST_ACTIVITY.md. No replacement SO.

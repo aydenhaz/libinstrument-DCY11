@@ -1,0 +1,18 @@
+0002ecc6 blx        #0x141d8                                 _ZN9GNS_FRAME17CGFrameSimulation14ownWorkStationEv
+0002ecca blx        #0x14634                                 _ZN9GNS_FRAME17CGFrameSimulation19getFragmentActivityEv
+0002ecce mov        fp, r0                                   
+0002ecd0 mov        r0, r8                                   
+0002ecd2 str.w      r8, [sp, #0x38]                          
+0002ecd6 blx        #0x13c74                                 _ZN9GNS_FRAME9CGPackage10getContextEv
+0002ecda str        r0, [sp, #0x2c]                          
+0002ecdc ldr.w      r0, [fp]                                 
+0002ece0 ldr        r1, [r0, #0x30]                          
+0002ece2 mov        r0, fp                                   
+0002ece4 blx        r1                                       
+0002ece6 ldr.w      r0, [fp]                                 
+0002ecea ldr        r1, [r0, #0x64]                          
+0002ecec mov        r0, fp                                   
+0002ecee blx        r1                                       
+0002ecf0 str        r0, [sp, #0x30]                          
+0002ecf2 ldr.w      r0, [fp, #8]                             
+0002ecf6 cmp        r0, #0                                   

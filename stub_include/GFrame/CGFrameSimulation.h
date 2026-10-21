@@ -3,6 +3,7 @@ class CGString;
 namespace GPI { class Closure; class MessageCtrl; template<class T> class ScopedRefptr; }
 namespace GNS_FRAME {
 class CGPackageMgr;
+class CGFragmentActivity;
 class CGContext; class CGPackage; class CGExhibition;
 class CGFrameSimulation {
 public:
@@ -11,7 +12,7 @@ public:
     static int getId();
     static int getRenderThreadExecutorId();
     static int getRenderThreadId();
-    static CGPackage *getFragmentActivity();
+    CGFragmentActivity *getFragmentActivity();
     static CGExhibition *getExhibition();
     bool isRender(bool);
     void setRenderEndCallback(void (*)());
