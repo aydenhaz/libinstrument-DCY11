@@ -261,3 +261,7 @@ Corrected getPackageMgr/getExhibition to instance methods. Startup/Exit now forw
 ## Original entry behavior audit (2026-10-21)
 
 Executed original startup/exit with mocked host effects and verified exact intent literals, load/unload flags, object receivers, destruction order, service-null and duplicate-start branches. Confirmed startup ignores loadPackage result and returns 1 after the attempt. Native entry ASan/UBSan regression expanded and passes. Corrected stale ALC documentation. No production behavior change; previous 39/39 compile-only baseline retained. No Android load success or replacement SO. See analysis/ENTRY_ORIGINAL_TRACE.md.
+
+## Package registration component checkpoint (2026-10-21)
+
+Recovered host ClassNode_CGPackage layout (0x20 ARM32), imported ctor/dtor and original CGIPLPacket/class alias registration parameters. Added explicit factory-taking registration component with scoped ownership. Removed four inert placeholder module constructors; originals archived. Native sanitizer and original init instruction traces pass; compile-only 39/39. Component is not auto-registered: real Packet/base construction and other module initializers are unfinished. No replacement SO.
