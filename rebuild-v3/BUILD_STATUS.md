@@ -311,3 +311,8 @@ Recompiled all 39 translation units with Zig 0.17.0 targeting `arm-linux-musleab
 - Removed two unreferenced Batch11 helper functions that had no `this` pointer but called Fragment instance methods anyway; they were not viable implementations.
 - Added the Packet top-render callback bridge to the recovered private CoverUtil dispatcher. It resolves the missing Packet callback symbol without exporting std::function through the host ABI; Packet/factory wiring is still incomplete.
 - Strict link now reports 11 undefined symbol categories (down from 16), with 38/38 translation units compiling. Remaining blockers are package/fragment receiver recovery, AutoExscreen closure/action implementation, TestNumObserver base adjustment, and the `std::__1` vs Android `std::__ndk1` vector ABI. See `analysis/STRICT_LINK_ARM32_MUSL.log`; no `.so` produced.
+
+## TestNumObserver subobject offset repair — 2026-10-21
+
+- Corrected SystemNotify declarations to the host's typed `TestNumObserver*` signatures. Original Thumb disassembly shows AutoCruise registers fragment+0x5f0; AutoPreview registers and removes fragment+0x2e4. Source now passes those exact subobject pointers, and the produced ARM objects import the exact host mangled symbols.
+- Strict link falls to 9 undefined-symbol categories with all 38 translation units compiling. Remaining blockers are AutoExscreen closure/action recovery, package receiver recovery, and the NDK libc++ vector ABI. See `analysis/v21_verified/test_num_observer_offsets.txt` and latest `analysis/STRICT_LINK_ARM32_MUSL.log`. No `.so` was published.
