@@ -1,5 +1,7 @@
 #include "../internal/NS_MultiScreenBase/AutoExscreenUiConfig.h"
+#include "../internal/NS_MultiScreenBase/AutoExscreenMapStatusPlan.h"
 #include <DiceString16.h>
+#include <NS_MultiScreenBase/AutoConfigScreenMode.h>
 #include <hsl/Bundle.h>
 #include <hsl/Config.h>
 #include <hsl/HSL.h>
@@ -55,6 +57,13 @@ bool Config::SetBundle(const dice::String16& k, const Bundle& value, SetterType_
 }
 Config* HSL::GetConfigHandle() { return &config; }
 }
+namespace NS_MultiScreenBase {
+AutoConfigScreenMode* AutoConfigScreenMode::GetInstance() {
+    static AutoConfigScreenMode instance;
+    return &instance;
+}
+int AutoConfigScreenMode::GetCurrentScreenMode(ScreenType) { return 7; }
+}
 int main() {
     const Key screen = u"ExScreenLarge";
     Node& before = rootData[screen];
@@ -80,4 +89,34 @@ int main() {
     assert(NS_MultiScreenBase::AutoExscreenUtil_IsDynamicLevelRequest(-1, 99));
     assert(!NS_MultiScreenBase::AutoExscreenUtil_IsDynamicLevelRequest(0, 99));
     assert(!NS_MultiScreenBase::AutoExscreenUtil_IsDynamicLevelRequest(-1, 1));
+
+    using namespace NS_MultiScreenBase;
+    int* currentScene = AutoExscreenUtil_GetCurrentSceneSlot(SCREEN_TYPE_MAIN);
+    assert(*currentScene == 0);
+    *currentScene = 2;
+    AutoExscreenUtil_SetMapViewLevelToUiConfig(SCREEN_TYPE_MAIN, 15);
+    AutoExscreenUtil_SetMapViewModeToUiConfig(SCREEN_TYPE_MAIN, 2);
+    const auto& written = rootData.at(screen).bundles.at(u"kExScreenModeKey7");
+    assert(written.bundles.at(u"kExScreenPreviewKey").ints.at(u"int32MapLevel") == 15);
+    assert(written.bundles.at(u"kExScreenPreviewKey").ints.at(u"int32MapViewMode") == 99);
+    assert(written.bundles.at(u"kExScreenGuideKey").ints.at(u"int32MapViewMode") == 2);
+    assert(written.bundles.at(u"kExScreenGuideKey").ints.at(u"int32CrossControl") == 1);
+    *currentScene = 0;
+    AutoExscreenUtil_SetMapViewModeToUiConfig(SCREEN_TYPE_MAIN, 3);
+    assert(rootData.at(screen).bundles.at(u"kExScreenModeKey7")
+           .bundles.at(u"kExScreenCuriseKey").ints.at(u"int32MapViewMode") == 3);
+
+    const MapStatusPlan noChanges = AutoExscreenUtil_PlanMapStatus(4, 99, 99);
+    assert(!noChanges.writeLevel && !noChanges.writeMode);
+    assert(noChanges.resetMapBindingList);
+    const MapStatusPlan dynamic = AutoExscreenUtil_PlanMapStatus(-1, 99, 1);
+    assert(!dynamic.writeLevel && dynamic.writeMode && dynamic.clearDynamicLevel);
+    assert(dynamic.attemptTimerStart && dynamic.setMapViewMode);
+    const MapStatusPlan requestDynamic = AutoExscreenUtil_PlanMapStatus(10, -1, 1);
+    assert(requestDynamic.writeLevel && requestDynamic.setMapLevel);
+    assert(requestDynamic.writeMode && !requestDynamic.clearDynamicLevel);
+    assert(!requestDynamic.attemptTimerStart && !requestDynamic.setMapViewMode);
+    const MapStatusPlan fixed = AutoExscreenUtil_PlanMapStatus(10, 12, 1);
+    assert(fixed.writeLevel && fixed.writeMode && fixed.setMapViewMode);
+    assert(!fixed.clearDynamicLevel && !fixed.attemptTimerStart);
 }

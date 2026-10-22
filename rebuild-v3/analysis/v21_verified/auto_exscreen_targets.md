@@ -30,6 +30,12 @@ Batch12 SetMapLevel is an incorrect static pseudo-implementation, and Batch13
 ResetMapBindingList is a placeholder. These dependencies need repair before
 installing the callback.
 
+The scene slots and the two UI-config writing wrappers are now reconstructed
+in `AutoExscreenUiConfig.cpp`. `AutoExscreenMapStatusPlan.h` records the
+verified 99 / -1 decision branches for subsequent callback integration. The
+ARM32 Linux probe still leaves this callback undefined until its config
+singleton, timer and map-view dispatch are restored.
+
 ## Control record entry at 0x2ace0
 
 The source withdrew a wrongly assigned body. The original is 3788 bytes,

@@ -2,6 +2,23 @@
 
 NOT a usable replacement. No successful strict shared-library link.
 
+## 2026-10-23 MapStatus recovery checkpoint
+
+- Recovered the original APK and the latest GitHub source branch after the
+  scratch workspace was cleaned; verified the same ARM32 binary SHA-256.
+- Implemented 0x1984c's three zero-initialized scene slots and the 0x173fc
+  level / 0x171b8 view-mode UI-config wrappers. Preview view mode writes to
+  guide, while preview level stays in preview. Host ASan/UBSan test passes for
+  both mappings, preservation of other fields, and the MapStatus 99/-1 branch
+  decisions. Control record word uses verified from 0x2ace0 are recorded in
+  `analysis/v21_verified/auto_exscreen_control_words.md`.
+- Reassembled and compiled all 39 translation units for ARMv7 Thumb with the
+  Linux/musl ABI probe. Strict link still has the same three undefined symbols:
+  the two unfinished map-status callbacks and `std::__ndk1::bad_function_call`
+  destructor absent from this probe runtime. The pseudo SetMapLevel and
+  ResetMapBindingList methods still need real implementations before routing
+  the first callback. No Android `.so` was produced.
+
 ## 2026-10-22 recovery checkpoint
 
 - Recovered the public `rebuild-v21-v3` branch and the 7.5 V21 source and

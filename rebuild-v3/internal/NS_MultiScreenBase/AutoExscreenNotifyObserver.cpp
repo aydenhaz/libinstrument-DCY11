@@ -71,7 +71,7 @@ void AutoExscreenNotifyObserver::DeferActionB(int screen, int level, int mode, i
 }
 void AutoExscreenNotifyObserver::DeferActionC(const tagSTExtScreenControl& control) {
     bl::MapEngineID eng = hsl::MultiScreenService::GetInstance()->GetMapEngineId(
-        control.words[0]);
+        control.words[kExtScreenSelector]);
     GPI::Closure::Callable<void()> task = GPI::Closure::bind(
         this, &AutoExscreenNotifyObserver::OnSetExScreenMapStatusUi, control);
     reinterpret_cast<hsl::UIObject*>(asyncState_)->RunAsyncDelayByEngineId(

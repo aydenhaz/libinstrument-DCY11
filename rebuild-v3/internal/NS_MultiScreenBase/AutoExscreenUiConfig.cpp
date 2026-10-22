@@ -3,6 +3,7 @@
 #include <hsl/Bundle.h>
 #include <hsl/Config.h>
 #include <hsl/HSL.h>
+#include <NS_MultiScreenBase/AutoConfigScreenMode.h>
 
 namespace NS_MultiScreenBase {
 namespace {
@@ -20,6 +21,25 @@ const char* const fieldKeys[] = {
 
 bool AutoExscreenUtil_IsDynamicLevelRequest(int configuredLevel, int requestedLevel) {
     return requestedLevel == -1 || (configuredLevel == -1 && requestedLevel == 99);
+}
+
+int* AutoExscreenUtil_GetCurrentSceneSlot(ScreenType screen) {
+    static int scenes[3] = {0, 0, 0};
+    const int index = static_cast<int>(screen);
+    return &scenes[index == 1 ? 1 : index == 2 ? 2 : 0];
+}
+
+void AutoExscreenUtil_SetMapViewLevelToUiConfig(ScreenType screen, int level) {
+    const int mode = AutoConfigScreenMode::GetInstance()->GetCurrentScreenMode(screen);
+    AutoExscreenUtil_SetMapParamsToUiConfig(
+        screen, mode, *AutoExscreenUtil_GetCurrentSceneSlot(screen), 0, level);
+}
+
+void AutoExscreenUtil_SetMapViewModeToUiConfig(ScreenType screen, int mode) {
+    const int currentMode = AutoConfigScreenMode::GetInstance()->GetCurrentScreenMode(screen);
+    const int scene = *AutoExscreenUtil_GetCurrentSceneSlot(screen);
+    AutoExscreenUtil_SetMapParamsToUiConfig(
+        screen, currentMode, scene == 2 ? 1 : scene, 1, mode);
 }
 
 void AutoExscreenUtil_SetMapParamsToUiConfig(ScreenType screen, int mode,
