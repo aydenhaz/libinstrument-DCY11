@@ -13,7 +13,7 @@ descriptive labels for the reconstructed C++ record, not recovered debug names.
 | 1 / +0x04 | Unless 99, passed to UI mode writer 0x171b8 and to instance `SetMapViewMode` 0x1def4 at 0x2af04–0x2af18. |
 | 2 / +0x08 | Unless 99, used for level changes, then passed to instance `SetMapLevel` 0x1e084 at 0x2b0e6. -2 and -3 select relative steps. |
 | 3 / +0x0c | Unless 99, compared with 1 and dispatched to `OnSetExternalScreenCrossControlUi` at 0x2b102. |
-| 4 / +0x10 | Values 0 or 1 are saved to field 3 of the UI configuration for three scenes at 0x2b1b4 and sent to a collection of observers. |
+| 4 / +0x10 | Values 0 or 1 are saved to field 3 of the guide-scene UI configuration at 0x2b1b4 and sent to a collection of observers. |
 | 5 / +0x14 | Values 0 or 1 are saved to field 4 of the UI configuration for three scenes at 0x2b262–0x2b27a and sent to a separate collection. |
 | 6 / +0x18 | Compared with current screen mode + 1 or 99 at 0x2ad80; selects an early path. |
 | 7 / +0x1c | No direct load identified in this callback; retained unchanged. |
