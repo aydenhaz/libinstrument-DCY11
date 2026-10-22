@@ -2,6 +2,37 @@
 
 NOT a usable replacement. No successful strict shared-library link.
 
+## 2026-10-22 recovery checkpoint
+
+- Recovered the public `rebuild-v21-v3` branch and the 7.5 V21 source and
+  reference binary after workspace cleanup. The original ARM32 DSO hash still
+  matches `6f5bd54c8e694ac40f02cd4280f6c6a049ea34896703e1eb5547fbc9e41d65e3`.
+- Implemented the verified 20-mode/three-scene/six-field Bundle writer and
+  CrossControl observer callback. A mocked Bundle/Config host test passes,
+  including preservation of unrelated fields, 99 defaults, invalid-mode
+  rejection, and the dynamic-level predicate. ARM32 object layout assertions
+  cover the collection and owner sizes.
+- Excluded the legacy Batch20 fragment pseudocode from the build: it invokes
+  receiver-less Fragment methods and tries to register a fragment pointer as
+  a concrete TestNumObserver. Withdrew other synthetic narrow-format and
+  receiver-less calls in Batch22 and LargeScreenImpl. Those flows are still
+  incomplete, not silently implemented.
+- Recovered three deferred bindings from the original allocation extents and
+  call arguments: (int,bool), four integers, and one 36-byte control record.
+  The nested Callable is 20 bytes on ARM32, the bound objects are 24/32/52
+  bytes, and the host scheduling import now matches its member receiver,
+  nested Callable argument, engine, delay, source token, and hidden shared
+  return. Native ASan/UBSan bind/copy/invoke tests pass.
+- Linux/musl Zig ARMv7 Thumb probe: 39/39 translation units compile. Strict
+  link fails on the two unfinished map-status callbacks and the
+  `std::__ndk1::bad_function_call` destructor absent from this Linux
+  namespace probe. The two V21 APK variants contain no
+  `libc++_shared.so`; an Android NDK runtime is still needed. This probe is
+  not an Android build. No replacement `.so` was produced.
+- Next: recover the two remaining map-status
+  callbacks, then build with an Android armeabi-v7a toolchain and verify on a
+  device. See `analysis/v21_verified/auto_exscreen_targets.md`.
+
 Latest source basis: InstrumentPannelLarge_full (3).tar.gz, main f50fdd4.
 Reference binary: 7.5-V21-v1-v2-v3_sign_sign.apk, ARM32 instrument SHA-256
 6f5bd54c8e694ac40f02cd4280f6c6a049ea34896703e1eb5547fbc9e41d65e3.

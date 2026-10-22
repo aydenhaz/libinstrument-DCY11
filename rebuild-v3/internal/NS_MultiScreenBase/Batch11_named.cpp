@@ -41,16 +41,7 @@ struct SurfaceConfig; struct tagMultiViewModeInfo;
 // ScreenType is shared in AbiTypes.h.
 enum ENaviMode_ { }; enum ECruiseMode_ { };
 
-/* sub_168e8 (1764B) — AutoExscreenUtil::SetMapParamsToUiConfig(SurfaceConfig&) */
-void AutoExscreenUtil_SetMapParamsToUiConfig(const SurfaceConfig &cfg) {
-    hsl::Config *c = hsl::HSL::GetConfigHandle();
-    if (!c) return;   /* "config == nullptr" */
-    /* "screenType=%d, mode=%d, scene=%d, t=%d, val=%d" log */
-    { hsl::Bundle b; b.PutBundle(dice::String16("ExScreenLarge"), b); }
-    { hsl::Bundle b; b.PutBundle(dice::String16("ExScreenWidget"), b); }
-    { hsl::Bundle b; b.PutBundle(dice::String16("ExScreenSmall"), b); }
-    /* int32EagleEyeEnable / int32CrossControl / int32MapLevel ... via PutBundle */
-}
+// The original sub_168e8 rebuild is in AutoExscreenUiConfig.cpp.
 
 // Original 0x18264 is implemented by CoverUtil::setConfig and its staged helpers.
 

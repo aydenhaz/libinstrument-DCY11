@@ -31,6 +31,11 @@ if args.ndk:
 for directory in ['include', 'stub_include', 'internal', 'internal/NS_MultiScreenBase', 'internal/NS_InstrumentPannelLarge']:
     flags.append('-I' + str(root / directory))
 sources = sorted((root / 'src').glob('*.cpp')) + sorted((root / 'internal').rglob('*.cpp')) + sorted((root / 'expanded').glob('*.cpp'))
+# This legacy batch consists of receiver-less pseudo-bodies. They import
+# deliberately nonexistent Fragment methods and do not implement the original
+# fragment classes. Keep its source for analysis but do not link it.
+excluded = {'internal/NS_MultiScreenBase/Batch20_fragments.cpp'}
+sources = [p for p in sources if p.relative_to(root).as_posix() not in excluded]
 objects = []
 failures = 0
 with (out / 'compile.log').open('w') as log:
