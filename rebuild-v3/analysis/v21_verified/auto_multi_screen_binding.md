@@ -39,3 +39,13 @@ selectors, and passes the engine to `HSL::GetMapViewHandle`. These three
 values come from the original table at 0x5d158. A host ASan/UBSan test
 checks the three calls and invalid selector paths. The original also logs
 on invalid selectors; the helper does not yet reproduce that diagnostic.
+
+Two constructor leaf functions are also restored without constructing the
+full singleton. V21 0x1c210 writes the default values and zero ranges of
+each 0xe4-byte scene record, preserving untouched bytes; it initializes the
+four selected words to -1, stores 6 and 240 at +0x38/+0x3c, and sets the
+floating-point sentinels at their verified offsets. V21 0x3bec0 zeros binding bytes
++4..+0x1c and writes the engine 5/3/7 (or -1) at word zero. The containing
+0x340-byte constructor at 0x1c174 also initializes a lock and registers
+three scenes at 0x1c2d4. Those side effects and singleton lifetime remain
+unimplemented, so these helpers must not be used as a complete constructor.

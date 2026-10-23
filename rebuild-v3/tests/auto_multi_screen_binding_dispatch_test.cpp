@@ -35,6 +35,11 @@ void bind(void* self, void* map, int32_t* parameters) {
 void put(unsigned char* scene, unsigned offset, int32_t value) {
     std::memcpy(scene + offset, &value, 4);
 }
+uint32_t word(const unsigned char* scene, unsigned offset) {
+    uint32_t value;
+    std::memcpy(&value, scene + offset, 4);
+    return value;
+}
 }
 
 namespace hsl {
@@ -61,6 +66,31 @@ int main() {
     alignas(8) unsigned char object[0x340] = {};
     const int32_t screen = 0;
     std::memcpy(object + 0x30c, &screen, 4);
+    alignas(4) unsigned char initializedScene[0xe4];
+    std::memset(initializedScene, 0xa5, sizeof(initializedScene));
+    NS_MultiScreenBase::AutoMultiScreenConfig_InitSceneRecord(initializedScene);
+    for (unsigned i = 4; i < 0x24; ++i) assert(initializedScene[i] == 0xff);
+    assert(initializedScene[0] == 0 && initializedScene[0x26] == 1);
+    assert(word(initializedScene, 0x28) == UINT32_MAX);
+    assert(word(initializedScene, 0x38) == 6 && word(initializedScene, 0x3c) == 240);
+    assert(word(initializedScene, 0x40) == 0xbf800000u);
+    assert(word(initializedScene, 0x78) == 0x3f3851ecu);
+    assert(word(initializedScene, 0x7c) == 0xbf800000u);
+    assert(word(initializedScene, 0x80) == 0x3f000000u);
+    assert(initializedScene[0x95] == 1 && initializedScene[0x96] == 1);
+    assert(word(initializedScene, 0x9c) == 7 && word(initializedScene, 0xd4) == 0xbf800000u);
+    assert(initializedScene[0x27] == 0xa5 && initializedScene[0xc9] == 0xa5 &&
+           initializedScene[0xe3] == 0xa5);
+    unsigned char initializedBinding[0x20];
+    for (int index = 0; index < 3; ++index) {
+        std::memset(initializedBinding, 0xa5, sizeof(initializedBinding));
+        NS_MultiScreenBase::AutoMultiScreenConfig_InitBindingRecord(initializedBinding, index);
+        assert(word(initializedBinding, 0) == static_cast<uint32_t>(index == 0 ? 5 : index == 1 ? 3 : 7));
+        for (unsigned byte = 4; byte < 0x1d; ++byte) assert(initializedBinding[byte] == 0);
+        for (unsigned byte = 0x1d; byte < 0x20; ++byte) assert(initializedBinding[byte] == 0xa5);
+    }
+    NS_MultiScreenBase::AutoMultiScreenConfig_InitBindingRecord(initializedBinding, 99);
+    assert(word(initializedBinding, 0) == UINT32_MAX);
     using NS_MultiScreenBase::AutoMultiScreenConfig_GetMapViewHandle;
     const int engines[] = {5, 3, 7};
     for (int index = 0; index < 3; ++index) {

@@ -21,7 +21,10 @@ NOT a usable replacement. No successful strict shared-library link.
   build, and no replacement `.so` has been produced.
 - Recovered V21 0x1ddd8's map-view lookup using its 0x16788 table: screen
   Large/Small/Widget selects engine ID 5/3/7. A host ASan/UBSan test covers
-  valid and invalid selectors. See
+  valid and invalid selectors. Restored isolated V21 0x1c210 scene-record and
+  0x3bec0 binding-record initializers, including the original untouched
+  bytes. The full 0x340-byte singleton constructor and its lock and scene
+  registration remain incomplete. See
   `analysis/v21_verified/auto_multi_screen_binding.md`.
 
 ## 2026-10-23 map binding checkpoint

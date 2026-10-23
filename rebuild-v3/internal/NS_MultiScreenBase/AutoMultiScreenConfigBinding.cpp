@@ -4,6 +4,7 @@
 #include <hsl/HSL.h>
 #include <cstdint>
 #include <cstring>
+#include <initializer_list>
 
 namespace NS_MultiScreenBase {
 namespace {
@@ -12,6 +13,51 @@ int32_t wordAt(const unsigned char* object, unsigned offset) {
     std::memcpy(&value, object + offset, sizeof(value));
     return value;
 }
+void putWord(unsigned char* object, unsigned offset, uint32_t value) {
+    std::memcpy(object + offset, &value, sizeof(value));
+}
+int engineForScreen(int screen) {
+    return screen == 0 ? 5 : screen == 1 ? 3 : screen == 2 ? 7 : -1;
+}
+}
+
+void AutoMultiScreenConfig_InitSceneRecord(void* record) {
+    unsigned char* bytes = static_cast<unsigned char*>(record);
+    // sub_1c210 writes only these ranges. Its untouched bytes are preserved.
+    bytes[0] = 0;
+    std::memset(bytes + 4, 0xff, 0x20);
+    std::memset(bytes + 0x24, 0, 2);
+    bytes[0x26] = 1;
+    for (unsigned offset : {0x28u, 0x2cu, 0x30u, 0x34u})
+        putWord(bytes, offset, UINT32_MAX);
+    putWord(bytes, 0x38, 6);
+    putWord(bytes, 0x3c, 240);
+    for (unsigned offset : {0x40u, 0x44u, 0x48u})
+        putWord(bytes, offset, 0xbf800000u); // -1.0f
+    std::memset(bytes + 0x4c, 0, 8);
+    for (unsigned offset : {0x54u, 0x60u, 0x6cu})
+        std::memset(bytes + offset, 0, 12);
+    putWord(bytes, 0x78, 0x3f3851ecu); // 0.72f
+    putWord(bytes, 0x7c, 0xbf800000u);
+    putWord(bytes, 0x80, 0x3f000000u); // 0.5f
+    std::memset(bytes + 0x84, 0, 0x11);
+    bytes[0x95] = bytes[0x96] = 1;
+    std::memset(bytes + 0x97, 0, 5);
+    putWord(bytes, 0x9c, 7);
+    bytes[0xa0] = 0;
+    std::memset(bytes + 0xa4, 0, 0x25);
+    std::memset(bytes + 0xcc, 0, 8);
+    putWord(bytes, 0xd4, 0xbf800000u);
+    std::memset(bytes + 0xd8, 0, 2);
+    bytes[0xda] = 0;
+    putWord(bytes, 0xdc, 0);
+}
+
+void AutoMultiScreenConfig_InitBindingRecord(void* record, int screen) {
+    unsigned char* bytes = static_cast<unsigned char*>(record);
+    // sub_3bec0 clears 25 bytes, then sets the mapped engine at word zero.
+    std::memset(bytes + 4, 0, 0x19);
+    putWord(bytes, 0, static_cast<uint32_t>(engineForScreen(screen)));
 }
 
 hsl::MapView* AutoMultiScreenConfig_GetMapViewHandle(const void* instance) {
@@ -19,7 +65,7 @@ hsl::MapView* AutoMultiScreenConfig_GetMapViewHandle(const void* instance) {
     const int screen = wordAt(object, 0x30c);
     // sub_16788 maps Large/Small/Widget to 5/3/7; sub_1ddd8 rejects
     // unexpected engine IDs before calling HSL::GetMapViewHandle.
-    const int engine = screen == 0 ? 5 : screen == 1 ? 3 : screen == 2 ? 7 : -1;
+    const int engine = engineForScreen(screen);
     if (engine < 0) return nullptr;
     return hsl::HSL::GetMapViewHandle(static_cast<bl::MapEngineID>(engine));
 }
