@@ -47,9 +47,12 @@ publishes the singleton. See
 
 The rebuilt Packet constructor no longer publishes its pointer. Its byte array does
 not construct the host package, its lock, the CoverUtil bases, or the fragment
-lifecycle. Its partial `onInitEnd` reads uninitialized legacy fragment and
-activity fields. Registering a factory for this object would permit GFrame to
-dispatch through invalid base and virtual state.
+lifecycle. The invalid legacy Fragment/activity fields have since been
+removed, and `onInitEnd` stops before the unrecovered Fragment stage.
+Registering a factory for this object would still permit GFrame to dispatch
+through invalid base and virtual state. Unpublished Packet and Opening
+constructor guards now verify part of the original order; neither provides
+a live host object or changes this device conclusion.
 
 Do not ship this development build as a replacement. A usable rebuild still
 needs real host and CoverUtil construction, callbacks, fragment ownership,

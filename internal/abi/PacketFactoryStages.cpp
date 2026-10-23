@@ -32,6 +32,24 @@ PendingPacket::PendingPacket(GNS_FRAME::CGContext* context,
 
 PendingPacket::~PendingPacket() noexcept { cleanup(); }
 
+void PendingPacket::installDerivedTables(const PacketDerivedTables& tables) {
+    if (derivedTablesInstalled_ || !hostConstructed_ || !coverConstructed_)
+        throw std::logic_error("Packet derived tables require completed bases exactly once");
+    if (!tables.coverMap || !tables.coverBusiness ||
+        !tables.hostObjMem || !tables.hostPackage)
+        throw std::invalid_argument("Packet requires four non-null derived table points");
+
+    // V21 0x2eb36..0x2eb42. Deliberately use four-byte ARM words, including
+    // in native tests where host pointers are eight bytes. This is an ABI
+    // staging step, not native virtual dispatch through these projections.
+    unsigned char* const bytes = static_cast<unsigned char*>(storage_);
+    std::memcpy(bytes + 0xc0, &tables.coverMap, sizeof(tables.coverMap));
+    std::memcpy(bytes + 0xc4, &tables.coverBusiness, sizeof(tables.coverBusiness));
+    std::memcpy(bytes + 0x40, &tables.hostObjMem, sizeof(tables.hostObjMem));
+    std::memcpy(bytes, &tables.hostPackage, sizeof(tables.hostPackage));
+    derivedTablesInstalled_ = true;
+}
+
 void PendingPacket::cleanup() noexcept {
     if (!storage_) return;
     if (coverConstructed_) ops_.destroyCover(

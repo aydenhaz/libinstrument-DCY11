@@ -117,6 +117,8 @@ def inspect_host(path):
     package_string_dtor = plt_symbol(elf, thumb_bl_target(elf, 0x1B433C) & ~3)[1]
     package_intent_dtor = plt_symbol(elf, thumb_bl_target(elf, 0x1B4334) & ~3)[1]
     return {
+        "opening_host_fragment_d2_export": (
+            "_ZN9GNS_FRAME10CGFragmentD2Ev" in elf.dynsym_names()),
         "fragment_package_constructor": "0x1b7610",
         "base_constructor_plt": hex(target),
         "base_constructor_symbol": base_constructor,
@@ -147,6 +149,19 @@ def inspect_host(path):
             "secondary_imports": [relocations.get(secondary_point + 4 * i)
                                   for i in range(2)],
         },
+    }
+
+
+def inspect_observer_host(path):
+    elf = ELF32(path)
+    names = elf.dynsym_names()
+    return {
+        "observer_c2_export": "_ZN3hsl12ObserverBaseC2EPKc" in names,
+        "observer_d2_export": "_ZN3hsl12ObserverBaseD2Ev" in names,
+        # The host ctor copies up to 31 bytes into inline storage, appends a
+        # NUL at +length and owns no separately allocated name buffer.
+        "inline_name_constructor_sha256": hashlib.sha256(
+            elf.at(0x20F16A, 0x30)).hexdigest(),
     }
 
 
@@ -198,6 +213,7 @@ def inspect(path):
         "factory_thumb": "0x2eb09",
         "factory_alloc_immediate": elf.at(0x2EB0E, 4).hex(),
         "factory_proxy_clear": elf.at(0x2EB26, 4).hex(),
+        "factory_derived_vptr_stores": elf.at(0x2EB36, 14).hex(),
         # Thumb ADD r0,pc at 0x2eb46 observes PC=0x2eb4a.
         "factory_singleton_slot": hex(0x2EB4A + elf.u32(0x2EB54)),
         "factory_singleton_store": elf.at(0x2EB48, 2).hex(),
@@ -218,12 +234,20 @@ def inspect(path):
             "query_null_branch_and_publish": elf.at(0x2E08A, 0x12).hex(),
         },
         "opening_fragment": {
+            "activity_virtual_gate": elf.at(0x2ECDC, 0x20).hex(),
             "allocation_immediate": elf.at(0x2ECFC, 4).hex(),
             "constructor_target": hex(thumb_bl_target(elf, 0x2ED0A)),
             "constructor_tag": elf.at(0x2ED0C + elf.u32(0x2EED4), 12)
                                   .rstrip(b"\0").decode("ascii"),
             "host_fragment_base": plt_symbol(
                 elf, thumb_bl_target(elf, 0x41968) & ~3)[1],
+            "host_launch_mode_zero": elf.at(0x41960, 2).hex(),
+            "observer_base": plt_symbol(
+                elf, thumb_bl_target(elf, 0x41974) & ~3)[1],
+            "observer_receiver_offset": elf.at(0x4196E, 4).hex(),
+            "observer_name": elf.at(0x41976 + elf.u32(0x41A28), 17)
+                                .rstrip(b"\0").decode("ascii"),
+            "engine_five_at_308": elf.at(0x41978, 6).hex(),
             "runtime_info_receiver_and_arg": elf.at(0x2ED42, 8).hex(),
             "embedded_runtime_info": plt_symbol(
                 elf, thumb_bl_target(elf, 0x2ED5C) & ~3)[1],
@@ -258,6 +282,8 @@ def check(report):
         raise ValueError("factory allocation instruction differs from 0x16c")
     if report["factory_proxy_clear"] != "c5f86801":
         raise ValueError("factory proxy clear instruction differs")
+    if report["factory_derived_vptr_stores"] != "c5e9302100f15001296408302860":
+        raise ValueError("factory derived vptr order/offsets differ")
     if report["factory_singleton_slot"] != "0x6fd48" or report["factory_singleton_store"] != "0560":
         raise ValueError("factory singleton publication differs")
     if report["module_lifetime"] != {
@@ -276,10 +302,17 @@ def check(report):
     }:
         raise ValueError("Packet/module ALC tags or QueryInterface branch differ from V21")
     if report["opening_fragment"] != {
+        "activity_virtual_gate":
+            "dbf80000016b58468847dbf80000416e584688470c90dbf80800002800f09282",
         "allocation_immediate": "4ff48860",
         "constructor_target": "0x41954",
         "constructor_tag": "HMI_OPENING",
         "host_fragment_base": "_ZN9GNS_FRAME10CGFragmentC2ENS0_11ELaunchModeE",
+        "host_launch_mode_zero": "0021",
+        "observer_base": "_ZN3hsl12ObserverBaseC2EPKc",
+        "observer_receiver_offset": "00f53a70",
+        "observer_name": "AutoBaseFragment",
+        "engine_five_at_308": "0520c4f80803",
         "runtime_info_receiver_and_arg": "06f5617006f56071",
         "embedded_runtime_info": "_ZN2bl17ObjectRuntimeInfoC1EPNS_8BLObjectE",
         "set_context": "_ZN9GNS_FRAME10CGFragment10setContextEPNS_9CGContextE",
@@ -339,6 +372,8 @@ def check(report):
 
 
 def check_host(report):
+    if not report["opening_host_fragment_d2_export"]:
+        raise ValueError("Opening CGFragment D2 not exported by V21 host")
     if report["base_constructor_symbol"] != "_ZN9GNS_FRAME9CGPackageC2EPNS_9CGContextE":
         raise ValueError("unexpected CGFragmentPackage base constructor")
     if report["fragment_vtable_got"] != "0x3e9c04" or report["fragment_vtable_relocation"] != (
@@ -380,6 +415,16 @@ def check_host(report):
         raise ValueError("host FragmentPackage virtual table differs from V21")
 
 
+def check_observer_host(report):
+    if report != {
+        "observer_c2_export": True,
+        "observer_d2_export": False,
+        "inline_name_constructor_sha256":
+            "057d9aefa560aa239c96972d498507d853841510ff9cff2e9887e49b969e9b0b",
+    }:
+        raise ValueError("V21 ObserverBase inline-name construction differs")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -391,12 +436,18 @@ def main():
         "--host-gframe", type=Path,
         default=Path(__file__).resolve().parents[1] / "host_libs/libGFrame.so",
     )
+    parser.add_argument(
+        "--host-hsl", type=Path,
+        default=Path(__file__).resolve().parents[1] / "host_libs/libhsl.so",
+    )
     args = parser.parse_args()
     report = inspect(args.elf)
     report["host"] = inspect_host(args.host_gframe)
+    report["host_observer"] = inspect_observer_host(args.host_hsl)
     if args.check_v21:
         check(report)
         check_host(report["host"])
+        check_observer_host(report["host_observer"])
         report["v21_contract"] = "PASS"
     print(json.dumps(report, indent=2))
 

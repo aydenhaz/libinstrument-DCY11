@@ -9,6 +9,7 @@
 
 using IPL_ABI::PendingPacket;
 using IPL_ABI::PacketConstructionOps;
+using IPL_ABI::PacketDerivedTables;
 using NS_InstrumentPannelLarge::CGIPLPacket;
 
 namespace {
@@ -40,7 +41,7 @@ void constructHost(void* p, GNS_FRAME::CGContext* ctx) {
     allocated[0x40] = 0x22;
 }
 void destroyHost(void* p) {
-    assert(p == allocated && allocated[0] == 0x11);
+    assert(p == allocated);
     steps.push_back(HostDtor);
 }
 void constructCover(void* p) {
@@ -51,7 +52,6 @@ void constructCover(void* p) {
 }
 void destroyCover(void* p) {
     assert(p == allocated + IPL_ABI::kPacketCoverOffset);
-    assert(allocated[IPL_ABI::kPacketCoverOffset] == 0x33);
     steps.push_back(CoverDtor);
 }
 const PacketConstructionOps ops = {
@@ -77,6 +77,36 @@ int main() {
         for (std::size_t i = IPL_ABI::kPacketProxyOffset;
              i < IPL_ABI::kPacketProxyOffset + 4; ++i) assert(allocated[i] == 0);
         assert(allocated[IPL_ABI::kPacketProxyOffset - 1] == 0xa5);
+        assert(CGIPLPacket::activePacket() == nullptr);
+        assert((steps == std::vector<Step>{Alloc, HostCtor, CoverCtor}));
+        assert(!pending.hasDerivedTables());
+        const PacketDerivedTables partial = {0x11111111, 0, 0x33333333, 0x44444444};
+        try {
+            pending.installDerivedTables(partial);
+            assert(false);
+        } catch (const std::invalid_argument&) {}
+        assert(!pending.hasDerivedTables());
+        assert(allocated[0] == 0x11 && allocated[0x40] == 0x22 &&
+               allocated[IPL_ABI::kPacketCoverOffset] == 0x33);
+        const PacketDerivedTables tables = {
+            0x11111111, 0x22222222, 0x33333333, 0x44444444
+        };
+        pending.installDerivedTables(tables);
+        assert(pending.hasDerivedTables());
+        auto word = [](std::size_t offset) {
+            std::uint32_t result;
+            std::memcpy(&result, allocated + offset, sizeof(result));
+            return result;
+        };
+        assert(word(0xc0) == tables.coverMap);
+        assert(word(0xc4) == tables.coverBusiness);
+        assert(word(0x40) == tables.hostObjMem);
+        assert(word(0x00) == tables.hostPackage);
+        assert(word(0x168) == 0);
+        try {
+            pending.installDerivedTables(tables);
+            assert(false);
+        } catch (const std::logic_error&) {}
         assert(CGIPLPacket::activePacket() == nullptr);
         assert((steps == std::vector<Step>{Alloc, HostCtor, CoverCtor}));
     }

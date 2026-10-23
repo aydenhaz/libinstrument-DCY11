@@ -6,6 +6,30 @@ missing. An earlier r27d development build loaded on a device, then GFrame
 failed to load the package and the app exited by SIGABRT. Fragment and observer
 bodies in the wider rebuild remain provisional.
 
+## 2026-10-24 Packet/Opening construction stage checkpoint
+
+- Pinned original `0x2eb36..0x2eb42` derived Packet vptr store order.
+  `PendingPacket` now accepts all four nonzero ARM32 address points together,
+  installs them at `+0xc0`, `+0xc4`, `+0x40`, then `+0`, and still rolls back
+  without publishing to GFrame. Native ASan/UBSan verifies offsets,
+  incomplete/repeated input rejection and reverse cleanup. Real derived
+  callbacks/RTTI and ownership transfer remain absent.
+- Pinned original Activity vtable slots 12/25 and the later `+8` gate.
+  Restored an isolated ordered gate and a rollback-only Opening host prefix:
+  `new(0x440)`, imported `CGFragment` C2 with mode 0, imported
+  `hsl::ObserverBase` C2 at `+0x2e8` with inline name `AutoBaseFragment`,
+  and engine ID 5 at `+0x308`. The matching host `CGFragment` D2 cleans up.
+  Native ASan/UBSan stage/gate tests and original V21 ELF gate pass.
+- Official NDK r26c was checksum verified and re-extracted. Assembled
+  **51/51** ARM32 sources compile and strict `--no-undefined` link passes.
+  Linked module ABI, Packet vtable shape and build publication checks pass.
+  Development SO SHA256:
+  `d50eb8fb248b8c2453ffcdf305bfd7f666e4920cde1df12be46cebada8d92c9e`.
+  No new device test. Factory registration, a real Packet and the remaining
+  `0x440` Opening Fragment layout/lifecycle still block replacement.
+  See `analysis/PACKET_FACTORY_STAGING.md` and
+  `analysis/OPENING_FRAGMENT_STAGING.md`.
+
 ## 2026-10-24 Packet/module ALC checkpoint
 
 - Corrected the shared `AlcExport` calling convention: the V21 logger reads

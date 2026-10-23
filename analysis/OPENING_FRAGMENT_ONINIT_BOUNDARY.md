@@ -31,3 +31,11 @@ The Opening Fragment's complete base hierarchy, observer interfaces,
 constructor, error path and ownership remain to be rebuilt before restoring
 the rest of `onInitEnd` or activating the Packet factory. The linked SO
 therefore remains a development artifact and cannot replace the V21 image.
+
+The isolated `PendingOpeningHost` now calls the matching host
+`CGFragment` C2 with launch mode 0, constructs `hsl::ObserverBase` at
+`+0x2e8` with the inline name `AutoBaseFragment`, and writes engine 5 at
+`+0x308`. It always rolls back through the imported `CGFragment` D2; it
+does not install the derived Fragment vptrs or leave a live Fragment. The
+Activity calls at vtable slots 12 and 25 followed by the `activity+8` gate
+are modeled separately. Details: `analysis/OPENING_FRAGMENT_STAGING.md`.

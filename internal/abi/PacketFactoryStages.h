@@ -26,6 +26,17 @@ struct PacketConstructionOps {
     void (*destroyCover)(void*);
 };
 
+// Address points in the original factory's store order. Values are ARM32
+// virtual-table pointers (the first callable slot, after the RTTI header).
+// Keeping them together prevents exposing a host object with only some of
+// its derived virtual subobjects installed.
+struct PacketDerivedTables {
+    std::uint32_t coverMap;
+    std::uint32_t coverBusiness;
+    std::uint32_t hostObjMem;
+    std::uint32_t hostPackage;
+};
+
 class PendingPacket {
 public:
     PendingPacket(GNS_FRAME::CGContext*, const PacketConstructionOps&);
@@ -34,12 +45,17 @@ public:
     PendingPacket& operator=(const PendingPacket&) = delete;
     // For inspection while this guard is alive. No ownership transfer exists.
     const unsigned char* bytes() const { return static_cast<const unsigned char*>(storage_); }
+    // This stage still rolls the object back; installing vptrs cannot publish
+    // it until Packet callbacks, RTTI, Fragment lifecycle and ownership work.
+    void installDerivedTables(const PacketDerivedTables&);
+    bool hasDerivedTables() const { return derivedTablesInstalled_; }
 private:
     void cleanup() noexcept;
     PacketConstructionOps ops_;
     void* storage_ = nullptr;
     bool hostConstructed_ = false;
     bool coverConstructed_ = false;
+    bool derivedTablesInstalled_ = false;
 };
 
 #if defined(__arm__) && !defined(__aarch64__) && UINTPTR_MAX == 0xffffffffu

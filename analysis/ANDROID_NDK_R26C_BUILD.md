@@ -70,6 +70,17 @@ places flag, zero, module, auxiliary, signature, line, name and optional
 pointers in successive stack words before calling the logger; see
 `analysis/MODULE_ALC_ABI.md`. This is still not a usable replacement.
 
+At the next Packet/Opening construction checkpoint, the same verified NDK
+r26c compiled **51/51** source files and passed strict `--no-undefined`
+linking. The three extra ARM32 units are the Opening Activity gate, Opening
+host operations and Opening host construction guard. The new SO SHA256 is
+`d50eb8fb248b8c2453ffcdf305bfd7f666e4920cde1df12be46cebada8d92c9e`.
+`tests/large_screen_abi_test.py`, the NDK Packet shape probe, build-output
+contract, original ELF gate and native ASan/UBSan stage tests pass. The
+Opening host C2/D2 and ObserverBase C2 references resolve against the
+matching V21 host libraries. This stage is still rolled back, not registered,
+and has not been tested on Android hardware.
+
 This is a development build, **not an installable replacement**. The
 earlier NDK r27d development build loaded on a device but GFrame failed to
 load `com.autonavi.package.GIPLPacket`, followed by SIGABRT. The current

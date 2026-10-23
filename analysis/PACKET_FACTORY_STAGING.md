@@ -6,12 +6,18 @@ clears the ARM32 proxy word at `+0x168`, installs four Packet vptrs and
 publishes its singleton to `0x6fd48`. See
 `rebuild-v3/analysis/v21_verified/packet_factory_runtime_table.md`.
 
-`internal/abi/PacketFactoryStages.{h,cpp}` now implements only the
-**unpublished** portion through the proxy clear. Its `PendingPacket` guard
+`internal/abi/PacketFactoryStages.{h,cpp}` implements the **unpublished**
+portion through the proxy clear and an optional derived-vptr stage. Its `PendingPacket` guard
 owns the allocation and always destroys CoverUtil, then the GFrame host base,
 then frees the allocation. If CoverUtil construction throws, it destroys the
 completed host base; if the host constructor throws, it only frees the raw
 allocation. No pointer is transferred to GFrame or the Packet singleton.
+Four nonzero ARM32 address points must be supplied together; the guard
+writes them in original order at `+0xc0`, `+0xc4`, `+0x40`, then `+0`.
+The original store instructions at `0x2eb36..0x2eb42` are pinned by
+`tools/inspect_packet_factory.py --check-v21`. The native test supplies
+mock words, not real production RTTI/vtable pointers. Partial or repeated
+installation fails before another store.
 
 On ARM32, `internal/abi/PacketFactoryHostOps.cpp` supplies actual callback
 bindings to the matching `libGFrame.so` C2/D2 symbols and the reconstructed
@@ -39,15 +45,16 @@ ASAN_OPTIONS=detect_leaks=0 /tmp/ipl-packet-stage-test
 ```
 
 The test checks allocation extent, host/Cover order, four-byte proxy clear,
+the four derived-vptr offsets, partial/repeated installation rejection,
 no singleton publication, reverse cleanup, and exception rollback. It passed
 with ASan/UBSan. LeakSanitizer is disabled because this environment cannot
 inspect `/proc` under the test runner.
 
 This is a prerequisite for the live factory, **not** an operational factory
-or a replacement SO. The derived Packet vptrs, RTTI, virtual callbacks,
+or a replacement SO. The real derived Packet vptrs, RTTI, virtual callbacks,
 Fragment construction, CoverUtil ownership, and module registration are
-still absent. No Android NDK compile/link or device run was performed for
-these new files.
+still absent. Installing four mock address points in a rollback guard does
+not produce a live factory.
 
 An ARM GNU compile of `PacketFactoryHostOps.cpp` confirms direct references
 to the host C2/D2 and local CoverUtil C1/D1 symbols. That compiler's
