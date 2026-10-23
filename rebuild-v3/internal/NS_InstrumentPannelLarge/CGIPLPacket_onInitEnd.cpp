@@ -4,7 +4,7 @@
  * Signature string recovered @0x54cb0:
  *   "virtual void NS_InstrumentPannelLarge::CGIPLPacket::onInitEnd()"
  *
- * Complete call trace (70 calls, verified):
+ * Original path landmarks (the later Fragment stage is not implemented):
  *   1. ALC export block (module "HMI_PANNELLARGE", name "onInitEnd")
  *   2. LargeScreenImpl ctor (operator new 0x10 = 16B)
  *      ExModuleManager::GetInstance()->ModuleReg((ModuleInterfaceId)0x1f40, impl)
@@ -14,28 +14,15 @@
  *      ThirdManager::SetUITaskThread(UI_TASK_DEVICE_ID, engineId, 0, false, proxy)
  *      CommonUtils::GetEngineIdByDeviceId(id); CGFrameSimulation::getId()
  *      UIObject::SetUITaskThread(frameId, engineId)
- *   4. Fragment context:
- *      ownWorkStation()->getFragmentActivity(); Packet package-base getContext()
- *      new bl::ObjectRuntimeInfo(BLObject*)
- *   5. Timer: TimerUtilsFuns::InsertTimerById((long long)... )
- *   6. AutoConfigJsonData::GetInstance()->Init()
- *      GetSurfaceConfig(ScreenType, SurfaceConfig&)   <- "AutoConfigJsonData::GetInstance() is NULL" assert
- *   7. Observer registrations (SystemNotify):
- *      AddMapSurfaceViewObserver(this)          name "AddMapSurfaceViewObserver"
- *      AddLanguageSwitchObserver(this, bool)    name "_systemNotify->AddLanguageSwitchObserver"
- *      MultiScreenService::GetInstance()->GetStartOpenScreenMode(i)
- *      AddNetObserver(this)
- *      CGBroadcaster::getInstance(u32); GetSystemNotifyHandle()
- *      AddInstrumentPannelObserver(this)        name "AddInstrumentPannelObserver"
- *   8. Fragment host wiring:
- *      CGFragment::setContext(ctx); setType(void*)
- *      CGIntent intent; CGActivity::setFragment(int, fragment, intent)
- *   9. Screen mode publish:
- *      AutoConfigScreenMode::GetInstance()->SetCurrentScreenMode(ScreenType, mode)
- *      MultiScreenService::SetStartOpenScreenMode(mode, tagSTExtScreen)
- *  10. Logging: CGString::Format + CGGFrameCrashLogger::exportToAndroidLogCat
- *      CGFrameAlcLog::getInstance() + I_GetAlcDevPtr() flush pairs
- *  11. abort() on fatal path
+ *   4. Packet package-base getContext(), then test the host activity.
+ *   5. Allocate a separate 0x440-byte Opening Fragment and call its
+ *      constructor at 0x41954 with the HMI_OPENING tag. The fragment owns
+ *      ObjectRuntimeInfo at +0x384 (with a +0x380 BLObject argument) and
+ *      observer interfaces at +0x36c etc.
+ *   6. Set context/type on the constructed fragment, and pass that same
+ *      fragment to CGActivity::setFragment. Bind Packet CoverUtil (+0xc0)
+ *      to the fragment's +0x40c field in the tail call to 0x3bdbc.
+ *      This whole fragment stage is still unrecovered and is not called.
  *
  * Additional strings @0x55ec9: "NS_MultiScreenBase::AutoOpeningFragment::AutoOpeningFragment
  * (bl::MapEngineID, hsl::UI_TASK_DEVICE_ID)", "_engineId:%d", "windowId:%d",
@@ -46,27 +33,13 @@
 #include "CGIPLPacket.h"
 #include "LargeScreenImpl.h"
 #include "../AlcExport.h"
-#include <GFrame/CGString.h>
 #include <GFrame/CGFrameSimulation.h>
 #include <GFrame/CGPackage.h>
-#include <GFrame/CGIntent.h>
-#include <GFrame/CGBroadcaster.h>
-#include <GFrame/CGGFrameCrashLogger.h>
-#include <GFrame/CGFrameAlcLog.h>
-#include <GFrame/GblAlc.h>
 #include <hsl/HSL.h>
-#include <hsl/SystemNotify.h>
-#include <hsl/MultiScreenService.h>
 #include <hsl/ThirdManager.h>
 #include <hsl/CommonUtils.h>
 #include <hsl/UIObject.h>
-#include <hsl/TimerUtilsFuns.h>
 #include <hsl/UITaskThreadProxy.h>
-#include <NS_MultiScreenBase/AutoConfigJsonData.h>
-#include <NS_MultiScreenBase/AutoConfigScreenMode.h>
-#include "Observers.h"
-#include <NS_MultiScreenBase/AutoExscreenNotifyObserver.h>
-#include <ExModuleManager.h>
 #include <new>
 
 namespace NS_InstrumentPannelLarge {
@@ -102,46 +75,18 @@ void CGIPLPacket::onInitEnd() {
         hsl::UIObject::SetUITaskThread(engine, GNS_FRAME::CGFrameSimulation::ownWorkStation()->getId());
     }
 
-    /* 4. Fragment context + runtime info */
+    /* 4. V21 retrieves these from real host objects before creating the
+       Opening Fragment. The current Packet has no constructed host base. */
     GNS_FRAME::CGFragmentActivity *activity =
         GNS_FRAME::CGFrameSimulation::ownWorkStation()->getFragmentActivity();
-    (void)activity; // Original also dispatches activity slots 12 and 25; unrecovered.
     GNS_FRAME::CGContext* context =
         reinterpret_cast<GNS_FRAME::CGPackage*>(this)->getContext();
-    bl::ObjectRuntimeInfo *rti = new bl::ObjectRuntimeInfo(legacy_.blObject_);
-
-    /* 5. Init timer by id */
-    hsl::TimerUtilsFuns::InsertTimerById(/*timer id*/ 0);
-
-    /* 6. Surface config */
-    NS_MultiScreenBase::AutoConfigJsonData *cfg =
-        NS_MultiScreenBase::AutoConfigJsonData::GetInstance();
-    if (cfg == 0) { /* "AutoConfigJsonData::GetInstance() is NULL" */ }
-    cfg->Init();
-    NS_MultiScreenBase::SurfaceConfig sc;
-    cfg->GetSurfaceConfig(0, sc);
-
-    /* 7. Observer registration intentionally omitted here. The V21 observer
-       subobjects live in the 0x440-byte Opening Fragment, while this Packet
-       allocation is only 0x16c bytes. Registering Packet as those interfaces
-       was an invalid owner/receiver reconstruction; restore at the real
-       Opening Fragment construction site once its base layout is recovered. */
-
-    /* 8. Host fragment wiring */
-    legacy_.hostFragment_->setContext(context);
-    legacy_.hostFragment_->setType(this);
-    GNS_FRAME::CGIntent intent;
-    static_cast<GNS_FRAME::CGActivity*>(legacy_.activity_)->setFragment(0, legacy_.hostFragment_, intent);
-
-    /* 9. Publish screen mode */
-    NS_MultiScreenBase::AutoConfigScreenMode::GetInstance()
-        ->SetCurrentScreenMode(0, /*mode*/ legacy_.mode_);
-    static NS_MultiScreenBase::tagSTExtScreen st{};
-    hsl::MultiScreenService::GetInstance()->SetStartOpenScreenMode(legacy_.mode_, st);
-
-    /* 10. Crash-log breadcrumb */
-    CGString s; s.Format(reinterpret_cast<const unsigned short*>(u"onInitEnd"));
-    GNS_FRAME::CGGFrameCrashLogger::exportToAndroidLogCat(0, "onInitEnd", 0, s);
+    (void)activity;
+    (void)context;
+    // Stop before fragment allocation. Its 0x440-byte base and observer
+    // subobjects do not exist in the rebuild. The old legacy_ fields read
+    // unconstructed Packet bytes and fabricated a heap ObjectRuntimeInfo,
+    // timer ID 0 and screen mode; none can be used for this stage.
 }
 
 } // namespace

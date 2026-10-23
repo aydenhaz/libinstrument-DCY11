@@ -17,8 +17,17 @@ it does not reconstruct the complete Packet or teardown method.
    query its device identifier (slot 42), log it, then DestroyDisplayFacility.
 9. ThirdManager::RemoveUITaskThread(device 2).
 10. If Packet+0x168 proxy is nonnull, call its deleting destructor (slot 1),
-    then clear that field and the Packet singleton pointer.
+    then clear that field and the Packet singleton pointer at `0x6fd48`.
 11. Destroy the temporary CGString.
+
+The final `movs r0,#0; ldr r1,[pc,#0x3c]; add r1,pc; str r0,[r1]`
+at `0x2f41a..0x2f424` uses the literal at `0x2f460`. Its computed
+destination is `0x6fd48`, while `onInitEnd` publishes the `LargeScreenImpl`
+pointer at `0x6fd4c`. This teardown never accesses the module singleton;
+adding `delete activeLargeScreenImpl` here would introduce a lifetime change
+unsupported by the original. The module's eventual owner is still unknown.
+`tools/inspect_packet_factory.py --check-v21` pins both addresses and the
+teardown instruction sequence.
 
 There is no RemoveInstrumentPannelObserver call in this method. Observer
 subobjects belong to Opening Fragment, whose lifetime is separate.
@@ -60,10 +69,11 @@ extent includes its vptr and remains 0xf0. The original Common library exports
 D0/D1 destructors and the primary/secondary vtables; instrument 0x2f40e..0x2f412
 calls deleting-destructor slot 1.
 
-Packet's proxy field now occupies +0x168. Unverified initialization fields are
-explicitly named legacy_ and the remaining prefix is reserved; no host base or
-CoverUtil constructor is implied by padding. Retired bogus Batch7 fields were
-removed. onDestroy deletes the proxy after thread removal, zeros the pointer,
+Packet's proxy field now occupies +0x168. The entire prefix is explicitly
+unconstructed opaque storage; neither the host base nor CoverUtil is implied
+by its size. Invalid `legacy_` fields and reads have been removed. Retired
+bogus Batch7 fields were also removed. onDestroy deletes the proxy after
+thread removal, zeros the pointer,
 then clears the rebuilt singleton. The constructor no longer publishes that
 singleton, and still does not construct a valid host Packet. The shutdown
 contract test explicitly simulates publication after installing its mock

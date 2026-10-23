@@ -2,11 +2,11 @@
  * Batch 1 — LargeScreenImpl (IBaseModuleEx implementation)
  * Reconstructed from sub_2dfa4 / sub_2e02c / sub_2e03c / sub_2e0f8.
  *
- * Vtable @0x6b79c (LargeScreenImpl, 4 slots):
- *   [0] sub_2dfa4  ~LargeScreenImpl            -> ModuleUnReg(0x1fa) + ALC export tag 0x4b
+ * Primary vtable @0x6b79c (LargeScreenImpl, 4 slots), secondary at 0x6b7b4:
+ *   [0] sub_2dfa4  ~LargeScreenImpl            -> ModuleUnReg(0x1f40) + ALC export tag 0x4b
  *   [1] sub_2e02c  deleting-dtor thunk -> [0]
  *   [2] sub_2e03c  int32_t QueryInterface(int32_t, void**)  -> ALC export tags 0x9f, 0x166
- *   [3] sub_2e0f8  OnChangeScreenMode(...)      -> 2548B state machine (below)
+ *   [3] sub_2e0f8  doStartFragment(...)         -> secondary -4 thunk at 0x2eaf8
  *
  * ALC export block (8 words, passed by value as 4th arg):
  *   { 0, 0, module, aux, tag, signature, this, name }   fn(alc, 8, 0, block)
@@ -34,12 +34,14 @@ static const char kNameQI[]   = "QueryInterface:%p %p";
 
 
 LargeScreenImpl::LargeScreenImpl() {
-    /* vtable store observed at 0x2dfb2: vptr=0x6b79c(+0x1c region), count 8 */
+    // The original Packet onInitEnd inlines the 0x10-byte construction and
+    // registers the completed module with interface ID 0x1f40.
+    ExModuleManager::GetInstance()->ModuleReg((ModuleInterfaceId)0x1f40, this);
 }
 
 LargeScreenImpl::~LargeScreenImpl() {
     /* sub_2dfa4 */
-    ExModuleManager::GetInstance()->ModuleUnReg((ModuleInterfaceId)0x1fa /*506*/);
+    ExModuleManager::GetInstance()->ModuleUnReg((ModuleInterfaceId)0x1f40);
     AlcExport(kNameDtor, kSigDtor, 0x4b, this);
 }
 
@@ -47,7 +49,10 @@ int32_t LargeScreenImpl::QueryInterface(int32_t id, void **out) {
     /* sub_2e03c — two ALC exports, no ModuleReg here */
     AlcExport(kNameQI, kSigQI, 0x9f /*159*/, this);
     AlcExport(kNameQI, kSigQI, 0x166 /*358*/, this);
-    if (out) *out = this;
+    // V21 0x2e090..0x2e0d8 returns the +4 interface pointer, or -1 when
+    // the caller supplied no output storage.
+    if (!out) return -1;
+    *out = static_cast<IMultiScreenInterfaces*>(this);
     return 0;
 }
 
@@ -72,26 +77,12 @@ void LargeScreenImpl::OnChangeScreenMode(int32_t screenType, int32_t mode, const
     /* key literal pool @0x2e16e-0x2e198 region (String16) */
     /* cfg->GetInt32(key, cur, hsl::Config::VALUE_STRATEGY_DEFAULT); */
 
-    GNS_FRAME::CGPackage *pkg = GNS_FRAME::CGPackage::getHostFragmentActivityUnrecovered();
-    GNS_FRAME::CGContext *ctx = GNS_FRAME::CGPackage::getContextUnrecovered();
-    /* Original assertion requires the real Fragment state, not a context string.
-       Restore it together with the correct receiver/layout. */
-
-    /* branch per (screenType, mode): see analysis log strings
-       "largeScreenMode:%d,curLargeScreenMode:%d" @0x5365c, "largeScreenMode same as before" @0x53685 */
-    GNS_FRAME::CGFragment *frag = GNS_FRAME::CGFragment::tryStartExistFragmentUnrecovered(intent, 2, ctx);
-    /* __dynamic_cast to one of the 10 concrete CGInstrumentPannelLarge*Fragment types */
-
-    if (frag) {
-        GNS_FRAME::CGExhibition *exh = GNS_FRAME::CGFrameSimulation::ownWorkStation()->getExhibition();
-        CGString name(reinterpret_cast<const unsigned short*>(u""));  /* per-branch name, pool @0x2e2d6 */
-        exh->appendFragment(3, name, intent, 0);
-        return;
-    }
-
-    /* fallback: create new fragment for this mode */
-    /* frag = new CGInstrumentPannelLargeXxxFragment(...); frag->setContext(ctx);
-       frag->startNewFragmentUnrecovered(parent, 0, intent, 2); */
+    (void)cur; (void)cfg;
+    // The original CGPackage receiver is the Packet singleton at RVA 0x6fd48,
+    // written by factory 0x2eb08 only after base, CoverUtil, and vptr setup.
+    // The rebuilt Packet does not construct those bases; Fragment factories
+    // and screen-mode dispatch remain unrecovered.
+    // The previous receiver-less calls could not dispatch on real host objects.
 }
 
 } // namespace NS_InstrumentPannelLarge

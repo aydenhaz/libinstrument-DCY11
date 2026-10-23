@@ -53,6 +53,9 @@ compiled 48/48 translation units and passed the same strict link. Its
 dual-interface vtable/RTTI check passed, and missing original exports
 dropped to **30** (15 typeinfo/type-name pairs). See
 `analysis/LARGE_SCREEN_MODULE_ABI.md`. This still does not register Packet.
+The subsequent removal of invalid `legacy_` Packet fields has passed native
+syntax and mock-sanitizer checks, but the transient NDK checkout is gone;
+an Android compile/link of that later revision has not been rerun.
 
 This is a development build, **not an installable replacement**. The
 earlier NDK r27d development build loaded on a device but GFrame failed to
@@ -60,6 +63,7 @@ load `com.autonavi.package.GIPLPacket`, followed by SIGABRT. The current
 source still does not publish a constructed Packet or run the fifth
 original module initializer that registers its factory. Its isolated
 construction guard rolls back immediately and the legacy Packet fields
-are not a valid host object. See `analysis/DEVICE_BLACK_SCREEN_CRASH.md`
+were subsequently removed; the current opaque prefix is still not a valid
+host object. See `analysis/DEVICE_BLACK_SCREEN_CRASH.md`
 and `analysis/PACKET_VIRTUAL_ABI.md`. No device test was run on the r26c
 output.

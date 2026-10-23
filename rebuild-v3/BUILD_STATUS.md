@@ -6,8 +6,29 @@ missing. An earlier r27d development build loaded on a device, then GFrame
 failed to load the package and the app exited by SIGABRT. Fragment and observer
 bodies in the wider rebuild remain provisional.
 
+## 2026-10-23 Opening Fragment ownership checkpoint
+
+- Re-read the V21 `onInitEnd` call sequence: `new(0x440)` at `0x2ecfc`
+  constructs a distinct `HMI_OPENING` Fragment at `0x41954`, with host
+  `CGFragment` and embedded `ObjectRuntimeInfo` at Fragment+0x384.
+  Activity registration and Cover binding both receive that same Fragment.
+- Removed the fake `legacy_` Packet fields and their unconstructed reads,
+  including the fabricated heap runtime-info object, timer ID zero and
+  screen mode. The assembled method stops before the unrecovered Opening
+  Fragment stage. The Packet still has no real host base or factory and
+  cannot be registered. Original ELF gate and native compiler/ASan/UBSan
+  stage and teardown tests pass. See
+  `analysis/OPENING_FRAGMENT_ONINIT_BOUNDARY.md`.
+- The earlier 48/48 Android r26c strict link predates this source cleanup.
+  That transient NDK checkout is no longer present, so an Android link of
+  this exact revision remains to be rerun; no new linked SO is claimed.
+
 ## 2026-10-23 LargeScreenImpl dual-interface checkpoint
 
+- Verified the original Packet teardown's final PC-relative store: it clears
+  only the Packet singleton at `0x6fd48`; the module at `0x6fd4c` is not
+  released by `onDestroy`. Pinned both addresses and the instruction bytes
+  in the V21 ELF inspection gate. The module's eventual owner is unknown.
 - Original `onInitEnd` allocates a 0x10-byte `LargeScreenImpl` and stores
   its pointer in a separate BSS singleton at `0x6fd4c`, while Packet uses
   `0x6fd48`. Corrected the module's two-base C++ declaration, secondary
@@ -15,9 +36,9 @@ bodies in the wider rebuild remain provisional.
   and unregistration use the verified ID `0x1f40`; `QueryInterface`
   publishes `this+4` and returns `-1` for a null output pointer.
 - `onInitEnd` no longer stores the module into Packet's primary vptr or
-  its transient third-party handle/context into host async fields. Its
-  later legacy Fragment fields remain invalid, so the Packet factory is
-  still disabled. NDK r26c compiled 48/48 and strictly linked. Original
+  its transient third-party handle/context into host async fields. The
+  later legacy Fragment fields were removed in the next checkpoint; the
+  Packet factory is still disabled. NDK r26c compiled 48/48 and strictly linked. Original
   visible exports missing from the development SO decreased from 34 to 30.
   The dual-vtable Android ELF test and native ASan/UBSan module contract
   test pass; see `analysis/LARGE_SCREEN_MODULE_ABI.md`.

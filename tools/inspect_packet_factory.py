@@ -201,6 +201,32 @@ def inspect(path):
         # Thumb ADD r0,pc at 0x2eb46 observes PC=0x2eb4a.
         "factory_singleton_slot": hex(0x2EB4A + elf.u32(0x2EB54)),
         "factory_singleton_store": elf.at(0x2EB48, 2).hex(),
+        # The Packet teardown at 0x2f41a..0x2f424 zeros only the factory's
+        # singleton. Its PC-relative literal is at 0x2f460; the module
+        # singleton allocated by onInitEnd lives at a different BSS address.
+        "module_lifetime": {
+            "module_singleton_slot": hex(0x2EBE8 + elf.u32(0x2EEBC)),
+            "on_destroy_clear_slot": hex(0x2F426 + elf.u32(0x2F460)),
+            "on_destroy_tail": elf.at(0x2F41A, 12).hex(),
+        },
+        "opening_fragment": {
+            "allocation_immediate": elf.at(0x2ECFC, 4).hex(),
+            "constructor_target": hex(thumb_bl_target(elf, 0x2ED0A)),
+            "constructor_tag": elf.at(0x2ED0C + elf.u32(0x2EED4), 12)
+                                  .rstrip(b"\0").decode("ascii"),
+            "host_fragment_base": plt_symbol(
+                elf, thumb_bl_target(elf, 0x41968) & ~3)[1],
+            "runtime_info_receiver_and_arg": elf.at(0x2ED42, 8).hex(),
+            "embedded_runtime_info": plt_symbol(
+                elf, thumb_bl_target(elf, 0x2ED5C) & ~3)[1],
+            "set_context": plt_symbol(
+                elf, thumb_bl_target(elf, 0x2F182) & ~3)[1],
+            "set_type": plt_symbol(
+                elf, thumb_bl_target(elf, 0x2F18C) & ~3)[1],
+            "activity_set_fragment": plt_symbol(
+                elf, thumb_bl_target(elf, 0x2F1A0) & ~3)[1],
+            "cover_binding_tail": elf.at(0x2F1BA, 16).hex(),
+        },
         "short_virtual_bodies": {
             hex(address): elf.at(address, size).hex()
             for address, size in (
@@ -226,6 +252,25 @@ def check(report):
         raise ValueError("factory proxy clear instruction differs")
     if report["factory_singleton_slot"] != "0x6fd48" or report["factory_singleton_store"] != "0560":
         raise ValueError("factory singleton publication differs")
+    if report["module_lifetime"] != {
+        "module_singleton_slot": "0x6fd4c",
+        "on_destroy_clear_slot": "0x6fd48",
+        "on_destroy_tail": "0020cbf868010f4979440860",
+    }:
+        raise ValueError("Packet teardown/module singleton boundary differs from V21")
+    if report["opening_fragment"] != {
+        "allocation_immediate": "4ff48860",
+        "constructor_target": "0x41954",
+        "constructor_tag": "HMI_OPENING",
+        "host_fragment_base": "_ZN9GNS_FRAME10CGFragmentC2ENS0_11ELaunchModeE",
+        "runtime_info_receiver_and_arg": "06f5617006f56071",
+        "embedded_runtime_info": "_ZN2bl17ObjectRuntimeInfoC1EPNS_8BLObjectE",
+        "set_context": "_ZN9GNS_FRAME10CGFragment10setContextEPNS_9CGContextE",
+        "set_type": "_ZN9GNS_FRAME10CGFragment7setTypeEPv",
+        "activity_set_fragment": "_ZN9GNS_FRAME10CGActivity11setFragmentEiPNS_10CGFragmentERKNS_8CGIntentE",
+        "cover_binding_tail": "00f1c00130461bb0bde8000fbde8f040",
+    }:
+        raise ValueError("Opening Fragment allocation/host wiring differs from V21")
     tops = [0, -0x40, -0xC0, -0xC4]
     slots = [
         [0x2EB59, 0x2EB6F],

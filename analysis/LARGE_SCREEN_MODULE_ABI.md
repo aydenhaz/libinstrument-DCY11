@@ -34,10 +34,15 @@ Android build still compiles 48/48 units and strictly links against nine
 hosts after the change.
 
 The Packet's `onInitEnd` now keeps this module in an independent static
-slot and stores the third-party handle and context in local variables.
-Its later `legacy_.blObject_`, `legacy_.hostFragment_`, `legacy_.activity_`
-and `legacy_.mode_` reads are **still unverified** and cannot run on the
-host-constructed Packet. Original `onInitEnd` allocates a separate
-`0x440`-byte Opening Fragment at `0x2ecfc` and has substantial remaining
-construction and ownership work. The factory is not registered and this
-development SO remains unsuitable for installation.
+slot and holds the third-party handle and context in local variables.
+The invalid `legacy_` Packet fields and reads have since been removed.
+Original `onInitEnd` allocates a separate `0x440`-byte Opening Fragment
+at `0x2ecfc`; its base construction, observers and ownership remain to
+be restored. The factory is not registered and this development SO remains
+unsuitable for installation. See `analysis/OPENING_FRAGMENT_ONINIT_BOUNDARY.md`.
+
+The original Packet `onDestroy` clears only the Packet singleton at `0x6fd48`.
+Its final PC-relative store at `0x2f424` does not reach the independent module
+slot at `0x6fd4c`. The rebuilt teardown accordingly leaves the module alone;
+its eventual disposal path has not been established. The original-ELF check
+now pins the two slots and the store bytes.

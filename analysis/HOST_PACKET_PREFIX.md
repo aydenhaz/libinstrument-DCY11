@@ -33,16 +33,14 @@ inspection gate; these offsets are additionally readable in the Thumb
 stores/calls at `0x1b4434..0x1b44ba` and `0x1b4320..0x1b4378`.
 
 The current `CGIPLPacket` class in `internal/NS_InstrumentPannelLarge/`
-still declares an `UnverifiedLegacyFields` member starting at offset zero.
-The assembled `onInitEnd()` no longer writes `legacy_.impl_` into the
-primary vptr or `legacy_.third_` / `legacy_.ctx_` into async state; the
-module is now a separate singleton and these transient handles are local.
-The later `legacy_.blObject_`, `legacy_.hostFragment_`,
-`legacy_.activity_` and `legacy_.mode_` reads are **not** backed by
-constructed host fields and remain unsafe. Do not register the existing
-class as a factory result. The host base must be represented by genuine
-inherited subobjects, and the opening Fragment must be built and owned
-separately. See `analysis/LARGE_SCREEN_MODULE_ABI.md`.
+now has an explicitly unconstructed opaque prefix. The invalid `legacy_`
+fields and all reads from them have been removed. The assembled
+`onInitEnd()` holds its module in a separate singleton and uses local
+activity/context variables. It stops before constructing the independent
+Opening Fragment; see `analysis/OPENING_FRAGMENT_ONINIT_BOUNDARY.md`.
+Do not register this class as a factory result. The host base must be
+represented by genuine inherited subobjects and the Opening Fragment
+must be built and owned separately.
 
 The NDK vtable probe in `tests/packet_vtable_shape_probe.cpp` models the
 base extents and vptr offsets but intentionally leaves these owning

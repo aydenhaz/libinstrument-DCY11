@@ -1,14 +1,12 @@
 #pragma once
 #include <cstdint>
 #include <cstddef>
-namespace bl { struct ObjectRuntimeInfo; }
 namespace GPI { class Closure; }
 namespace GNS_FRAME { class CGCanvas; class CGIntent; class CGFragment; class CGPackage; class CGContext; }
 namespace hmi { class UITaskThreadProxy; }
 namespace hsl { class IActivateVerification; }
 namespace NS_InstrumentPannelLarge {
 
-class LargeScreenImpl;
 class PacketFactory;
 
 class CGIPLPacket {
@@ -36,19 +34,10 @@ private:
     // PacketFactory is not implemented. It must call this only after the
     // complete host object exists. The shutdown contract test simulates that.
     static void publishConstructed(CGIPLPacket*);
-    // UNVERIFIED legacy fields used by the incomplete onInitEnd. These are
-    // NOT a reconstructed host base or CoverUtil base. Do not register factories
-    // or treat prefix size alone as object ABI compatibility.
-    struct UnverifiedLegacyFields {
-        LargeScreenImpl* impl_;
-        void* third_;
-        GNS_FRAME::CGContext* ctx_;
-        bl::ObjectRuntimeInfo* blObject_;
-        GNS_FRAME::CGFragment* hostFragment_;
-        void* activity_;
-        int mode_;
-    } legacy_;
-    unsigned char unconstructed_host_prefix_[0x168-sizeof(UnverifiedLegacyFields)];
+    // The V21 host package and CoverUtil bases occupy the entire prefix.
+    // Their constructors, virtual layout and owning members are not modeled
+    // by this storage-only class; the factory must remain disconnected.
+    alignas(void*) unsigned char unconstructed_host_and_cover_[0x168];
     hmi::UITaskThreadProxy* uiThreadProxy_ = nullptr;
     static CGIPLPacket* active_;
 };

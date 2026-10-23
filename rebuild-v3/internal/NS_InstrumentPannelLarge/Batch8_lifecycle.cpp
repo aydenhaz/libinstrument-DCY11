@@ -122,6 +122,9 @@ void CGIPLPacket::onDestroy() {
         ->RemoveUITaskThread(hsl::UI_TASK_DEVICE_INSTRUMENT);
     delete uiThreadProxy_;
     uiThreadProxy_=nullptr;
+    // V21 0x2f420..0x2f424 clears BSS +0x6fd48 (the Packet pointer).
+    // The separately registered LargeScreenImpl is at +0x6fd4c and is not
+    // destroyed by onDestroy; its eventual owner remains to be identified.
     active_=nullptr;
 }
 
