@@ -14,6 +14,7 @@
 #include <hsl/MultiScreenService.h>
 #include <NS_MultiScreenBase/AutoConfigScreenMode.h>
 #include <NS_MultiScreenBase/AutoConfigJsonData.h>
+#include <NS_MultiScreenBase/AutoMultiScreenConfig.h>
 #include "AutoMultiScreenConfigBinding.h"
 #include <asl/String16Utils.h>
 
@@ -24,7 +25,6 @@ namespace NS_MultiScreenBase {
 
  struct tagSTStartCrossInfo;
 struct SurfaceConfig; struct tagMultiViewModeInfo;
-struct MapViewModeConfig {};
 
 class AutoOpeningFragment {
 public:
@@ -43,13 +43,6 @@ class AutoArNaviFragment {
 public:
     AutoArNaviFragment(bl::MapEngineID, bool);
     void HideCrossImageOnUI();
-};
-class AutoMultiScreenConfig {
-public:
-    void ResetMapBindingList(int scene);
-    MapViewModeConfig GetMapViewModeConfig();
-    void UpdateTrafficEventState(bool);
-    void SetMapLevel(int, int);
 };
 class CGIPLGuideS311Fragment { public: bool GoToCross(...); };
 class CGIPLCruiseS311Fragment { public: bool GoToCross(...); };
@@ -134,11 +127,9 @@ void RunOnUIThread_A() {
 // Definition retained in Batch17_compiled.cpp.
 
 
-/* sub_2be04 (620B) AutoMultiScreenConfig::GetMapViewModeConfig() */
-MapViewModeConfig AutoMultiScreenConfig::GetMapViewModeConfig() {
-    MapViewModeConfig c;
-    return c;
-}
+// 0x2be04 is the 36-byte outgoing status writer used by the observer's
+// map-status callback. It is not a receiver-free GetMapViewModeConfig()
+// returning an empty class, so do not export that synthetic method.
 
 /* sub_43a04 (616B) unnamed — config GetInt32 cluster */
 void ConfigInt32Cluster() {

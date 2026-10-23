@@ -2,6 +2,25 @@
 
 NOT a usable replacement. No successful strict shared-library link.
 
+## 2026-10-23 map view mode dependency
+
+- Restored V21 0x1def4's instance `AutoMultiScreenConfig::SetMapViewMode`:
+  both view lookups, the +0x314 state update, modes 0/1/2 mapped to 2/1/0,
+  mode 3 resolved through the engine-1 reference view, and 99 fallback.
+  Mock-vtable ASan/UBSan tests cover modes, null views and invalid values.
+- Restored 0x1781c's scene 0/1 dynamic-level close step. Host mock-vtable
+  tests verify `IsOpenDynamicLevel` and conditional `OpenDynamicLevel` on
+  separate ARM32 four-byte virtual slots. The 0x1e084 `SetMapLevel`
+  jump table and its +0x338 stored-type cleanup are documented in
+  `analysis/v21_verified/map_view_virtuals.md`. The isolated 0x1765c
+  dynamic initializer now writes the 0x88-byte parameter object, then
+  dispatches `InitDynamicLevel`, `OpenDynamicLevel(true, type)` and
+  `OpenDynamicCenter(false)`; mock-vtable ASan/UBSan tests check the record
+  and order. Its singleton-owning wrapper and `SetMapLevel` remain absent.
+  Removed Batch13's incorrect empty `GetMapViewModeConfig` pseudo-method,
+  which had mislabeled the status
+  writer at 0x2be04.
+
 ## 2026-10-23 map status callback branch analysis
 
 - Resolved V21 `libhsl.so` MapViewBaseImpl vtable relocations against the

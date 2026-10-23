@@ -41,7 +41,6 @@ public:
     bool OnOpenExScreenUi(const tagSTExtScreen&);
 };
 class AutoNaviFragment { public: void OnExScreenModeChange(int32_t,int32_t); };
-class AutoMultiScreenConfig { public: void SetMapLevel(int,int); };
 class AutoPreviewFragment { public: void ShowPreview(); };
 class AutoArNaviFragment { public: void onResume(); };
 class AutoCruiseFragment {
@@ -58,7 +57,6 @@ void AutoExscreenNotifyObserver_Ctor();
 using NS_MultiScreenBase::AutoOpeningFragment;
 using NS_MultiScreenBase::AutoExscreenNotifyObserver;
 using NS_MultiScreenBase::AutoNaviFragment;
-using NS_MultiScreenBase::AutoMultiScreenConfig;
 using NS_MultiScreenBase::AutoPreviewFragment;
 using NS_MultiScreenBase::AutoArNaviFragment;
 using NS_MultiScreenBase::AutoCruiseFragment;

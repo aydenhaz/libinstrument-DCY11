@@ -28,11 +28,11 @@ The level path checks 0x17ad0, and for requested level other than 99 calls
 0x173fc (field 0 UI config) then 0x1e084 (instance SetMapLevel). For requested
 mode other than 99 it calls 0x171b8 (field 1; preview scene 2 maps to scene 1),
 then may invoke map-view `OpenDynamicLevel(false, type 0)` at slot +0x3e8,
-conditionally start the timer
-at `this+0xcc`, and call instance SetMapViewMode at 0x1def4. It finally
-calls ResetMapBindingList at 0x1e790 using the scene ID. The current source's
-Batch12's incorrect static SetMapLevel pseudo-implementation was withdrawn;
-the real instance method remains undefined.
+conditionally start the timer at `this+0xcc`, and call instance
+SetMapViewMode at 0x1def4. It finally calls ResetMapBindingList at 0x1e790
+using the scene ID. The incorrect static Batch12 SetMapLevel pseudo-body was
+withdrawn; the real instance method remains undefined. The separate
+`SetMapViewMode` instance method now has its verified map-view dispatch.
 ResetMapBindingList now has the observed binding-state and service dispatch,
 but its containing singleton and scene-record constructor remain missing.
 These dependencies need repair before installing the callback.
@@ -41,7 +41,7 @@ The scene slots and UI-config read/write wrappers are now reconstructed
 in `AutoExscreenUiConfig.cpp`. `AutoExscreenMapStatusPlan.h` records the
 verified 99 / -1 decision branches for subsequent callback integration. The
 ARM32 Linux probe still leaves this callback undefined until its config
-singleton, timer and map-view dispatch are restored.
+singleton, level dispatch and timer are restored.
 
 The dynamic branch is narrower than the predicate alone: requested mode
 must differ from 99 and requested level must differ from -1. Thus its
@@ -115,8 +115,9 @@ callbacks still require recovery.
 machine-code call sites. These slot signatures depend on the V21 host ABI.
 
 The two callbacks still lack the full constructed config singleton,
-`SetMapLevel`, `SetMapViewMode`, map-view dispatch and observer
-construction. The partial helper is not installed as a substitute callback.
+`SetMapLevel`, remaining map-view dispatch and observer construction.
+`SetMapViewMode` is independently restored but requires that singleton;
+the partial helpers are not installed as substitute callbacks.
 
 The observer constructor at 0x29798 and registrations are also incomplete.
 The CrossControl member implementation assumes its original object layout;

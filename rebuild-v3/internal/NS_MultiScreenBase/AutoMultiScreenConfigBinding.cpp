@@ -2,12 +2,16 @@
 #include "AutoMultiScreenBindingState.h"
 #include "AutoExscreenUiConfig.h"
 #include <hsl/HSL.h>
+#include <NS_MultiScreenBase/AutoMultiScreenConfig.h>
 #include <cstdint>
 #include <cstring>
 #include <initializer_list>
 
 namespace NS_MultiScreenBase {
 namespace {
+// The V21 host vtables consist of four-byte ARM32 function pointers. Keep
+// their logical indices separate in 64-bit host contract tests as well.
+const unsigned armVtableWord = 4;
 int32_t wordAt(const unsigned char* object, unsigned offset) {
     int32_t value;
     std::memcpy(&value, object + offset, sizeof(value));
@@ -96,15 +100,98 @@ void AutoMultiScreenConfig_ResetMapBindingList(void* instance, int scene) {
     if (!service) return;
     typedef void* (*Lookup)(void*, int);
     void** serviceVtable = *static_cast<void***>(service);
-    Lookup lookup = reinterpret_cast<Lookup>(serviceVtable[0x3c / sizeof(void*)]);
+    Lookup lookup = reinterpret_cast<Lookup>(serviceVtable[0x3c / armVtableWord]);
     void* first = lookup(service, 1);
     void* second = lookup(service, state->words[0]);
     if (!first || !second) return;
     state->words[7] = 1;
     typedef void (*Bind)(void*, void*, int32_t*);
     void** firstVtable = *static_cast<void***>(first);
-    Bind bind = reinterpret_cast<Bind>(firstVtable[0x3c / sizeof(void*)]);
+    Bind bind = reinterpret_cast<Bind>(firstVtable[0x3c / armVtableWord]);
     bind(first, second, &state->words[1]);
+}
+
+void AutoMultiScreenConfig_SetMapViewMode(void* instance, int fallbackMode,
+                                         int requestedMode) {
+    hsl::MapView* own = AutoMultiScreenConfig_GetMapViewHandle(instance);
+    hsl::MapView* reference = hsl::HSL::GetMapViewHandle(
+        static_cast<bl::MapEngineID>(1));
+    if (!own || !reference) return;
+
+    const int effective = requestedMode == 99 ? fallbackMode : requestedMode;
+    putWord(static_cast<unsigned char*>(instance), 0x314,
+            static_cast<uint32_t>(effective));
+    if (static_cast<unsigned>(effective) > 3u) return;
+
+    typedef int (*GetMode)(void*);
+    typedef void (*SetMode)(void*, int, bool, bool, bool, bool);
+    void** ownVtable = *reinterpret_cast<void***>(own);
+    const SetMode setMode = reinterpret_cast<SetMode>(
+        ownVtable[0x90 / armVtableWord]);
+    int mapMode = 2 - effective;
+    if (effective == 3) {
+        void** referenceVtable = *reinterpret_cast<void***>(reference);
+        const GetMode getMode = reinterpret_cast<GetMode>(
+            referenceVtable[0x98 / armVtableWord]);
+        mapMode = getMode(reference);
+    }
+    setMode(own, mapMode, false, false, false, false);
+}
+
+void AutoMultiScreenConfig_CloseSceneDynamicLevel(int screen, int scene) {
+    const int engine = engineForScreen(screen);
+    if (engine < 0) return;
+    hsl::MapView* view = hsl::HSL::GetMapViewHandle(
+        static_cast<bl::MapEngineID>(engine));
+    if (!view || (scene != 0 && scene != 1)) return;
+
+    const int dynamicType = scene == 0 ? 1 : 0;
+    void** vtable = *reinterpret_cast<void***>(view);
+    typedef bool (*IsOpenDynamicLevel)(void*, int);
+    typedef void (*OpenDynamicLevel)(void*, bool, int);
+    const IsOpenDynamicLevel isOpen = reinterpret_cast<IsOpenDynamicLevel>(
+        vtable[0x3ec / armVtableWord]);
+    if (!isOpen(view, dynamicType)) return;
+    const OpenDynamicLevel open = reinterpret_cast<OpenDynamicLevel>(
+        vtable[0x3e8 / armVtableWord]);
+    open(view, false, dynamicType);
+}
+
+void AutoMultiScreenConfig_InitSceneDynamicLevel(void* instance, int scene) {
+    hsl::MapView* view = AutoMultiScreenConfig_GetMapViewHandle(instance);
+    if (!view) return;
+    unsigned char* object = static_cast<unsigned char*>(instance);
+    const unsigned sceneIndex = scene == 2 ? 2 : scene == 1 ? 1 : 0;
+    const unsigned char* sceneRecord = object + 0xe4 * sceneIndex;
+    const int32_t quarter = wordAt(sceneRecord, 8) / 4;
+
+    // sub_176dc..17732 writes every word of a 0x88-byte parameter object.
+    // Float fields are kept as their observed IEEE-754 words, avoiding an
+    // accidental change in rounding of the constants when compiled on ARM.
+    alignas(8) const uint32_t params[34] = {
+        10, 20, 20, 10, 20, 10, static_cast<uint32_t>(quarter),
+        0x3f000000u, 0x3f30e560u, 0x41880000u, 0x41700000u,
+        0x41880000u, 0x41600000u, 0x41880000u, 0x41600000u,
+        0x41880000u, 0x41600000u, 0x42340000u, 0x42480000u,
+        0x41880000u, 0x41f00000u, 0x41700000u, 0x41600000u,
+        0x41600000u, 600, 0x41880000u, 0x3f333333u, 0x41700000u,
+        0x42b40000u, 200, 0, 0, 0, 0
+    };
+    static_assert(sizeof(params) == 0x88, "V21 DynamicLevelParam extent");
+    void** vtable = *reinterpret_cast<void***>(view);
+    typedef void (*InitDynamicLevel)(void*, const void*);
+    typedef void (*OpenDynamicLevel)(void*, bool, int);
+    typedef void (*OpenDynamicCenter)(void*, bool);
+    reinterpret_cast<InitDynamicLevel>(vtable[0x3cc / armVtableWord])(view, params);
+    reinterpret_cast<OpenDynamicLevel>(vtable[0x3e8 / armVtableWord])(
+        view, true, scene == 0 ? 1 : 0);
+    reinterpret_cast<OpenDynamicCenter>(vtable[0x3f0 / armVtableWord])(
+        view, false);
+}
+
+void AutoMultiScreenConfig::SetMapViewMode(int fallbackMode,
+                                          int requestedMode) {
+    AutoMultiScreenConfig_SetMapViewMode(this, fallbackMode, requestedMode);
 }
 
 } // namespace NS_MultiScreenBase
