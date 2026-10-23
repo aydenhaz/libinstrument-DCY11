@@ -86,3 +86,12 @@ CGString at Cover `+0x44`, then local String16 at Cover `+0x18` (after
 optional logging); it does not itself release the image or unregister an
 observer. `tools/inspect_packet_factory.py --check-v21` now pins the
 destructor body, imported CGString D1, local String16 D1 and Packet call.
+
+The matching host virtual table has its primary address point at
+`0x3d8ab0` and its `CGObjMem` destructor address point at `0x3d8af8`.
+The original Packet overwrites both host pointers and CoverUtil's observer
+pointers. Six Packet destructor thunks at `0x2fca0..0x2fcc2` adjust `this`
+by `-0x40`, `-0xc0` or `-0xc4` before entering Packet D1/D0. The inherited
+business callback uses a separate `-4` adjustment at `0x18068`. Both ELF
+tables and these thunk bytes are now pinned by the inspection gate; detailed
+slot mapping: `analysis/PACKET_VIRTUAL_ABI.md`.

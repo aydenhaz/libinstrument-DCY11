@@ -108,6 +108,9 @@ def inspect_host(path):
     address, base_constructor = plt_symbol(elf, target)
     got = 0x1B761E + elf.u32(0x1B762C)
     vtable_relocation = elf.relocation_symbols(".rel.dyn").get(got)
+    relocations = elf.relocation_symbols(".rel.dyn")
+    primary_point = 0x3D8AB0
+    secondary_point = 0x3D8AF8
     return {
         "fragment_package_constructor": "0x1b7610",
         "base_constructor_plt": hex(target),
@@ -116,6 +119,19 @@ def inspect_host(path):
         "fragment_vtable_got": hex(got),
         "fragment_vtable_relocation": vtable_relocation,
         "fragment_vptr_stores": elf.at(0x1B761E, 10).hex(),
+        "fragment_vtable": {
+            "primary_point": hex(primary_point),
+            "primary_imports": [relocations.get(primary_point + 4 * i)
+                                for i in range(4)],
+            "primary_local_slots": [hex(elf.u32(primary_point + 4 * i))
+                                    for i in range(4, 16)],
+            "primary_local_bodies": elf.at(0x1B43A8, 0x1C).hex(),
+            "secondary_point": hex(secondary_point),
+            "secondary_offset_to_top": struct.unpack(
+                "<i", elf.at(secondary_point - 8, 4))[0],
+            "secondary_imports": [relocations.get(secondary_point + 4 * i)
+                                  for i in range(2)],
+        },
     }
 
 
@@ -179,6 +195,8 @@ def inspect(path):
             )
         },
         "cover_destructor": inspect_cover_destructor(elf),
+        "packet_adjustor_thunks": elf.at(0x2FCA0, 0x24).hex(),
+        "cover_business_adjustor": elf.at(0x18068, 0x0E).hex(),
         "tables": tables,
     }
 
@@ -235,6 +253,12 @@ def check(report):
     }
     if report["cover_destructor"] != expected_cover_dtor:
         raise ValueError("CoverUtil destructor boundary differs from V21")
+    if report["packet_adjustor_thunks"] != (
+        "4038fef759bf4038fef761bf"
+        "c038fef753bfc038fef75bbf"
+        "c438fef74dbfc438fef755bf"
+    ) or report["cover_business_adjustor"] != "80b56f460438fff715ff012080bd":
+        raise ValueError("Packet/Cover virtual this-adjustment differs from V21")
 
 
 def check_host(report):
@@ -246,6 +270,26 @@ def check_host(report):
         raise ValueError("unexpected CGFragmentPackage vtable GOT")
     if report["fragment_vptr_stores"] != "01f15002026408310160":
         raise ValueError("host +0x40/+0 virtual pointer setup differs")
+    table = report["fragment_vtable"]
+    if table != {
+        "primary_point": "0x3d8ab0",
+        "primary_imports": [
+            (2, "_ZN9GNS_FRAME9CGPackageD2Ev"),
+            (2, "_ZN9GNS_FRAME17CGFragmentPackageD0Ev"),
+            (2, "_ZN9GNS_FRAME13CGAsyncObject13getExecutorIdEv"),
+            (2, "_ZN9GNS_FRAME13CGAsyncObject13getUIThreadIdEv"),
+        ],
+        "primary_local_slots": [hex(0x1B43A9), hex(0x1B43AD)] + [
+            hex(0x1B43B1 + 2 * i) for i in range(10)],
+        "primary_local_bodies": "0020704701207047" + "7047" * 10,
+        "secondary_point": "0x3d8af8",
+        "secondary_offset_to_top": -0x40,
+        "secondary_imports": [
+            (2, "_ZThn64_N9GNS_FRAME17CGFragmentPackageD1Ev"),
+            (2, "_ZThn64_N9GNS_FRAME17CGFragmentPackageD0Ev"),
+        ],
+    }:
+        raise ValueError("host FragmentPackage virtual table differs from V21")
 
 
 def main():
