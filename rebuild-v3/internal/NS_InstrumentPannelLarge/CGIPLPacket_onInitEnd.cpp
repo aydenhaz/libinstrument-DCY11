@@ -50,11 +50,10 @@ LargeScreenImpl* activeLargeScreenImpl;
 }
 
 void CGIPLPacket::onInitEnd() {
-    /* 1. ALC export: {0,0,"HMI_PANNELLARGE",0,tag,"virtual void NS_InstrumentPannelLarge::
-       CGIPLPacket::onInitEnd()","onInitEnd"} */
+    /* V21 0x2ebba logs line 0x12e using seven stack fields. */
     AlcExport("onInitEnd",
               "virtual void NS_InstrumentPannelLarge::CGIPLPacket::onInitEnd()",
-              /*tag*/ 0, this);
+              0x12e);
 
     /* 2. Module lifetime is separate from the Packet's virtual base at +0. */
     if (!activeLargeScreenImpl) activeLargeScreenImpl = new LargeScreenImpl();

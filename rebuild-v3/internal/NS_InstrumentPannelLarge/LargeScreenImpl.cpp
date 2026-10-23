@@ -29,30 +29,36 @@ namespace NS_InstrumentPannelLarge {
 
 static const char kSigDtor[]  = "virtual NS_InstrumentPannelLarge::LargeScreenImpl::~LargeScreenImpl()";
 static const char kNameDtor[] = "ModuleUnReg:%p";
+static const char kSigCtor[]  = "NS_InstrumentPannelLarge::LargeScreenImpl::LargeScreenImpl()";
+static const char kNameCtor[] = "ModuleReg:%p";
 static const char kSigQI[]    = "virtual int32_t NS_InstrumentPannelLarge::LargeScreenImpl::QueryInterface(int32_t, void **)";
-static const char kNameQI[]   = "QueryInterface:%p %p";
+static const char kNameQI[]   = "QueryInterface:%p";
+static const char kNameQIResult[] = "QueryInterface:%p %p";
 
 
 LargeScreenImpl::LargeScreenImpl() {
     // The original Packet onInitEnd inlines the 0x10-byte construction and
     // registers the completed module with interface ID 0x1f40.
     ExModuleManager::GetInstance()->ModuleReg((ModuleInterfaceId)0x1f40, this);
+    AlcExportCommon(kNameCtor, kSigCtor, 0x22, AlcRegister3::Auxiliary, this);
 }
 
 LargeScreenImpl::~LargeScreenImpl() {
     /* sub_2dfa4 */
     ExModuleManager::GetInstance()->ModuleUnReg((ModuleInterfaceId)0x1f40);
-    AlcExport(kNameDtor, kSigDtor, 0x4b, this);
+    AlcExportCommon(kNameDtor, kSigDtor, 0x4b, AlcRegister3::Flag, this);
 }
 
 int32_t LargeScreenImpl::QueryInterface(int32_t id, void **out) {
-    /* sub_2e03c — two ALC exports, no ModuleReg here */
-    AlcExport(kNameQI, kSigQI, 0x9f /*159*/, this);
-    AlcExport(kNameQI, kSigQI, 0x166 /*358*/, this);
+    (void)id; // V21 does not branch on this interface ID.
+    /* V21 0x2e03c logs the call before testing the output pointer. */
+    AlcExportCommon(kNameQI, kSigQI, 0x9f, AlcRegister3::Callback, this);
     // V21 0x2e090..0x2e0d8 returns the +4 interface pointer, or -1 when
     // the caller supplied no output storage.
     if (!out) return -1;
     *out = static_cast<IMultiScreenInterfaces*>(this);
+    AlcExportCommon(kNameQIResult, kSigQI, 0xa6,
+                    AlcRegister3::Callback, this, *out);
     return 0;
 }
 

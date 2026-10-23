@@ -57,6 +57,19 @@ The subsequent removal of invalid `legacy_` Packet fields has passed native
 syntax and mock-sanitizer checks, but the transient NDK checkout is gone;
 an Android compile/link of that later revision has not been rerun.
 
+At the next ALC checkpoint, the official r26c archive was downloaded again
+and reverified against the SHA256 at the top of this file. After removing
+the invalid fields and correcting the ALC stack-call ABI, **48/48** source
+units compiled and the strict `--no-undefined` link passed. The resulting
+development SO is ELF32 ARM EABI5, has the expected SONAME and the nine V21
+host dependencies plus `libm.so`, `libdl.so` and `libc.so`; its SHA256 is
+`0c63bfafbefd6d69dacea565ffd73a71a31a3dd8c34faf6ed1ba6dda06cffa8d`.
+The built module's two interface vtables/RTTI and the separate NDK Packet
+shape probe both pass. ARM object disassembly confirms `AlcExportFields`
+places flag, zero, module, auxiliary, signature, line, name and optional
+pointers in successive stack words before calling the logger; see
+`analysis/MODULE_ALC_ABI.md`. This is still not a usable replacement.
+
 This is a development build, **not an installable replacement**. The
 earlier NDK r27d development build loaded on a device but GFrame failed to
 load `com.autonavi.package.GIPLPacket`, followed by SIGABRT. The current

@@ -209,6 +209,14 @@ def inspect(path):
             "on_destroy_clear_slot": hex(0x2F426 + elf.u32(0x2F460)),
             "on_destroy_tail": elf.at(0x2F41A, 12).hex(),
         },
+        "module_log_tags": {
+            "on_init_end": elf.at(0x2EBBA, 4).hex(),
+            "module_reg": elf.at(0x2EC2A, 4).hex(),
+            "module_unreg": elf.at(0x2DFD6, 4).hex(),
+            "query": elf.at(0x2E062, 4).hex(),
+            "query_result": elf.at(0x2E0AA, 2).hex(),
+            "query_null_branch_and_publish": elf.at(0x2E08A, 0x12).hex(),
+        },
         "opening_fragment": {
             "allocation_immediate": elf.at(0x2ECFC, 4).hex(),
             "constructor_target": hex(thumb_bl_target(elf, 0x2ED0A)),
@@ -258,6 +266,15 @@ def check(report):
         "on_destroy_tail": "0020cbf868010f4979440860",
     }:
         raise ValueError("Packet teardown/module singleton boundary differs from V21")
+    if report["module_log_tags"] != {
+        "on_init_end": "4ff4977c",  # 0x12e
+        "module_reg": "4ff0220c",  # 0x22
+        "module_unreg": "4ff04b0c",  # 0x4b
+        "query": "4ff09f0c",  # 0x9f
+        "query_result": "a622",  # 0xa6 (166 decimal)
+        "query_null_branch_and_publish": "baf1000f21d009f10400ab46b046caf80000",
+    }:
+        raise ValueError("Packet/module ALC tags or QueryInterface branch differ from V21")
     if report["opening_fragment"] != {
         "allocation_immediate": "4ff48860",
         "constructor_target": "0x41954",

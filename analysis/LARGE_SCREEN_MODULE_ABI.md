@@ -46,3 +46,9 @@ Its final PC-relative store at `0x2f424` does not reach the independent module
 slot at `0x6fd4c`. The rebuilt teardown accordingly leaves the module alone;
 its eventual disposal path has not been established. The original-ELF check
 now pins the two slots and the store bytes.
+
+The module and Packet ALC calls now use the original ARM32 stack-field
+calling convention. The module's logger category is `HMI_COMMON`, and the
+successful QueryInterface result line is `0xa6`; see
+`analysis/MODULE_ALC_ABI.md`. Native sanitizer tests cover the corrected
+call order and output values.

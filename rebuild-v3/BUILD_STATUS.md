@@ -6,6 +6,20 @@ missing. An earlier r27d development build loaded on a device, then GFrame
 failed to load the package and the app exited by SIGABRT. Fragment and observer
 bodies in the wider rebuild remain provisional.
 
+## 2026-10-24 Packet/module ALC checkpoint
+
+- Corrected the shared `AlcExport` calling convention: the V21 logger reads
+  seven stack fields and optional values, not a pointer to an array in `r3`.
+  Restored `onInitEnd` line `0x12e`, module category `HMI_COMMON`, constructor
+  log line `0x22`, QueryInterface success line `0xa6` and its conditional
+  order. The original ELF gate and module ASan/UBSan mock logger test pass.
+  Recovered official NDK r26c and rebuilt this exact revision: 48/48 ARM32
+  source files compile, strict `--no-undefined` link passes, and linked
+  module ABI/Packet shape checks pass. The development SO SHA256 is
+  `0c63bfafbefd6d69dacea565ffd73a71a31a3dd8c34faf6ed1ba6dda06cffa8d`.
+  Factory/registration remains absent; do not install it. See
+  `analysis/MODULE_ALC_ABI.md` and `analysis/ANDROID_NDK_R26C_BUILD.md`.
+
 ## 2026-10-23 Opening Fragment ownership checkpoint
 
 - Re-read the V21 `onInitEnd` call sequence: `new(0x440)` at `0x2ecfc`
@@ -19,9 +33,8 @@ bodies in the wider rebuild remain provisional.
   cannot be registered. Original ELF gate and native compiler/ASan/UBSan
   stage and teardown tests pass. See
   `analysis/OPENING_FRAGMENT_ONINIT_BOUNDARY.md`.
-- The earlier 48/48 Android r26c strict link predates this source cleanup.
-  That transient NDK checkout is no longer present, so an Android link of
-  this exact revision remains to be rerun; no new linked SO is claimed.
+- The earlier 48/48 Android r26c strict link predated this source cleanup.
+  The later ALC checkpoint above reran that build after the cleanup.
 
 ## 2026-10-23 LargeScreenImpl dual-interface checkpoint
 
