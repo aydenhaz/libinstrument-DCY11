@@ -21,7 +21,9 @@ struct Node {
 };
 std::map<const hsl::Bundle*, Node> bundleData;
 std::map<Key, Node> rootData;
+std::map<Key, int> rootInts;
 hsl::Config config;
+bool configAvailable = true;
 }
 namespace hsl {
 Bundle::Bundle() { bundleData[this] = Node{}; }
@@ -55,7 +57,14 @@ bool Config::SetBundle(const dice::String16& k, const Bundle& value, SetterType_
     rootData[key(k)] = bundleData.at(&value);
     return true;
 }
-Config* HSL::GetConfigHandle() { return &config; }
+bool Config::GetInt32(const dice::String16& k, int& result, VALUE_STRATEGY strategy) {
+    assert(strategy == VALUE_STRATEGY_DEFAULT);
+    const auto found = rootInts.find(key(k));
+    if (found == rootInts.end()) return false;
+    result = found->second;
+    return true;
+}
+Config* HSL::GetConfigHandle() { return configAvailable ? &config : nullptr; }
 }
 namespace NS_MultiScreenBase {
 AutoConfigScreenMode* AutoConfigScreenMode::GetInstance() {
@@ -101,6 +110,29 @@ int main() {
     assert(written.bundles.at(u"kExScreenPreviewKey").ints.at(u"int32MapViewMode") == 99);
     assert(written.bundles.at(u"kExScreenGuideKey").ints.at(u"int32MapViewMode") == 2);
     assert(written.bundles.at(u"kExScreenGuideKey").ints.at(u"int32CrossControl") == 1);
+    assert(AutoExscreenUtil_GetMapParamsFromUiConfig(SCREEN_TYPE_MAIN, 7, 2, 0) == 15);
+    assert(AutoExscreenUtil_GetMapParamsFromUiConfig(SCREEN_TYPE_MAIN, 7, 1, 1) == 2);
+    assert(AutoExscreenUtil_GetMapParamsFromUiConfig(SCREEN_TYPE_MAIN, 7, 2, 1) == 99);
+    assert(AutoExscreenUtil_GetMapViewLevelFromUiConfig(SCREEN_TYPE_MAIN) == 15);
+    assert(AutoExscreenUtil_GetMapViewModeFromUiConfig(SCREEN_TYPE_MAIN) == 99);
+    assert(AutoExscreenUtil_GetMapDayNightModeFromUiConfig(SCREEN_TYPE_MAIN) == 99);
+    assert(AutoExscreenUtil_GetMapParamsFromUiConfig(SCREEN_TYPE_MAIN, 0, 0, 1) == 99);
+    assert(AutoExscreenUtil_GetMapParamsFromUiConfig(SCREEN_TYPE_MAIN, 20, 0, 1) == 99);
+    assert(AutoExscreenUtil_GetMapParamsFromUiConfig(SCREEN_TYPE_MAIN, -1, 0, 1) == 99);
+    assert(AutoExscreenUtil_GetMapParamsFromUiConfig(SCREEN_TYPE_MAIN, 7, 3, 1) == 99);
+    assert(AutoExscreenUtil_GetMapParamsFromUiConfig(SCREEN_TYPE_MAIN, 7, 0, 6) == 99);
+    assert(AutoExscreenUtil_GetMapParamsFromUiConfig(static_cast<ScreenType>(3), 7, 0, 0) == 99);
+    configAvailable = false;
+    assert(AutoExscreenUtil_GetMapParamsFromUiConfig(SCREEN_TYPE_MAIN, 7, 2, 0) == 99);
+    assert(AutoExscreenUtil_IsOnlyShowCrossImage(SCREEN_TYPE_MAIN, 1) == 1);
+    configAvailable = true;
+    rootInts[u"IsLargePannelOnlyShowCrossImage"] = 0;
+    rootInts[u"IsSmallPannelOnlyShowCrossImage"] = 1;
+    rootInts[u"IsWidgetOnlyShowCrossImage"] = 99;
+    assert(AutoExscreenUtil_IsOnlyShowCrossImage(SCREEN_TYPE_MAIN, 1) == 0);
+    assert(AutoExscreenUtil_IsOnlyShowCrossImage(static_cast<ScreenType>(1), 0) == 1);
+    assert(AutoExscreenUtil_IsOnlyShowCrossImage(static_cast<ScreenType>(2), 0) == 0);
+    assert(AutoExscreenUtil_IsOnlyShowCrossImage(static_cast<ScreenType>(3), 1) == 1);
     *currentScene = 0;
     AutoExscreenUtil_SetMapViewModeToUiConfig(SCREEN_TYPE_MAIN, 3);
     assert(rootData.at(screen).bundles.at(u"kExScreenModeKey7")

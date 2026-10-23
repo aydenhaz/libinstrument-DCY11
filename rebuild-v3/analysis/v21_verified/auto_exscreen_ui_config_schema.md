@@ -26,6 +26,21 @@ implementation guards indices before accessing the key arrays and preserves
 previous fields in other modes/scenes. This is a host-contract test of Bundle
 calls, not an Android process test.
 
+The original reader at 0x16fcc obtains the screen bundle, selects one of
+20 mode records and three scene records through 0x1c0bc, then returns one
+of the six int32 values. It returns 99 when the configuration handle is null,
+the screen/mode/scene/field is invalid, or the requested record is absent.
+`AutoExscreenUiConfig.cpp` now implements that lookup alongside the writer.
+The 40-byte wrappers 0x1748c, 0x17320 and 0x17348 query the current mode and
+scene and then read fields 0 (level), 1 (view mode), and 5 (day/night).
+Host tests cover both directions, absent config and invalid indices.
+
+The separate selector 0x174b4 reads `IsLargePannelOnlyShowCrossImage`,
+`IsSmallPannelOnlyShowCrossImage` or `IsWidgetOnlyShowCrossImage` from
+`Config::GetInt32`, based on screen type. It uses its second argument as the
+fallback when the value is absent/99 or the config handle is unavailable.
+This selector feeds the unrecovered binding-state calculation at 0x1e790.
+
 At 0x2bcdc CrossControl uses `this+0xdc` for screen type, current mode,
 scene 1/field 2, then locks the collection at `this+0x6c`. The collection
 holds observer pointer array at +0x7c and count at +0x84. Its lock/unlock

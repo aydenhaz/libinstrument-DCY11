@@ -2,6 +2,33 @@
 
 NOT a usable replacement. No successful strict shared-library link.
 
+## 2026-10-23 map binding checkpoint
+
+- Replaced Batch13's `ResetMapBindingList(...) { return true; }` with the
+  scene selection, 0x20-byte binding-state calculation, and map-service
+  virtual registration observed in V21 0x1e790. Added the per-screen
+  OnlyShowCrossImage override and UI field reader dependencies. The
+  field meanings not proved by disassembly remain offset-labelled.
+- Host ASan/UBSan tests pass for the UI reader/writer, binding state, and
+  service dispatch (success, missing target, missing service). ARMv7 Thumb
+  Linux/musl probe compiles 40/40 translation units and still reports only
+  the two unrecovered map-status callbacks and the probe runtime's
+  `std::__ndk1::bad_function_call` destructor at strict link.
+- The invalid static SetMapLevel pseudo-body was withdrawn. The
+  AutoMultiScreenConfig constructor/singleton and SetMapLevel and
+  SetMapViewMode instance methods remain incomplete. No Android build or
+  replacement `.so` is claimed. See `analysis/v21_verified/auto_multi_screen_binding.md`.
+
+## 2026-10-23 UI config reader checkpoint
+
+- Recovered V21 0x16fcc's six-field reader and three current-mode/current-scene
+  wrappers (0x1748c, 0x17320, 0x17348). Missing bundles, invalid indices,
+  and absent hsl::Config yield the original 99 sentinel. Host ASan/UBSan
+  contract tests exercise writer/reader round trips and the sentinel paths.
+- This reader supplies the field values consumed by
+  `AutoMultiScreenConfig::ResetMapBindingList`; the two map callbacks remain
+  undefined at this checkpoint.
+
 ## 2026-10-23 MapStatus recovery checkpoint
 
 - Recovered the original APK and the latest GitHub source branch after the

@@ -1,0 +1,33 @@
+# V21 map binding reconstruction
+
+Reference: V21 ARM32 `libInstrumentPannelLarge.so`, SHA-256
+`6f5bd54c8e694ac40f02cd4280f6c6a049ea34896703e1eb5547fbc9e41d65e3`.
+
+At 0x1e790, `AutoMultiScreenConfig::ResetMapBindingList(scene)` chooses a
+0xe4-byte scene record at instance offsets 0, 0xe4, or 0x1c8, and a 0x20-byte
+binding record at +0x2ac, +0x2cc, or +0x2ec. Unknown scene IDs use the
+first record. Screen type is stored at instance +0x30c; word 0 in the
+binding record is an engine selector. The original maps engine selector
+3 to Small, 7 to Widget and the rest to Large before reading the per-screen
+OnlyShowCrossImage override.
+
+The method reads current-mode/current-scene UI fields 5 (day/night), 0
+(level), and 1 (view mode), in that order. It resolves scene record fields
+at +0x4c, +0x50, +0x88, +0x8c, +0x90, +0x99, and +0xa0 into binding words
+at +4 through +0x18. `AutoMultiScreenBindingState.h` contains the verified
+selection, sentinel and clamp branches. Its host test covers dynamic mode,
+level boundaries, 99 fallbacks, and the preserved engine/bound-state words.
+
+After writing the binding state, the original obtains
+`HSL::GetMapServiceHandle()`, calls virtual slot +0x3c twice with selector
+1 and with binding word 0, and calls virtual slot +0x3c on the first returned
+object with the second object and `binding+4`. It sets the byte at binding
++0x1c to 1 just before the final call. The reconstructed dispatcher now
+follows this order. A mock host test covers success, missing second object
+and missing service. These are ABI contract checks; the actual map service
+and live scene objects have not been exercised on Android.
+
+The `AutoMultiScreenConfig` constructor / singleton, `SetMapLevel`, and
+`SetMapViewMode` still need restoration before this method can be safely
+invoked from the unfinished map-status callback. A successful strict link
+would still not prove that the library can replace the original.

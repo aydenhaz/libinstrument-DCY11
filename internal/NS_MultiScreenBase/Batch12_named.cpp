@@ -41,7 +41,7 @@ public:
     bool OnOpenExScreenUi(const tagSTExtScreen&);
 };
 class AutoNaviFragment { public: void OnExScreenModeChange(int32_t,int32_t); };
-class AutoMultiScreenConfig { public: static void SetMapLevel(int,int); };
+class AutoMultiScreenConfig { public: void SetMapLevel(int,int); };
 class AutoPreviewFragment { public: void ShowPreview(); };
 class AutoArNaviFragment { public: void onResume(); };
 class AutoCruiseFragment {
@@ -96,13 +96,9 @@ void AutoNaviFragment::OnExScreenModeChange(int32_t a, int32_t b) {
     /* CrossRouteView setVisible + cross info struct fill; ALC export tail */
 }
 
-/* sub_1e084 (904B) AutoMultiScreenConfig::SetMapLevel(int, int) */
-void AutoMultiScreenConfig::SetMapLevel(int mapEngineId, int level) {
-    hsl::Config *c = hsl::HSL::GetConfigHandle();
-    int32_t v = 0;
-    c->GetInt32(dice::String16("int32MapLevel"), v, hsl::Config::VALUE_STRATEGY_DEFAULT);
-    /* level clamp + InstrumentManager::SetInstrumentMapSize callout */
-}
+/* sub_1e084 (904B): the earlier static definition ignored its instance
+   receiver (+0x30c screen selector, +0x338 dynamic state). Withdraw that
+   pseudo-body until the actual map-view scale/level calls are restored. */
 
 /* sub_35e2c (840B) AutoOpeningFragment::OnMapLevelChanged(uint32_t, bool) */
 // Definition retained in Batch17_compiled.cpp.

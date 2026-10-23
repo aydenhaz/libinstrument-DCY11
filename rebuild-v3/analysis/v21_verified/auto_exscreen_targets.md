@@ -26,11 +26,13 @@ mode other than 99 it calls 0x171b8 (field 1; preview scene 2 maps to scene 1),
 then may invoke map-view virtual slot +0x3e8, conditionally start the timer
 at `this+0xcc`, and call instance SetMapViewMode at 0x1def4. It finally
 calls ResetMapBindingList at 0x1e790 using the scene ID. The current source's
-Batch12 SetMapLevel is an incorrect static pseudo-implementation, and Batch13
-ResetMapBindingList is a placeholder. These dependencies need repair before
-installing the callback.
+Batch12's incorrect static SetMapLevel pseudo-implementation was withdrawn;
+the real instance method remains undefined.
+ResetMapBindingList now has the observed binding-state and service dispatch,
+but its containing singleton and scene-record constructor remain missing.
+These dependencies need repair before installing the callback.
 
-The scene slots and the two UI-config writing wrappers are now reconstructed
+The scene slots and UI-config read/write wrappers are now reconstructed
 in `AutoExscreenUiConfig.cpp`. `AutoExscreenMapStatusPlan.h` records the
 verified 99 / -1 decision branches for subsequent callback integration. The
 ARM32 Linux probe still leaves this callback undefined until its config

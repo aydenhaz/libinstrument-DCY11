@@ -29,6 +29,71 @@ int* AutoExscreenUtil_GetCurrentSceneSlot(ScreenType screen) {
     return &scenes[index == 1 ? 1 : index == 2 ? 2 : 0];
 }
 
+int AutoExscreenUtil_GetMapParamsFromUiConfig(ScreenType screen, int mode,
+                                               int scene, int field) {
+    const int screenIndex = static_cast<int>(screen);
+    if (screenIndex < 0 || screenIndex >= 3 || mode < 0 || mode >= 20 ||
+        scene < 0 || scene >= 3 || field < 0 || field >= 6) return 99;
+    hsl::Config* config = hsl::HSL::GetConfigHandle();
+    if (!config) return 99;
+
+    const dice::String16 screenKey(screenKeys[screenIndex]);
+    hsl::Bundle screens;
+    if (!config->GetBundle(screenKey, screens)) return 99;
+
+    char modeName[] = "kExScreenModeKey00";
+    modeName[16] = static_cast<char>('0' + mode / 10);
+    modeName[17] = static_cast<char>('0' + mode % 10);
+    if (mode < 10) {
+        modeName[16] = modeName[17];
+        modeName[17] = 0;
+    }
+    const dice::String16 modeKey(modeName);
+    hsl::Bundle modes;
+    if (!screens.GetBundle(modeKey, modes)) return 99;
+    const dice::String16 sceneKey(sceneKeys[scene]);
+    hsl::Bundle scenes;
+    if (!modes.GetBundle(sceneKey, scenes)) return 99;
+    const dice::String16 fieldKey(fieldKeys[field]);
+    int32_t result = 99;
+    scenes.GetInt32(fieldKey, result);
+    return result;
+}
+
+int AutoExscreenUtil_GetMapViewLevelFromUiConfig(ScreenType screen) {
+    const int mode = AutoConfigScreenMode::GetInstance()->GetCurrentScreenMode(screen);
+    return AutoExscreenUtil_GetMapParamsFromUiConfig(
+        screen, mode, *AutoExscreenUtil_GetCurrentSceneSlot(screen), 0);
+}
+
+int AutoExscreenUtil_GetMapViewModeFromUiConfig(ScreenType screen) {
+    const int mode = AutoConfigScreenMode::GetInstance()->GetCurrentScreenMode(screen);
+    return AutoExscreenUtil_GetMapParamsFromUiConfig(
+        screen, mode, *AutoExscreenUtil_GetCurrentSceneSlot(screen), 1);
+}
+
+int AutoExscreenUtil_GetMapDayNightModeFromUiConfig(ScreenType screen) {
+    const int mode = AutoConfigScreenMode::GetInstance()->GetCurrentScreenMode(screen);
+    return AutoExscreenUtil_GetMapParamsFromUiConfig(
+        screen, mode, *AutoExscreenUtil_GetCurrentSceneSlot(screen), 5);
+}
+
+int AutoExscreenUtil_IsOnlyShowCrossImage(ScreenType screen, int fallback) {
+    static const char16_t* const keys[] = {
+        u"IsLargePannelOnlyShowCrossImage",
+        u"IsSmallPannelOnlyShowCrossImage",
+        u"IsWidgetOnlyShowCrossImage"
+    };
+    const int index = static_cast<int>(screen);
+    if (index < 0 || index >= 3) return fallback;
+    hsl::Config* config = hsl::HSL::GetConfigHandle();
+    if (!config) return fallback;
+    const dice::String16 key(reinterpret_cast<const unsigned short*>(keys[index]));
+    int value = 99;
+    config->GetInt32(key, value, hsl::Config::VALUE_STRATEGY_DEFAULT);
+    return value == 99 ? fallback : value;
+}
+
 void AutoExscreenUtil_SetMapViewLevelToUiConfig(ScreenType screen, int level) {
     const int mode = AutoConfigScreenMode::GetInstance()->GetCurrentScreenMode(screen);
     AutoExscreenUtil_SetMapParamsToUiConfig(

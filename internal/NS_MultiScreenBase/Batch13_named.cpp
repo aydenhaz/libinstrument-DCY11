@@ -14,6 +14,7 @@
 #include <hsl/MultiScreenService.h>
 #include <NS_MultiScreenBase/AutoConfigScreenMode.h>
 #include <NS_MultiScreenBase/AutoConfigJsonData.h>
+#include "AutoMultiScreenConfigBinding.h"
 #include <asl/String16Utils.h>
 
 namespace GPI { struct CGCanvas; }
@@ -45,7 +46,7 @@ public:
 };
 class AutoMultiScreenConfig {
 public:
-    bool ResetMapBindingList(...);
+    void ResetMapBindingList(int scene);
     MapViewModeConfig GetMapViewModeConfig();
     void UpdateTrafficEventState(bool);
     void SetMapLevel(int, int);
@@ -79,10 +80,10 @@ void AutoPreviewFragment::OnEnableMapRender(bool enable, int reason) {
     /* preview map render enable/disable + observer notify */
 }
 
-/* sub_1e790 (664B) AutoMultiScreenConfig::ResetMapBindingList(...) */
-bool AutoMultiScreenConfig::ResetMapBindingList(...) {
-    /* binding list clear + re-register; GetMapServiceHandle */
-    return true;
+/* sub_1e790: calculate the scene's 0x20-byte binding record and register
+   through the map-service and map-view vtable slot +0x3c. */
+void AutoMultiScreenConfig::ResetMapBindingList(int scene) {
+    AutoMultiScreenConfig_ResetMapBindingList(this, scene);
 }
 
 /* sub_26038 (664B) AutoNaviFragment::ShowCrossImageOnUIEx(RefBase*) */
