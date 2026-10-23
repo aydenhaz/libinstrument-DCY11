@@ -2,6 +2,7 @@
 #include "../internal/NS_MultiScreenBase/AutoExscreenMapStatusPlan.h"
 #include <DiceString16.h>
 #include <NS_MultiScreenBase/AutoConfigScreenMode.h>
+#include <NS_MultiScreenBase/AutoConfigJsonData.h>
 #include <hsl/Bundle.h>
 #include <hsl/Config.h>
 #include <hsl/HSL.h>
@@ -9,6 +10,7 @@
 #include <cstdint>
 #include <map>
 #include <string>
+#include <vector>
 
 namespace {
 using Key = std::u16string;
@@ -24,6 +26,9 @@ std::map<Key, Node> rootData;
 std::map<Key, int> rootInts;
 hsl::Config config;
 bool configAvailable = true;
+std::vector<NS_MultiScreenBase::tagMultiViewModeInfo> modeValues;
+bool modeValuesAvailable = true;
+int modeReads = 0;
 }
 namespace hsl {
 Bundle::Bundle() { bundleData[this] = Node{}; }
@@ -67,6 +72,17 @@ bool Config::GetInt32(const dice::String16& k, int& result, VALUE_STRATEGY strat
 Config* HSL::GetConfigHandle() { return configAvailable ? &config : nullptr; }
 }
 namespace NS_MultiScreenBase {
+AutoConfigJsonData* AutoConfigJsonData::GetInstance() {
+    static AutoConfigJsonData instance;
+    return &instance;
+}
+bool AutoConfigJsonData::GetMultiViewModeInfo(
+    ScreenType, std::vector<tagMultiViewModeInfo>& values) {
+    ++modeReads;
+    if (!modeValuesAvailable) return false;
+    values = modeValues;
+    return true;
+}
 AutoConfigScreenMode* AutoConfigScreenMode::GetInstance() {
     static AutoConfigScreenMode instance;
     return &instance;
@@ -142,13 +158,45 @@ int main() {
     assert(!noChanges.writeLevel && !noChanges.writeMode);
     assert(noChanges.resetMapBindingList);
     const MapStatusPlan dynamic = AutoExscreenUtil_PlanMapStatus(-1, 99, 1);
-    assert(!dynamic.writeLevel && dynamic.writeMode && dynamic.clearDynamicLevel);
+    assert(!dynamic.writeLevel && dynamic.writeMode && dynamic.disableDynamicLevel);
     assert(dynamic.attemptTimerStart && dynamic.setMapViewMode);
     const MapStatusPlan requestDynamic = AutoExscreenUtil_PlanMapStatus(10, -1, 1);
     assert(requestDynamic.writeLevel && requestDynamic.setMapLevel);
-    assert(requestDynamic.writeMode && !requestDynamic.clearDynamicLevel);
+    assert(requestDynamic.writeMode && !requestDynamic.disableDynamicLevel);
     assert(!requestDynamic.attemptTimerStart && !requestDynamic.setMapViewMode);
     const MapStatusPlan fixed = AutoExscreenUtil_PlanMapStatus(10, 12, 1);
     assert(fixed.writeLevel && fixed.writeMode && fixed.setMapViewMode);
-    assert(!fixed.clearDynamicLevel && !fixed.attemptTimerStart);
+    assert(!fixed.disableDynamicLevel && !fixed.attemptTimerStart);
+
+    // V21 0x2b106..0x2b1b4: bit zero fans out the EagleEye guide field to
+    // every available mode; otherwise only the current screen mode is written.
+    rootInts[u"ControlAllMultiModeFlag"] = 1;
+    modeValues = {{1}, {0}, {1}};
+    AutoExscreenUtil_SetEagleEyeEnabledToUiConfig(SCREEN_TYPE_MAIN, true);
+    assert(modeReads == 1);
+    for (int i = 0; i < 3; ++i) {
+        const Key modeKey = Key(u"kExScreenModeKey") + char16_t(u'0' + i);
+        const auto& entry = rootData.at(screen).bundles.at(modeKey);
+        assert(entry.bundles.at(u"kExScreenGuideKey").ints.at(u"int32EagleEyeEnable")
+               == (i == 1 ? 0 : 1));
+        assert(entry.bundles.at(u"kExScreenCuriseKey").ints.at(u"int32EagleEyeEnable") == 99);
+    }
+    AutoExscreenUtil_SetEagleEyeEnabledToUiConfig(SCREEN_TYPE_MAIN, false);
+    assert(modeReads == 2);
+    for (int i = 0; i < 3; ++i) {
+        const Key modeKey = Key(u"kExScreenModeKey") + char16_t(u'0' + i);
+        assert(rootData.at(screen).bundles.at(modeKey)
+               .bundles.at(u"kExScreenGuideKey").ints.at(u"int32EagleEyeEnable") == 0);
+    }
+    rootInts[u"ControlAllMultiModeFlag"] = 2;
+    AutoExscreenUtil_SetEagleEyeEnabledToUiConfig(SCREEN_TYPE_MAIN, true);
+    assert(modeReads == 2);
+    assert(rootData.at(screen).bundles.at(u"kExScreenModeKey7")
+           .bundles.at(u"kExScreenGuideKey").ints.at(u"int32EagleEyeEnable") == 1);
+    rootInts[u"ControlAllMultiModeFlag"] = 3;
+    modeValuesAvailable = false;
+    AutoExscreenUtil_SetEagleEyeEnabledToUiConfig(SCREEN_TYPE_MAIN, false);
+    assert(modeReads == 3);
+    assert(rootData.at(screen).bundles.at(u"kExScreenModeKey7")
+           .bundles.at(u"kExScreenGuideKey").ints.at(u"int32EagleEyeEnable") == 1);
 }

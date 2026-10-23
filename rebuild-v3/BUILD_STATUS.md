@@ -2,6 +2,30 @@
 
 NOT a usable replacement. No successful strict shared-library link.
 
+## 2026-10-23 map status callback branch analysis
+
+- Resolved V21 `libhsl.so` MapViewBaseImpl vtable relocations against the
+  original callback sites. `word[8]` drives the map-style methods
+  `SetSpecifiedMapStyle`, `SetMapStyleName` and `SetMapStyleTime`; the
+  original +0x3e8 call is `OpenDynamicLevel(false, type 0)`, not a reset.
+  Corrected the plan field name accordingly. The HMI status tail copies
+  the 36-byte input record before rewriting only words 0–6, so words 7–8
+  are preserved. See `analysis/v21_verified/map_view_virtuals.md`.
+- Removed the lingering static `SetMapLevel(int,int)` pseudo-body from the
+  Batch12 overlay. Its C++ symbol matched the instance method while using
+  the wrong ARM register arguments; keeping it would misroute a restored
+  callback at runtime.
+- Verified 0x2ace0's engine/mode entry gate, EagleEye all-mode fanout,
+  level-step guards, three view-state selectors, observer collection
+  dispatch and HMI status tail. The original `ControlAllMultiModeFlag`
+  tests bit 0 and `GetMultiViewModeInfo` returns bool; the host declaration
+  has been corrected and the EagleEye UI writer branch restored in an
+  isolated helper with ASan/UBSan host tests.
+- V21 0x2c070's fourth integer affects its log only. Its temporary scene
+  record uses three 12-byte copy constructors and matching destructors,
+  so raw copying the full 0xe4 bytes would corrupt ownership. Both callbacks
+  remain incomplete; see `analysis/v21_verified/auto_exscreen_targets.md`.
+
 ## 2026-10-23 top-render callback dependency checkpoint
 
 - The original V21 library imports `CGWorkStation::setTopRenderCallback` with a

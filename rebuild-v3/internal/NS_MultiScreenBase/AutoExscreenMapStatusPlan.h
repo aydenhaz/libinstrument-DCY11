@@ -10,7 +10,8 @@ struct MapStatusPlan {
     bool writeLevel;
     bool setMapLevel;
     bool writeMode;
-    bool clearDynamicLevel;
+    // Calls MapView::OpenDynamicLevel(false, bl::DynamicLevelType(0)).
+    bool disableDynamicLevel;
     bool attemptTimerStart;
     bool setMapViewMode;
     bool resetMapBindingList;

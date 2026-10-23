@@ -23,6 +23,10 @@ int* AutoExscreenUtil_GetCurrentSceneSlot(ScreenType screen);
 // preview scene (2) belongs to the guide scene (1) in the UI configuration.
 void AutoExscreenUtil_SetMapViewLevelToUiConfig(ScreenType screen, int level);
 void AutoExscreenUtil_SetMapViewModeToUiConfig(ScreenType screen, int mode);
+// V21 0x2b106..0x2b1b4 and 0x2b4e2..0x2b5e6: EagleEye field 3, with
+// ControlAllMultiModeFlag selecting per-mode fanout or current-mode write.
+void AutoExscreenUtil_SetEagleEyeEnabledToUiConfig(ScreenType screen,
+                                                    bool requested);
 
 // V21 0x1748c, 0x17320, 0x17348: current mode and scene, fields 0, 1, 5.
 int AutoExscreenUtil_GetMapViewLevelFromUiConfig(ScreenType screen);

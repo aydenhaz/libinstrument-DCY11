@@ -4,6 +4,8 @@
 #include <hsl/Config.h>
 #include <hsl/HSL.h>
 #include <NS_MultiScreenBase/AutoConfigScreenMode.h>
+#include <NS_MultiScreenBase/AutoConfigJsonData.h>
+#include <vector>
 
 namespace NS_MultiScreenBase {
 namespace {
@@ -105,6 +107,30 @@ void AutoExscreenUtil_SetMapViewModeToUiConfig(ScreenType screen, int mode) {
     const int scene = *AutoExscreenUtil_GetCurrentSceneSlot(screen);
     AutoExscreenUtil_SetMapParamsToUiConfig(
         screen, currentMode, scene == 2 ? 1 : scene, 1, mode);
+}
+
+void AutoExscreenUtil_SetEagleEyeEnabledToUiConfig(ScreenType screen,
+                                                    bool requested) {
+    int allModes = 0;
+    hsl::Config* config = hsl::HSL::GetConfigHandle();
+    if (config) {
+        const dice::String16 key(
+            reinterpret_cast<const unsigned short*>(u"ControlAllMultiModeFlag"));
+        config->GetInt32(key, allModes, hsl::Config::VALUE_STRATEGY_DEFAULT);
+    }
+    if ((allModes & 1) == 0) {
+        const int mode = AutoConfigScreenMode::GetInstance()->GetCurrentScreenMode(screen);
+        AutoExscreenUtil_SetMapParamsToUiConfig(screen, mode, 1, 3,
+                                                requested ? 1 : 0);
+        return;
+    }
+
+    std::vector<tagMultiViewModeInfo> modes;
+    if (!AutoConfigJsonData::GetInstance()->GetMultiViewModeInfo(screen, modes))
+        return;
+    for (std::size_t mode = 0; mode < modes.size(); ++mode)
+        AutoExscreenUtil_SetMapParamsToUiConfig(screen, static_cast<int>(mode),
+                                                1, 3, requested ? modes[mode].value : 0);
 }
 
 void AutoExscreenUtil_SetMapParamsToUiConfig(ScreenType screen, int mode,

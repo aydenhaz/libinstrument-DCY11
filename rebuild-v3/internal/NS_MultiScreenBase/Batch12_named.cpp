@@ -41,7 +41,6 @@ public:
     bool OnOpenExScreenUi(const tagSTExtScreen&);
 };
 class AutoNaviFragment { public: void OnExScreenModeChange(int32_t,int32_t); };
-class AutoMultiScreenConfig { public: static void SetMapLevel(int,int); };
 class AutoPreviewFragment { public: void ShowPreview(); };
 class AutoArNaviFragment { public: void onResume(); };
 class AutoCruiseFragment {
@@ -58,7 +57,6 @@ void AutoExscreenNotifyObserver_Ctor();
 using NS_MultiScreenBase::AutoOpeningFragment;
 using NS_MultiScreenBase::AutoExscreenNotifyObserver;
 using NS_MultiScreenBase::AutoNaviFragment;
-using NS_MultiScreenBase::AutoMultiScreenConfig;
 using NS_MultiScreenBase::AutoPreviewFragment;
 using NS_MultiScreenBase::AutoArNaviFragment;
 using NS_MultiScreenBase::AutoCruiseFragment;
@@ -96,13 +94,10 @@ void AutoNaviFragment::OnExScreenModeChange(int32_t a, int32_t b) {
     /* CrossRouteView setVisible + cross info struct fill; ALC export tail */
 }
 
-/* sub_1e084 (904B) AutoMultiScreenConfig::SetMapLevel(int, int) */
-void AutoMultiScreenConfig::SetMapLevel(int mapEngineId, int level) {
-    hsl::Config *c = hsl::HSL::GetConfigHandle();
-    int32_t v = 0;
-    c->GetInt32(dice::String16("int32MapLevel"), v, hsl::Config::VALUE_STRATEGY_DEFAULT);
-    /* level clamp + InstrumentManager::SetInstrumentMapSize callout */
-}
+// V21 sub_1e084 is an AutoMultiScreenConfig *instance* method. The old
+// receiver-free two-integer pseudo-body selected a different calling ABI
+// while exporting the same C++ mangled name. Its real implementation still
+// requires the constructed singleton and map-view virtual dispatch.
 
 /* sub_35e2c (840B) AutoOpeningFragment::OnMapLevelChanged(uint32_t, bool) */
 // Definition retained in Batch17_compiled.cpp.

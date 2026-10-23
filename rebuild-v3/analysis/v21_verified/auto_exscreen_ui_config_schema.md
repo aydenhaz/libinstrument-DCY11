@@ -49,3 +49,13 @@ its first virtual slot.
 
 At 0x17ad0 the dynamic-level condition is
 `requestedLevel == -1 || (configuredLevel == -1 && requestedLevel == 99)`.
+
+At 0x2b106 the EagleEye control word 0/1 enters a second UI writer path.
+`ControlAllMultiModeFlag` (UTF-16 key) selects all modes when its lowest bit
+is set; a successful `GetMultiViewModeInfo` returns one byte per mode.
+Guide scene (1), field 3 is written with that byte for enable, or zero for
+disable. When the flag is clear or absent, only the current mode is written
+with one or zero. Host ASan/UBSan tests cover both paths and a failed mode
+lookup. `GetMultiViewModeInfo` returns bool in r0 in V21 `libCommon.so`;
+its previous void declaration matched the mangled symbol but lost this
+control-flow result. This helper is not the whole map status callback.
