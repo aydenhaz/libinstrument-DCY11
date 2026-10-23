@@ -31,3 +31,11 @@ The `AutoMultiScreenConfig` constructor / singleton, `SetMapLevel`, and
 `SetMapViewMode` still need restoration before this method can be safely
 invoked from the unfinished map-status callback. A successful strict link
 would still not prove that the library can replace the original.
+
+The map-view lookup at 0x1ddd8 is now reconstructed as an isolated helper.
+It reads screen type from `instance+0x30c`, calls the original 0x16788
+screen-to-engine mapping (Large→5, Small→3, Widget→7), rejects other
+selectors, and passes the engine to `HSL::GetMapViewHandle`. These three
+values come from the original table at 0x5d158. A host ASan/UBSan test
+checks the three calls and invalid selector paths. The original also logs
+on invalid selectors; the helper does not yet reproduce that diagnostic.

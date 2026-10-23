@@ -5,6 +5,7 @@
 #include <cassert>
 #include <cstdint>
 #include <cstring>
+#include <initializer_list>
 #include <new>
 
 namespace {
@@ -17,6 +18,8 @@ int bindCount = 0;
 int queriedScreen = -1;
 int32_t* boundState = nullptr;
 bool allowSecond = true;
+int viewEngine = -1;
+unsigned char fakeView;
 
 void* lookup(void* self, int engine) {
     assert(self == &service);
@@ -36,6 +39,10 @@ void put(unsigned char* scene, unsigned offset, int32_t value) {
 
 namespace hsl {
 void* HSL::GetMapServiceHandle() { return selectedService; }
+MapView* HSL::GetMapViewHandle(bl::MapEngineID engine) {
+    viewEngine = static_cast<int>(engine);
+    return reinterpret_cast<MapView*>(&fakeView);
+}
 }
 namespace NS_MultiScreenBase {
 int AutoExscreenUtil_GetMapViewLevelFromUiConfig(ScreenType) { return -1; }
@@ -53,6 +60,22 @@ int main() {
     mapVtable[slot] = reinterpret_cast<void*>(&bind);
     alignas(8) unsigned char object[0x340] = {};
     const int32_t screen = 0;
+    std::memcpy(object + 0x30c, &screen, 4);
+    using NS_MultiScreenBase::AutoMultiScreenConfig_GetMapViewHandle;
+    const int engines[] = {5, 3, 7};
+    for (int index = 0; index < 3; ++index) {
+        std::memcpy(object + 0x30c, &index, 4);
+        viewEngine = -1;
+        assert(AutoMultiScreenConfig_GetMapViewHandle(object) ==
+               reinterpret_cast<hsl::MapView*>(&fakeView));
+        assert(viewEngine == engines[index]);
+    }
+    for (int invalid : {-1, 3, 99}) {
+        std::memcpy(object + 0x30c, &invalid, 4);
+        viewEngine = -1;
+        assert(AutoMultiScreenConfig_GetMapViewHandle(object) == nullptr);
+        assert(viewEngine == -1);
+    }
     std::memcpy(object + 0x30c, &screen, 4);
     unsigned char* scene = object + 0xe4;
     put(scene, 0x4c, 2);

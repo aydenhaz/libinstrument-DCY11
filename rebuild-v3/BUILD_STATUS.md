@@ -2,6 +2,28 @@
 
 NOT a usable replacement. No successful strict shared-library link.
 
+## 2026-10-23 top-render callback dependency checkpoint
+
+- The original V21 library imports `CGWorkStation::setTopRenderCallback` with a
+  plain canvas function pointer, has no `libc++_shared.so` in `DT_NEEDED`, and
+  does not import or define the `bad_function_call` destructor. The rebuilt
+  CoverUtil had introduced that additional symbol through private
+  `std::function` storage. Replaced that storage with an atomic owner pointer
+  and the existing plain callback dispatcher. Existing host paint tests now
+  also cover replacement, synchronous registration and callback removal under
+  ASan/UBSan.
+- Reassembled and compiled 40/40 ARMv7 Thumb translation units with the
+  Linux/musl ABI probe. Its strict link has **two** remaining undefined
+  symbols: `OnSetExternalScreenMapStatusUi(int,int,int,int)` and
+  `OnSetExScreenMapStatusUi(tagSTExtScreenControl const&)`. These are substantial
+  unrecovered behaviors; neither is replaced with an empty implementation.
+  See `analysis/STRICT_LINK_ARM32_CURRENT.log`. The probe is not an Android
+  build, and no replacement `.so` has been produced.
+- Recovered V21 0x1ddd8's map-view lookup using its 0x16788 table: screen
+  Large/Small/Widget selects engine ID 5/3/7. A host ASan/UBSan test covers
+  valid and invalid selectors. See
+  `analysis/v21_verified/auto_multi_screen_binding.md`.
+
 ## 2026-10-23 map binding checkpoint
 
 - Replaced Batch13's `ResetMapBindingList(...) { return true; }` with the

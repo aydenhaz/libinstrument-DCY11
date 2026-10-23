@@ -23,3 +23,13 @@ AutoExscreen closure/bind/action implementation. Full log:
 
 This is an ABI namespace experiment only, not an Android build and not a
 replacement shared object.
+
+Update, 2026-10-23: `bad_function_call` was introduced by the rebuild's
+private CoverUtil `std::function`, not by a V21 runtime import. The original
+ARM32 library's `DT_NEEDED` list omits `libc++_shared.so`, and its symbol
+table contains neither an import nor a definition of the destructor. The
+CoverUtil dispatcher now holds an atomic owner pointer and registers the same
+plain `CGCanvas*` function-pointer signature seen in the original import.
+The strict Linux/musl probe compiles 40/40 files and no longer reports this
+symbol. Its two remaining link errors are the unimplemented map callbacks;
+Android runtime and device behavior are still unverified.

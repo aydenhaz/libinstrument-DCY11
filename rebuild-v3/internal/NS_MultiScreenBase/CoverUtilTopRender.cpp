@@ -1,23 +1,24 @@
 #include "CoverUtil.h"
 #include <GFrame/CGWorkStation.h>
-#include <functional>
+#include <atomic>
 namespace NS_MultiScreenBase {
 namespace {
-// Entirely private rebuilt storage. No std::function/GPI closure object crosses
-// the host ABI; CGWorkStation receives only the plain canvas function pointer.
-std::function<void(GNS_FRAME::CGCanvas*)> topRender;
+// Private callback target. CGWorkStation receives the plain canvas function
+// pointer. This avoids introducing a libc++ std::function dependency absent
+// from the original V21 library's undefined-symbol set.
+std::atomic<CoverUtil*> topRenderOwner{nullptr};
 void dispatchTopRender(GNS_FRAME::CGCanvas* canvas) {
-    const auto callback=topRender;
-    if(callback) callback(canvas);
+    CoverUtil* owner = topRenderOwner.load(std::memory_order_acquire);
+    if (owner) owner->TopRenderCoverCallback(canvas);
 }
 }
 void CoverUtil::installTopRenderCallback() {
-    topRender=[this](GNS_FRAME::CGCanvas* canvas){TopRenderCoverCallback(canvas);};
+    topRenderOwner.store(this, std::memory_order_release);
     GNS_FRAME::CGWorkStation::ownWorkStation()->setTopRenderCallback(&dispatchTopRender);
 }
 void CoverUtil::uninstallTopRenderCallback() {
+    topRenderOwner.store(nullptr, std::memory_order_release);
     GNS_FRAME::CGWorkStation::ownWorkStation()->setTopRenderCallback(nullptr);
-    topRender=nullptr;
 }
 
 void DispatchTopRenderCallback(GNS_FRAME::CGCanvas* canvas) {

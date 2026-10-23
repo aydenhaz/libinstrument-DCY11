@@ -14,6 +14,16 @@ int32_t wordAt(const unsigned char* object, unsigned offset) {
 }
 }
 
+hsl::MapView* AutoMultiScreenConfig_GetMapViewHandle(const void* instance) {
+    const unsigned char* object = static_cast<const unsigned char*>(instance);
+    const int screen = wordAt(object, 0x30c);
+    // sub_16788 maps Large/Small/Widget to 5/3/7; sub_1ddd8 rejects
+    // unexpected engine IDs before calling HSL::GetMapViewHandle.
+    const int engine = screen == 0 ? 5 : screen == 1 ? 3 : screen == 2 ? 7 : -1;
+    if (engine < 0) return nullptr;
+    return hsl::HSL::GetMapViewHandle(static_cast<bl::MapEngineID>(engine));
+}
+
 void AutoMultiScreenConfig_ResetMapBindingList(void* instance, int scene) {
     unsigned char* object = static_cast<unsigned char*>(instance);
     // sub_1c5c8 and sub_1e790 fall back to scene zero for unknown values.

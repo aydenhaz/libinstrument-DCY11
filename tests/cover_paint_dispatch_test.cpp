@@ -19,6 +19,7 @@ struct CoverUtilTestAccess {
  static void count(CoverUtil& c,int n){c.counter_=n;}
  static bool requested(CoverUtil& c){return c.requested_;}
  static bl::ScreenShotInfo* info(CoverUtil& c){return &c.screenshot_;}
+ static void uninstall(CoverUtil& c){c.uninstallTopRenderCallback();}
 };
 }
 using Cover=NS_MultiScreenBase::CoverUtil;
@@ -34,7 +35,7 @@ static int topRegistrations;
 static bool invokeDuringRegistration=false;
 GNS_FRAME::CGWorkStation* GNS_FRAME::CGWorkStation::ownWorkStation(){static CGWorkStation station;return &station;}
 void GNS_FRAME::CGWorkStation::setTopRenderCallback(void(*callback)(CGCanvas*)){registeredTop=callback;++topRegistrations;
- if(invokeDuringRegistration)callback(reinterpret_cast<CGCanvas*>(expectedCanvas));}
+ if(invokeDuringRegistration&&callback)callback(reinterpret_cast<CGCanvas*>(expectedCanvas));}
 static void draw(GNS_FRAME::CGCanvas* canvas,GNS_FRAME::CGImage* image,const GPI::CGRect& rect,GNS_FRAME::EGDrawImageType_ mode,void* style){
  assert(static_cast<void*>(canvas)==expectedCanvas&&static_cast<void*>(image)==current);
  const int expected[]={0,640,0,480};
@@ -82,4 +83,9 @@ int main(){
     invokeDuringRegistration=false;Access::count(replacement,2);
     calls.clear();registeredTop(reinterpret_cast<GNS_FRAME::CGCanvas*>(&canvas));
     assert((calls==std::vector<int>{1})&&Access::count(replacement)==3&&Access::count(c)==3);
+    Access::uninstall(replacement);
+    assert(topRegistrations==3&&registeredTop==nullptr);
+    calls.clear();callbackEntry(reinterpret_cast<GNS_FRAME::CGCanvas*>(&canvas));
+    NS_MultiScreenBase::DispatchTopRenderCallback(reinterpret_cast<GNS_FRAME::CGCanvas*>(&canvas));
+    assert(calls.empty()&&Access::count(replacement)==3);
 }
