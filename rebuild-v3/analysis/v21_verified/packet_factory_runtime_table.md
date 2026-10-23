@@ -3,8 +3,9 @@
 The input is `reference/v21/libInstrumentPannelLarge.so` (ELF32 ARMv7).
 Run `python3 tools/inspect_packet_factory.py --check-v21` from the repository
 root to re-read the original ELF's initializer array, factory bytes, four
-virtual table groups, and relocations. The check passed on the committed V21
-binary. It validates static evidence, not a rebuilt factory or Android behavior.
+virtual table groups, and the matching host GFrame constructor/relocations.
+The check passed on the committed V21 binaries. It validates static
+evidence, not a rebuilt factory or Android behavior.
 
 ## Creation order
 
@@ -24,6 +25,20 @@ It is the **same** `0x6fd48` slot used by LargeScreenImpl screen-mode
 branches at `0x2e20e`, `0x2e2fa`, `0x2e36e`, `0x2e3ea`, and another
 package receiver at `0x158aa`. These calls receive the constructed Packet's
 host package base; they must not pass `LargeScreenImpl::this`.
+
+## Host base construction boundary
+
+The matching `host_libs/libGFrame.so` has
+`CGFragmentPackage(CGContext*)` at `0x1b7610`. Its call at `0x1b7614`
+targets PLT `0x11098c`, whose relocation names
+`CGPackage::CGPackage(CGContext*)`. The returned host object gets its
+`CGFragmentPackage` secondary vptr at `+0x40` and primary vptr at
+`+0`. The vtable pointer comes through GOT `0x3e9c04`, whose relocation
+names `_ZTVN9GNS_FRAME17CGFragmentPackageE`. Its constructor stores
+`vtable+0x50` at `+0x40`, then `vtable+8` at `+0`.
+The local Packet factory overwrites both with derived Packet vptrs
+after constructing CoverUtil. This is why a zeroed `0xc0`-byte prefix
+cannot stand in for the host base.
 
 ## Derived virtual table groups
 

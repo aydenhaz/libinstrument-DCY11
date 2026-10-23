@@ -54,6 +54,65 @@ class ELF32:
             )
         }
 
+    def dynsym_names(self):
+        sym = self.sections[".dynsym"]
+        strings = self.sections[".dynstr"]
+        names = self.data[strings[4] : strings[4] + strings[5]]
+        result = []
+        for offset in range(sym[4], sym[4] + sym[5], 16):
+            index = struct.unpack_from("<I", self.data, offset)[0]
+            result.append(names[index : names.index(b"\0", index)].decode())
+        return result
+
+    def relocation_symbols(self, name):
+        section = self.sections[name]
+        symbols = self.dynsym_names()
+        return {
+            address: (info & 0xff, symbols[info >> 8])
+            for address, info in struct.iter_unpack(
+                "<II", self.data[section[4] : section[4] + section[5]]
+            )
+        }
+
+
+def thumb_bl_target(elf, address):
+    first, second = struct.unpack("<HH", elf.at(address, 4))
+    if first >> 11 != 0x1e or second >> 14 != 0x3:
+        raise ValueError("expected Thumb long branch")
+    s, j1, j2 = (first >> 10) & 1, (second >> 13) & 1, (second >> 11) & 1
+    i1, i2 = 1 ^ j1 ^ s, 1 ^ j2 ^ s
+    offset = ((s << 24) | (i1 << 23) | (i2 << 22)
+              | ((first & 0x3ff) << 12) | ((second & 0x7ff) << 1))
+    if s:
+        offset -= 1 << 25
+    return address + 4 + offset
+
+
+def inspect_host(path):
+    elf = ELF32(path)
+    # BL from CGFragmentPackage(CGContext*) at 0x1b7614 to CGPackage C2 PLT.
+    plt = elf.sections[".plt"][3]
+    target = thumb_bl_target(elf, 0x1B7614)
+    position, remainder = divmod(target - (plt + 20), 12)
+    if remainder or position < 0:
+        raise ValueError("host package constructor call is not an ARM PLT entry")
+    rel_plt = elf.sections[".rel.plt"]
+    address, info = struct.unpack_from(
+        "<II", elf.data, rel_plt[4] + 8 * position
+    )
+    base_constructor = elf.dynsym_names()[info >> 8]
+    got = 0x1B761E + elf.u32(0x1B762C)
+    vtable_relocation = elf.relocation_symbols(".rel.dyn").get(got)
+    return {
+        "fragment_package_constructor": "0x1b7610",
+        "base_constructor_plt": hex(target),
+        "base_constructor_symbol": base_constructor,
+        "base_constructor_got": hex(address),
+        "fragment_vtable_got": hex(got),
+        "fragment_vtable_relocation": vtable_relocation,
+        "fragment_vptr_stores": elf.at(0x1B761E, 10).hex(),
+    }
+
 
 def inspect(path):
     elf = ELF32(path)
@@ -146,6 +205,17 @@ def check(report):
         raise ValueError("short Packet virtual bodies differ")
 
 
+def check_host(report):
+    if report["base_constructor_symbol"] != "_ZN9GNS_FRAME9CGPackageC2EPNS_9CGContextE":
+        raise ValueError("unexpected CGFragmentPackage base constructor")
+    if report["fragment_vtable_got"] != "0x3e9c04" or report["fragment_vtable_relocation"] != (
+        21, "_ZTVN9GNS_FRAME17CGFragmentPackageE"
+    ):
+        raise ValueError("unexpected CGFragmentPackage vtable GOT")
+    if report["fragment_vptr_stores"] != "01f15002026408310160":
+        raise ValueError("host +0x40/+0 virtual pointer setup differs")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -153,10 +223,16 @@ def main():
         default=Path(__file__).resolve().parents[1] / "reference/v21/libInstrumentPannelLarge.so",
     )
     parser.add_argument("--check-v21", action="store_true")
+    parser.add_argument(
+        "--host-gframe", type=Path,
+        default=Path(__file__).resolve().parents[1] / "host_libs/libGFrame.so",
+    )
     args = parser.parse_args()
     report = inspect(args.elf)
+    report["host"] = inspect_host(args.host_gframe)
     if args.check_v21:
         check(report)
+        check_host(report["host"])
         report["v21_contract"] = "PASS"
     print(json.dumps(report, indent=2))
 

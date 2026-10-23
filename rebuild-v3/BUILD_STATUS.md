@@ -560,3 +560,4 @@ Recompiled all 39 translation units with Zig 0.17.0 targeting `arm-linux-musleab
 
 - Removed the partial `CGIPLPacket` constructor's premature singleton write. The original factory publishes only after host/CoverUtil construction and all four derived virtual pointers are installed.
 - Added a private factory-only publication step. The existing shutdown contract test now simulates that step after preparing its mock host lock; it passes when compiled against the assembled overlay. This change does not create the host base, a live Packet factory, GFrame registration, or an installable SO.
+- Verified the host `CGFragmentPackage(CGContext*)` constructor's imported `CGPackage` call and both vptr stores through its relocation tables. The original-ELF inspection gate now checks both instrument and host binaries.

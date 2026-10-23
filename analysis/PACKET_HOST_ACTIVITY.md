@@ -4,6 +4,16 @@ Host libGFrame SHA256 45252a215427ba52fd0165417de517ee835d079a31bc8eaa8e68e04d84
 
 Host RTTI: CGFragmentPackage inherits CGPackage. CGPackage inherits CGAsyncObject at 0 and CGObjMem at +0x40. Its extent in Packet is 0xc0, but this does not suffice to reproduce the base's fields or vtable. CGFragmentPackage context constructor 0x1b7610 calls CGPackage constructor 0x1b4434 and installs two vptrs. The package constructor initializes a reference-counted context at +0x64, CGString at +0x6c, CGIntent at +0x8c and other owned state; it cannot be replaced by zeroing memory.
 
+The host constructor's call at 0x1b7614 resolves via PLT 0x11098c and
+`R_ARM_JUMP_SLOT` to the `CGPackage(CGContext*)` C2 symbol. Its PIC
+GOT entry 0x3e9c04 resolves by `R_ARM_GLOB_DAT` to
+`_ZTVN9GNS_FRAME17CGFragmentPackageE`. The constructor writes
+vtable+0x50 to object+0x40 and vtable+8 to object+0. Original Packet
+factory 0x2eb08 subsequently installs derived Packet vptrs at both
+positions. The host ELF boundary is checked by
+`tools/inspect_packet_factory.py --check-v21`; no raw-host-base
+construction is enabled in the rebuild.
+
 Packet destructor's ARM veneer 0x456b4 resolves to PLT 0x145c8; original Cover destructor runs first. Factory and destructor remain disabled/incomplete in rebuilt Packet. No raw-host-base constructor was introduced at this checkpoint.
 
 ## Concrete corrected boundary
