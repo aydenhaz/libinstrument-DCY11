@@ -28,7 +28,7 @@ adb shell dumpsys dropbox --print data_app_crash >"%OUT%\java_crashes.txt" 2>&1
 adb shell dumpsys dropbox --print data_app_native_crash >"%OUT%\native_crashes.txt" 2>&1
 adb shell getprop ro.product.cpu.abilist >"%OUT%\abi.txt" 2>&1
 adb shell pm path %PKG% >"%OUT%\package_path.txt" 2>&1
-findstr /i /c:"InstrumentPannelLarge" /c:"AndroidRuntime" /c:"FATAL EXCEPTION" /c:"linker" /c:"SIGSEGV" /c:"SIGABRT" /c:"GFrame" "%OUT%\logcat.txt" >"%OUT%\focus.txt"
+findstr /i /c:"InstrumentPannelLarge" /c:"AndroidRuntime" /c:"FATAL EXCEPTION" /c:"linker" /c:"SIGSEGV" /c:"SIGABRT" /c:"GFrame" /c:"amap_so" /c:"signum" "%OUT%\logcat.txt" >"%OUT%\focus.txt"
 powershell -NoProfile -Command "Compress-Archive -LiteralPath $env:OUT -DestinationPath ($env:OUT + '.zip') -Force"
 if errorlevel 1 (
   echo ZIP creation failed. Upload the folder: "%OUT%"

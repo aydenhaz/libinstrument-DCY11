@@ -73,8 +73,10 @@ void LargeScreenImpl::OnChangeScreenMode(int32_t screenType, int32_t mode, const
     /* cfg->GetInt32(key, cur, hsl::Config::VALUE_STRATEGY_DEFAULT); */
 
     (void)cur; (void)cfg;
-    // The original CGPackage receiver is loaded from a singleton slot.
-    // Its initializer and the derived Fragment factories remain unrecovered.
+    // The original CGPackage receiver is the Packet singleton at RVA 0x6fd48,
+    // written by factory 0x2eb08 only after base, CoverUtil, and vptr setup.
+    // The rebuilt Packet does not construct those bases; Fragment factories
+    // and screen-mode dispatch remain unrecovered.
     // The previous receiver-less calls could not dispatch on real host objects.
 }
 

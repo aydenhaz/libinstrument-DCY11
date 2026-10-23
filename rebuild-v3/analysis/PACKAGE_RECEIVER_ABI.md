@@ -17,5 +17,10 @@ one shared position-relative BSS slot at RVA `0x6fd48` (read sites:
 `0x2e20e`, `0x2e2fa`, `0x2e36e`, `0x2e3ea`). A separate path at `0x158aa`
 reads the same slot. This confirms `LargeScreenImpl::this` is not the package
 receiver, while also showing that the original obtains a valid shared receiver.
-The code or lifecycle action that initializes the slot remains unrecovered.
-The evidence is in `v21_verified/large_screen_package_slot.txt`.
+The Packet factory at `0x2eb08` initializes this slot after construction:
+its store at `0x2eb48` targets RVA `0x6fd48`. The package receiver is
+therefore the Packet's offset-zero host `CGFragmentPackage` base. The
+replacement still cannot use this receiver until its own Packet factory,
+host base, and virtual state are constructed. The evidence is in
+`v21_verified/large_screen_package_slot.txt` and
+`v21_verified/packet_factory_runtime_table.md`.

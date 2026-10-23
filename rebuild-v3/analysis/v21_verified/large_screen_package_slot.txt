@@ -15,9 +15,16 @@ receiver is shared module state, not `LargeScreenImpl::this` and not a context
 parameter. The exact GFrame instance-method ABI is recorded in
 `analysis/PACKAGE_RECEIVER_ABI.md`.
 
-The slot is in the original DSO's BSS. The static call-site scan identifies
-its readers, but has not yet identified who initializes it during the package
-lifecycle. A replacement DSO has its own BSS address and cannot reuse the
-original slot by hard-coded RVA; receiver creation/registration must be
-recovered before replacing the `Unrecovered` calls with real method calls.
-No source shim or arbitrary cast is justified by this evidence.
+The slot is in the original DSO's BSS. Factory `0x2eb08` writes its newly
+constructed Packet into this exact slot at `0x2eb48`: the literal loaded
+at `0x2eb44` is `0x411fe`, and the PC observed by the `0x2eb46` ADD is
+`0x2eb4a`, yielding `0x6fd48`. This identifies the receiver as the
+Packet's host CGPackage base at offset zero, published after the constructor
+and four derived vptr stores. The original initializer at `0x14e40`
+registers this factory.
+
+A replacement DSO has its own BSS and cannot reuse the original RVA. Its
+Packet factory and host base must be built before the `Unrecovered` calls can
+become real member calls. No source shim or arbitrary cast is justified by
+this evidence. See `packet_factory_runtime_table.md` and
+`tools/inspect_packet_factory.py --check-v21`.
