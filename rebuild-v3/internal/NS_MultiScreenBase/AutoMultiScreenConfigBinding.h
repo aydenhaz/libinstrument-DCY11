@@ -24,4 +24,8 @@ void AutoMultiScreenConfig_CloseSceneDynamicLevel(int screen, int scene);
 // scene, initialize the screen's map view and open the scene's dynamic type.
 // This requires the same constructed 0x340-byte singleton as the other helpers.
 void AutoMultiScreenConfig_InitSceneDynamicLevel(void* instance, int scene);
+// V21 0x1e084: true instance receiver, fallback level and requested level.
+// Dispatches through ARM32 map-view slots and updates dynamic type at +0x338.
+void AutoMultiScreenConfig_SetMapLevel(void* instance, int fallbackLevel,
+                                       int requestedLevel);
 }

@@ -27,10 +27,10 @@ follows this order. A mock host test covers success, missing second object
 and missing service. These are ABI contract checks; the actual map service
 and live scene objects have not been exercised on Android.
 
-The `AutoMultiScreenConfig` constructor / singleton and `SetMapLevel` still
-need restoration before the unfinished map-status callbacks can use this
-method. The instance `SetMapViewMode` method now uses the verified V21 map
-view virtual slots and ARM register arguments, but still requires a fully
+The `AutoMultiScreenConfig` constructor / singleton still needs restoration
+before the unfinished map-status callbacks can use these methods. The
+instance `SetMapViewMode` and `SetMapLevel` methods now use the verified V21
+map-view virtual slots and ARM register arguments, but still require a fully
 constructed singleton. The isolated dynamic initializer reconstructs the
 0x88-byte parameter record and +0x3cc/+0x3e8/+0x3f0 virtual-call sequence
 from V21 0x1765c. It is not the original singleton-owning static function.

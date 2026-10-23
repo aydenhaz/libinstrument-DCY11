@@ -153,7 +153,7 @@ void AutoMultiScreenConfig_CloseSceneDynamicLevel(int screen, int scene) {
         vtable[0x3ec / armVtableWord]);
     if (!isOpen(view, dynamicType)) return;
     const OpenDynamicLevel open = reinterpret_cast<OpenDynamicLevel>(
-        vtable[0x3e8 / armVtableWord]);
+        (*reinterpret_cast<void***>(view))[0x3e8 / armVtableWord]);
     open(view, false, dynamicType);
 }
 
@@ -178,15 +178,114 @@ void AutoMultiScreenConfig_InitSceneDynamicLevel(void* instance, int scene) {
         0x42b40000u, 200, 0, 0, 0, 0
     };
     static_assert(sizeof(params) == 0x88, "V21 DynamicLevelParam extent");
-    void** vtable = *reinterpret_cast<void***>(view);
     typedef void (*InitDynamicLevel)(void*, const void*);
     typedef void (*OpenDynamicLevel)(void*, bool, int);
     typedef void (*OpenDynamicCenter)(void*, bool);
-    reinterpret_cast<InitDynamicLevel>(vtable[0x3cc / armVtableWord])(view, params);
-    reinterpret_cast<OpenDynamicLevel>(vtable[0x3e8 / armVtableWord])(
+    const auto slot = [&](unsigned offset) {
+        return (*reinterpret_cast<void***>(view))[offset / armVtableWord];
+    };
+    reinterpret_cast<InitDynamicLevel>(slot(0x3cc))(view, params);
+    reinterpret_cast<OpenDynamicLevel>(slot(0x3e8))(
         view, true, scene == 0 ? 1 : 0);
-    reinterpret_cast<OpenDynamicCenter>(vtable[0x3f0 / armVtableWord])(
+    reinterpret_cast<OpenDynamicCenter>(slot(0x3f0))(
         view, false);
+}
+
+void AutoMultiScreenConfig_SetMapLevel(void* instance, int fallbackLevel,
+                                       int requestedLevel) {
+    hsl::MapView* own = AutoMultiScreenConfig_GetMapViewHandle(instance);
+    if (!own) return;
+    hsl::MapView* reference = hsl::HSL::GetMapViewHandle(
+        static_cast<bl::MapEngineID>(1));
+    if (!reference) return;
+
+    unsigned char* object = static_cast<unsigned char*>(instance);
+    const int screen = wordAt(object, 0x30c);
+    const int scene = *AutoExscreenUtil_GetCurrentSceneSlot(
+        static_cast<ScreenType>(screen));
+    const auto ownSlot = [&](unsigned offset) {
+        return (*reinterpret_cast<void***>(own))[offset / armVtableWord];
+    };
+    typedef void (*ZoomStep)(void*, bool, bool, bool, bool);
+    typedef float (*GetZoomLevel)(void*);
+    typedef void (*SetZoomLevel)(void*, float, bool, bool, bool, bool);
+    typedef void (*OpenDynamicLevel)(void*, bool, int);
+    typedef void (*ResetDynamicLevel)(void*);
+
+    // sub_1e22c/1e2f0/1e30c/1e338 close the previously recorded type.
+    // Only the fallback absolute-level branch also resets the host's
+    // dynamic-level parameters at virtual slot +0x3d4.
+    const auto closeRecorded = [&](bool resetParameters) {
+        const int activeType = wordAt(object, 0x338);
+        if (activeType == -1) return;
+        reinterpret_cast<OpenDynamicLevel>(ownSlot(0x3e8))(
+            own, false, activeType);
+        if (resetParameters)
+            reinterpret_cast<ResetDynamicLevel>(ownSlot(0x3d4))(own);
+        putWord(object, 0x338, UINT32_MAX);
+    };
+    const auto preserveReferenceZoom = [&]() {
+        AutoMultiScreenConfig_CloseSceneDynamicLevel(screen, scene);
+        void** referenceVtable = *reinterpret_cast<void***>(reference);
+        const float level = reinterpret_cast<GetZoomLevel>(
+            referenceVtable[0x198 / armVtableWord])(reference);
+        reinterpret_cast<SetZoomLevel>(ownSlot(0x1b0))(
+            own, level, false, false, true, false);
+        closeRecorded(false);
+    };
+    const auto startDynamic = [&]() {
+        const int activeType = wordAt(object, 0x338);
+        if (activeType != -1)
+            reinterpret_cast<OpenDynamicLevel>(ownSlot(0x3e8))(
+                own, false, activeType);
+        AutoMultiScreenConfig_InitSceneDynamicLevel(instance, scene);
+        putWord(object, 0x338, scene == 0 ? 1u : 0u);
+    };
+
+    switch (requestedLevel) {
+    case -3:
+    case -2:
+        AutoMultiScreenConfig_CloseSceneDynamicLevel(screen, scene);
+        reinterpret_cast<ZoomStep>(ownSlot(
+            requestedLevel == -3 ? 0x8c : 0x88))(
+            own, true, false, true, false);
+        return;
+    case -1:
+        startDynamic();
+        return;
+    case 0:
+        preserveReferenceZoom();
+        return;
+    default:
+        break;
+    }
+    if (requestedLevel >= 3 && requestedLevel <= 19) {
+        closeRecorded(false);
+        AutoMultiScreenConfig_CloseSceneDynamicLevel(screen, scene);
+        reinterpret_cast<SetZoomLevel>(ownSlot(0x1b0))(
+            own, static_cast<float>(requestedLevel), false, true, false, false);
+        return;
+    }
+    if (requestedLevel != 99) return;
+    if (fallbackLevel == -1) {
+        startDynamic();
+        return;
+    }
+    if (fallbackLevel == 0) {
+        preserveReferenceZoom();
+        return;
+    }
+    closeRecorded(true);
+    AutoMultiScreenConfig_CloseSceneDynamicLevel(screen, scene);
+    const int clampedLevel = fallbackLevel < 3 ? 3 :
+                             fallbackLevel > 19 ? 19 : fallbackLevel;
+    reinterpret_cast<SetZoomLevel>(ownSlot(0x1b0))(
+        own, static_cast<float>(clampedLevel), false, true, true, false);
+}
+
+void AutoMultiScreenConfig::SetMapLevel(int fallbackLevel,
+                                        int requestedLevel) {
+    AutoMultiScreenConfig_SetMapLevel(this, fallbackLevel, requestedLevel);
 }
 
 void AutoMultiScreenConfig::SetMapViewMode(int fallbackMode,

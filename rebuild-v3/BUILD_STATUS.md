@@ -1,4 +1,4 @@
-# V21 ARM32 rebuild status — 2026-10-20
+# V21 ARM32 rebuild status — 2026-10-23
 
 NOT a usable replacement. No successful strict shared-library link.
 
@@ -16,7 +16,15 @@ NOT a usable replacement. No successful strict shared-library link.
   dynamic initializer now writes the 0x88-byte parameter object, then
   dispatches `InitDynamicLevel`, `OpenDynamicLevel(true, type)` and
   `OpenDynamicCenter(false)`; mock-vtable ASan/UBSan tests check the record
-  and order. Its singleton-owning wrapper and `SetMapLevel` remain absent.
+  and order. The 0x1e084 instance `SetMapLevel` now implements its jump
+  table, 99 fallback/clamp and +0x338 state transitions using the verified
+  four-byte ARM virtual slots. Host mock-vtable tests cover those paths.
+  The static initializer's singleton-owning wrapper remains absent.
+- Reassembled this source and compiled 40/40 ARMv7 Thumb translation units
+  with the Linux/musl ABI probe. Its strict link still fails on exactly
+  `OnSetExternalScreenMapStatusUi(int,int,int,int)` and
+  `OnSetExScreenMapStatusUi(tagSTExtScreenControl const&)`. Both instance
+  methods have the expected ARM32 C++ symbols. This is not an Android build.
   Removed Batch13's incorrect empty `GetMapViewModeConfig` pseudo-method,
   which had mislabeled the status
   writer at 0x2be04.

@@ -31,8 +31,9 @@ then may invoke map-view `OpenDynamicLevel(false, type 0)` at slot +0x3e8,
 conditionally start the timer at `this+0xcc`, and call instance
 SetMapViewMode at 0x1def4. It finally calls ResetMapBindingList at 0x1e790
 using the scene ID. The incorrect static Batch12 SetMapLevel pseudo-body was
-withdrawn; the real instance method remains undefined. The separate
-`SetMapViewMode` instance method now has its verified map-view dispatch.
+withdrawn; both real instance methods now have their verified map-view
+dispatch, with the dynamic-level initializer factored into a raw-layout
+helper. The 0x1c380 singleton required by this callback remains missing.
 ResetMapBindingList now has the observed binding-state and service dispatch,
 but its containing singleton and scene-record constructor remain missing.
 These dependencies need repair before installing the callback.
@@ -41,7 +42,7 @@ The scene slots and UI-config read/write wrappers are now reconstructed
 in `AutoExscreenUiConfig.cpp`. `AutoExscreenMapStatusPlan.h` records the
 verified 99 / -1 decision branches for subsequent callback integration. The
 ARM32 Linux probe still leaves this callback undefined until its config
-singleton, level dispatch and timer are restored.
+singleton, scene-record ownership and timer are restored.
 
 The dynamic branch is narrower than the predicate alone: requested mode
 must differ from 99 and requested level must differ from -1. Thus its
@@ -115,8 +116,8 @@ callbacks still require recovery.
 machine-code call sites. These slot signatures depend on the V21 host ABI.
 
 The two callbacks still lack the full constructed config singleton,
-`SetMapLevel`, remaining map-view dispatch and observer construction.
-`SetMapViewMode` is independently restored but requires that singleton;
+remaining map-view dispatch and observer construction. `SetMapLevel` and
+`SetMapViewMode` are independently restored but require that singleton;
 the partial helpers are not installed as substitute callbacks.
 
 The observer constructor at 0x29798 and registrations are also incomplete.

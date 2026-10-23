@@ -20,7 +20,7 @@ int32_t* boundState = nullptr;
 bool allowSecond = true;
 int viewEngine = -1;
 void* ownViewVtable[0x400 / 4] = {};
-void* referenceViewVtable[0xa0 / 4] = {};
+void* referenceViewVtable[0x1a0 / 4] = {};
 struct FakeView { void** vtable; } ownView = {ownViewVtable},
                               referenceView = {referenceViewVtable};
 bool allowOwnView = true;
@@ -38,9 +38,50 @@ uint32_t capturedDynamicParams[34] = {};
 char dynamicEvents[4] = {};
 unsigned dynamicEventCount = 0;
 bool dynamicCenterEnabled = true;
+int sceneSlot = 0;
+int sceneScreen = -1;
+int zoomInCount = 0;
+int zoomOutCount = 0;
+int getZoomCount = 0;
+int setZoomCount = 0;
+int resetDynamicCount = 0;
+float referenceZoom = 8.5f;
+float selectedZoom = -1.0f;
+bool selectedZoomFlags[4] = {};
+struct DynamicAction { bool enabled; int type; };
+DynamicAction dynamicActions[32] = {};
+unsigned dynamicActionCount = 0;
+
+void zoomIn(void* self, bool a, bool b, bool c, bool d) {
+    assert(self == &ownView && a && !b && c && !d);
+    ++zoomInCount;
+}
+void zoomOut(void* self, bool a, bool b, bool c, bool d) {
+    assert(self == &ownView && a && !b && c && !d);
+    ++zoomOutCount;
+}
+float getZoom(void* self) {
+    assert(self == &referenceView);
+    ++getZoomCount;
+    return referenceZoom;
+}
+void setZoom(void* self, float level, bool a, bool b, bool c, bool d) {
+    assert(self == &ownView);
+    selectedZoom = level;
+    selectedZoomFlags[0] = a;
+    selectedZoomFlags[1] = b;
+    selectedZoomFlags[2] = c;
+    selectedZoomFlags[3] = d;
+    ++setZoomCount;
+}
+void resetDynamic(void* self) {
+    assert(self == &ownView);
+    ++resetDynamicCount;
+}
 
 void initDynamic(void* self, const void* params) {
     assert(self == &ownView);
+    dynamicEventCount = 0;
     assert(dynamicEventCount < sizeof(dynamicEvents));
     dynamicEvents[dynamicEventCount++] = 'I';
     std::memcpy(capturedDynamicParams, params, sizeof(capturedDynamicParams));
@@ -59,8 +100,10 @@ bool isDynamicOpen(void* self, int type) {
 }
 void openDynamic(void* self, bool enabled, int type) {
     assert(self == &ownView);
+    assert(dynamicActionCount < sizeof(dynamicActions) / sizeof(dynamicActions[0]));
+    dynamicActions[dynamicActionCount++] = {enabled, type};
     lastDynamicEnabled = enabled;
-    if (dynamicEventCount) {
+    if (dynamicEventCount == 1 && dynamicEvents[0] == 'I') {
         assert(dynamicEventCount < sizeof(dynamicEvents));
         dynamicEvents[dynamicEventCount++] = 'O';
     }
@@ -110,6 +153,10 @@ MapView* HSL::GetMapViewHandle(bl::MapEngineID engine) {
 }
 }
 namespace NS_MultiScreenBase {
+int* AutoExscreenUtil_GetCurrentSceneSlot(ScreenType screen) {
+    sceneScreen = static_cast<int>(screen);
+    return &sceneSlot;
+}
 int AutoExscreenUtil_GetMapViewLevelFromUiConfig(ScreenType) { return -1; }
 int AutoExscreenUtil_GetMapViewModeFromUiConfig(ScreenType) { return 1; }
 int AutoExscreenUtil_GetMapDayNightModeFromUiConfig(ScreenType) { return 99; }
@@ -124,11 +171,16 @@ int main() {
     serviceVtable[slot] = reinterpret_cast<void*>(&lookup);
     mapVtable[slot] = reinterpret_cast<void*>(&bind);
     ownViewVtable[0x90 / 4] = reinterpret_cast<void*>(&setMapMode);
+    ownViewVtable[0x88 / 4] = reinterpret_cast<void*>(&zoomIn);
+    ownViewVtable[0x8c / 4] = reinterpret_cast<void*>(&zoomOut);
+    ownViewVtable[0x1b0 / 4] = reinterpret_cast<void*>(&setZoom);
+    ownViewVtable[0x3d4 / 4] = reinterpret_cast<void*>(&resetDynamic);
     ownViewVtable[0x3ec / 4] = reinterpret_cast<void*>(&isDynamicOpen);
     ownViewVtable[0x3e8 / 4] = reinterpret_cast<void*>(&openDynamic);
     ownViewVtable[0x3cc / 4] = reinterpret_cast<void*>(&initDynamic);
     ownViewVtable[0x3f0 / 4] = reinterpret_cast<void*>(&openDynamicCenter);
     referenceViewVtable[0x98 / 4] = reinterpret_cast<void*>(&getMapMode);
+    referenceViewVtable[0x198 / 4] = reinterpret_cast<void*>(&getZoom);
     alignas(8) unsigned char object[0x340] = {};
     const int32_t screen = 0;
     std::memcpy(object + 0x30c, &screen, 4);
@@ -196,6 +248,64 @@ int main() {
     AutoMultiScreenConfig_SetMapViewMode(object, 99, 2);
     assert(word(object, 0x314) == UINT32_MAX && setModeCount == 5);
     allowOwnView = true;
+    using NS_MultiScreenBase::AutoMultiScreenConfig_SetMapLevel;
+    put(object, 0x338, -1);
+    put(object, 8, 41);
+    put(object + 0xe4, 8, -5);
+    sceneSlot = 0;
+    isOpenValue = true;
+    dynamicEventCount = 0;
+    AutoMultiScreenConfig_SetMapLevel(object, 0, -3);
+    AutoMultiScreenConfig_SetMapLevel(object, 0, -2);
+    assert(sceneScreen == 0 && zoomOutCount == 1 && zoomInCount == 1);
+    assert(isOpenType == 1 && word(object, 0x338) == UINT32_MAX);
+    AutoMultiScreenConfig_SetMapLevel(object, 0, -1);
+    assert(word(object, 0x338) == 1 && lastDynamicEnabled && openType == 1);
+    assert(dynamicEventCount == 3 && std::memcmp(dynamicEvents, "IOC", 3) == 0);
+    sceneSlot = 1;
+    dynamicEventCount = 0;
+    unsigned actionBase = dynamicActionCount;
+    AutoMultiScreenConfig_SetMapLevel(object, 0, -1);
+    assert(dynamicActionCount == actionBase + 2);
+    assert(!dynamicActions[actionBase].enabled && dynamicActions[actionBase].type == 1);
+    assert(dynamicActions[actionBase + 1].enabled && dynamicActions[actionBase + 1].type == 0);
+    assert(word(object, 0x338) == 0 && capturedDynamicParams[6] == UINT32_MAX);
+    actionBase = dynamicActionCount;
+    AutoMultiScreenConfig_SetMapLevel(object, 0, 0);
+    assert(getZoomCount == 1 && setZoomCount == 1 && selectedZoom == referenceZoom);
+    assert(!selectedZoomFlags[0] && !selectedZoomFlags[1] &&
+           selectedZoomFlags[2] && !selectedZoomFlags[3]);
+    assert(dynamicActionCount == actionBase + 2 && word(object, 0x338) == UINT32_MAX);
+    put(object, 0x338, 1);
+    sceneSlot = 0;
+    AutoMultiScreenConfig_SetMapLevel(object, 0, 8);
+    assert(selectedZoom == 8.0f && setZoomCount == 2);
+    assert(!selectedZoomFlags[0] && selectedZoomFlags[1] &&
+           !selectedZoomFlags[2] && !selectedZoomFlags[3]);
+    assert(word(object, 0x338) == UINT32_MAX && resetDynamicCount == 0);
+    dynamicEventCount = 0;
+    AutoMultiScreenConfig_SetMapLevel(object, -1, 99);
+    assert(word(object, 0x338) == 1 && lastDynamicEnabled);
+    AutoMultiScreenConfig_SetMapLevel(object, 0, 99);
+    assert(word(object, 0x338) == UINT32_MAX && selectedZoom == referenceZoom);
+    put(object, 0x338, 0);
+    AutoMultiScreenConfig_SetMapLevel(object, -10, 99);
+    assert(selectedZoom == 3.0f && resetDynamicCount == 1);
+    assert(!selectedZoomFlags[0] && selectedZoomFlags[1] &&
+           selectedZoomFlags[2] && !selectedZoomFlags[3]);
+    assert(word(object, 0x338) == UINT32_MAX);
+    AutoMultiScreenConfig_SetMapLevel(object, 100, 99);
+    assert(selectedZoom == 19.0f && resetDynamicCount == 1);
+    const int zoomBeforeInvalid = setZoomCount;
+    for (int invalid : {-4, 1, 2, 20, 98})
+        AutoMultiScreenConfig_SetMapLevel(object, 7, invalid);
+    assert(setZoomCount == zoomBeforeInvalid && word(object, 0x338) == UINT32_MAX);
+    allowReferenceView = false;
+    AutoMultiScreenConfig_SetMapLevel(object, 7, 99);
+    assert(setZoomCount == zoomBeforeInvalid);
+    allowReferenceView = true;
+    dynamicOpenCount = 0;
+    dynamicActionCount = 0;
     using NS_MultiScreenBase::AutoMultiScreenConfig_CloseSceneDynamicLevel;
     AutoMultiScreenConfig_CloseSceneDynamicLevel(0, 0);
     assert(viewEngine == 5 && isOpenType == 1 && openType == 1 && dynamicOpenCount == 1);

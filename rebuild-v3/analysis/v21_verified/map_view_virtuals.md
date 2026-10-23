@@ -82,9 +82,19 @@ an isolated raw-layout helper: it reads scene word +8, converts it to a
 quarter integer, writes the observed 0x88-byte parameter object, and calls
 `InitDynamicLevel`, `OpenDynamicLevel(true, scene==0)` and
 `OpenDynamicCenter(false)` in that order. Parameter word +0x44 is 45.0f,
-while +0x50 is 30.0f. Its original static wrapper, singleton lookup and
-`SetMapLevel` are still absent. The old receiver-free static pseudo-method
-has been removed.
+while +0x50 is 30.0f. The original static wrapper and singleton lookup
+remain absent. The instance `SetMapLevel` now dispatches through these
+helpers. The old receiver-free static pseudo-method has been removed.
+
+At 0x1e22c/0x1e2f0/0x1e30c/0x1e338, `SetMapLevel` passes the **stored**
+type from +0x338 to `OpenDynamicLevel(false,type)` and resets +0x338 to -1
+after closing. Its 99/fallback absolute-level case alone also invokes
+`ResetDynamicLevel()` on active dynamic state. This is now implemented as
+the actual `AutoMultiScreenConfig::SetMapLevel(int,int)` instance symbol;
+the host mock-vtable test covers every requested-level branch, state
+transition, flag set, 3..19 clamp, absent views and original parameter
+record. Constructing the singleton and running against Android map views
+remain necessary before using either map-status callback.
 
 The previous Batch13 placeholder assigned 0x2be04 to
 `AutoMultiScreenConfig::GetMapViewModeConfig()` and returned an empty class.
