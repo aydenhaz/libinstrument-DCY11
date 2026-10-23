@@ -22,7 +22,10 @@ void constructHost(void* p, GNS_FRAME::CGContext* context) {
 void destroyHost(void* p) { v21FragmentPackageD2(p); }
 void constructCover(void* p) { ::new (p) NS_MultiScreenBase::CoverUtil(); }
 void destroyCover(void* p) {
-    static_cast<NS_MultiScreenBase::CoverUtil*>(p)->~CoverUtil();
+    // Member teardown is a direct D1 call in the original Packet destructor.
+    // A qualified call prevents dispatch through a potentially replaced vptr.
+    static_cast<NS_MultiScreenBase::CoverUtil*>(p)
+        ->NS_MultiScreenBase::CoverUtil::~CoverUtil();
 }
 }
 

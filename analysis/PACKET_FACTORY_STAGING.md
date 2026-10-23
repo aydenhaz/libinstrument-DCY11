@@ -22,7 +22,10 @@ only on a completed base subobject. Original CoverUtil D1 at `0x17dfc`
 destroys `SurfaceConfig::name` at `+0x44`, then `text_` at `+0x18`; default C++
 member destruction provides that order. The original also logs, which the
 local destructor does not reproduce. Image and observer release occur in the
-lifecycle path. This guard must not escape into a live Packet.
+lifecycle path. The host callback uses a qualified destructor call, which
+produces a direct CoverUtil D1 reference instead of dispatching through a
+potentially replaced virtual pointer. This guard must not escape into a live
+Packet.
 
 Host regression:
 
@@ -45,3 +48,12 @@ or a replacement SO. The derived Packet vptrs, RTTI, virtual callbacks,
 Fragment construction, CoverUtil ownership, and module registration are
 still absent. No Android NDK compile/link or device run was performed for
 these new files.
+
+An ARM GNU compile of `PacketFactoryHostOps.cpp` confirms direct references
+to the host C2/D2 and local CoverUtil C1/D1 symbols. That compiler's
+hard-float GNU sysroot is not the Android NDK: a complete assembled
+compile-only run reaches 47/48 units, with the remaining intentional
+`sizeof(std::string)==12` assertion observing GNU's 24-byte string instead
+of V21's NDK layout. A softfp full-source attempt stops even earlier because
+the hard-float GNU sysroot has no `gnu/stubs-soft.h`. This is toolchain
+evidence only, not Android link or runtime validation.

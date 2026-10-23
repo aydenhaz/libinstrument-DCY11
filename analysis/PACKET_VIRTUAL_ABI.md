@@ -37,3 +37,17 @@ type. Its `0x16c` size assertion does not supply these vptrs, inherited
 virtual signatures, RTTI, or host-owned member lifetime. The unpublished
 construction guard therefore still destroys its object without registration
 or ownership transfer. No installable replacement follows from this table.
+
+`tests/packet_vtable_shape_probe.cpp` is a freestanding 32-bit C++ hierarchy
+with the same base extents, virtual-slot counts and override positions.
+`python3 tests/packet_vtable_shape_test.py` compiles it with `g++ -m32`, then
+checks the generated relocation slots, four address points (`+8/+0x50/+0x60/
++0x78`), offset-to-top words (`0/-0x40/-0xc0/-0xc4`), destructor thunks,
+Cover business callback thunk and RTTI base offsets (`0xc002`/`0x402`). This
+probe also passes with `--arm`, using `arm-linux-gnueabihf-g++` with ARMv7,
+Thumb and softfp flags. Its ARM ELF32 object has 29 Packet table relocations
+at the same offsets. This establishes the inherited table **shape** on the
+target processor ABI. The probe's dummy names and opaque storage do not
+reconstruct GFrame; the cross compiler targets Linux, not Android. A real
+host declaration still needs matching method signatures, ownership and an
+Android NDK compile/link before use.
