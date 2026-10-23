@@ -7,7 +7,7 @@ behavior.
 | Entry | RVA | Current state |
 | --- | ---: | --- |
 | OnSetExternalScreenCrossControlUi(int,bool) | 0x2bcdc | Restored UI config write and CrossControl observer dispatch |
-| OnSetExternalScreenMapStatusUi(int,int,int,int) | 0x2c070 | Not implemented |
+| OnSetExternalScreenMapStatusUi(int,int,int,int) | 0x2c070 | Restored and ARM32 linked; Android runtime unverified |
 | OnSetExScreenMapStatusUi(tagSTExtScreenControl const&) | 0x2ace0 | Not implemented |
 
 ## Map status entry at 0x2c070
@@ -20,9 +20,11 @@ state. It looks up scene with screen type at `this+0xdc`, reads current
 `AutoMultiScreenConfig` scene record, and copies its 0xe4-byte object at
 0x17a6c. This is not a raw 0xe4-byte memcpy: three 12-byte string-like
 subobjects at +0x54/+0x60/+0x6c use the copy constructor at 0x17b8e;
-the temporary destroys all three at 0x17b54. Configured level and view
-mode are at copied record offsets
-+0x88 and +0x8c.
+the temporary destroys all three at 0x17b54. The callback consumes only
+two scalar fields from that copy, at +0x88 and +0x8c. Its isolated map-state
+snapshot now reads those two fields before any configuration mutation,
+without taking ownership of the three strings. The original copy's heap
+allocation and release are consequently not reproduced by this helper.
 
 The level path checks 0x17ad0, and for requested level other than 99 calls
 0x173fc (field 0 UI config) then 0x1e084 (instance SetMapLevel). For requested
@@ -33,16 +35,22 @@ SetMapViewMode at 0x1def4. It finally calls ResetMapBindingList at 0x1e790
 using the scene ID. The incorrect static Batch12 SetMapLevel pseudo-body was
 withdrawn; both real instance methods now have their verified map-view
 dispatch, with the dynamic-level initializer factored into a raw-layout
-helper. The 0x1c380 singleton required by this callback remains missing.
-ResetMapBindingList now has the observed binding-state and service dispatch,
-but its containing singleton and scene-record constructor remain missing.
-These dependencies need repair before installing the callback.
+helper. The 0x1c380 per-screen singleton now lazily initializes three
+0x340-byte instances, the ARM32 `asl::Mutex`/`LockLinux` wrapper and its
+three `SceneConfig` records through the imported `GetSceneConfig`. It uses
+the original +0x54/+0x60/+0x6c string offsets with an ARM32 12-byte libc++
+size assertion. The callback is now exported, but construction, ownership
+and the full observer lifetime have not been exercised on Android.
 
 The scene slots and UI-config read/write wrappers are now reconstructed
 in `AutoExscreenUiConfig.cpp`. `AutoExscreenMapStatusPlan.h` records the
-verified 99 / -1 decision branches for subsequent callback integration. The
-ARM32 Linux probe still leaves this callback undefined until its config
-singleton, scene-record ownership and timer are restored.
+verified 99 / -1 decision branches. The original calls its dynamic-level
+predicate immediately after reading the scene, even when subsequent 99
+branches skip updates; the plan now preserves that call order.
+`AutoExscreenMapStatusDispatch.cpp` applies the observed UI, map-view,
+timer and binding operations after the observer passes its first map-view
+gate and supplies the constructed per-screen singleton. The actual observer
+method at 0x2c070 now calls this dispatcher.
 
 The dynamic branch is narrower than the predicate alone: requested mode
 must differ from 99 and requested level must differ from -1. Thus its
@@ -50,9 +58,11 @@ map-view `OpenDynamicLevel(false, type 0)` and guarded `CGUITimer::start` happen
 configured level is -1 and requested level is 99. The timer object comes
 from observer +0xcc. It is started only when its +4 word is at least 1,
 its first two bytes are clear and `start` returns true; the callback then
-sets its first byte. Mode update and final `ResetMapBindingList(scene)`
-follow. The current `MapStatusPlan` records these decisions, not the
-timer's unimplemented object ABI.
+sets its first byte. The `AutoExscreenMapTimer` helper passes timer+0x10,
+the signed interval at +4 and the 64-bit value at +8 to the original
+`CGUITimer::start(int,unsigned long long)` import. Mode update and final
+`ResetMapBindingList(scene)` follow. Host ASan/UBSan tests cover these
+operations and their skip paths.
 
 ## Control record entry at 0x2ace0
 
@@ -115,10 +125,11 @@ callbacks still require recovery.
 `map_view_virtuals.md` records the matching host vtable symbol names and
 machine-code call sites. These slot signatures depend on the V21 host ABI.
 
-The two callbacks still lack the full constructed config singleton,
-remaining map-view dispatch and observer construction. `SetMapLevel` and
-`SetMapViewMode` are independently restored but require that singleton;
-the partial helpers are not installed as substitute callbacks.
+The long 0x2ace0 callback remains unimplemented; its style, collection,
+control and HMI status branches must be recovered before a strict link.
+The short callback and singleton now compile/link against the ARM32 Linux
+probe, but do not establish safe Android replacement behavior. The wider
+observer constructor and callback lifetime remain incomplete.
 
 The observer constructor at 0x29798 and registrations are also incomplete.
 The CrossControl member implementation assumes its original object layout;

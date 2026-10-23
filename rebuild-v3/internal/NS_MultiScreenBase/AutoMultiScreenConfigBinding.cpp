@@ -74,6 +74,15 @@ hsl::MapView* AutoMultiScreenConfig_GetMapViewHandle(const void* instance) {
     return hsl::HSL::GetMapViewHandle(static_cast<bl::MapEngineID>(engine));
 }
 
+void AutoMultiScreenConfig_SnapshotMapState(const void* instance, int scene,
+                                           int* level, int* mode) {
+    const unsigned sceneIndex = scene == 2 ? 2 : scene == 1 ? 1 : 0;
+    const unsigned char* record = static_cast<const unsigned char*>(instance) +
+                                  0xe4 * sceneIndex;
+    *level = wordAt(record, 0x88);
+    *mode = wordAt(record, 0x8c);
+}
+
 void AutoMultiScreenConfig_ResetMapBindingList(void* instance, int scene) {
     unsigned char* object = static_cast<unsigned char*>(instance);
     // sub_1c5c8 and sub_1e790 fall back to scene zero for unknown values.

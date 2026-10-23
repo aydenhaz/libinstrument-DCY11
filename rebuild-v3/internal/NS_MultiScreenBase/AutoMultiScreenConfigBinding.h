@@ -9,6 +9,11 @@ void AutoMultiScreenConfig_InitBindingRecord(void* record, int screen);
 // V21 sub_1ddd8: obtain the map view for the screen at instance+0x30c.
 // A fully constructed 0x340-byte AutoMultiScreenConfig is required.
 hsl::MapView* AutoMultiScreenConfig_GetMapViewHandle(const void* instance);
+// V21 0x2c108..2c1d6 consumes only scene words +0x88/+0x8c from its
+// temporary 0xe4-byte scene copy. Read both before the callback mutates
+// configuration, without copying the scene's three owning strings.
+void AutoMultiScreenConfig_SnapshotMapState(const void* instance, int scene,
+                                           int* level, int* mode);
 // V21 sub_1e790. The containing AutoMultiScreenConfig object must have been
 // constructed to its original 0x340-byte layout before this is called.
 void AutoMultiScreenConfig_ResetMapBindingList(void* instance, int scene);

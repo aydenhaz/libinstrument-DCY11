@@ -22,8 +22,10 @@ inline MapStatusPlan AutoExscreenUtil_PlanMapStatus(
     const bool level = requestedLevel != 99;
     const bool mode = requestedMode != 99;
     const bool changeMode = mode && requestedLevel != -1;
-    const bool dynamic = changeMode && AutoExscreenUtil_IsDynamicLevelRequest(
+    // 0x2c114 invokes the predicate even when either requested field is 99.
+    const bool requestedDynamic = AutoExscreenUtil_IsDynamicLevelRequest(
         configuredLevel, requestedLevel);
+    const bool dynamic = changeMode && requestedDynamic;
     const MapStatusPlan result = {
         level, level, mode, dynamic, dynamic, changeMode, true
     };

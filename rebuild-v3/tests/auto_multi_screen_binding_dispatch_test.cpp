@@ -225,6 +225,18 @@ int main() {
         assert(viewEngine == -1);
     }
     std::memcpy(object + 0x30c, &screen, 4);
+    using NS_MultiScreenBase::AutoMultiScreenConfig_SnapshotMapState;
+    int snapshotLevel = 0, snapshotMode = 0;
+    put(object, 0x88, -1);
+    put(object, 0x8c, 3);
+    put(object + 0xe4, 0x88, 12);
+    put(object + 0xe4, 0x8c, 99);
+    AutoMultiScreenConfig_SnapshotMapState(object, 0, &snapshotLevel, &snapshotMode);
+    assert(snapshotLevel == -1 && snapshotMode == 3);
+    AutoMultiScreenConfig_SnapshotMapState(object, 1, &snapshotLevel, &snapshotMode);
+    assert(snapshotLevel == 12 && snapshotMode == 99);
+    AutoMultiScreenConfig_SnapshotMapState(object, 99, &snapshotLevel, &snapshotMode);
+    assert(snapshotLevel == -1 && snapshotMode == 3);
     using NS_MultiScreenBase::AutoMultiScreenConfig_SetMapViewMode;
     for (int requested = 0; requested < 3; ++requested) {
         AutoMultiScreenConfig_SetMapViewMode(object, 99, requested);

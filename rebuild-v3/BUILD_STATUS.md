@@ -2,6 +2,29 @@
 
 NOT a usable replacement. No successful strict shared-library link.
 
+## 2026-10-23 map status operational path
+
+- Recovered V21 0x2c070's operational order in an isolated dispatcher that
+  accepts a constructed per-screen config. It snapshots the only two scene
+  values actually consumed (+0x88/+0x8c), preserving their values before
+  UI or map changes while avoiding a raw copy of three owning strings.
+  The map-view entry gate, UI writes, dynamic-level close, instance mode and
+  level calls, and binding reset are covered by a mock host test.
+- Restored the timer gate at 0x2c1a4..2c1c8, calling the imported
+  `CGUITimer::start(int,unsigned long long)` on timer+0x10 with interval +4
+  and 64-bit value +8. Host ASan/UBSan tests cover its guards, failed and
+  successful starts, and one-shot started byte.
+- The original observer callback and per-screen config singleton still
+  require Android runtime validation. The short observer callback now calls
+  the dispatcher after its original map-view gate, and three 0x340-byte
+  singletons are initialized lazily with the imported scene configuration,
+  `asl::Mutex`/`LockLinux`, and ARM32 12-byte strings. The long control
+  callback remains unrecovered.
+- Latest ARMv7 Thumb Linux/musl ABI probe compiles 43/43 translation units.
+  Strict link now fails only on
+  `OnSetExScreenMapStatusUi(tagSTExtScreenControl const&)`. This probe does
+  not produce a usable Android library or validate live singleton ownership.
+
 ## 2026-10-23 map view mode dependency
 
 - Restored V21 0x1def4's instance `AutoMultiScreenConfig::SetMapViewMode`:
@@ -25,9 +48,8 @@ NOT a usable replacement. No successful strict shared-library link.
   `OnSetExternalScreenMapStatusUi(int,int,int,int)` and
   `OnSetExScreenMapStatusUi(tagSTExtScreenControl const&)`. Both instance
   methods have the expected ARM32 C++ symbols. This is not an Android build.
-  Removed Batch13's incorrect empty `GetMapViewModeConfig` pseudo-method,
-  which had mislabeled the status
-  writer at 0x2be04.
+- Removed Batch13's incorrect empty `GetMapViewModeConfig` pseudo-method,
+  which had mislabeled the status writer at 0x2be04.
 
 ## 2026-10-23 map status callback branch analysis
 

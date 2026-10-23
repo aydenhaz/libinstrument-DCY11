@@ -20,6 +20,7 @@
  */
 #include "Observers.h"
 #include "AutoExscreenUiConfig.h"
+#include "AutoExscreenMapStatusDispatch.h"
 #include <hsl/MultiScreenService.h>
 #include <hsl/UIObject.h>
 #include <hsl/GOTHERProtocolHmiToAl.h>
@@ -29,6 +30,8 @@
 #include <GFrame/GPIClosure.h>
 #include <NS_MultiScreenBase/AutoConfigJsonData.h>
 #include <NS_MultiScreenBase/AutoConfigScreenMode.h>
+#include <NS_MultiScreenBase/AutoMultiScreenConfig.h>
+#include <hsl/HSL.h>
 #include <new>
 
 namespace NS_MultiScreenBase {
@@ -96,6 +99,21 @@ void AutoExscreenNotifyObserver::OnSetExternalScreenCrossControlUi(int mapEngine
         observer->OnSetExternalScreenCrossControlUi(screenType_, enabled);
     }
     reinterpret_cast<MutexOp>(mutexVtable[3])(&collection);
+}
+
+// V21 0x2c070: the fourth integer is used only by its logging path.
+// The entry view gate precedes singleton initialization in the original.
+void AutoExscreenNotifyObserver::OnSetExternalScreenMapStatusUi(
+    int mapEngineId, int level, int mode, int position) {
+    (void)position;
+    hsl::MapView* view = hsl::HSL::GetMapViewHandle(
+        static_cast<bl::MapEngineID>(mapEngineId));
+    if (!view) return;
+    AutoMultiScreenConfig* config = AutoMultiScreenConfig::GetInstance(screenType_);
+    void* timerState = *reinterpret_cast<void**>(
+        reinterpret_cast<unsigned char*>(this) + 0xcc);
+    AutoExscreenUtil_ApplyMapStatusWithView(config, screenType_, timerState,
+                                             view, level, mode);
 }
 
 } // namespace

@@ -5,6 +5,11 @@
 #include <cstddef>
 #include <GFrame/CGString.h>
 namespace NS_MultiScreenBase {
+enum SceneType : int;
+// V21 scene record passed by reference to libCommon::GetSceneConfig.
+// Three owning 12-byte strings at +0x54/+0x60/+0x6c require construction.
+struct SceneConfig { unsigned char bytes[0xe4]; };
+static_assert(sizeof(SceneConfig) == 0xe4, "V21 SceneConfig extent");
 // V21 libCommon GetData(SurfaceConfig&) at 0x34aebc:
 // copy 0x24 scalar bytes, assign CGString at +0x24, copy 0x11 bytes at +0x3c.
 struct SurfaceConfig {
@@ -27,6 +32,7 @@ public:
     static AutoConfigJsonData *GetInstance();
     void Init();
     void GetSurfaceConfig(ScreenType, SurfaceConfig&) const;
+    bool GetSceneConfig(ScreenType, SceneType, SceneConfig&) const;
     void GetSurfaceConfig(int screen, SurfaceConfig& config) const { GetSurfaceConfig(static_cast<ScreenType>(screen), config); }
     bool GetMultiViewModeInfo(ScreenType, std::vector<tagMultiViewModeInfo>&);
     bool GetMultiViewModeInfo(int screen, std::vector<tagMultiViewModeInfo>& modes) { return GetMultiViewModeInfo(static_cast<ScreenType>(screen), modes); }
