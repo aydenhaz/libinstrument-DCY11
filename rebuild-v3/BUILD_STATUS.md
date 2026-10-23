@@ -26,6 +26,11 @@ unrelated fragment and observer bodies in the wider rebuild remain provisional.
   `libc.so`; the dependency/runtime mismatch remains material. No Android NDK
   is present in this environment, and a Zig Android target cannot compile the
   libc++ headers without an Android sysroot.
+- The original observer is allocated lazily in three 0x128-byte screen
+  instances at 0x296a0 and constructed at 0x29798. The current rebuild has no
+  equivalent constructor, registration, or lifetime path; see
+  `analysis/v21_verified/auto_exscreen_observer_lifecycle.md`. Strict linking
+  does not make either restored callback reachable in a live host process.
 
 ## 2026-10-23 map status operational path
 
