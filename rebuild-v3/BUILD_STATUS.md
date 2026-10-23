@@ -549,3 +549,9 @@ Recompiled all 39 translation units with Zig 0.17.0 targeting `arm-linux-musleab
 - Assembled the current V21 overlay, compiled 46/46 translation units, and linked with `--no-undefined` against nine V21 ARM32 host libraries: PASS. `build_android.py` now selects static libc++ by default to avoid adding a direct `libc++_shared.so` dependency absent from the original. The shared-STL variant also linked successfully.
 - Result is ELF32 ARMv7 Thumb-2/softfp, with the three named entrypoints. Its SHA256 is `5c0587af6f4edbc68d12001f459793bafcf4d07ca35e7011507eea1f7a6bd550`. See `analysis/ANDROID_NDK_R27D_BUILD.md` for commands and dependency comparison.
 - This output is a linkable development build, not yet a drop-in replacement: 34 original dynamic exports are absent, the original has 23 direct dependencies versus 12 in the new image, and Fragment/Packet and AutoExscreen observer lifecycle recovery remains unfinished. No Android device load/runtime validation was done.
+
+## Device black display and crash report — 2026-10-23
+
+- The NDK r27d development SO was reported to produce a black instrument display followed by an app crash. No matching logcat/tombstone has yet been received; the fault location remains unconfirmed.
+- Static audit confirms the original has five load-time initializers and the rebuilt image has none. The original registers the `CGIPLPacket` package factory through its last initializer; rebuilt module registration intentionally remains disconnected because Packet/Fragment construction is incomplete. The current startup still requests package load.
+- The partial Packet initializer also dereferences unconstructed legacy fragment/activity fields, which makes any accidental live use unsafe. Do not publish the build as a replacement. See `analysis/DEVICE_BLACK_SCREEN_CRASH.md` and the one-run Windows collector `tools/V21_ARM32_crash_collect.cmd`.
