@@ -555,3 +555,8 @@ Recompiled all 39 translation units with Zig 0.17.0 targeting `arm-linux-musleab
 - The supplied `V21_ARM32_CRASH_19410.zip` confirms that the SO loads (`ret=1`) and GFrame immediately reports failure to load `InstrumentPannelLargePackage` of type `com.autonavi.package.GIPLPacket`; the same thread receives SIGABRT. No new usable tombstone identifies the abort PC.
 - The original has five load-time initializers and the rebuilt image has none. The last original initializer registers the Packet factory. Original factory `0x2eb08` constructs the host package, CoverUtil, and four virtual subobjects before publishing the Packet singleton to BSS `0x6fd48`. This also identifies the missing LargeScreenImpl package receiver initializer. The current Packet's byte storage and constructor do not perform these operations, so automatically registering it would be unsafe.
 - Added an ELF inspection gate for this original factory and its vtable offsets. This is an analysis checkpoint; there is no new device-safe replacement SO. See `analysis/DEVICE_BLACK_SCREEN_CRASH.md`, `analysis/v21_verified/packet_factory_runtime_table.md`, and `tools/inspect_packet_factory.py`.
+
+## Packet singleton publication order — 2026-10-23
+
+- Removed the partial `CGIPLPacket` constructor's premature singleton write. The original factory publishes only after host/CoverUtil construction and all four derived virtual pointers are installed.
+- Added a private factory-only publication step. The existing shutdown contract test now simulates that step after preparing its mock host lock; it passes when compiled against the assembled overlay. This change does not create the host base, a live Packet factory, GFrame registration, or an installable SO.

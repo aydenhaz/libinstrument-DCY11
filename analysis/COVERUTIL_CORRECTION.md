@@ -23,8 +23,9 @@ Consequences:
   Padding and a correct total size cannot supply them.
 
 The existing Packet is still a partial storage reconstruction. Its constructor
-only publishes the rebuilt singleton and does not construct the host/CoverUtil
-bases. Factory registration must remain disabled until those are recovered.
+does not construct the host/CoverUtil bases. The earlier version prematurely
+published the rebuilt singleton; this was removed after the device failure.
+Factory registration must remain disabled until those bases are recovered.
 
 ## SurfaceConfig defaults
 

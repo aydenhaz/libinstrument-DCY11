@@ -9,6 +9,7 @@ namespace hsl { class IActivateVerification; }
 namespace NS_InstrumentPannelLarge {
 
 class LargeScreenImpl;
+class PacketFactory;
 
 class CGIPLPacket {
 public:
@@ -24,12 +25,17 @@ public:
     void onResume();                     // sub_3f080   692B  batch8
     void onDestroy();                    // sub_2f2f0   372B  batch8
 
-    // Internal rebuilt singleton; original factory writes it after construction.
+    // Original factory publishes only after host/CoverUtil construction and
+    // the four derived vptr stores. This partial constructor does not publish.
     static CGIPLPacket* activePacket() {return active_;}
     static constexpr std::size_t taskProxyOffset();
     static void TopRenderCallback(GNS_FRAME::CGCanvas*);
 
 private:
+    friend class PacketFactory;
+    // PacketFactory is not implemented. It must call this only after the
+    // complete host object exists. The shutdown contract test simulates that.
+    static void publishConstructed(CGIPLPacket*);
     // UNVERIFIED legacy fields used by the incomplete onInitEnd. These are
     // NOT a reconstructed host base or CoverUtil base. Do not register factories
     // or treat prefix size alone as object ABI compatibility.

@@ -15,6 +15,16 @@
 #include <hsl/UITaskThreadProxy.h>
 #include "NS_InstrumentPannelLarge/CGIPLPacket.h"
 using NS_InstrumentPannelLarge::CGIPLPacket;
+namespace NS_InstrumentPannelLarge {
+// The live factory is intentionally absent. This test supplies only the
+// publication step after preparing its mocked host lock.
+class PacketFactory {
+public:
+ static void publishForShutdownTest(CGIPLPacket* packet) {
+  CGIPLPacket::publishConstructed(packet);
+ }
+};
+}
 static void* packet;
 static std::vector<int> events;
 static void* mapService;
@@ -79,14 +89,20 @@ static void prepareLock(CGIPLPacket& object){
  std::memcpy(static_cast<unsigned char*>(packet)+8,&table,sizeof(table));
 }
 int main(){
- CGIPLPacket object;prepareLock(object);assert(CGIPLPacket::activePacket()==&object);
+ CGIPLPacket object;assert(CGIPLPacket::activePacket()==nullptr);
+ prepareLock(object);
+ NS_InstrumentPannelLarge::PacketFactory::publishForShutdownTest(&object);
+ assert(CGIPLPacket::activePacket()==&object);
  serviceSlots[15]=reinterpret_cast<void*>(&lookup);facilitySlots[42]=reinterpret_cast<void*>(&deviceId);
  mapService=nullptr;object.onDestroy();assert((events==std::vector<int>{0,1,2,3,11,4,12,5,6}));
  events.clear();mapService=&serviceObject;hasFacility=false;object.onDestroy();assert((events==std::vector<int>{0,1,2,3,11,4,12,5,7,6}));
  events.clear();hasFacility=true;object.onDestroy();assert((events==std::vector<int>{0,1,2,3,11,4,12,5,7,8,9,10,6}));
  events.clear();traceEnabled=false;object.onDestroy();assert((events==std::vector<int>{1,2,3,11,4,12,5,7,8,10,6}));
  assert(CGIPLPacket::activePacket()==nullptr);
- CGIPLPacket withProxy;prepareLock(withProxy);assert(CGIPLPacket::activePacket()==&withProxy);
+ CGIPLPacket withProxy;assert(CGIPLPacket::activePacket()==nullptr);
+ prepareLock(withProxy);
+ NS_InstrumentPannelLarge::PacketFactory::publishForShutdownTest(&withProxy);
+ assert(CGIPLPacket::activePacket()==&withProxy);
  hmi::UITaskThreadProxy* proxy=new TrackedProxy;
  auto* slot=static_cast<unsigned char*>(packet)+CGIPLPacket::taskProxyOffset();
  std::memcpy(slot,&proxy,sizeof(proxy));

@@ -64,8 +64,10 @@ Packet's proxy field now occupies +0x168. Unverified initialization fields are
 explicitly named legacy_ and the remaining prefix is reserved; no host base or
 CoverUtil constructor is implied by padding. Retired bogus Batch7 fields were
 removed. onDestroy deletes the proxy after thread removal, zeros the pointer,
-then clears the rebuilt singleton. The constructor currently only publishes
-that singleton, and still does not construct a valid host Packet.
+then clears the rebuilt singleton. The constructor no longer publishes that
+singleton, and still does not construct a valid host Packet. The shutdown
+contract test explicitly simulates publication after installing its mock
+host lock.
 
 The test uses a derived tracked proxy to verify virtual deletion and that the
 singleton remains visible during destruction, is cleared afterward, and a

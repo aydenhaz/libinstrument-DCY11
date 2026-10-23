@@ -41,11 +41,13 @@ pointers have `R_ARM_RELATIVE` relocations; two imported
 the full allocation. Merely matching its total size cannot reproduce
 constructors, RTTI, virtual methods, lock ownership, or teardown.
 
-The current `CGIPLPacket` class is only a partial storage reconstruction:
-its constructor publishes its own pointer before any equivalent base
-construction. The registration helper deliberately remains disconnected.
+The current `CGIPLPacket` class is only a partial storage reconstruction.
+Its constructor no longer publishes its own pointer; only a future complete
+factory may invoke its private publication step. The shutdown contract test
+simulates that step after installing a mock host lock. The registration
+helper deliberately remains disconnected.
 The safe recovery sequence is to model the host base and inherited virtual
-ABI, implement the CoverUtil/Packet overrides and lifetime, replace premature
-singleton publication with the factory's final store, then enable
+ABI, implement the CoverUtil/Packet overrides and lifetime, make the factory
+publish only at the end, then enable
 registration and run on-device validation. No operational Packet factory is
 claimed at this checkpoint.

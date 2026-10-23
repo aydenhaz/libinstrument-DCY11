@@ -45,7 +45,7 @@ publishes the singleton. See
 `analysis/v21_verified/packet_factory_runtime_table.md` and
 `tools/inspect_packet_factory.py`.
 
-The rebuilt Packet constructor only publishes a pointer. Its byte array does
+The rebuilt Packet constructor no longer publishes its pointer. Its byte array does
 not construct the host package, its lock, the CoverUtil bases, or the fragment
 lifecycle. Its partial `onInitEnd` reads uninitialized legacy fragment and
 activity fields. Registering a factory for this object would permit GFrame to
