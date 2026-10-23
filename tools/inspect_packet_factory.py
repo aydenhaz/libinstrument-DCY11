@@ -90,6 +90,14 @@ def inspect(path):
         # Thumb ADD r0,pc at 0x2eb46 observes PC=0x2eb4a.
         "factory_singleton_slot": hex(0x2EB4A + elf.u32(0x2EB54)),
         "factory_singleton_store": elf.at(0x2EB48, 2).hex(),
+        "short_virtual_bodies": {
+            hex(address): elf.at(address, size).hex()
+            for address, size in (
+                (0x2EB7E, 4), (0x2EB82, 4),
+                (0x2F2EC, 2), (0x2F2EE, 2),
+                (0x2F5F4, 2), (0x2F5F6, 2), (0x2F5F8, 2),
+            )
+        },
         "tables": tables,
     }
 
@@ -123,9 +131,19 @@ def check(report):
                 raise ValueError(f"unexpected relocation in {table['subobject']} slot {i}")
     if report["tables"][0]["slots"][4:6] != ["0x2eb7f", "0x2eb83"]:
         raise ValueError("package vtable prefix differs")
-    for i, target in {6: 0x2EB89, 10: 0x2F465, 14: 0x2F5FD, 15: 0x2FC31}.items():
+    for i, target in {
+        6: 0x2EB89, 9: 0x2F2F1, 10: 0x2F465,
+        14: 0x2F5FD, 15: 0x2FC31,
+    }.items():
         if report["tables"][0]["slots"][i] != hex(target):
             raise ValueError(f"package lifecycle slot {i} differs")
+    expected_short = {
+        "0x2eb7e": "00207047", "0x2eb82": "01207047",
+        "0x2f2ec": "7047", "0x2f2ee": "7047",
+        "0x2f5f4": "7047", "0x2f5f6": "7047", "0x2f5f8": "7047",
+    }
+    if report["short_virtual_bodies"] != expected_short:
+        raise ValueError("short Packet virtual bodies differ")
 
 
 def main():

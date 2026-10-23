@@ -29,7 +29,7 @@ host package base; they must not pass `LargeScreenImpl::this`.
 
 | Packet subobject | Offset | Vtable address point | Offset-to-top | Visible functions |
 | --- | ---: | ---: | ---: | --- |
-| `CGFragmentPackage` | `+0` | `0x6b800` | 0 | 16 slots; destructors 0/1, `onInitEnd` 6, `onPreLoad` 10, `onPostLoadRes` 14, `onPostAlreadyLoadRes` 15 |
+| `CGFragmentPackage` | `+0` | `0x6b800` | 0 | 16 slots; destructors 0/1, `onInitEnd` 6, `onDestroy` 9, `onPreLoad` 10, `onPostLoadRes` 14, `onPostAlreadyLoadRes` 15 |
 | host `CGObjMem` | `+0x40` | `0x6b848` | `-0x40` | 2 slots |
 | `CoverUtil` / `MapSurfaceViewObserver` | `+0xc0` | `0x6b858` | `-0xc0` | 4 slots |
 | `CoverUtil` / `IBLMapBusinessDataObserver` | `+0xc4` | `0x6b870` | `-0xc4` | 3 slots |
@@ -37,6 +37,13 @@ host package base; they must not pass `LargeScreenImpl::this`.
 All four vtable headers reference Packet RTTI `0x6b87c`. Most function
 pointers have `R_ARM_RELATIVE` relocations; two imported
 `CGAsyncObject` entries in the primary table use `R_ARM_ABS32`.
+`0x2eb7e` and `0x2eb82` are four-byte virtual bodies that return
+`0` and `1` respectively (primary slots 4 and 5). Primary slots 7 and 8
+at `0x2f2ec` and `0x2f2ee`, and slots 11 through 13 at
+`0x2f5f4`, `0x2f5f6`, `0x2f5f8`, each contain only `bx lr`.
+Their source-level return types and names cannot be inferred from that
+instruction alone. Slot 9 starts the nontrivial `onDestroy` body at
+`0x2f2f0`; it must not be treated as another two-byte return.
 `0x16c = 0xc0 + 0xa8 + 4`: the host base, CoverUtil, and proxy occupy
 the full allocation. Merely matching its total size cannot reproduce
 constructors, RTTI, virtual methods, lock ownership, or teardown.
