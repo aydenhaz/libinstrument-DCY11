@@ -8,7 +8,7 @@ behavior.
 | --- | ---: | --- |
 | OnSetExternalScreenCrossControlUi(int,bool) | 0x2bcdc | Restored UI config write and CrossControl observer dispatch |
 | OnSetExternalScreenMapStatusUi(int,int,int,int) | 0x2c070 | Restored and ARM32 linked; Android runtime unverified |
-| OnSetExScreenMapStatusUi(tagSTExtScreenControl const&) | 0x2ace0 | Not implemented |
+| OnSetExScreenMapStatusUi(tagSTExtScreenControl const&) | 0x2ace0 | Restored main dispatch, ARM32 Linux/musl linked; Android runtime unverified |
 
 ## Map status entry at 0x2c070
 
@@ -68,8 +68,9 @@ operations and their skip paths.
 
 The source withdrew a wrongly assigned body. The original is 3788 bytes,
 accepts a 36-byte tagSTExtScreenControl record and drives several screen
-state transitions. Its branches, concrete object ownership, and downstream
-callbacks still require recovery.
+state transitions. The rebuilt callback now implements the observed control,
+style and status paths, with separately tested style/status helpers. Its
+observer object and host runtime behavior still require validation.
 
 ### Verified 0x2ace0 branches
 
@@ -125,10 +126,17 @@ callbacks still require recovery.
 `map_view_virtuals.md` records the matching host vtable symbol names and
 machine-code call sites. These slot signatures depend on the V21 host ABI.
 
-The long 0x2ace0 callback remains unimplemented; its style, collection,
-control and HMI status branches must be recovered before a strict link.
-The short callback and singleton now compile/link against the ARM32 Linux
-probe, but do not establish safe Android replacement behavior. The wider
+The long 0x2ace0 callback now exports its original instance symbol and
+participates in a strict 46/46 translation-unit ARM32 Linux/musl link. The
+callback copies three scene strings through ARM32 libc++ and reads scalar
+scene values in place; unlike the original 0xe4-byte temporary it does not
+copy unrelated scalar fields. Diagnostic logging is omitted. The `word[8]`
+selector 0 creates the original raw MapStyleParam initialization and invokes
+the engine-1 view's device, theme and night slots. A mock-vtable test checks
+the associated call order, style names and fallback. The status helper uses
+the singleton's internal +0x310 scene for the +0x9c/+0xc7 fallback fields
+and the per-screen scene slot for UI config reads. These implementation
+details do not establish safe Android replacement behavior. The wider
 observer constructor and callback lifetime remain incomplete.
 
 The observer constructor at 0x29798 and registrations are also incomplete.

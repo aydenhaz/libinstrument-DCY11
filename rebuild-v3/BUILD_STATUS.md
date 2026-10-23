@@ -1,6 +1,31 @@
 # V21 ARM32 rebuild status — 2026-10-23
 
-NOT a usable replacement. No successful strict shared-library link.
+NOT a usable Android replacement. The ARM32 Linux/musl ABI probe strictly
+links, but the Android NDK and a device runtime validation are absent. Several
+unrelated fragment and observer bodies in the wider rebuild remain provisional.
+
+## 2026-10-23 long control callback and strict-link checkpoint
+
+- Recovered the long V21 0x2ace0 callback's engine/mode gate, singleton scene
+  snapshot, requested mode and level updates (including -2/-3 zoom guards),
+  CrossControl, EagleEye and preview collection dispatch, map binding reset,
+  three map-style selectors, and 36-byte HMI status reply. The reply preserves
+  input words 7 and 8; 0x2be04 replaces words 0 through 6 only after a second
+  successful map-view lookup. Diagnostic logging is omitted. The original
+  three owning scene strings are copied, not byte-copied.
+- Isolated the original MapView virtual slots and host MapStyleParam
+  initialization in `AutoExscreenMapStyle.cpp`. The status path is isolated in
+  `AutoExscreenControlStatus.cpp`. Native ASan/UBSan mock-vtable tests cover
+  style selectors, short/empty names, attached/night fallback, status fields,
+  provisional zoom/mode and the failed second lookup. No Android runtime test
+  of the observer's ownership or host objects has been performed.
+- Reassembled and compiled 46/46 ARMv7 Thumb translation units; strict link
+  against the nine supplied ARM32 hosts **passes**. This output targets
+  Linux/musl and cannot be installed as the V21 Android library. The original
+  ELF has 23 `DT_NEEDED` entries, whereas the probe has nine host entries plus
+  `libc.so`; the dependency/runtime mismatch remains material. No Android NDK
+  is present in this environment, and a Zig Android target cannot compile the
+  libc++ headers without an Android sysroot.
 
 ## 2026-10-23 map status operational path
 

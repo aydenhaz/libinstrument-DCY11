@@ -1,12 +1,13 @@
 ARMv7 Thumb Linux/musl ABI probe, 2026-10-23
 Compiler wrapper: ziglang c++ -target arm-linux-musleabi -mcpu=cortex_a9
                   -D_LIBCPP_ABI_NAMESPACE=__ndk1
-Command: python3 -u v21-work/build_android.py --cxx ./arm-cxx --out ./arm-probe-singleton
+Command: python3 v21-work/build_android.py --cxx ./arm-cxx --out ./arm-probe-control-final
 
-Compiled 43/43 source files
-Strict link: FAIL
-ld.lld: error: undefined symbol: NS_MultiScreenBase::AutoExscreenNotifyObserver::OnSetExScreenMapStatusUi(tagSTExtScreenControl const&)
->>> referenced by AutoExscreenNotifyObserver.cpp:0
->>>               arm-probe-singleton/12.o:(NS_MultiScreenBase::AutoExscreenNotifyObserver::DeferActionC(tagSTExtScreenControl const&))
+Compiled 46/46 source files
+Strict link: PASS
+Defined original callback symbol:
+NS_MultiScreenBase::AutoExscreenNotifyObserver::OnSetExScreenMapStatusUi(tagSTExtScreenControl const&)
 
-No shared library was published. This is a Linux/musl probe, not an Android build.
+Resulting ELF: 32-bit ARM EABI5, SONAME libInstrumentPannelLarge.so.
+This is a Linux/musl probe, NOT an Android build or a usable replacement.
+Android NDK/sysroot and device runtime validation are still required.
