@@ -11,11 +11,21 @@ import tempfile
 source = Path(__file__).with_name("packet_vtable_shape_probe.cpp")
 relocation_section = ".rel.data.rel.ro._ZTV6Packet"
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument("--arm", action="store_true", help="compile ARMv7 Thumb softfp object")
+target = parser.add_mutually_exclusive_group()
+target.add_argument("--arm", action="store_true", help="compile ARMv7 Thumb softfp GNU object")
+target.add_argument("--ndk", type=Path, help="compile Android ARMv7 Thumb softfp object")
 args = parser.parse_args()
-compiler = os.environ.get("ARM_CXX", "arm-linux-gnueabihf-g++") if args.arm else os.environ.get("CXX", "g++")
-objcopy = os.environ.get("ARM_OBJCOPY", "arm-linux-gnueabihf-objcopy") if args.arm else os.environ.get("OBJCOPY", "objcopy")
-relocation = "R_ARM_ABS32" if args.arm else "R_386_32"
+if args.ndk:
+    toolchain = args.ndk.resolve() / "toolchains/llvm/prebuilt/linux-x86_64/bin"
+    compiler = str(toolchain / "armv7a-linux-androideabi21-clang++")
+    objcopy = str(toolchain / "llvm-objcopy")
+elif args.arm:
+    compiler = os.environ.get("ARM_CXX", "arm-linux-gnueabihf-g++")
+    objcopy = os.environ.get("ARM_OBJCOPY", "arm-linux-gnueabihf-objcopy")
+else:
+    compiler = os.environ.get("CXX", "g++")
+    objcopy = os.environ.get("OBJCOPY", "objcopy")
+relocation = "R_ARM_ABS32" if args.arm or args.ndk else "R_386_32"
 expected = {
     0x04: "_ZTI6Packet", 0x08: "_ZN6PacketD1Ev", 0x0c: "_ZN6PacketD0Ev",
     0x10: "_ZN5Async8executorEv", 0x14: "_ZN5Async8uiThreadEv",
@@ -46,7 +56,7 @@ with tempfile.TemporaryDirectory(prefix="ipl-vtable-") as directory:
     tmp = Path(directory)
     obj = tmp / "shape.o"
     flags = (["-mthumb", "-march=armv7-a", "-mfloat-abi=softfp"]
-             if args.arm else ["-m32"])
+             if args.arm or args.ndk else ["-m32"])
     subprocess.run([compiler, "-std=c++11", "-fPIC", *flags,
                     "-c", str(source), "-o", str(obj)], check=True)
     output = subprocess.check_output([os.environ.get("READELF", "readelf"),
@@ -59,6 +69,10 @@ with tempfile.TemporaryDirectory(prefix="ipl-vtable-") as directory:
                          r"\s+\S+\s+(\S+)", line)
         if match:
             entries[int(match.group(1), 16)] = match.group(2)
+    # Clang may select the complete destructor's D2 alias for slot zero.
+    # Both symbols designate the same non-deleting destructor entry point.
+    assert entries.get(0x08) in ("_ZN6PacketD1Ev", "_ZN6PacketD2Ev"), entries
+    expected[0x08] = entries[0x08]
     assert entries == expected, (entries, expected)
 
     data = section_bytes(obj, ".data.rel.ro._ZTV6Packet", tmp / "vtable.bin")
@@ -74,5 +88,6 @@ with tempfile.TemporaryDirectory(prefix="ipl-vtable-") as directory:
     assert (struct.unpack_from("<I", cover_rtti, 0x14)[0],
             struct.unpack_from("<I", cover_rtti, 0x1c)[0]) == (2, 0x402)
 
-print(("ARMv7 Thumb softfp" if args.arm else "x86 32-bit") +
+print(("Android ARMv7 Thumb softfp" if args.ndk else
+       "GNU ARMv7 Thumb softfp" if args.arm else "x86 32-bit") +
       " Packet vtable/RTTI shape: PASS")

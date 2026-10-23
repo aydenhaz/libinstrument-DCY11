@@ -46,8 +46,13 @@ checks the generated relocation slots, four address points (`+8/+0x50/+0x60/
 Cover business callback thunk and RTTI base offsets (`0xc002`/`0x402`). This
 probe also passes with `--arm`, using `arm-linux-gnueabihf-g++` with ARMv7,
 Thumb and softfp flags. Its ARM ELF32 object has 29 Packet table relocations
-at the same offsets. This establishes the inherited table **shape** on the
-target processor ABI. The probe's dummy names and opaque storage do not
-reconstruct GFrame; the cross compiler targets Linux, not Android. A real
-host declaration still needs matching method signatures, ownership and an
-Android NDK compile/link before use.
+at the same offsets. The Android NDK r26c probe also passes with
+`python3 tests/packet_vtable_shape_test.py --ndk /path/to/android-ndk-r26c`:
+it checks the same 29 relocations and four address points in an Android
+ARMv7 Thumb softfp object. Clang selects the D2 alias for the primary
+non-deleting destructor slot, where GNU GCC selects D1. This establishes
+the inherited table **shape** under both toolchains. The dummy method names
+and opaque storage do not reconstruct GFrame. The complete project now
+compiles and strictly links with Android NDK r26c (see
+`analysis/ANDROID_NDK_R26C_BUILD.md`), but the real Packet base declaration,
+signatures, ownership and device behavior still need recovery.

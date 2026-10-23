@@ -1,4 +1,9 @@
-# V21 ARM32 rebuild status — 2026-10-20
+# V21 ARM32 rebuild status — historical baseline, 2026-10-20
+
+Current status: `rebuild-v3/BUILD_STATUS.md`. The assembled overlay now
+compiles 48/48 Android ARM32 source units and passes a strict NDK r26c link,
+but the missing Packet factory/registration prevents use as a replacement.
+The checkpoints below describe the older unassembled source tree.
 
 NOT a usable replacement. No successful strict shared-library link.
 

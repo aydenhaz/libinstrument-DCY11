@@ -1,8 +1,28 @@
 # V21 ARM32 rebuild status — 2026-10-23
 
-NOT a usable Android replacement. The ARM32 Linux/musl ABI probe strictly
-links, but the Android NDK and a device runtime validation are absent. Several
-unrelated fragment and observer bodies in the wider rebuild remain provisional.
+NOT a usable Android replacement. Android NDK r26c compiles 48/48 source files
+and strictly links, but the GIPLPacket factory/registration path is still
+missing. An earlier r27d development build loaded on a device, then GFrame
+failed to load the package and the app exited by SIGABRT. Fragment and observer
+bodies in the wider rebuild remain provisional.
+
+## 2026-10-23 Android NDK r26c and Packet ABI checkpoint
+
+- Downloaded and hash-checked NDK r26c (`26.2.11394342`), assembled the
+  repository, restored the compressed host `libGbl.so`, and compiled all
+  48/48 Android ARMv7 translation units. Strict `--no-undefined` link against
+  nine V21 ARM32 hosts passes; the result is an ELF32 ARM EABI5 SO with the
+  expected SONAME and three public entrypoints. See
+  `analysis/ANDROID_NDK_R26C_BUILD.md` for commands and checksums.
+- The inherited Packet virtual-table shape probe now also runs on the NDK
+  compiler. Its 29 relocations, four address points, offset-to-top values,
+  destructor thunks, and RTTI base offsets pass the same checks as the GNU
+  ARM probe. This is an isolated ABI model, not a constructed host Packet.
+- The new SO still has no live Packet factory or registration. Comparison
+  with the original finds 34 missing exports (17 typeinfo/type-name pairs).
+  Do not install this development output as a replacement. The original
+  factory, host base lifecycle, CoverUtil observer subobjects, and Fragment
+  ownership need completion before another device test.
 
 ## 2026-10-23 long control callback and strict-link checkpoint
 
