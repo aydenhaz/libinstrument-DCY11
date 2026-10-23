@@ -6,8 +6,8 @@
  *
  * Complete call trace (70 calls, verified):
  *   1. ALC export block (module "HMI_PANNELLARGE", name "onInitEnd")
- *   2. LargeScreenImpl ctor (operator new 0x2c = 44B)
- *      ExModuleManager::GetInstance()->ModuleReg((ModuleInterfaceId)0x9f, impl)
+ *   2. LargeScreenImpl ctor (operator new 0x10 = 16B)
+ *      ExModuleManager::GetInstance()->ModuleReg((ModuleInterfaceId)0x1f40, impl)
  *      -- ModuleReg string @0x54420: "NS_InstrumentPannelLarge::LargeScreenImpl::LargeScreenImpl()"
  *   3. UI thread wiring:
  *      HSL::Get3rdHandle(); new UITaskThreadProxy(renderThreadExecutorId)
@@ -70,6 +70,11 @@
 #include <new>
 
 namespace NS_InstrumentPannelLarge {
+namespace {
+// Original BSS +0x6fd4c: module singleton separate from the Packet's
+// constructed host base. The Packet singleton occupies +0x6fd48 instead.
+LargeScreenImpl* activeLargeScreenImpl;
+}
 
 void CGIPLPacket::onInitEnd() {
     /* 1. ALC export: {0,0,"HMI_PANNELLARGE",0,tag,"virtual void NS_InstrumentPannelLarge::
@@ -78,20 +83,19 @@ void CGIPLPacket::onInitEnd() {
               "virtual void NS_InstrumentPannelLarge::CGIPLPacket::onInitEnd()",
               /*tag*/ 0, this);
 
-    /* 2. LargeScreenImpl + module registration (interface 0x9f = 159) */
-    legacy_.impl_ = new LargeScreenImpl();
-    ExModuleManager::GetInstance()->ModuleReg((ModuleInterfaceId)0x9f, legacy_.impl_);
+    /* 2. Module lifetime is separate from the Packet's virtual base at +0. */
+    if (!activeLargeScreenImpl) activeLargeScreenImpl = new LargeScreenImpl();
 
     /* 3. UI task thread wiring */
-    legacy_.third_ = hsl::HSL::Get3rdHandle();
-    if (legacy_.third_) { // V21 0x2ec58..0x2ecc2.
+    hsl::ThirdManager* third = hsl::HSL::Get3rdHandle();
+    if (third) { // V21 0x2ec58..0x2ecc2.
         if (!uiThreadProxy_) {
             const int executor = GNS_FRAME::CGFrameSimulation::ownWorkStation()->getRenderThreadExecutorId();
             uiThreadProxy_ = new hmi::UITaskThreadProxy(executor);
         }
         const int executor = GNS_FRAME::CGFrameSimulation::ownWorkStation()->getRenderThreadExecutorId();
         const uint32_t render_thread = GNS_FRAME::CGFrameSimulation::ownWorkStation()->getRenderThreadId();
-        static_cast<hsl::ThirdManager*>(legacy_.third_)->SetUITaskThread(
+        third->SetUITaskThread(
             hsl::UI_TASK_DEVICE_INSTRUMENT, executor,
             static_cast<long long>(render_thread), true, uiThreadProxy_->taskInterface());
         const int engine = hsl::CommonUtils::GetEngineIdByDeviceId(hsl::UI_TASK_DEVICE_INSTRUMENT);
@@ -102,7 +106,8 @@ void CGIPLPacket::onInitEnd() {
     GNS_FRAME::CGFragmentActivity *activity =
         GNS_FRAME::CGFrameSimulation::ownWorkStation()->getFragmentActivity();
     (void)activity; // Original also dispatches activity slots 12 and 25; unrecovered.
-    legacy_.ctx_ = reinterpret_cast<GNS_FRAME::CGPackage*>(this)->getContext();
+    GNS_FRAME::CGContext* context =
+        reinterpret_cast<GNS_FRAME::CGPackage*>(this)->getContext();
     bl::ObjectRuntimeInfo *rti = new bl::ObjectRuntimeInfo(legacy_.blObject_);
 
     /* 5. Init timer by id */
@@ -123,7 +128,7 @@ void CGIPLPacket::onInitEnd() {
        Opening Fragment construction site once its base layout is recovered. */
 
     /* 8. Host fragment wiring */
-    legacy_.hostFragment_->setContext(legacy_.ctx_);
+    legacy_.hostFragment_->setContext(context);
     legacy_.hostFragment_->setType(this);
     GNS_FRAME::CGIntent intent;
     static_cast<GNS_FRAME::CGActivity*>(legacy_.activity_)->setFragment(0, legacy_.hostFragment_, intent);

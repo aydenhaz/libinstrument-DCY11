@@ -47,6 +47,13 @@ and their 17 type-name symbols, for `IBaseModuleEx`,
 `GPI::Closure::CallbackBase` and ten `hsl` observer/interface classes.
 Adding these exports alone would not construct or register the Packet.
 
+The figures and SHA256 above identify the earlier Packet ABI checkpoint.
+After restoring `LargeScreenImpl`'s two interfaces, another r26c build
+compiled 48/48 translation units and passed the same strict link. Its
+dual-interface vtable/RTTI check passed, and missing original exports
+dropped to **30** (15 typeinfo/type-name pairs). See
+`analysis/LARGE_SCREEN_MODULE_ABI.md`. This still does not register Packet.
+
 This is a development build, **not an installable replacement**. The
 earlier NDK r27d development build loaded on a device but GFrame failed to
 load `com.autonavi.package.GIPLPacket`, followed by SIGABRT. The current

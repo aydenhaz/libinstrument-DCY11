@@ -80,7 +80,7 @@ struct TrackedProxy:hmi::UITaskThreadProxy {
 };
 namespace hsl {
 void* HSL::GetMapServiceHandle(){return mapService;}
-HSL* HSL::Get3rdHandle(){static HSL service;return &service;}
+ThirdManager* HSL::Get3rdHandle(){static ThirdManager service;return &service;}
 void MapViewServiceImpl::DestroyDisplayFacility(MapViewBase* facility){assert(static_cast<void*>(this)==&serviceObject&&static_cast<void*>(facility)==&facilityObject);events.push_back(10);}
 void ThirdManager::RemoveUITaskThread(UI_TASK_DEVICE_ID device){assert(device==UI_TASK_DEVICE_INSTRUMENT);events.push_back(6);}
 }

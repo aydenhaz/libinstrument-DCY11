@@ -2,11 +2,11 @@
  * Batch 1 — LargeScreenImpl (IBaseModuleEx implementation)
  * Reconstructed from sub_2dfa4 / sub_2e02c / sub_2e03c / sub_2e0f8.
  *
- * Vtable @0x6b79c (LargeScreenImpl, 4 slots):
- *   [0] sub_2dfa4  ~LargeScreenImpl            -> ModuleUnReg(0x1fa) + ALC export tag 0x4b
+ * Primary vtable @0x6b79c (LargeScreenImpl, 4 slots), secondary at 0x6b7b4:
+ *   [0] sub_2dfa4  ~LargeScreenImpl            -> ModuleUnReg(0x1f40) + ALC export tag 0x4b
  *   [1] sub_2e02c  deleting-dtor thunk -> [0]
  *   [2] sub_2e03c  int32_t QueryInterface(int32_t, void**)  -> ALC export tags 0x9f, 0x166
- *   [3] sub_2e0f8  OnChangeScreenMode(...)      -> 2548B state machine (below)
+ *   [3] sub_2e0f8  doStartFragment(...)         -> secondary -4 thunk at 0x2eaf8
  *
  * ALC export block (8 words, passed by value as 4th arg):
  *   { 0, 0, module, aux, tag, signature, this, name }   fn(alc, 8, 0, block)
@@ -34,12 +34,14 @@ static const char kNameQI[]   = "QueryInterface:%p %p";
 
 
 LargeScreenImpl::LargeScreenImpl() {
-    /* vtable store observed at 0x2dfb2: vptr=0x6b79c(+0x1c region), count 8 */
+    // The original Packet onInitEnd inlines the 0x10-byte construction and
+    // registers the completed module with interface ID 0x1f40.
+    ExModuleManager::GetInstance()->ModuleReg((ModuleInterfaceId)0x1f40, this);
 }
 
 LargeScreenImpl::~LargeScreenImpl() {
     /* sub_2dfa4 */
-    ExModuleManager::GetInstance()->ModuleUnReg((ModuleInterfaceId)0x1fa /*506*/);
+    ExModuleManager::GetInstance()->ModuleUnReg((ModuleInterfaceId)0x1f40);
     AlcExport(kNameDtor, kSigDtor, 0x4b, this);
 }
 
@@ -47,7 +49,10 @@ int32_t LargeScreenImpl::QueryInterface(int32_t id, void **out) {
     /* sub_2e03c — two ALC exports, no ModuleReg here */
     AlcExport(kNameQI, kSigQI, 0x9f /*159*/, this);
     AlcExport(kNameQI, kSigQI, 0x166 /*358*/, this);
-    if (out) *out = this;
+    // V21 0x2e090..0x2e0d8 returns the +4 interface pointer, or -1 when
+    // the caller supplied no output storage.
+    if (!out) return -1;
+    *out = static_cast<IMultiScreenInterfaces*>(this);
     return 0;
 }
 

@@ -6,6 +6,22 @@ missing. An earlier r27d development build loaded on a device, then GFrame
 failed to load the package and the app exited by SIGABRT. Fragment and observer
 bodies in the wider rebuild remain provisional.
 
+## 2026-10-23 LargeScreenImpl dual-interface checkpoint
+
+- Original `onInitEnd` allocates a 0x10-byte `LargeScreenImpl` and stores
+  its pointer in a separate BSS singleton at `0x6fd4c`, while Packet uses
+  `0x6fd48`. Corrected the module's two-base C++ declaration, secondary
+  `+4` vptr, three adjustor thunks and RTTI offsets. Module registration
+  and unregistration use the verified ID `0x1f40`; `QueryInterface`
+  publishes `this+4` and returns `-1` for a null output pointer.
+- `onInitEnd` no longer stores the module into Packet's primary vptr or
+  its transient third-party handle/context into host async fields. Its
+  later legacy Fragment fields remain invalid, so the Packet factory is
+  still disabled. NDK r26c compiled 48/48 and strictly linked. Original
+  visible exports missing from the development SO decreased from 34 to 30.
+  The dual-vtable Android ELF test and native ASan/UBSan module contract
+  test pass; see `analysis/LARGE_SCREEN_MODULE_ABI.md`.
+
 ## 2026-10-23 Android NDK r26c and Packet ABI checkpoint
 
 - Downloaded and hash-checked NDK r26c (`26.2.11394342`), assembled the
