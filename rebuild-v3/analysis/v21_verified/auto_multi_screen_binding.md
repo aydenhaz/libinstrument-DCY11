@@ -49,3 +49,16 @@ floating-point sentinels at their verified offsets. V21 0x3bec0 zeros binding by
 0x340-byte constructor at 0x1c174 also initializes a lock and registers
 three scenes at 0x1c2d4. Those side effects and singleton lifetime remain
 unimplemented, so these helpers must not be used as a complete constructor.
+
+Constructor call sequence from 0x1c174/0x1c2d4: initialize scene records at
++0, +0xe4 and +0x1c8, then initialize bindings at +0x2ac, +0x2cc and
++0x2ec with the same screen argument. Store the screen at +0x30c, zero
++0x310, set +0x314 to 3, construct an `asl::LockLinux` wrapper at +0x318,
+set +0x338 to -1 and clear +0x33c. While holding that lock, call
+`AutoConfigJsonData::GetInstance()` and its imported const
+`GetSceneConfig(ScreenType, SceneType, SceneConfig&)` three times for scene
+IDs 0, 1 and 2, with each corresponding 0xe4-byte record as the output.
+The call targets were verified through the original GOT relocations at
+0x6e950 and 0x6e954. The lock wrapper, three scene imports, destructor and
+per-screen static lifetime at 0x1c380 must be restored together before a
+callback uses this object.
