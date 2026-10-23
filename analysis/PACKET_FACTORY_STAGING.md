@@ -18,8 +18,11 @@ bindings to the matching `libGFrame.so` C2/D2 symbols and the reconstructed
 CoverUtil constructor/destructor. The host exports were verified by `nm -D`
 and `tools/inspect_packet_factory.py --check-v21`. The callbacks are not
 called by Startup or the registration helper. The host destructor is used
-only on a completed base subobject. The local CoverUtil destructor is still
-incomplete relative to V21, so this stage must not escape into a live Packet.
+only on a completed base subobject. Original CoverUtil D1 at `0x17dfc`
+destroys `SurfaceConfig::name` at `+0x44`, then `text_` at `+0x18`; default C++
+member destruction provides that order. The original also logs, which the
+local destructor does not reproduce. Image and observer release occur in the
+lifecycle path. This guard must not escape into a live Packet.
 
 Host regression:
 

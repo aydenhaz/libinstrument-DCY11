@@ -5,6 +5,7 @@ Addresses below are image virtual addresses from the 7.5 V21 ELF. This
 checks static construction evidence; it does not certify rebuilt code.
 """
 import argparse
+import hashlib
 import json
 from pathlib import Path
 import struct
@@ -88,19 +89,23 @@ def thumb_bl_target(elf, address):
     return address + 4 + offset
 
 
-def inspect_host(path):
-    elf = ELF32(path)
-    # BL from CGFragmentPackage(CGContext*) at 0x1b7614 to CGPackage C2 PLT.
+def plt_symbol(elf, target):
     plt = elf.sections[".plt"][3]
-    target = thumb_bl_target(elf, 0x1B7614)
     position, remainder = divmod(target - (plt + 20), 12)
     if remainder or position < 0:
-        raise ValueError("host package constructor call is not an ARM PLT entry")
+        raise ValueError("target is not an ARM PLT entry")
     rel_plt = elf.sections[".rel.plt"]
     address, info = struct.unpack_from(
         "<II", elf.data, rel_plt[4] + 8 * position
     )
-    base_constructor = elf.dynsym_names()[info >> 8]
+    return address, elf.dynsym_names()[info >> 8]
+
+
+def inspect_host(path):
+    elf = ELF32(path)
+    # BL from CGFragmentPackage(CGContext*) at 0x1b7614 to CGPackage C2 PLT.
+    target = thumb_bl_target(elf, 0x1B7614)
+    address, base_constructor = plt_symbol(elf, target)
     got = 0x1B761E + elf.u32(0x1B762C)
     vtable_relocation = elf.relocation_symbols(".rel.dyn").get(got)
     return {
@@ -111,6 +116,22 @@ def inspect_host(path):
         "fragment_vtable_got": hex(got),
         "fragment_vtable_relocation": vtable_relocation,
         "fragment_vptr_stores": elf.at(0x1B761E, 10).hex(),
+    }
+
+
+def inspect_cover_destructor(elf):
+    # Thumb BLX uses an aligned PC; the common BL decoder's raw result is
+    # two bytes ahead for this halfword-aligned call at 0x17e62.
+    string_dtor_plt = thumb_bl_target(elf, 0x17E62) & ~3
+    _, string_dtor_symbol = plt_symbol(elf, string_dtor_plt)
+    body = elf.at(0x17DFC, 0x7C)
+    return {
+        "body_sha256": hashlib.sha256(body).hexdigest(),
+        "member_teardown": elf.at(0x17E5E, 0x10).hex(),
+        "surface_string_dtor_plt": hex(string_dtor_plt),
+        "surface_string_dtor_symbol": string_dtor_symbol,
+        "text_dtor_local": hex(thumb_bl_target(elf, 0x17E6A)),
+        "packet_cover_dtor_call": hex(thumb_bl_target(elf, 0x2EB60)),
     }
 
 
@@ -157,6 +178,7 @@ def inspect(path):
                 (0x2F5F4, 2), (0x2F5F6, 2), (0x2F5F8, 2),
             )
         },
+        "cover_destructor": inspect_cover_destructor(elf),
         "tables": tables,
     }
 
@@ -203,6 +225,16 @@ def check(report):
     }
     if report["short_virtual_bodies"] != expected_short:
         raise ValueError("short Packet virtual bodies differ")
+    expected_cover_dtor = {
+        "body_sha256": "3396d429a464264b1dad5c2db36289f7c0fb04148b7b0722425d8f5aee69c103",
+        "member_teardown": "04f14400fbf77aef04f11800fef716fa",
+        "surface_string_dtor_plt": "0x13d58",
+        "surface_string_dtor_symbol": "_ZN8CGStringD1Ev",
+        "text_dtor_local": "0x1629a",
+        "packet_cover_dtor_call": "0x17dfc",
+    }
+    if report["cover_destructor"] != expected_cover_dtor:
+        raise ValueError("CoverUtil destructor boundary differs from V21")
 
 
 def check_host(report):

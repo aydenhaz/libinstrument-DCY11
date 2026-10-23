@@ -1,0 +1,55 @@
+V21 libInstrumentPannelLarge.so, CoverUtil D1 at 0x17dfc.
+Disassembled from the original ELF32 ARM Thumb body [0x17dfc,0x17e78).
+The branch at 0x17e18 skips optional logging when I_GetAlcPtr is null.
+
+00017dfc push       {r4, r5, r6, r7, lr}
+00017dfe add        r7, sp, #0xc
+00017e00 push.w     {r0, r1, r2, r3, r4, r5, r6, r7, r8, sb, fp}
+00017e04 mov        r4, r0
+00017e06 ldr        r0, [pc, #0x70]
+00017e08 add        r0, pc
+00017e0a add.w      r1, r0, #0x20
+00017e0e adds       r0, #8
+00017e10 strd       r0, r1, [r4]
+00017e14 blx        #0x13c14                  I_GetAlcPtr
+00017e18 cbz        r0, #0x17e5e
+00017e1a blx        #0x13c14                  I_GetAlcPtr
+00017e1e ldr        r1, [r4, #0x18]
+00017e20 mov.w      r8, #0
+00017e24 mov.w      ip, #0x5d
+00017e28 cmp        r1, #0
+00017e2a it         ne
+00017e2c addne      r1, #8
+00017e2e ldr        r2, [r0]
+00017e30 ldr.w      lr, [r2, #4]
+00017e34 ldr        r2, [pc, #0x44]
+00017e36 ldr        r6, [pc, #0x48]
+00017e38 add        r2, pc
+00017e3a ldr        r5, [pc, #0x48]
+00017e3c ldr        r3, [pc, #0x48]
+00017e3e add        r6, pc
+00017e40 mov        sb, r2
+00017e42 mov.w      r2, #0x8000000
+00017e46 strd       r2, r8, [sp]
+00017e4a add        r3, pc
+00017e4c add        r2, sp, #8
+00017e4e add        r5, pc
+00017e50 stm.w      r2, {r3, r5, r6, ip}
+00017e54 movs       r2, #0
+00017e56 strd       sb, r1, [sp, #0x18]
+00017e5a movs       r1, #8
+00017e5c blx        lr                       optional logger
+00017e5e add.w      r0, r4, #0x44
+00017e62 blx        #0x13d58                  CGString::~CGString()
+00017e66 add.w      r0, r4, #0x18
+00017e6a bl         #0x1629a                  local String16 destructor
+00017e6e mov        r0, r4
+00017e70 add        sp, #0x20
+00017e72 pop.w      {r8, sb, fp}
+00017e76 pop        {r4, r5, r6, r7, pc}
+
+Packet D1 at 0x2eb58 calls this entry at 0x2eb60, then tail-branches to
+the host base destructor. The imported CGString symbol is resolved through
+.rel.plt; the local String16 destructor at 0x1629a deletes its own block.
+No image/observer release call occurs in this body. The local default
+destructor does not reproduce the optional logging call.

@@ -79,3 +79,10 @@ The separate unpublished construction guard in
 CoverUtil placement construction, proxy initialization, and rollback. It
 does not transfer ownership or install derived virtual pointers. See
 `analysis/PACKET_FACTORY_STAGING.md`.
+
+The original Packet destructor calls CoverUtil D1 at `0x17dfc` before
+branching to the host base destructor. CoverUtil D1 destroys the nested
+CGString at Cover `+0x44`, then local String16 at Cover `+0x18` (after
+optional logging); it does not itself release the image or unregister an
+observer. `tools/inspect_packet_factory.py --check-v21` now pins the
+destructor body, imported CGString D1, local String16 D1 and Packet call.

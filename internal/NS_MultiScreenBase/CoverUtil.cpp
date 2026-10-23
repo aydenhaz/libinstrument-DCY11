@@ -3,6 +3,8 @@
 #include "../abi/CoverCaptureResult.h"
 namespace NS_MultiScreenBase {
 CoverUtil::CoverUtil() = default;
+// V21 0x17dfc destroys SurfaceConfig::name (+0x44), then text_ (+0x18)
+// after optional logging. Image/observer release belongs to the lifecycle.
 CoverUtil::~CoverUtil() = default;
 void CoverUtil::MapSurfaceViewStatusChange(int surface,MAPSURFACE event,
         void*,int,int,int) {
