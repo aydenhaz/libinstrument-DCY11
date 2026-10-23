@@ -73,3 +73,9 @@ ABI, implement the CoverUtil/Packet overrides and lifetime, make the factory
 publish only at the end, then enable
 registration and run on-device validation. No operational Packet factory is
 claimed at this checkpoint.
+
+The separate unpublished construction guard in
+`internal/abi/PacketFactoryStages.h` now covers allocation, host C2,
+CoverUtil placement construction, proxy initialization, and rollback. It
+does not transfer ownership or install derived virtual pointers. See
+`analysis/PACKET_FACTORY_STAGING.md`.

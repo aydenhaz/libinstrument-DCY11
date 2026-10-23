@@ -561,3 +561,8 @@ Recompiled all 39 translation units with Zig 0.17.0 targeting `arm-linux-musleab
 - Removed the partial `CGIPLPacket` constructor's premature singleton write. The original factory publishes only after host/CoverUtil construction and all four derived virtual pointers are installed.
 - Added a private factory-only publication step. The existing shutdown contract test now simulates that step after preparing its mock host lock; it passes when compiled against the assembled overlay. This change does not create the host base, a live Packet factory, GFrame registration, or an installable SO.
 - Verified the host `CGFragmentPackage(CGContext*)` constructor's imported `CGPackage` call and both vptr stores through its relocation tables. The original-ELF inspection gate now checks both instrument and host binaries.
+
+## Unpublished Packet construction stages — 2026-10-23
+
+- Added an owned `0x16c`-byte construction guard with the original host C2 call, CoverUtil placement construction at `+0xc0`, and four-byte proxy clear at `+0x168`. On ARM32 its operations bind to the matching GFrame C2/D2 exports and the local CoverUtil class. It tears down partial construction in reverse order and never publishes or registers the object.
+- Host ASan/UBSan regression covers normal construction/destruction, failures in the host and Cover constructors, and the absence of singleton publication. These changes do not install Packet vptrs or implement the Fragment lifecycle; there is no new device-safe SO. Details: `analysis/PACKET_FACTORY_STAGING.md`.
