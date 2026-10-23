@@ -542,3 +542,10 @@ Recompiled all 39 translation units with Zig 0.17.0 targeting `arm-linux-musleab
 - Started full build with the Android libc++ namespace probe wrapper. All 38/38 translation units compile as ELF32 ARM objects, but the objects use Zig's Linux musl target because no Android NDK is installed in the environment.
 - Strict shared-library link failed; no `.so` was produced. Remaining undefined symbols are the NDK runtime's `std::__ndk1::bad_function_call` plus the unrecovered AutoExscreen `Closure::bind`, `RunAsyncDelayByEngineId`, `ActionA/B/C`, and LargeScreenImpl `CGPackage`/`CGFragment` receiver calls.
 - Full diagnostics: `analysis/STRICT_LINK_ARM32_BUILD_ATTEMPT.log`. This is a failed cross-target probe, not a successful Android build.
+
+## Real Android NDK r27d compile and strict link — 2026-10-23
+
+- Downloaded and SHA1-verified official Linux NDK r27d. Restored archive symlinks mangled by this environment's unzip; the Android API 21 ARMv7 compiler then ran normally.
+- Assembled the current V21 overlay, compiled 46/46 translation units, and linked with `--no-undefined` against nine V21 ARM32 host libraries: PASS. `build_android.py` now selects static libc++ by default to avoid adding a direct `libc++_shared.so` dependency absent from the original. The shared-STL variant also linked successfully.
+- Result is ELF32 ARMv7 Thumb-2/softfp, with the three named entrypoints. Its SHA256 is `5c0587af6f4edbc68d12001f459793bafcf4d07ca35e7011507eea1f7a6bd550`. See `analysis/ANDROID_NDK_R27D_BUILD.md` for commands and dependency comparison.
+- This output is a linkable development build, not yet a drop-in replacement: 34 original dynamic exports are absent, the original has 23 direct dependencies versus 12 in the new image, and Fragment/Packet and AutoExscreen observer lifecycle recovery remains unfinished. No Android device load/runtime validation was done.

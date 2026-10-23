@@ -11,6 +11,8 @@ compiler.add_argument('--ndk', type=Path)
 compiler.add_argument('--cxx', type=Path, help='explicit compiler executable or target-configured launcher; not necessarily NDK')
 parser.add_argument('--out', type=Path, default=Path('build/android-arm32'))
 parser.add_argument('--compile-only', action='store_true', help='check all translation units without linking or publishing a shared library')
+parser.add_argument('--stl', choices=('static', 'shared'), default='static',
+                    help='NDK libc++ linkage; static matches the V21 image without a libc++_shared.so dependency')
 args = parser.parse_args()
 root = Path(__file__).resolve().parent
 out = args.out.resolve()
@@ -61,7 +63,8 @@ if missing:
     print('Missing host libraries:', ', '.join(missing))
     print('Run sh host_libs/restore_libGbl.sh if libGbl.so is compressed.')
     sys.exit(1)
-result = subprocess.run([str(cxx), '-shared', '-Wl,--no-undefined', '-Wl,--error-limit=0', '-Wl,-soname,libInstrumentPannelLarge.so', *objects, '-Wl,--no-as-needed', *map(str, hosts), '-o', str(candidate)], capture_output=True, text=True)
+stl_flags = ['-static-libstdc++'] if args.ndk and args.stl == 'static' else []
+result = subprocess.run([str(cxx), '-shared', *stl_flags, '-Wl,--no-undefined', '-Wl,--error-limit=0', '-Wl,-soname,libInstrumentPannelLarge.so', *objects, '-Wl,--no-as-needed', *map(str, hosts), '-o', str(candidate)], capture_output=True, text=True)
 (out / 'link.log').write_text(result.stdout + result.stderr)
 print('Strict link:', 'PASS' if result.returncode == 0 else 'FAIL')
 if result.returncode:
