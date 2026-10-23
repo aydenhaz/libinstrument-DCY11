@@ -72,4 +72,7 @@ if result.returncode:
     candidate.unlink(missing_ok=True)
 else:
     candidate.replace(output)
+    print('Development output only: device test loads this SO, but GFrame cannot'
+          ' load GIPLPacket and the app aborts. Packet factory/registration'
+          ' recovery is required before installation as a replacement.')
 sys.exit(result.returncode)
