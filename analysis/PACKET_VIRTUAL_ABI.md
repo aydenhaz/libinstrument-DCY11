@@ -36,7 +36,9 @@ Packet class. The present `CGIPLPacket` is a non-polymorphic, partial storage
 type. Its `0x16c` size assertion does not supply these vptrs, inherited
 virtual signatures, RTTI, or host-owned member lifetime. The unpublished
 construction guard therefore still destroys its object without registration
-or ownership transfer. No installable replacement follows from this table.
+or ownership transfer. The owning host prefix and the conflicting current
+Packet fields are detailed in `analysis/HOST_PACKET_PREFIX.md`. No
+installable replacement follows from this table.
 
 `tests/packet_vtable_shape_probe.cpp` is a freestanding 32-bit C++ hierarchy
 with the same base extents, virtual-slot counts and override positions.

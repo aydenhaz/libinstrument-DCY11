@@ -111,6 +111,11 @@ def inspect_host(path):
     relocations = elf.relocation_symbols(".rel.dyn")
     primary_point = 0x3D8AB0
     secondary_point = 0x3D8AF8
+    async_ctor = plt_symbol(elf, thumb_bl_target(elf, 0x1B4442) & ~3)[1]
+    package_string_ctor = plt_symbol(elf, thumb_bl_target(elf, 0x1B448A) & ~3)[1]
+    package_intent_ctor = plt_symbol(elf, thumb_bl_target(elf, 0x1B4496) & ~3)[1]
+    package_string_dtor = plt_symbol(elf, thumb_bl_target(elf, 0x1B433C) & ~3)[1]
+    package_intent_dtor = plt_symbol(elf, thumb_bl_target(elf, 0x1B4334) & ~3)[1]
     return {
         "fragment_package_constructor": "0x1b7610",
         "base_constructor_plt": hex(target),
@@ -119,6 +124,16 @@ def inspect_host(path):
         "fragment_vtable_got": hex(got),
         "fragment_vtable_relocation": vtable_relocation,
         "fragment_vptr_stores": elf.at(0x1B761E, 10).hex(),
+        "package_prefix": {
+            "async_ctor_symbol": async_ctor,
+            "string_ctor_symbol": package_string_ctor,
+            "intent_ctor_symbol": package_intent_ctor,
+            "intent_dtor_symbol": package_intent_dtor,
+            "string_dtor_symbol": package_string_dtor,
+            "async_ctor_sha256": hashlib.sha256(elf.at(0x1FD92C, 68)).hexdigest(),
+            "package_ctor_sha256": hashlib.sha256(elf.at(0x1B4434, 300)).hexdigest(),
+            "package_dtor_sha256": hashlib.sha256(elf.at(0x1B41F4, 420)).hexdigest(),
+        },
         "fragment_vtable": {
             "primary_point": hex(primary_point),
             "primary_imports": [relocations.get(primary_point + 4 * i)
@@ -270,6 +285,17 @@ def check_host(report):
         raise ValueError("unexpected CGFragmentPackage vtable GOT")
     if report["fragment_vptr_stores"] != "01f15002026408310160":
         raise ValueError("host +0x40/+0 virtual pointer setup differs")
+    if report["package_prefix"] != {
+        "async_ctor_symbol": "_ZN9GNS_FRAME13CGAsyncObjectC2Ev",
+        "string_ctor_symbol": "_ZN8CGStringC1Ev",
+        "intent_ctor_symbol": "_ZN9GNS_FRAME8CGIntentC2Ev",
+        "intent_dtor_symbol": "_ZN9GNS_FRAME8CGIntentD2Ev",
+        "string_dtor_symbol": "_ZN8CGStringD1Ev",
+        "async_ctor_sha256": "530eca109186c252ee471c2a2a238a1224bd3f90f0c3ff184d16670f57ce658b",
+        "package_ctor_sha256": "7b2e2c3793933fa5a202a6128ecbd342ee158b2bede114c9f2c3f312dc562862",
+        "package_dtor_sha256": "234170c2c6ca1c5bc41569cd79455acf2f7cc95dfc79c292be81eb5fb5f25f8f",
+    }:
+        raise ValueError("host CGPackage owned prefix differs from V21")
     table = report["fragment_vtable"]
     if table != {
         "primary_point": "0x3d8ab0",

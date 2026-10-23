@@ -23,6 +23,13 @@ bodies in the wider rebuild remain provisional.
   Do not install this development output as a replacement. The original
   factory, host base lifecycle, CoverUtil observer subobjects, and Fragment
   ownership need completion before another device test.
+- Traced host `CGPackage` C2/D2 and `CGAsyncObject` C2 in the supplied
+  `libGFrame.so`. The host constructor owns live lock/list state in the
+  first `0x40` bytes and constructs `CGString` at `+0x6c` and `CGIntent`
+  at `+0x8c`. `tools/inspect_packet_factory.py --check-v21` now pins the
+  call symbols and bodies. The current Packet `legacy_` writes starting
+  at `+0` would overwrite the constructed primary vptr; see
+  `analysis/HOST_PACKET_PREFIX.md`.
 
 ## 2026-10-23 long control callback and strict-link checkpoint
 
