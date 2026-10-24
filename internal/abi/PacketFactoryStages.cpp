@@ -6,6 +6,13 @@
 
 namespace IPL_ABI {
 
+PacketDerivedTables PacketDerivedTables::fromVTable(std::uint32_t base) {
+    // Last group contains three callable slots, through base+0x80.
+    if (!base || (base & 3u) || base > UINT32_MAX - 0x83u)
+        throw std::invalid_argument("Packet vtable group must be aligned and fit ARM32");
+    return {base + 0x60u, base + 0x78u, base + 0x50u, base + 8u};
+}
+
 PendingPacket::PendingPacket(GNS_FRAME::CGContext* context,
                              const PacketConstructionOps& ops) : ops_(ops) {
     if (!ops_.allocate || !ops_.deallocate ||
@@ -38,6 +45,13 @@ void PendingPacket::installDerivedTables(const PacketDerivedTables& tables) {
     if (!tables.coverMap || !tables.coverBusiness ||
         !tables.hostObjMem || !tables.hostPackage)
         throw std::invalid_argument("Packet requires four non-null derived table points");
+    if (tables.hostPackage < 8u)
+        throw std::invalid_argument("Packet primary address point lacks its header");
+    const auto expected = PacketDerivedTables::fromVTable(tables.hostPackage - 8u);
+    if (tables.coverMap != expected.coverMap ||
+        tables.coverBusiness != expected.coverBusiness ||
+        tables.hostObjMem != expected.hostObjMem)
+        throw std::invalid_argument("Packet address points do not match the V21 vtable group");
 
     // V21 0x2eb36..0x2eb42. Deliberately use four-byte ARM words, including
     // in native tests where host pointers are eight bytes. This is an ABI

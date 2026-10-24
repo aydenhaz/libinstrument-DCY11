@@ -19,6 +19,16 @@ The original store instructions at `0x2eb36..0x2eb42` are pinned by
 mock words, not real production RTTI/vtable pointers. Partial or repeated
 installation fails before another store.
 
+The address-point builder now derives the four pointers from a single
+aligned ARM32 vtable-group base: `+0x60/+0x78/+0x50/+8`. Installation
+rejects inconsistent groups, including swapped observer address points,
+before writing any object bytes. The full 0x84-byte group must fit in the
+ARM32 address range. Native ASan/UBSan tests cover swapped groups,
+alignment and overflow boundaries; the original ELF gate passes. These
+checks do not validate the pointed-to RTTI/callback implementations or
+enable registration. This correction has not been rebuilt with Android
+NDK or run on a device.
+
 On ARM32, `internal/abi/PacketFactoryHostOps.cpp` supplies actual callback
 bindings to the matching `libGFrame.so` C2/D2 symbols and the reconstructed
 CoverUtil constructor/destructor. The host exports were verified by `nm -D`

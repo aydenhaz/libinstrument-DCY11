@@ -35,6 +35,8 @@ struct PacketDerivedTables {
     std::uint32_t coverBusiness;
     std::uint32_t hostObjMem;
     std::uint32_t hostPackage;
+    // V21 has one contiguous vtable group, not four unrelated tables.
+    static PacketDerivedTables fromVTable(std::uint32_t groupBase);
 };
 
 class PendingPacket {

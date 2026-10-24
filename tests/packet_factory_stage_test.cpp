@@ -88,9 +88,15 @@ int main() {
         assert(!pending.hasDerivedTables());
         assert(allocated[0] == 0x11 && allocated[0x40] == 0x22 &&
                allocated[IPL_ABI::kPacketCoverOffset] == 0x33);
-        const PacketDerivedTables tables = {
-            0x11111111, 0x22222222, 0x33333333, 0x44444444
-        };
+        const PacketDerivedTables tables = PacketDerivedTables::fromVTable(0x10000);
+        assert(tables.hostPackage == 0x10008 && tables.hostObjMem == 0x10050);
+        assert(tables.coverMap == 0x10060 && tables.coverBusiness == 0x10078);
+        auto swapped = tables;
+        swapped.coverMap = tables.coverBusiness;
+        swapped.coverBusiness = tables.coverMap;
+        try { pending.installDerivedTables(swapped); assert(false); }
+        catch (const std::invalid_argument&) {}
+        assert(!pending.hasDerivedTables() && allocated[0] == 0x11);
         pending.installDerivedTables(tables);
         assert(pending.hasDerivedTables());
         auto word = [](std::size_t offset) {
@@ -113,6 +119,12 @@ int main() {
     assert((steps == std::vector<Step>{Alloc, HostCtor, CoverCtor,
                                        CoverDtor, HostDtor, Free}));
     reset();
+
+    for (std::uint32_t base : {0u, 1u, 0xfffffffcu, 0xffffff80u}) {
+        try { PacketDerivedTables::fromVTable(base); assert(false); }
+        catch (const std::invalid_argument&) {}
+    }
+    assert(PacketDerivedTables::fromVTable(0xffffff7cu).coverBusiness == 0xfffffff4u);
 
     failCover = true;
     try {
