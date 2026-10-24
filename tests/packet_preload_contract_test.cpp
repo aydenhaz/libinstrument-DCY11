@@ -11,11 +11,13 @@ using NS_InstrumentPannelLarge::CGIPLPacket;
 static void* packet;
 static bool locked, fail;
 static int paints, topCalls;
+static void** updatedLockTable;
 static std::unique_ptr<GPI::Closure::Callable<void()>> retained;
 namespace hmi { UITaskThreadProxy::UITaskThreadProxy(int) {} UITaskThreadProxy::~UITaskThreadProxy() {} }
 extern "C" void* I_GetAlcPtr() { return nullptr; }
 static void lock(void* p) { assert(p==static_cast<char*>(packet)+8&&!locked); locked=true; }
 static void unlock(void* p) { assert(p==static_cast<char*>(packet)+8&&locked); locked=false; }
+static void staleUnlock(void*) { assert(false && "unlock used stale lock table"); }
 namespace NS_MultiScreenBase { void DispatchTopRenderCallback(GNS_FRAME::CGCanvas*) {} }
 namespace GNS_FRAME {
 CGWorkStation* CGWorkStation::ownWorkStation() { static CGWorkStation s; return &s; }
@@ -29,6 +31,7 @@ void CGAsyncObject::scheduleTaskHelper(GPI::Closure::Callable<void()>& task,
     void (CGIPLPacket::*method)()=&CGIPLPacket::refreshGFramePaint;
     uintptr_t entry; std::memcpy(&entry,&method,sizeof(entry));
     assert(identity==reinterpret_cast<void*>(entry));
+    std::memcpy(static_cast<char*>(packet)+8,&updatedLockTable,sizeof(updatedLockTable));
     if(fail) throw std::runtime_error("schedule failure");
     retained.reset(new GPI::Closure::Callable<void()>(task));
 }
@@ -39,10 +42,13 @@ void CGFrameSimulation::sendMsg(int code,int a,int b,unsigned long long token,GP
 }
 int main() {
     CGIPLPacket object; packet=&object;
-    void* entries[]={nullptr,nullptr,reinterpret_cast<void*>(&lock),reinterpret_cast<void*>(&unlock)};
+    void* entries[]={nullptr,nullptr,reinterpret_cast<void*>(&lock),reinterpret_cast<void*>(&staleUnlock)};
+    void* updated[]={nullptr,nullptr,reinterpret_cast<void*>(&lock),reinterpret_cast<void*>(&unlock)};
+    updatedLockTable=updated;
     void** table=entries; std::memcpy(static_cast<char*>(packet)+8,&table,sizeof(table));
     object.onPreLoad(); assert(!locked&&retained&&topCalls==1);
     retained->invoke(); assert(paints==1); retained.reset();
+    std::memcpy(static_cast<char*>(packet)+8,&table,sizeof(table));
     fail=true;
     try { object.onPreLoad(); assert(false); } catch(const std::runtime_error&) {}
     assert(!locked&&topCalls==2);

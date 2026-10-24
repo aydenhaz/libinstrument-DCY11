@@ -20,3 +20,11 @@ Packet real inheritance/vtables/RTTI, post-load Fragment builder registration,
 Opening construction and full Fragment lifecycle remain incomplete. Automatic
 GFrame package registration remains disabled. This is a functional preload
 recovery, not a usable replacement library.
+
+The shared PacketTaskLock now reloads the lock vptr at unlock time, as
+the original preload does at 0x2f5a4 and teardown at 0x2f390. The prior
+adapter cached the unlock entry before acquiring the lock. A regression
+replaces the lock table inside scheduleTaskHelper and rejects calls to
+the stale unlock entry, on both normal return and exception. The assembled
+preload and shutdown ASan/UBSan tests and original ELF gate pass. This
+correction has not received an Android full build or device test.
