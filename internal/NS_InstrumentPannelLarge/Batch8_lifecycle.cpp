@@ -2,7 +2,7 @@
  * Batch 8 — CGIPLPacket lifecycle family (verified by string xref)
  *
  * onInitEnd     sub_2eb88 (1892B)  — batch 5 (observer registration hub)
- * onPreLoad     sub_2f464 (400B)   — render callbacks + 2 allocations (0x16, 0x36)
+ * onPreLoad     sub_2f464 (400B)   — render callback + locked refresh-task scheduling
  * onPostLoadRes sub_2f5fc (1588B)  — resource load completion
  * onPostAlreadyLoadRes sub_2fc30 (112B) — post-load hook
  * refreshGFramePaint   sub_30d34 (128B) — paint refresh
@@ -34,16 +34,19 @@ namespace NS_InstrumentPannelLarge {
 
 /* ---- onPreLoad sub_2f464 (400B) ---- */
 void CGIPLPacket::onPreLoad() {
-    AlcExport(0, 0, 0x7c87, this);           /* f44f7c87 */
-    /* 1. set render callbacks */
+    IPL_ABI::packetTrace("onPreLoad", "virtual void NS_InstrumentPannelLarge::CGIPLPacket::onPreLoad()", 0x10e, true);
     GNS_FRAME::CGWorkStation::ownWorkStation()
         ->setTopRenderCallback(&CGIPLPacket::TopRenderCallback);
-    /* 2. two allocations: 0x16(22B) object + 0x36(54B) object
-          (stored this+0x34c/0x34e/0x34f per f8d4 STRB offsets) */
-    void *a = operator new(0x16);
-    void *b = operator new(0x36);
-    /* 3. wiring (e9c0/e9cd strd chains store vtable pairs into new objects) */
-    /* 4. ownWorkStation()->setMapRenderCallback(...) per sub_2f4ba region */
+    IPL_ABI::PacketTaskLock guard(this);
+    auto task = GPI::Closure::bind(this, &CGIPLPacket::refreshGFramePaint);
+    void (CGIPLPacket::*method)() = &CGIPLPacket::refreshGFramePaint;
+    uintptr_t identity = 0;
+    std::memcpy(&identity, &method, sizeof(identity));
+    static const char source[] = "/home/jenkins/build/AutoCpp/app/components/MultiScreen/InstrumentPannelLarge/func/GIPLPacket.cpp";
+    const uint64_t token = (uint64_t(0x110) << 32) |
+        uint32_t(reinterpret_cast<uintptr_t>(source));
+    reinterpret_cast<GNS_FRAME::CGAsyncObject*>(this)->scheduleTaskHelper(
+        task, 1000, 0, -1, reinterpret_cast<void*>(identity), token);
 }
 
 /* ---- onPostLoadRes sub_2f5fc (1588B) ---- */
