@@ -8,6 +8,13 @@ Fragment. `internal/abi/OpeningActivityGate.cpp` reproduces only this order
 and check. It requires a constructed activity; it is not yet wired to the
 partial Packet or to its fatal branch at `0x2f220`.
 
+The gate reloads the activity's vptr after slot 12, matching the original
+load at `0x2ece6`. Slot 25 is validated and fetched from that new table;
+it need not exist in the old table. Regression cases replace the table in
+the first callback and populate the attached state in the second callback.
+Native ASan/UBSan and the original ELF check pass. This correction has not
+yet been rebuilt with Android NDK or tested on a device.
+
 The Opening base constructor called at `0x41954` starts with imported
 `GNS_FRAME::CGFragment` C2, launch mode 0. It invokes imported
 `hsl::ObserverBase` C2 on Fragment `+0x2e8` with the **inline** name
