@@ -1,10 +1,19 @@
-# V21 ARM32 rebuild status — 2026-10-23
+# V21 ARM32 rebuild status — 2026-10-24
 
-NOT a usable Android replacement. Android NDK r26c compiles 48/48 source files
+NOT a usable Android replacement. Android NDK r26c compiles 51/51 source files
 and strictly links, but the GIPLPacket factory/registration path is still
 missing. An earlier r27d development build loaded on a device, then GFrame
 failed to load the package and the app exited by SIGABRT. Fragment and observer
 bodies in the wider rebuild remain provisional.
+
+## 2026-10-24 preload and lock-table Android rebuild
+
+Latest source checkpoint `b2a1e98` passes 51/51 ARM32 compilation and strict
+linking, including preload scheduling and lock-vptr reload changes.
+SO SHA256: `e10ced6c307dc99a3b3fa6cc020e8154025d8c882ee6a50910babf029360301a`.
+LargeScreenImpl ABI, Packet shape model, original ELF inspection, and native
+ASan/UBSan preload/shutdown tests pass. No device run of this output.
+See `analysis/ANDROID_NDK_R26C_BUILD.md` for the exact scope and remaining gaps.
 
 ## 2026-10-24 Packet/Opening construction stage checkpoint
 

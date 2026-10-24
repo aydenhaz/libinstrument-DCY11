@@ -91,3 +91,28 @@ were subsequently removed; the current opaque prefix is still not a valid
 host object. See `analysis/DEVICE_BLACK_SCREEN_CRASH.md`
 and `analysis/PACKET_VIRTUAL_ABI.md`. No device test was run on the r26c
 output.
+
+## 2026-10-24 preload and lock-table rebuild
+
+Source checkpoint: `b2a1e98cf4b91fafa7361390a5d566e3c1e1b761`.
+The official r26c archive was downloaded again and verified against the
+SHA256 above; extraction preserved executable modes and symlinks.
+The assembled overlay compiled **51/51** units and passed strict
+`--no-undefined` linking after the preload scheduler and lock-vptr reload
+changes. Output SHA256:
+`e10ced6c307dc99a3b3fa6cc020e8154025d8c882ee6a50910babf029360301a`.
+
+The output is ELF32 ARM EABI5 with SONAME `libInstrumentPannelLarge.so`;
+the twelve direct dependencies remain the nine supplied hosts plus
+`libm.so`, `libdl.so`, and `libc.so`, with static NDK libc++.
+`large_screen_abi_test.py`, the NDK `packet_vtable_shape_test.py`, and
+`inspect_packet_factory.py --check-v21` pass. Native preload and shutdown
+contract tests pass under ASan/UBSan (`detect_leaks=0`), including the
+lock-table swap and exceptional scheduler path.
+
+No device test was performed on this output. The Packet shape test checks
+a separate model; it does not establish a live production Packet vtable.
+Packet factory publication/registration, derived Fragment construction,
+and `onPostLoadRes` builder registration are still incomplete. This is a
+development build, not evidence that the previous black screen/SIGABRT
+has been resolved.
