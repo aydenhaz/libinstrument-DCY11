@@ -8,6 +8,7 @@ static void emit(void*,int count,int reserved,uintptr_t r3,uint32_t flag,uint32_
  assert(count==8&&reserved==0&&flag==0x08000000&&zero==0);
  assert(!std::strcmp(module,"HMI_PANNELLARGE")&&!aux[0]&&sig[0]);
  if(!std::strcmp(name,"refreshGFramePaint")){assert(line==0xdf&&r3==reinterpret_cast<uintptr_t>(&emit));}
+ else if(!std::strcmp(name,"onPostLoadRes")){assert(line==0x11a&&r3==reinterpret_cast<uintptr_t>(&emit));assert(!std::strcmp(sig,"virtual void NS_InstrumentPannelLarge::CGIPLPacket::onPostLoadRes()"));}
  else{assert(!std::strcmp(name,"onPostAlreadyLoadRes")&&line==0x115&&r3==0x08000000);}
  ++traceCalls;
 }
@@ -21,6 +22,6 @@ int main(){
  using NS_InstrumentPannelLarge::CGIPLPacket;
  CGIPLPacket object;
  void* slots[16]={};slots[14]=reinterpret_cast<void*>(&post);void** table=slots;std::memcpy(&object,&table,sizeof(table));
- auto* p=&object;p->refreshGFramePaint();p->onPostAlreadyLoadRes();
- assert(calls==1&&loaded==1&&traceCalls==2);
+ auto* p=&object;p->refreshGFramePaint();p->onPostAlreadyLoadRes();p->onPostLoadRes();
+ assert(calls==1&&loaded==1&&traceCalls==3);
 }

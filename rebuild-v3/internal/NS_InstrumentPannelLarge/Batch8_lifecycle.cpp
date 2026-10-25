@@ -56,17 +56,16 @@ void CGIPLPacket::onPreLoad() {
 
 /* ---- onPostLoadRes sub_2f5fc (1588B) ---- */
 void CGIPLPacket::onPostLoadRes() {
-    AlcExport(0, 0, 0x7c8d, this);           /* f44f7c8d */
-    /* 1. CGString(u"...") pool @0x2f670 -> resolve widget name */
-    CGString name(reinterpret_cast<const unsigned short*>(u""));
-    // Packet's recovered package-base receiver is at offset zero.
-    void *ctx = reinterpret_cast<GNS_FRAME::CGPackage*>(this)->getContext();
-    /* 2. allocate 0x56(86B) object; store via vtable ptrs (0x2f698 pool) */
-    void *obj = operator new(0x56);
-    /* 3. init member chain this+0x34c etc. */
-    /* CORRECTION: original tail dispatches Packet vtable slot 6 after
-       registering fragment builders. It does not cancel a task here.
-       Builder registration and the dispatch remain to be reconstructed. */
+    IPL_ABI::packetTrace("onPostLoadRes",
+        "virtual void NS_InstrumentPannelLarge::CGIPLPacket::onPostLoadRes()",
+        0x11a, true);
+    // V21 creates three 0x38-byte CGFragmentBuilder objects with owning
+    // create/data Callables, then transfers them to _registerFragment.
+    // The old empty name/context query and leaked 0x56-byte buffer were
+    // not a builder. Do not allocate until those constructors are recovered.
+    // Registration order: largecuise (original spelling), largeguide,
+    // largepreview. Only after all three does original slot 6 run.
+    // This method remains incomplete; do not dispatch completion early.
 }
 
 /* ---- onPostAlreadyLoadRes sub_2fc30 (112B) ---- */

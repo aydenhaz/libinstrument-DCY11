@@ -684,3 +684,22 @@ Recompiled all 39 translation units with Zig 0.17.0 targeting `arm-linux-musleab
 - Decoded six Packet destructor adjustor thunks: `-0x40`, `-0xc0`, `-0xc4` into D1/D0. The business observer keeps CoverUtil's separate `-4` callback thunk. Extended `tools/inspect_packet_factory.py --check-v21` to pin both ELF virtual tables and thunk bytes. See `analysis/PACKET_VIRTUAL_ABI.md`. The current Packet still has no derived virtual table or host class layout and must not be registered.
 - Added a freestanding 32-bit C++ inheritance probe. Its generated Packet vtable has exactly four address points and 29 relocations in the original slot pattern, with matching destructor/business `this` adjustments and two RTTI base offset words. The probe passes under both `g++ -m32` and `arm-linux-gnueabihf-g++ -mthumb -march=armv7-a -mfloat-abi=softfp`. The ARM object validates virtual ABI shape only; it does not compile a GFrame-compatible class or an Android SO.
 - Fixed PacketConstructionOps Cover teardown to invoke CoverUtil D1 directly. ARM object relocations now show explicit GFrame C2/D2 and CoverUtil C1/D1 references. A GNU ARM hard-float compile-only of the assembled overlay reached 47/48 source units; `AutoMultiScreenConfigSingleton.cpp` intentionally rejected GNU's 24-byte std::string against V21's 12-byte NDK layout. The GNU hard-float sysroot cannot compile full C++ with softfp (`gnu/stubs-soft.h` missing). The Android NDK build and host link remain untested in this workspace.
+
+## Post-load placeholder correction — 2026-10-25
+
+- Corrected onPostLoadRes ALC line to 0x11a with the verified seven-stack-word
+  Packet trace ABI. The old value 0x7c8d was part of the instruction encoding.
+- Removed the empty name, unused context query and leaked 0x56-byte allocation
+  from both lifecycle copies. Original allocates three 0x38-byte builders;
+  replacing a buffer size alone would still leave invalid objects.
+- Original ELF regression pins registration names in order: largecuise
+  (original spelling), largeguide, largepreview; final virtual slot 6 follows
+  all three registrations. Builder Callable construction/ownership is still
+  missing, so completion is deliberately not dispatched early.
+- Native lifecycle ASan/UBSan regression passes (vptr sanitizer excluded for
+  mocked host types; leak detection disabled). Original post-load ELF and
+  factory gates pass. NDK r26c compiles 51/51 and strictly links successfully.
+  Development SO SHA256: fa5f45aefb260b0ad7ada638a4f54cd36b3b5ca0b06e2d30f4173e1fafad0a74.
+- No device validation or working Packet registration. This fixes an invalid
+  trace and allocation leak; it does not restore the full post-load callback
+  or resolve the previous device black screen/SIGABRT.
