@@ -765,3 +765,18 @@ Native Packet lifecycle sanitizer regression passes. NDK r26c production
 build: 52/52 compiled, strict --no-undefined link PASS. SO SHA256:
 e3a69f77933559e154baa207764f340612d724003164eabcc3f503f67b976c17.
 See analysis/CRUISE_LIFECYCLE_CORRECTIONS.md. Still not a device replacement.
+
+## Unsafe location buffer quarantine — 2026-10-25
+
+Removed fake 16-byte CarLoc and one-byte LocInfo definitions and their
+unused calls in the partial Cruise view flow. Host Context reads CarLoc
+at +0x10; LocInfo copying covers at least 0x68c bytes and assigns an owning
+member. Incomplete declarations preserve signatures while rejecting invalid
+instantiation. Removed duplicate root Cruise pseudo-body and the falsely
+identified ConfigBundleZeroInit memset from both trees.
+Native and NDK compiler rejection/signature tests plus host ELF checks pass;
+six-case original Cruise regression passes. NDK r26c build: 52/52 compiled,
+strict link PASS, SHA256 34aebceb94a8ffbc01c3067e317c2ffe74c526773dacd379ebe0a24b74f13900.
+This removes known stack overflow/read-overrun hazards; location functionality
+is not restored. See analysis/LOCATION_LAYOUT_QUARANTINE.md. No device test
+or replacement-ready library is claimed.

@@ -81,19 +81,8 @@ bool ReadMapInt32Bundle(hsl::Config *cfg_, void *self) {
     return true;
 }
 
-/* sub_3eb3c (1348B) — AutoCruiseFragment::onCreateView(CGViewGroup*) */
-void AutoCruiseFragment_onCreateView(void *parent, void *self) {
-    hsl::SystemNotify::GetSystemNotifyHandle()->AddTestNumObserver(self);
-    void *mv = hsl::HSL::GetMapViewHandle((bl::MapEngineID)0);
-    void *guide = hsl::HSL::GetGuideHandle();
-    (void)mv; (void)guide;
-    bl::CarLoc loc; bl::LocInfo li;
-    hsl::HSL::GetCarPosition(loc, (bl::MapEngineID)0);
-    hsl::Pos *pos = static_cast<hsl::Pos*>(hsl::HSL::GetPosHandle());
-    if (!pos) { /* "null posHandle" */ }
-    else pos->GetLocInfo(li);
-    /* "AutoCruiseFragment::GoToCarLocation (%f,%f)" / "invalid car loc" */
-}
+// Duplicate receiver-less Cruise view pseudo-body withdrawn. The active
+// partial implementation is in Batch17; location objects remain unrecovered.
 
 /* sub_31538 (1168B) — GuideGuangQiA106Fragment::onCreateView
    sub_42a04 (1080B) — GuideFragment::onCreateView (same body family) */

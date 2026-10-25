@@ -112,10 +112,8 @@ GNS_FRAME::CGViewGroup *AutoCruiseFragment::onCreateView(GNS_FRAME::CGViewGroup 
     void *mv = hsl::HSL::GetMapViewHandle(static_cast<bl::MapEngineID>(engine));
     void *guide = hsl::HSL::GetGuideHandle();
     (void)mv; (void)guide;
-    bl::CarLoc loc;
-    hsl::HSL::GetCarPosition(loc, (bl::MapEngineID)0);
-    void *pos = hsl::HSL::GetPosHandle();
-    if (pos) { bl::LocInfo li; static_cast<hsl::Pos*>(pos)->GetLocInfo(li); }
+    // Position retrieval requires real CarLoc/LocInfo construction and the
+    // original branch selection. The old 16-byte/1-byte objects were unsafe.
     /* "GoToCarLocation (%f,%f)" / "invalid car loc" */
     /* AddConfigObserver + CGBroadcaster::getInstance x2 tail */
     return inflater(0, parent);

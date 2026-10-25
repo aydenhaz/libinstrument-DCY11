@@ -41,10 +41,8 @@ CGString FormatDistance(double meters) {
     return fmt;
 }
 
-/* sub_394ec (372B) — POD struct zero-init (10x memclr region) */
-void ConfigBundleZeroInit(void *cfg_bundle) {
-    memset(cfg_bundle, 0, 0x80);   /* aggregate of 10 sub-structs */
-}
+// 0x394ec constructs LocInfo, including owning members; the previous
+// 0x80-byte ConfigBundleZeroInit memset was unrelated and is withdrawn.
 
 /* sub_18078 (312B) — observer detach + render callback clear
    "windowId:%d, mode:%d, status:%d" */
