@@ -715,3 +715,16 @@ link probe pass. Production overlay still compiles 51/51 and strictly links.
 See analysis/FRAGMENT_BUILDER_ABI.md for reproduced host offsets and limits.
 No real Fragment factory targets or registration are enabled by this change;
 no Android runtime success or device-safe replacement is claimed.
+
+## Builder type identities and deleting cleanup — 2026-10-25
+
+Located all three post-load create/type/cleanup targets in the original ELF.
+Cruise/guide/preview allocate 0x3dc/0x8a0/0x380; builder launch modes are
+2/2/0. Restored isolated stable type-key getters and null-safe virtual deleting
+cleanup in FragmentBuilderCallbacks. Original-ELF and native ASan/UBSan
+regressions pass, including secondary-base destructor adjustment and exact
+single deallocation. These helpers are not yet registered or used by the
+incomplete Fragment factories. See analysis/FRAGMENT_BUILDER_TARGETS.md.
+This revision adds a translation unit. The prior 51/51 Android result does
+not cover it: after temporary environment cleanup NDK is absent, and no
+new Android compile/link or device test was performed. Not replacement-ready.
