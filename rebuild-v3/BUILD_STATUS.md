@@ -627,7 +627,7 @@ Recompiled all 39 translation units with Zig 0.17.0 targeting `arm-linux-musleab
 
 ## TestNumObserver subobject offset repair — 2026-10-21
 
-- Corrected SystemNotify declarations to the host's typed `TestNumObserver*` signatures. Original Thumb disassembly shows AutoCruise registers fragment+0x5f0; AutoPreview registers and removes fragment+0x2e4. Source now passes those exact subobject pointers, and the produced ARM objects import the exact host mangled symbols.
+- Corrected SystemNotify declarations to the host's typed `TestNumObserver*` signatures. CORRECTION (2026-10-25): AutoCruise and AutoPreview both register fragment+0x2e4; AutoPreview removes the same pointer. The earlier +0x5f0 claim missed a register restore in the logging path. Source now passes the corrected subobject pointers, and the produced ARM objects import the exact host mangled symbols.
 - Strict link falls to 9 undefined-symbol categories with all 38 translation units compiling. Remaining blockers are AutoExscreen closure/action recovery, package receiver recovery, and the NDK libc++ vector ABI. See `analysis/v21_verified/test_num_observer_offsets.txt` and latest `analysis/STRICT_LINK_ARM32_MUSL.log`. No `.so` was published.
 
 ## Closure ABI inspection — 2026-10-21
@@ -728,3 +728,27 @@ incomplete Fragment factories. See analysis/FRAGMENT_BUILDER_TARGETS.md.
 This revision adds a translation unit. The prior 51/51 Android result does
 not cover it: after temporary environment cleanup NDK is absent, and no
 new Android compile/link or device test was performed. Not replacement-ready.
+
+## Cruise observer receiver correction and fresh NDK build — 2026-10-25
+
+Corrected AutoCruiseFragment::onCreateView observer from this+0x5f0 to
+this+0x2e4. The old offset lies outside the whole 0x3dc-byte cruise object.
+Original instruction 0x3eb98 reloads r4 from sp+0x68 after the logging label
+uses this+0x30c. Logging-disabled code retains the original r4 throughout.
+Updated both source copies and corrected the earlier offset evidence.
+
+The Unicorn regression executes the original receiver/stack instructions
+with logging on and off; both pass Fragment+0x2e4 to the mocked host add.
+Other external calls are mocked; this is not a device lifecycle test.
+The freshly linked ARM code independently shows add.w #0x2e4 before
+AddTestNumObserver. Previous factory-target and callback cleanup tests pass.
+
+Recovered official NDK r26c and verified archive SHA256 against the recorded
+6d6e659834d28bb24ba7ae66148ad05115ebbad7dabed1af9b3265674774fcf6.
+Fresh production overlay compiles 52/52 source units and passes strict
+--no-undefined linking, now including FragmentBuilderCallbacks.cpp.
+Builder ABI and Packet shape probes pass under the same NDK.
+Development SO SHA256:
+47b0c0bb47895c45f118d47f02a6356f11df531387c589951a6c447b4a543d40.
+Packet registration and complete Fragment construction are still missing;
+there is no new device validation and this is not a replacement SO.

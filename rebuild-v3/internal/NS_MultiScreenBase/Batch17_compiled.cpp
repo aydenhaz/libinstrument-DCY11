@@ -100,9 +100,10 @@ void AutoNavi2dCrossView::ShowCrossView(bool show, void *seg) {
 
 /* sub_3eb3c (1348B) AutoCruiseFragment::onCreateView(CGViewGroup*) — full body */
 GNS_FRAME::CGViewGroup *AutoCruiseFragment::onCreateView(GNS_FRAME::CGViewGroup *parent) {
-    // V21 passes the embedded TestNumObserver subobject at fragment+0x5f0.
+    // V21 passes the embedded TestNumObserver subobject at fragment+0x2e4.
+    // 0x3eb98 reloads r4 from sp+0x68 after the log label uses +0x30c.
     auto *testObserver = reinterpret_cast<hsl::TestNumObserver*>(
-        reinterpret_cast<uint8_t*>(this) + 0x5f0);
+        reinterpret_cast<uint8_t*>(this) + 0x2e4);
     hsl::SystemNotify::GetSystemNotifyHandle()->AddTestNumObserver(testObserver);
     void *mv = hsl::HSL::GetMapViewHandle((bl::MapEngineID)0);
     void *guide = hsl::HSL::GetGuideHandle();

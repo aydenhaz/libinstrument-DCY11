@@ -100,7 +100,8 @@ void AutoNavi2dCrossView::ShowCrossView(bool show, void *seg) {
 
 /* sub_3eb3c (1348B) AutoCruiseFragment::onCreateView(CGViewGroup*) — full body */
 GNS_FRAME::CGViewGroup *AutoCruiseFragment::onCreateView(GNS_FRAME::CGViewGroup *parent) {
-    hsl::SystemNotify::GetSystemNotifyHandle()->AddTestNumObserver(this);
+    hsl::SystemNotify::GetSystemNotifyHandle()->AddTestNumObserver(
+        reinterpret_cast<uint8_t*>(this) + 0x2e4);
     void *mv = hsl::HSL::GetMapViewHandle((bl::MapEngineID)0);
     void *guide = hsl::HSL::GetGuideHandle();
     (void)mv; (void)guide;

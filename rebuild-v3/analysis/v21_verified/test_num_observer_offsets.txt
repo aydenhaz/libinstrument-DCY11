@@ -2,7 +2,7 @@
 
 The calls use the concrete imported symbols `AddTestNumObserver(TestNumObserver*)` and `RemoveTestNumObserver(TestNumObserver*)`. ARM32 Thumb instructions show the pointer passed in r1 is an interior subobject, not the fragment's `this` pointer.
 
-AutoCruiseFragment::onCreateView at sub_3eb3c: this is saved in the frame, restored, then `+0x30c` is formed; just before AddTestNumObserver, `+0x2e4` is added to that pointer, yielding `this+0x5f0`.
+CORRECTED 2026-10-25: AutoCruiseFragment::onCreateView at sub_3eb3c passes this+0x2e4. The former this+0x5f0 claim missed the ldrd at 0x3eb98: r4 is restored from sp+0x68, where 0x3eb70 saved the Fragment pointer. The +0x30c value is only a temporary log label, saved to sp+8. With logging disabled r4 never changes. Both branches therefore pass the same +0x2e4 observer. The erroneous +0x5f0 exceeds the whole 0x3dc-byte cruise allocation.
 
 ```asm
 0003eb8a: add.w    r4, r2, #0x30c
