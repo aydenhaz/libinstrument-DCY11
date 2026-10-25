@@ -703,3 +703,15 @@ Recompiled all 39 translation units with Zig 0.17.0 targeting `arm-linux-musleab
 - No device validation or working Packet registration. This fixes an invalid
   trace and allocation leak; it does not restore the full post-load callback
   or resolve the previous device black screen/SIGABRT.
+
+## Pointer-return Fragment builder ABI — 2026-10-25
+
+Added CGFragment*()/void*() member Callable adapters and the real host
+CGFragmentBuilder constructor/destructor/registration declarations. Host
+C2 confirms two 20-byte Callables, clone slot 3, pointer-return invoke slot 2,
+and a 0x38-byte builder. The void* callback returns fragment type.
+Native sanitizer ownership/dispatch tests and the NDK ARM32 signature/strict
+link probe pass. Production overlay still compiles 51/51 and strictly links.
+See analysis/FRAGMENT_BUILDER_ABI.md for reproduced host offsets and limits.
+No real Fragment factory targets or registration are enabled by this change;
+no Android runtime success or device-safe replacement is claimed.
