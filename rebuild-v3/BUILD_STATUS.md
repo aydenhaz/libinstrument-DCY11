@@ -820,3 +820,21 @@ Development SO SHA256:
 3a9f5786062a7cde73c0f305f50133b12be1f4750ee079acf415d25e08d2af06.
 The new primitives are not yet attached to the incomplete view lifecycle;
 scene/query/iteration/map integration and Packet registration remain blockers.
+
+## Cruise location branch attached — 2026-10-26
+
+Both partial onCreateView implementations now store the queried map at
++0x3c0 and run the recovered location stage on ARM32. Scene selection,
+engine-1 direct retrieval vs Pos/LocInfo conversion, record iteration,
+ARM-compatible speed conversion, first-location map movement and CarLoc
+layer delivery are implemented with scoped ownership. Corrupt record
+counts are rejected before inline storage can be exceeded.
+
+Native ASan/UBSan branch tests, 16 original scene-selector cases, original
+VFP edge cases and original-vs-rebuilt ARM map-call register/stack tests
+pass. Prior owning-type/conversion/growth and observer regressions pass.
+NDK r26c build: 55/55 compiled and strict --no-undefined link PASS; SHA256:
+be00279c424f038857d9afce88c9938bc409dd401b2bcf94d1465730451c4077.
+See analysis/CRUISE_LOCATION_INTEGRATION.md for exact coverage/limitations.
+No device test; remaining lifecycle and Packet registration still block a
+replacement-ready library.

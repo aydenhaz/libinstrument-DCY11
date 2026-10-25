@@ -1,3 +1,4 @@
+#include "abi/CruiseLocation.h"
 /*
  * Batch 17 — Observer/Fragment lifecycle, compiled C++ (behavior-level)
  * Upgraded from expanded/*.cpp pseudocode; verified against decoded traces.
@@ -99,7 +100,7 @@ void AutoNavi2dCrossView::ShowCrossView(bool show, void *seg) {
     }
 }
 
-/* sub_3eb3c (1348B) AutoCruiseFragment::onCreateView(CGViewGroup*) — full body */
+/* sub_3eb3c (1348B) AutoCruiseFragment::onCreateView(CGViewGroup*) — partial lifecycle */
 GNS_FRAME::CGViewGroup *AutoCruiseFragment::onCreateView(GNS_FRAME::CGViewGroup *parent) {
     hsl::SystemNotify::GetSystemNotifyHandle()->AddTestNumObserver(
         reinterpret_cast<uint8_t*>(this) + 0x2e4);
@@ -108,10 +109,12 @@ GNS_FRAME::CGViewGroup *AutoCruiseFragment::onCreateView(GNS_FRAME::CGViewGroup 
     std::memcpy(&engine, reinterpret_cast<const uint8_t*>(this) + 0x308, sizeof(engine));
     void *mv = hsl::HSL::GetMapViewHandle(static_cast<bl::MapEngineID>(engine));
     void *guide = hsl::HSL::GetGuideHandle();
-    (void)mv; (void)guide;
-    // Position retrieval requires real CarLoc/LocInfo construction and the
-    // original branch selection. The old 16-byte/1-byte objects were unsafe.
-    /* "GoToCarLocation (%f,%f)" / "invalid car loc" */
+    (void)guide;
+    // Restore the original location branch only; remaining view setup is partial.
+    std::memcpy(reinterpret_cast<uint8_t*>(this) + 0x3c0, &mv, sizeof(mv));
+#if defined(__arm__) && !defined(__aarch64__)
+    IPL_ABI::initializeCruiseLocation(mv, IPL_ABI::cruiseLocationHostOps());
+#endif
     /* AddConfigObserver + CGBroadcaster::getInstance x2 tail */
     return CGFragment::inflaterUnrecovered(0, parent);
 }
