@@ -1,5 +1,10 @@
 # Location buffer layout quarantine — 2026-10-25
 
+Update 2026-10-26: exact constructible types now replace the incomplete
+declarations. See [LOCATION_TYPES_RECOVERY.md](LOCATION_TYPES_RECOVERY.md)
+for byte-level validation and remaining Cruise integration. The removed
+unsafe calls remain removed. The text below records the prior quarantine.
+
 The former hsl/HSL.h definitions were unsafe: bl::CarLoc contained two
  doubles (16 bytes) and bl::LocInfo was empty (1 byte). Cruise onCreateView
 passed those stack objects into real host APIs even though their results

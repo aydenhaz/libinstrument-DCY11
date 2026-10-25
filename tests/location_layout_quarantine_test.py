@@ -1,4 +1,4 @@
-"""Reject fake location storage while preserving typed host declarations."""
+"""Validate recovered storage and host declarations; retain host bounds evidence."""
 import argparse
 from pathlib import Path
 import subprocess
@@ -29,5 +29,5 @@ with tempfile.TemporaryDirectory() as directory:
     for name in ('CarLoc', 'LocInfo'):
         src.write_text('#include <hsl/HSL.h>\nvoid bad() { bl::' + name + ' object; }\n')
         result = subprocess.run(command, capture_output=True, text=True)
-        assert result.returncode != 0 and 'incomplete' in result.stderr, result.stderr
-print('Host layout bounds and forbidden fake location construction: PASS')
+        assert result.returncode == 0, result.stderr
+print('Host layout bounds, recovered type construction and API signatures: PASS')

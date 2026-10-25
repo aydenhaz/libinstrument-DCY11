@@ -780,3 +780,25 @@ strict link PASS, SHA256 34aebceb94a8ffbc01c3067e317c2ffe74c526773dacd379ebe0a24
 This removes known stack overflow/read-overrun hazards; location functionality
 is not restored. See analysis/LOCATION_LAYOUT_QUARANTINE.md. No device test
 or replacement-ready library is claimed.
+
+## Location object construction restored — 2026-10-26
+
+Replaced the quarantined incomplete types with recovered ARM32 CarLoc
+(0x1c) and LocInfo (0x690). Restored array allocator ownership flags and
+scalar new/delete, exact constructor sentinels/ranges, and owning UTF-16
+string copy/assignment/destruction. Array copying stays disabled pending
+recovery of its element/copy semantics. See analysis/LOCATION_TYPES_RECOVERY.md.
+
+Original Thumb constructor comparison passes for three initial fill patterns;
+original array initializer/destructor checks, native ASan/UBSan ownership
+checks, ARM32 size/offset/API probes, and six Cruise observer/engine cases
+pass. LeakSanitizer was disabled due to unavailable /proc task inspection.
+Fresh NDK r26c overlay build compiles 53/53 units and strictly links with
+--no-undefined. Development SO SHA256:
+3e05c1dca42996b6e1018f319b374938712c144abdaf28f580dfb4af45491297.
+
+This restores usable object storage/lifetime primitives. Cruise scene
+selection, LocInfo-to-CarLoc conversion and map consumption are still missing,
+so the unsafe unconditional query calls have not been reintroduced. Packet
+registration and full Fragment lifecycle remain blockers. No device test or
+replacement-ready library is claimed.

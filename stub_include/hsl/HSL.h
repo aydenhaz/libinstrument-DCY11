@@ -1,8 +1,7 @@
 #include <AbiTypes.h>
 #pragma once
-namespace bl {  typedef int MapDeviceID; struct ObjectRuntimeInfo { explicit ObjectRuntimeInfo(void*){} }; // Host-owned nontrivial layouts are not recovered. Never instantiate fake
-// stack objects: LocInfo copies cover at least 0x68c bytes.
-struct CarLoc; struct LocInfo; }
+#include <bl/LocationTypes.h>
+namespace bl { typedef int MapDeviceID; struct ObjectRuntimeInfo { explicit ObjectRuntimeInfo(void*){} }; }
 
 namespace hsl {
 class SystemNotify; class Config; class Guide; class MapView; class ThirdManager;
