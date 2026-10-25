@@ -20,7 +20,6 @@ public:
     void onPostLoadRes();                // sub_2f5fc  1588B  batch8
     void onPostAlreadyLoadRes();         // sub_2fc30   112B  batch8
     void refreshGFramePaint();           // sub_30d34   128B  batch8
-    void onResume();                     // sub_3f080   692B  batch8
     void onDestroy();                    // sub_2f2f0   372B  batch8
 
     // Original factory publishes only after host/CoverUtil construction and

@@ -3,6 +3,7 @@
  * Upgraded from expanded/*.cpp pseudocode; verified against decoded traces.
  */
 #include <cstdint>
+#include <cstring>
 #include <mutex>
 #include <GFrame/CGString.h>
 #include <GFrame/CGFrameSimulation.h>
@@ -102,7 +103,10 @@ void AutoNavi2dCrossView::ShowCrossView(bool show, void *seg) {
 GNS_FRAME::CGViewGroup *AutoCruiseFragment::onCreateView(GNS_FRAME::CGViewGroup *parent) {
     hsl::SystemNotify::GetSystemNotifyHandle()->AddTestNumObserver(
         reinterpret_cast<uint8_t*>(this) + 0x2e4);
-    void *mv = hsl::HSL::GetMapViewHandle((bl::MapEngineID)0);
+    // V21 0x3ebc0 reads the constructed Fragment engine word, not engine 0.
+    int32_t engine;
+    std::memcpy(&engine, reinterpret_cast<const uint8_t*>(this) + 0x308, sizeof(engine));
+    void *mv = hsl::HSL::GetMapViewHandle(static_cast<bl::MapEngineID>(engine));
     void *guide = hsl::HSL::GetGuideHandle();
     (void)mv; (void)guide;
     bl::CarLoc loc;

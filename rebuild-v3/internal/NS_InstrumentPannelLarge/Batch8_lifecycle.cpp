@@ -6,7 +6,6 @@
  * onPostLoadRes sub_2f5fc (1588B)  — resource load completion
  * onPostAlreadyLoadRes sub_2fc30 (112B) — post-load hook
  * refreshGFramePaint   sub_30d34 (128B) — paint refresh
- * onResume      sub_3f080 (692B)   — resume with MapService handle refresh
  * onDestroy     sub_2f2f0 (372B)   — teardown (below)
  */
 #include "CGIPLPacket.h"
@@ -84,17 +83,8 @@ void CGIPLPacket::refreshGFramePaint() {
     GNS_FRAME::CGFrameSimulation::ownWorkStation()->sendMsg(0x30,0,0,token,nullptr);
 }
 
-/* ---- onResume sub_3f080 (692B) ---- */
-void CGIPLPacket::onResume() {
-    AlcExport(0, 0, /*tag*/ 0x700, this);    /* f04f0c70 -> block tag=0x70 */
-    /* resume timer/member set at f89423cc (this+0x3cc) */
-    void *ms = hsl::HSL::GetMapServiceHandle();
-    if (ms) {
-        /* vtable call ms+0x1a8; store r0; re-read +0x1a8 on this+0x34c chain;
-           conditional re-query when member != 0 (0x3f114 CMP/BNE) */
-    }
-    /* string @0x5a9e7: "onResume, _mapViewBase:%p, _bFirstResume:%d" -> log */
-}
+/* 0x3f080 belongs to AutoCruiseFragment, not Packet. Its earlier
+ * receiver-less pseudo-body is withdrawn; see CRUISE_LIFECYCLE_CORRECTIONS.md. */
 
 /* ---- onDestroy sub_2f2f0 (372B) ---- */
 void CGIPLPacket::onDestroy() {

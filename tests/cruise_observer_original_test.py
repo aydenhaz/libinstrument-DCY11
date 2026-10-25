@@ -10,7 +10,8 @@ root = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(root / 'tools'))
 from inspect_packet_factory import ELF32
 elf = ELF32(root / 'reference/v21/libInstrumentPannelLarge.so')
-for logging in (False, True):
+for logging, engine in ((False, 0), (True, 0), (False, 5), (True, 5),
+                        (False, -1), (True, -1)):
     m = Uc(UC_ARCH_ARM, UC_MODE_THUMB)
     m.mem_map(0, 0x200000)
     for kind, offset, address, _, size, *_ in elf.segments:
@@ -41,6 +42,12 @@ for logging in (False, True):
             assert e.reg_read(UC_ARM_REG_R1) == fragment + 0x2e4
             assert e.reg_read(UC_ARM_REG_R1) < fragment + 0x3dc
             trace.append('add')
+            # Synchronous registration can update the field: the query must
+            # load it after registration rather than use a cached/default ID.
+            e.mem_write(fragment + 0x308, struct.pack('<i', engine))
+        elif address == 0x3ebc4:
+            assert e.reg_read(UC_ARM_REG_R0) == engine & 0xffffffff
+            trace.append('map')
             e.emu_stop()
             return
         else:
@@ -52,6 +59,9 @@ for logging in (False, True):
     m.reg_write(UC_ARM_REG_R7, 0x181000)
     m.reg_write(UC_ARM_REG_R0, fragment)
     m.reg_write(UC_ARM_REG_R1, parent)
-    m.emu_start(0x3eb4d, 0x3ebc0, count=200)
-    assert trace == (['log'] if logging else []) + ['base', 'add'], trace
-print('Original cruise observer receiver = Fragment+0x2e4 with ALC enabled/disabled: PASS')
+    m.emu_start(0x3eb4d, 0x3ebc8, count=200)
+    assert trace == (['log'] if logging else []) + ['base', 'add', 'map'], trace
+# ALC signature at 0x3f0dc + literal proves resume ownership.
+assert elf.at(0x3f0dc + elf.u32(0x3f310), 100).split(b'\0')[0] == (
+    b'virtual void NS_MultiScreenBase::AutoCruiseFragment::onResume()')
+print('Original cruise observer/engine reload (6 cases) and resume ownership: PASS')

@@ -752,3 +752,16 @@ Development SO SHA256:
 47b0c0bb47895c45f118d47f02a6356f11df531387c589951a6c447b4a543d40.
 Packet registration and complete Fragment construction are still missing;
 there is no new device validation and this is not a replacement SO.
+
+## Cruise engine selection and resume ownership — 2026-10-25
+
+Cruise onCreateView now reads Fragment+0x308 after observer registration
+for GetMapViewHandle instead of hard-coding engine 0. With ALC on/off and
+engine 0/5/-1, six original-instruction cases confirm the fresh field read.
+Removed the erroneously owned CGIPLPacket::onResume pseudo-body: original
+0x3f080 is AutoCruiseFragment::onResume, confirmed by its resolved signature.
+This does not implement the full Cruise resume or map initialization flow.
+Native Packet lifecycle sanitizer regression passes. NDK r26c production
+build: 52/52 compiled, strict --no-undefined link PASS. SO SHA256:
+e3a69f77933559e154baa207764f340612d724003164eabcc3f503f67b976c17.
+See analysis/CRUISE_LIFECYCLE_CORRECTIONS.md. Still not a device replacement.
