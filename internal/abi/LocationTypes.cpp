@@ -12,6 +12,50 @@ CarLocationArray::~CarLocationArray() {
     capacity = count = 0;
 }
 
+// Preserve the original untouched padding at +0x2c..0x2f and +0x49..0x4b.
+void CarLocationEntry::assignLocInfoRecord(const unsigned char* record) {
+    std::memset(bytes + 0x30, 0, 0x19);
+    std::memset(bytes + 0x4c, 0xff, 12);
+    std::memset(bytes + 0x58, 0, 16);
+    std::memcpy(bytes, record + 0x88, 12);
+    std::memcpy(bytes + 0x0c, record + 0x98, 8);
+    std::memcpy(bytes + 0x14, record + 0x98, 4);
+    std::memcpy(bytes + 0x18, record, 16);
+    std::memcpy(bytes + 0x28, record + 0x18, 4);
+    int32_t available;
+    std::memcpy(&available, record + 0x58, 4);
+    if (available >= 1) {
+        std::memcpy(bytes + 0x30, record + 0x20, 24);
+        bytes[0x48] = 1;
+    }
+}
+
+// Original 0x39660. Snapshot before growing: entry may alias the old array.
+void CarLocationArray::append(const CarLocationEntry& entry) {
+    const uint32_t max_count = UINT32_MAX / sizeof(CarLocationEntry);
+    if (count >= max_count) throw std::bad_alloc();
+    if (count + 1 > capacity) {
+        CarLocationEntry saved;
+        std::memcpy(&saved, &entry, sizeof saved);
+        uint32_t next = count + 1;
+        if ((allocator.flags & 0xf) == 1) {
+            const uint32_t extra = capacity < 5 ? 5 :
+                (capacity >= 500 ? count / 4 : count);
+            if (extra > max_count - next) throw std::bad_alloc();
+            next += extra;
+        }
+        auto* replacement = static_cast<unsigned char*>(allocator.allocate(next * sizeof saved));
+        if (count) std::memcpy(replacement, data, count * sizeof saved);
+        allocator.release(data);
+        data = replacement;
+        capacity = next;
+        std::memcpy(replacement + count * sizeof saved, &saved, sizeof saved);
+    } else {
+        std::memcpy(static_cast<unsigned char*>(data) + count * sizeof entry, &entry, sizeof entry);
+    }
+    ++count;
+}
+
 // V21 instrument 0x394ec: preserve untouched padding and nonzero sentinels.
 LocInfo::LocInfo() {
     auto at = [this](size_t offset) -> unsigned char* {

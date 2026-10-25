@@ -54,3 +54,7 @@ calls are not that flow and remain removed. Recover the selector, conversion,
 array growth and map-consumption sequence together before reattaching it.
 Packet registration and complete Fragment construction/lifecycle remain
 unresolved; no device validation or replacement-ready SO is claimed.
+
+Update 2026-10-26: per-record conversion and array append/growth are now
+implemented and tested; see [CRUISE_LOCATION_CONVERSION.md](CRUISE_LOCATION_CONVERSION.md).
+Full scene/query/map integration remains pending.

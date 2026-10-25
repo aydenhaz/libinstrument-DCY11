@@ -12,12 +12,19 @@ public:
     virtual void* allocate(uint32_t bytes);
     virtual void release(void* pointer);
 };
+// Cruise 0x3eca8..0x3ed2c converts one 0x110-byte LocInfo record.
+struct alignas(8) CarLocationEntry {
+    unsigned char bytes[0x68];
+    void assignLocInfoRecord(const unsigned char* record);
+};
+static_assert(sizeof(CarLocationEntry) == 0x68, "V21 location entry size");
 struct CarLocationArray {
     void* data = nullptr;
     uint32_t capacity = 0, count = 0;
     LocationAllocator allocator;
     CarLocationArray() = default;
     ~CarLocationArray();
+    void append(const CarLocationEntry& entry);
     CarLocationArray(const CarLocationArray&) = delete;
     CarLocationArray& operator=(const CarLocationArray&) = delete;
 };

@@ -802,3 +802,21 @@ selection, LocInfo-to-CarLoc conversion and map consumption are still missing,
 so the unsafe unconditional query calls have not been reintroduced. Packet
 registration and full Fragment lifecycle remain blockers. No device test or
 replacement-ready library is claimed.
+
+## Cruise record conversion and dynamic append — 2026-10-26
+
+Recovered the 0x110-byte LocInfo-record to 0x68-byte CarLoc-entry conversion,
+including optional coordinates, validity byte, sentinels and untouched
+padding. Added original array growth policy, input snapshot before reallocating
+an aliased entry, and allocation-size overflow rejection. Details and scene
+selector evidence: analysis/CRUISE_LOCATION_CONVERSION.md.
+
+Four original-ARM conversion cases and 2200 original appends pass against
+native results. Native ASan/UBSan alias/overflow checks, prior constructor/
+release regressions, ARM32 layout/API probes and six Cruise observer/engine
+cases pass. LeakSanitizer remains disabled for the documented environment
+limitation. NDK r26c overlay: 53/53 compiled, --no-undefined link PASS.
+Development SO SHA256:
+3a9f5786062a7cde73c0f305f50133b12be1f4750ee079acf415d25e08d2af06.
+The new primitives are not yet attached to the incomplete view lifecycle;
+scene/query/iteration/map integration and Packet registration remain blockers.
