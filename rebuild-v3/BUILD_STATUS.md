@@ -856,3 +856,20 @@ NDK r26c: 56/56 compiled, strict link PASS. Development SO SHA256:
 840ff5dc6728c1e8ecf9a99289a1e43d080b55e453b35aa536f17699c584a91e.
 Broadcast/UI callbacks, scene/resume work, complete derived construction and
 Packet registration remain pending. No device validation/replacement claim.
+
+## UI observer list and listener operations — 2026-10-26
+
+Implemented the six original map-render/UI-update add/remove and projection/
+UI-style setter operations with recovered locks, inline allocator layout,
+duplicate/null behavior, growth policy and ordered removal. The setter pair
+also handles null clearing. Sources require a real constructed observer owner;
+they are not yet attached to Cruise until singleton construction is recovered.
+See analysis/EXSCREEN_UI_OBSERVERS.md for the broadcast ownership blocker.
+
+Thirty original-vs-rebuilt ARM scenarios (656 operations per binary) pass,
+including complete memory and lock/allocation traces. Existing Cruise view,
+map ABI, scene/VFP and location lifetime tests pass. NDK r26c production:
+57/57 compiled, strict --no-undefined link PASS. Development SO SHA256:
+cd2b3ea186656ed127b7a1f859d208b03fa412bdaba58e96f42bc072d9e29c44.
+No device validation; singleton/Fragment construction, broadcast callbacks
+and Packet registration still block a usable replacement.
