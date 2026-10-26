@@ -838,3 +838,21 @@ be00279c424f038857d9afce88c9938bc409dd401b2bcf94d1465730451c4077.
 See analysis/CRUISE_LOCATION_INTEGRATION.md for exact coverage/limitations.
 No device test; remaining lifecycle and Packet registration still block a
 replacement-ready library.
+
+## Cruise paired host lifecycle bindings — 2026-10-26
+
+Corrected Cruise and host CGFragment onCreateView return contracts to void;
+base creation now precedes registration and the unsupported trailing inflater
+is removed. Added Guide/Pos/Config registrations, map-interface/Pos/Config
+cache stores, and a Cruise onDestroyView with matching host-observer removal
+before base destruction. The engine remains reloaded after test registration.
+See analysis/CRUISE_VIEW_BINDINGS.md for offsets and incomplete portions.
+
+Sixteen original-vs-rebuilt ARM cases pass for call order, pointer arguments,
+cache stores and paired removal. Actual rebuilt Cruise lifecycle entries also
+pass with a mocked location stage, including synchronous engine mutation.
+Existing map ABI, scene/VFP, owning-type and observer/engine tests pass.
+NDK r26c: 56/56 compiled, strict link PASS. Development SO SHA256:
+840ff5dc6728c1e8ecf9a99289a1e43d080b55e453b35aa536f17699c584a91e.
+Broadcast/UI callbacks, scene/resume work, complete derived construction and
+Packet registration remain pending. No device validation/replacement claim.

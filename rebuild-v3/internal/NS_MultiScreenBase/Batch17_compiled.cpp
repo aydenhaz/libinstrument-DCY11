@@ -1,3 +1,4 @@
+#include "abi/CruiseViewBindings.h"
 #include "abi/CruiseLocation.h"
 /*
  * Batch 17 — Observer/Fragment lifecycle, compiled C++ (behavior-level)
@@ -44,7 +45,8 @@ class CruiseFragment : public GNS_FRAME::CGFragment { public: GNS_FRAME::CGViewG
 class AutoNavi2dCrossView { public: static void ShowCrossView(bool, void*); };
 class AutoCruiseFragment : public GNS_FRAME::CGFragment {
 public:
-    GNS_FRAME::CGViewGroup *onCreateView(GNS_FRAME::CGViewGroup*);
+    void onCreateView(GNS_FRAME::CGViewGroup*);
+    void onDestroyView();
 };
 class AutoOpeningFragment : public GNS_FRAME::CGFragment { public: void OnMapLevelChanged(uint32_t, bool); void OnMapPreviewExitOnUI(uint32_t); };
 class AutoArNaviFragment : public GNS_FRAME::CGFragment {
@@ -101,25 +103,28 @@ void AutoNavi2dCrossView::ShowCrossView(bool show, void *seg) {
 }
 
 /* sub_3eb3c (1348B) AutoCruiseFragment::onCreateView(CGViewGroup*) — partial lifecycle */
-GNS_FRAME::CGViewGroup *AutoCruiseFragment::onCreateView(GNS_FRAME::CGViewGroup *parent) {
-    // V21 passes the embedded TestNumObserver subobject at fragment+0x2e4.
-    // 0x3eb98 reloads r4 from sp+0x68 after the log label uses +0x30c.
-    auto *testObserver = reinterpret_cast<hsl::TestNumObserver*>(
-        reinterpret_cast<uint8_t*>(this) + 0x2e4);
-    hsl::SystemNotify::GetSystemNotifyHandle()->AddTestNumObserver(testObserver);
-    // V21 0x3ebc0 reads the constructed Fragment engine word, not engine 0.
+void AutoCruiseFragment::onCreateView(GNS_FRAME::CGViewGroup *parent) {
+#if defined(__arm__) && !defined(__aarch64__)
+    IPL_ABI::beginCruiseView(this, parent);
+    // Reload after observer registration, which can update the engine.
     int32_t engine;
     std::memcpy(&engine, reinterpret_cast<const uint8_t*>(this) + 0x308, sizeof(engine));
     void *mv = hsl::HSL::GetMapViewHandle(static_cast<bl::MapEngineID>(engine));
-    void *guide = hsl::HSL::GetGuideHandle();
-    (void)guide;
-    // Restore the original location branch only; remaining view setup is partial.
     std::memcpy(reinterpret_cast<uint8_t*>(this) + 0x3c0, &mv, sizeof(mv));
-#if defined(__arm__) && !defined(__aarch64__)
+    IPL_ABI::attachCruiseGuide(this);
     IPL_ABI::initializeCruiseLocation(mv, IPL_ABI::cruiseLocationHostOps());
+    IPL_ABI::attachCruiseViewTail(this);
+    // Broadcast and UI callback registration/state transitions remain missing.
+#else
+    (void)parent;
 #endif
-    /* AddConfigObserver + CGBroadcaster::getInstance x2 tail */
-    return inflater(0, parent);
+}
+
+/* sub_3f3e0: host-observer cleanup subset; broadcast/UI removals pending. */
+void AutoCruiseFragment::onDestroyView() {
+#if defined(__arm__) && !defined(__aarch64__)
+    IPL_ABI::detachCruiseView(this);
+#endif
 }
 
 /* sub_35e2c (840B) AutoOpeningFragment::OnMapLevelChanged(uint32_t, bool) */

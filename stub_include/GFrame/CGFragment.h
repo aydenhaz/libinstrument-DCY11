@@ -18,7 +18,7 @@ public:
     CGView *findViewById(int);
     static CGView *findViewByIdUnrecovered(int);
     void onDestroyView();
-    CGViewGroup* onCreateView(CGViewGroup*);
+    void onCreateView(CGViewGroup*);
     CGContext* getContext();
     void inflater(CGView*, CGViewGroup*);
     bool isTopFragment();
