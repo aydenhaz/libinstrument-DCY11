@@ -44,3 +44,7 @@ interoperability and valid Fragment callback vtables. Adapter RTTI compatibility
 with original method objects is a separate issue from this corrected resolver.
 External-screen singleton/timer construction and Packet registration remain
 incomplete. No device validation or usable replacement is claimed.
+
+Update 2026-10-26: original/rebuilt shared-control behavior is now tested
+with real NDK libc++, and both broadcast channels are attached to Cruise.
+See CRUISE_BROADCAST_WIRING.md for coverage and remaining construction limits.

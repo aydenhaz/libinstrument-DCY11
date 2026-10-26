@@ -5,7 +5,7 @@ namespace IPL_ABI {
 void beginCruiseView(void* fragment, void* parent);
 void attachCruiseGuide(void* fragment);
 void attachCruiseViewTail(void* fragment);
-// Host-observer subset only: broadcast/UI callbacks are not restored yet.
+// Host-observer subset: caller removes broadcasts first; UI cleanup pending.
 void detachCruiseView(void* fragment);
 }
 #endif

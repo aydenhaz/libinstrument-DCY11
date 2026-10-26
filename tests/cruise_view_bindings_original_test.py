@@ -49,12 +49,17 @@ def run(path, rebuilt, hasmap, hasservice, haspos, hasconfig, full=False):
  if full:
   location=next(address for name,address in symbols.items() if '24initializeCruiseLocation' in name)
   handlers[location & ~1]='location'
+  for needle,label in (('attachCruiseBroadcasts','broadcast-add'),('detachCruiseBroadcasts','broadcast-remove')):
+   address=next(address for name,address in symbols.items() if needle in name)
+   handlers[address & ~1]=label
  def hook(e,address,size,_):
   if address not in handlers:return
   name=handlers[address];r0=e.reg_read(UC_ARM_REG_R0);r1=e.reg_read(UC_ARM_REG_R1)
   if name=='logging':value=0
   elif name in ('system','guide','pos','config'):
    value={'system':N,'guide':G,'pos':P if haspos else 0,'config':C if hasconfig else 0}[name];trace.append(name)
+  elif name in ('broadcast-add','broadcast-remove'):
+   assert r0==F;trace.append(name);value=0
   elif name=='map':
    assert r0==7;value=M if hasmap else 0;trace.append(name)
   elif name=='location':
@@ -104,5 +109,7 @@ for hasmap in (0,1):
     expected=list(original[0]);expected.insert(3,'map')
     index=expected.index('addGuide')+1 if hasservice else expected.index('service')+1
     expected.insert(index,'location')
+    index=expected.index('removeTest')-1
+    expected[index:index]=['broadcast-add','broadcast-remove']
     assert trace==expected,(trace,expected)
 print('Original vs rebuilt ARM view bindings: 16 cases, ordering, offsets, cache writes and paired removal PASS')

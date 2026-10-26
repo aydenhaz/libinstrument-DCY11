@@ -64,3 +64,7 @@ and allocates a 0x90-byte timer object including CGUITimerInstance plus its
 own member closure. Therefore the previously recovered UI list operations
 cannot justify allocating a zeroed singleton or replacing its timer with a
 no-op. Full singleton/timer construction and destruction remain pending.
+
+Update 2026-10-26: original/rebuilt shared-control behavior is now tested
+with real NDK libc++, and both broadcast channels are attached to Cruise.
+See CRUISE_BROADCAST_WIRING.md for coverage and remaining construction limits.

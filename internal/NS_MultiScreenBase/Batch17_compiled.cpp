@@ -1,3 +1,4 @@
+#include "abi/CruiseBroadcastBindings.h"
 #include "abi/CruiseViewBindings.h"
 #include "abi/CruiseLocation.h"
 /*
@@ -114,15 +115,17 @@ void AutoCruiseFragment::onCreateView(GNS_FRAME::CGViewGroup *parent) {
     IPL_ABI::attachCruiseGuide(this);
     IPL_ABI::initializeCruiseLocation(mv, IPL_ABI::cruiseLocationHostOps());
     IPL_ABI::attachCruiseViewTail(this);
-    // Broadcast and UI callback registration/state transitions remain missing.
+    IPL_ABI::attachCruiseBroadcasts(this);
+    // UI callback registration/state transitions remain missing.
 #else
     (void)parent;
 #endif
 }
 
-/* sub_3f3e0: host-observer cleanup subset; broadcast/UI removals pending. */
+/* sub_3f3e0: broadcast and host-observer cleanup; UI removals pending. */
 void AutoCruiseFragment::onDestroyView() {
 #if defined(__arm__) && !defined(__aarch64__)
+    IPL_ABI::detachCruiseBroadcasts(this);
     IPL_ABI::detachCruiseView(this);
 #endif
 }

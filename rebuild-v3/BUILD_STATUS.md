@@ -926,3 +926,20 @@ NDK r26c: 60/60 compiled, strict link PASS. Development SO SHA256:
 Original/rebuilt shared-control interoperability, real Fragment callback
 vtables, singleton/timer construction and Packet registration remain pending.
 Broadcast lifecycle attachment is not yet enabled; no device test is claimed.
+
+## Cruise broadcasts attached after shared-control validation — 2026-10-26
+
+Original Callable copy/equality/destruction now passes against rebuilt
+objects with real NDK libc++ RTTI/control-block code in ARM emulation.
+Seven allocations are freed exactly once, and a retained callback remains
+callable after its source is destroyed. Rebuilt attach/duplicate/message/
+detach/repeated-detach also passes with real list and ownership code.
+
+Both Cruise lifecycle copies now register channels 0x10/0x10004 after host
+setup and remove them before host cleanup. Lifecycle ordering, Publisher
+callbacks and member-dispatch regression tests pass. NDK r26c: 61/61 compiled,
+strict link PASS. Development SO SHA256:
+59bcaa26d87db7167a27c21304d52ba840a04c0f2f6a963bad829b3b43e9a81e.
+See analysis/CRUISE_BROADCAST_WIRING.md. External-screen singleton/timer,
+complete Fragment construction and Packet registration remain unresolved.
+No device validation or complete replacement readiness is claimed.

@@ -66,7 +66,7 @@ void detachCruiseView(void* fragment) {
         cruiseRemoveConfig(config, at(fragment, 0x38c));
     if (void* service = guideService())
         slot<void(*)(void*, void*)>(service, 0x1c)(service, at(fragment, 0x364));
-    // Remaining broadcast/UI removals must precede this when recovered.
+    // Broadcasts are removed by the caller; pending UI removals belong before this.
     cruiseBaseDestroy(fragment);
 }
 }
