@@ -892,3 +892,21 @@ Singleton construction additionally includes five locks, AsyncObject and a
 timer/member closure; it is not restored by a zeroed allocation. See
 analysis/CRUISE_BROADCAST_CALLABLE.md. No device validation or usable
 replacement is claimed; Packet registration remains pending.
+
+## Broadcast list operations recovered — 2026-10-26
+
+Implemented registration/update and removal over the original 16-byte list
+state with libc++ mutex, 32-byte nodes, identity/channel matching, backward
+search and front insertion. Removal retains a temporary copy so its final
+release follows mutex unlock. ARM assertions verify node/state offsets.
+Original ARM list test covers 11 operations with mocked Callable/runtime
+operations; native ASan/UBSan tests use the actual rebuilt Callable and
+include four threads x 1000 add/duplicate/remove cycles. Existing 18 broadcast
+dispatch and 16 Cruise view-binding cases also pass.
+
+NDK r26c: 59/59 compiled, strict --no-undefined link PASS. Development SO SHA256:
+d189e7435ef574c8e39e3b6f7564c35b0a91cda475a6ec806c7c55501cd82d74.
+Resolver/RTTI and original-vs-rebuilt shared-control interoperability remain
+unverified; these list operations are not yet wired to Cruise. Singleton/
+Fragment construction and Packet registration remain blockers. See
+analysis/BROADCAST_LIST_RECOVERY.md. No device readiness is claimed.
