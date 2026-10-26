@@ -26,4 +26,14 @@ int main() {
     });
     for(auto& thread:threads)thread.join();
     assert(state.count==0 && state.sentinel.next==&state.sentinel && state.sentinel.previous==&state.sentinel);
+    // Publisher disposer must also clean up still-registered nodes.
+    auto* owned=createBroadcastListState();
+    assert(owned->count==0 && owned->sentinel.next==&owned->sentinel);
+    addBroadcastCallable(*owned,16,first);
+    addBroadcastCallable(*owned,17,second);
+    destroyBroadcastListState(owned);
+    destroyBroadcastListState(createBroadcastListState());
+    destroyBroadcastListState(nullptr);
+    assert(!first.empty() && !second.empty());
+
 }

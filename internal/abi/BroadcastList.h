@@ -12,6 +12,11 @@ struct BroadcastListState {
     uint32_t count;
     std::mutex mutex;
 };
+BroadcastListState* createBroadcastListState();
+void destroyBroadcastListState(BroadcastListState*);
+#if defined(__arm__) && !defined(__aarch64__)
+BroadcastListState* resolveBroadcastList(void* broadcaster);
+#endif
 void addBroadcastCallable(BroadcastListState&, uint32_t channel, const GPI::BroadcastCallable&);
 void removeBroadcastCallable(BroadcastListState&, uint32_t channel, const GPI::BroadcastCallable&);
 #if defined(__arm__) && !defined(__aarch64__)

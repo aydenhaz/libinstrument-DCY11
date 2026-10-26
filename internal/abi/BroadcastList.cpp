@@ -22,6 +22,26 @@ Node* find(BroadcastListState& state, uint32_t channel, const GPI::BroadcastCall
     return nullptr;
 }
 }
+BroadcastListState* createBroadcastListState() {
+    auto* state = new BroadcastListState{{nullptr,nullptr},0,{}};
+    state->sentinel.next = state->sentinel.previous = &state->sentinel;
+    return state;
+}
+void destroyBroadcastListState(BroadcastListState* state) {
+    if (!state) return;
+    // Original 0x15386 destroys the mutex before walking nodes backwards.
+    // The Publisher must have stopped all users before calling this disposer.
+    state->mutex.~mutex();
+    BroadcastLink* node = state->sentinel.previous;
+    state->sentinel.next = state->sentinel.previous = &state->sentinel;
+    state->count = 0;
+    while (node != &state->sentinel) {
+        BroadcastLink* previous = node->previous;
+        delete static_cast<Node*>(node);
+        node = previous;
+    }
+    ::operator delete(state); // mutex already destroyed; do not run it twice
+}
 void addBroadcastCallable(BroadcastListState& state, uint32_t channel, const GPI::BroadcastCallable& callable) {
     Lock lock(state.mutex);
     if (Node* node=find(state,channel,callable)) {

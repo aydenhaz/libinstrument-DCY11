@@ -46,10 +46,12 @@ ASan uses detect_leaks=0 for the existing environment limitation.
 ## Remaining integration
 
 This implements list operations but does not yet connect them to Cruise.
-Original resolver 0x15258 calls broadcaster virtual slot 0 and performs an
-RTTI cast to the expected list-state implementation. That resolver and the
-original shared-control-block interactions with rebuilt method objects still
-need end-to-end verification. The ARM reference test intentionally mocks
+Correction: resolver 0x15258 calls broadcaster virtual slot 0, then host
+GPI::Broadcast::internal::Publisher::get with create/dispose callbacks. It
+does not perform an RTTI cast. This resolver and those callbacks are now
+implemented and ARM-tested; see BROADCAST_PUBLISHER_RECOVERY.md. Original
+shared-control-block interactions with rebuilt method objects still require
+end-to-end verification. The ARM reference test intentionally mocks
 Callable shared ownership and must not be described as an ABI interoperability
 proof. Adapter RTTI does not claim to match original method RTTI.
 

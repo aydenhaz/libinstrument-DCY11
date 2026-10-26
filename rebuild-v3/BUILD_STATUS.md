@@ -910,3 +910,19 @@ Resolver/RTTI and original-vs-rebuilt shared-control interoperability remain
 unverified; these list operations are not yet wired to Cruise. Singleton/
 Fragment construction and Packet registration remain blockers. See
 analysis/BROADCAST_LIST_RECOVERY.md. No device readiness is claimed.
+
+## Publisher resolver and list disposal — 2026-10-26
+
+Corrected the earlier RTTI interpretation: original resolver 0x15258 calls
+host Publisher::get after broadcaster slot 0 and supplies create/dispose
+callbacks. Added that actual host bridge and recovered list construction/
+disposal (mutex destruction, backward node cleanup, final storage release).
+Original-vs-rebuilt ARM resolver/callback tests pass for empty/1/3-node
+states and null disposal; native sanitizer and prior list/dispatch/lifecycle
+regressions pass. See analysis/BROADCAST_PUBLISHER_RECOVERY.md.
+
+NDK r26c: 60/60 compiled, strict link PASS. Development SO SHA256:
+575ab0dbb22b0b9d54d900ab4870f71a16a0fd095adfe4f93eb59e8da89ecd1e.
+Original/rebuilt shared-control interoperability, real Fragment callback
+vtables, singleton/timer construction and Packet registration remain pending.
+Broadcast lifecycle attachment is not yet enabled; no device test is claimed.
