@@ -873,3 +873,22 @@ map ABI, scene/VFP and location lifetime tests pass. NDK r26c production:
 cd2b3ea186656ed127b7a1f859d208b03fa412bdaba58e96f42bc072d9e29c44.
 No device validation; singleton/Fragment construction, broadcast callbacks
 and Packet registration still block a usable replacement.
+
+## Message-reference broadcast Callable — 2026-10-26
+
+Recovered original RTTI signature void(const STGBroadcastMsg_&) and added
+the corresponding Callable specialization plus factories for Cruise virtual
+slots 0xe4/0xec. Implemented wrapper clone/shared method ownership, matching
+identity, copy/move/reset and ARM this-adjusted direct/virtual dispatch.
+Native ASan/UBSan ownership/identity tests and 18 original-vs-rebuilt ARM
+message-reference dispatch cases pass. Original RTTI is pinned by the test.
+Existing UI observer and Cruise view-binding regressions also pass.
+
+NDK r26c: 58/58 compiled, --no-undefined link PASS. Development SO SHA256:
+10ffbd0eadb2f9abf2b835bbef04ccd1b590dcf78cbc7b3516951b7739a99969.
+The adapter is not yet registered with the original broadcast list: complete
+list/control-block interop and real Fragment target vtables remain required.
+Singleton construction additionally includes five locks, AsyncObject and a
+timer/member closure; it is not restored by a zeroed allocation. See
+analysis/CRUISE_BROADCAST_CALLABLE.md. No device validation or usable
+replacement is claimed; Packet registration remains pending.
